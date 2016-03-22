@@ -7,6 +7,15 @@ use \humhub\compat\CHtml;
 $this->pageTitle = Yii::t('UserModule.views_auth_login', 'Login');
 ?>
 
+<!-- ******HEADER****** -->
+<header class="header">
+    <div class="container">
+        <h1 class="logo">
+            <a href="../index.html"><span class="logo-icon"></span><span class="text">Gen-9</span></a>
+        </h1><!--//logo-->
+
+    </div><!--//container-->
+</header><!--//header-->
 
 <div class="container" style="text-align: center;">
 
@@ -61,6 +70,8 @@ $this->pageTitle = Yii::t('UserModule.views_auth_login', 'Login');
 
     <?= humhub\widgets\LanguageChooser::widget(); ?>
 </div>
+
+
 
 
 
