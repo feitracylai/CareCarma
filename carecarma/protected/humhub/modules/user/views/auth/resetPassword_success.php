@@ -4,6 +4,15 @@ use yii\helpers\Url;
 
 $this->pageTitle = Yii::t('UserModule.views_auth_resetPassword', 'Password reset');
 ?>
+<!-- ******HEADER****** -->
+<header class="header">
+    <div class="container">
+        <h1 class="logo">
+            <a href="../index.html"><span class="logo-icon"></span><span class="text">CareCarma</span></a>
+        </h1><!--//logo-->
+
+    </div><!--//container-->
+</header><!--//header-->
 <div class="container" style="text-align: center;">
     <?php echo humhub\widgets\SiteLogo::widget(array('place' => 'login')); ?>
 

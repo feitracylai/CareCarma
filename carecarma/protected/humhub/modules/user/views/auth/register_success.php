@@ -1,6 +1,15 @@
 <?php
 $this->pageTitle = Yii::t('UserModule.views_auth_register_success', 'Registration successful');
 ?>
+<!-- ******HEADER****** -->
+<header class="header">
+    <div class="container">
+        <h1 class="logo">
+            <a href="../index.html"><span class="logo-icon"></span><span class="text">CareCarma</span></a>
+        </h1><!--//logo-->
+
+    </div><!--//container-->
+</header><!--//header-->
 <div class="container" style="text-align: center;">
     <?= humhub\widgets\SiteLogo::widget(['place' => 'login']); ?>
     <br>
@@ -10,7 +19,7 @@ $this->pageTitle = Yii::t('UserModule.views_auth_register_success', 'Registratio
             <div class="panel-body">
                 <p><?php echo Yii::t('UserModule.views_auth_register_success', 'Please check your email and follow the instructions!'); ?></p>
                 <br/>
-                <a href="<?php echo \yii\helpers\Url::to(["/"]) ?>" class="btn btn-primary"><?php echo Yii::t('UserModule.views_auth_register_success', 'back to home') ?></a>
+                <a href="../index.html" class="btn btn-primary"><?php echo Yii::t('UserModule.views_auth_register_success', 'back to home') ?></a>
             </div>
         </div>
     </div>

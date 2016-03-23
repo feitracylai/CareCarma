@@ -6,9 +6,18 @@ use humhub\compat\CActiveForm;
 
 $this->pageTitle = Yii::t('UserModule.views_auth_recoverPassword', 'Password recovery');
 ?>
+
+<!-- ******HEADER****** -->
+<header class="header">
+    <div class="container">
+        <h1 class="logo">
+            <a href="../index.html"><span class="logo-icon"></span><span class="text">CareCarma</span></a>
+        </h1><!--//logo-->
+
+    </div><!--//container-->
+</header><!--//header-->
 <div class="container" style="text-align: center;">
-    <?php echo humhub\widgets\SiteLogo::widget(array('place' => 'login')); ?>
-    <br>
+
 
     <div class="row">
         <div id="password-recovery-form" class="panel panel-default animated bounceIn" style="max-width: 300px; margin: 0 auto 20px; text-align: left;">
@@ -37,7 +46,8 @@ $this->pageTitle = Yii::t('UserModule.views_auth_recoverPassword', 'Password rec
                 </div>
 
                 <hr>
-                <?php echo Html::submitButton(Yii::t('UserModule.views_auth_recoverPassword', 'Reset password'), array('class' => 'btn btn-primary')); ?> <a class="btn btn-primary" href="<?php echo Url::home(); ?>"><?php echo Yii::t('UserModule.views_auth_recoverPassword', 'Back') ?></a>
+                <?php echo Html::submitButton(Yii::t('UserModule.views_auth_recoverPassword', 'Reset password'), array('class' => 'btn btn-primary')); ?>
+                <a class="btn btn-primary" href="<?php echo Url::home(); ?>"><?php echo Yii::t('UserModule.views_auth_recoverPassword', 'Back') ?></a>
 
                 <?php CActiveForm::end(); ?>
 
