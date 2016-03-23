@@ -5,12 +5,20 @@ use yii\helpers\Html;
 $this->pageTitle = Yii::t('UserModule.views_auth_createAccount', 'Create Account');
 ?>
 
+<!-- ******HEADER****** -->
+<header class="header">
+    <div class="container">
+        <h1 class="logo">
+            <a href="../index.html"><span class="logo-icon"></span><span class="text">CareCarma</span></a>
+        </h1><!--//logo-->
+
+    </div><!--//container-->
+</header><!--//header-->
+
 <div class="container" style="text-align: center;">
-    <h1 id="app-title" class="animated fadeIn"><?php echo Html::encode(Yii::$app->name); ?></h1>
-    <br/>
     <div class="row">
         <div id="create-account-form" class="panel panel-default animated bounceIn" style="max-width: 500px; margin: 0 auto 20px; text-align: left;">
-            <div class="panel-heading"><?php echo Yii::t('UserModule.views_auth_createAccount', '<strong>Account</strong> registration'); ?></div>
+            <div class="panel-heading" style="text-align: center"><?php echo Yii::t('UserModule.views_auth_createAccount', '<strong>Create</strong> an account'); ?></div>
             <div class="panel-body">
                 <?php $form = \yii\widgets\ActiveForm::begin(['enableClientValidation' => false]); ?>
                 <?php echo $hForm->render($form); ?>

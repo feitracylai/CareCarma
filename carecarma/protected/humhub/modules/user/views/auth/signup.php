@@ -11,7 +11,7 @@ $this->pageTitle = Yii::t('UserModule.views_auth_Signup', 'Signup');
 <header class="header">
     <div class="container">
         <h1 class="logo">
-            <a href="../index.html"><span class="logo-icon"></span><span class="text">Gen-9</span></a>
+            <a href="../index.html"><span class="logo-icon"></span><span class="text">CareCarma</span></a>
         </h1><!--//logo-->
 
     </div><!--//container-->
@@ -25,27 +25,26 @@ $this->pageTitle = Yii::t('UserModule.views_auth_Signup', 'Signup');
     <?php if ($canRegister) : ?>
         <div id="register-form"
              class="panel panel-default animated bounceInLeft"
-             style="max-width: 300px; margin: 0 auto 20px; text-align: left;">
+             style="max-width: 300px; margin: 0 auto 20px; text-align: center;">
 
-            <div class="panel-heading"><?php echo Yii::t('UserModule.views_auth_signup', '<strong>Sign</strong> up') ?></div>
+            <div class="panel-heading"><?php echo Yii::t('UserModule.views_auth_signup', '<strong>Sign up</strong> for CareCarma') ?></div>
 
             <div class="panel-body">
 
-                <p><?php echo Yii::t('UserModule.views_auth_signup', "Don't have an account? Join the network by entering your e-mail address."); ?></p>
 
                 <?php $form = ActiveForm::begin(['id' => 'account-register-form']); ?>
 
                 <?php echo $form->field($registerModel, 'email')->textInput(['id' => 'register-email', 'placeholder' => $registerModel->getAttributeLabel('email')])->label(false); ?>
-                <hr>
-                <?php echo CHtml::submitButton(Yii::t('UserModule.views_auth_signup', 'Register'), array('class' => 'btn btn-primary')); ?>
+               <div class="register-button">
+                   <?php echo CHtml::submitButton(Yii::t('UserModule.views_auth_login', 'Register'), array('class' => 'btn btn-primary')); ?>
+               </div>
 
                 <hr>
                 <div class="row">
                     <div class="col-md-12 text-left">
                         <small>
                             <?php echo Yii::t('UserModule.views_auth_signup', 'Already have an account?'); ?>
-                            <a
-                                href="<?php echo Url::toRoute('/user/auth/login'); ?>"><br><?php echo Yii::t('UserModule.views_auth_signup', 'Login') ?></a>
+                            <a href="<?php echo Url::toRoute('/user/auth/login'); ?>"><?php echo Yii::t('UserModule.views_auth_signup', 'Login') ?></a>
                         </small>
                     </div>
                 </div>
