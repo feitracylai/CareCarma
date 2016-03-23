@@ -225,7 +225,17 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .login-container .panel a {
-    color: #6fdbe8
+    color: #ec6952;
+    position: relative;
+
+}
+
+.login-container .panel a:hover{
+    text-decoration: underline;
+}
+
+.login-container .panel .login-parallel a {
+    margin-left: 40px;
 }
 
 .login-container h1, .login-container h2 {
@@ -246,9 +256,26 @@ input[type=text], input[type=password], input[type=select] {
     color: #555
 }
 
+.login-container .login-parallel{
+    display: inline;
+}
+
 #account-login-form .form-group {
     margin-bottom: 10px
 }
+
+#account-login-form .login-parallel .form-group{
+    margin-bottom: 0;
+    margin-right: 0;
+    display: inline;
+}
+
+.login-parallel label{
+    margin: 0 0 0 0;
+}
+
+
+
 
 .topbar {
     position: fixed;
@@ -813,7 +840,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .panel .panel-heading {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 300;
     color: #555;
     background-color: #fff;
@@ -1234,6 +1261,14 @@ input[type=text], input[type=password], input[type=select] {
     padding: 8px 16px
 }
 
+.login-container .login-button .btn{
+    padding: 8px 112px
+}
+
+.login-container .register-button .btn{
+    padding: 8px 107px
+}
+
 .input.btn {
     outline: 0
 }
@@ -1285,30 +1320,31 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .btn-primary {
-    background: #708fa0;
-    color: #fff !important
+    background: #ec6952;
+    color: #fff !important;
+
 }
 
 .btn-primary:hover, .btn-primary:focus {
-    background: #628394;
+    background: #ec9b90;
     text-decoration: none
 }
 
 .btn-primary:active, .btn-primary.active {
     outline: 0;
-    background: #628394 !important
+    background: #ec9b90 !important
 }
 
 .btn-primary[disabled], .btn-primary.disabled {
-    background: #7f9baa
+    background: #ec9b90
 }
 
 .btn-primary[disabled]:hover, .btn-primary.disabled:hover, .btn-primary[disabled]:focus, .btn-primary.disabled:focus {
-    background: #7f9baa
+    background: #ec9b90
 }
 
 .btn-primary[disabled]:active, .btn-primary.disabled:active, .btn-primary[disabled].active, .btn-primary.disabled.active {
-    background: #7f9baa !important
+    background: #ec9b90 !important
 }
 
 .btn-info {
@@ -1497,6 +1533,7 @@ input:-moz-placeholder {
 }
 
 .help-block {
+    display: none;
     color: #aeaeae !important;
     font-size: 12px
 }
@@ -2711,13 +2748,13 @@ img.bounceIn {
 }
 
 .regular-checkbox:checked + .regular-checkbox-box {
-    border: 2px solid #6fdbe8;
-    background: #6fdbe8;
+    border: 2px solid #ec6952;
+    background: #fff;
     color: #fff
 }
 
 .regular-radio:checked + .regular-radio-button:after {
-    background: #6fdbe8
+    background: #ec6952
 }
 
 .regular-radio:checked + .regular-radio-button {
