@@ -16,7 +16,7 @@ use \yii\helpers\Url;
                 <img id="user-account-image" class="img-rounded"
                      src="<?php echo Yii::$app->user->getIdentity()->getProfileImage()->getUrl(); ?>"
                      height="32" width="32" alt="32x32" data-src="holder.js/32x32"
-                     style="width: 32px; height: 32px;"/>
+                     style="width: 50px; height: 50px;"/>
 
                 <b class="caret"></b>
             </a>
