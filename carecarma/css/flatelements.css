@@ -110,9 +110,9 @@
 }
 
 .regular-checkbox + .regular-checkbox-box {
-    background-color: none;
+    background-color: #fff;
     border: 2px solid #ccc;
-    padding: 7px;
+    padding: 5px;
     border-radius: 3px;
     display: inline-block;
     position: relative;
@@ -128,11 +128,11 @@
 
 .regular-checkbox:checked + .regular-checkbox-box:after {
     content: '\2714';
-    font-size: 14px;
+    font-size: 10px;
     position: absolute;
     top: -3px;
     left: 1px;
-    color: white;
+    color: #ec6952;
     -webkit-transition: margin 0.2s ease-in 0s;
 }
 
