@@ -453,7 +453,7 @@ select {
   top: 0;
   left: 0;
   height: 1500px;
-  background: #253340 url('../images/background/bg-header-small-1.jpg') no-repeat 50% top;
+  background: #253340 url('../images/background/bg-header-small-1.jpg') no-repeat fixed top;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -464,6 +464,7 @@ select {
 }
 .headline-bg.contact-headline-bg {
   background-image: url('../images/background/bg-header-small-3.jpg');
+  height: 650px;
 }
 .headline-bg.about-headline-bg {
   background-image: url('../images/background/bg-header-small-4.jpg');
@@ -1387,7 +1388,7 @@ select {
 }
 /* ======= Contact section ======= */
 .contact-section {
-  padding: 80px 0;
+  padding: 30px 0;
   padding-top: 90px;
   position: relative;
   z-index: 10;
@@ -1399,7 +1400,8 @@ select {
   margin-bottom: 30px;
 }
 .contact-section .intro {
-  margin-bottom: 60px;
+  margin-bottom: 30px;
+  font-size: 15px;
 }
 .contact-section .contact-form {
   margin-left: 15px;
@@ -1442,7 +1444,7 @@ select {
   margin-bottom: 15px;
   padding: 15px;
   position: relative;
-  color: #666666;
+  color: #fff;
   text-align: left;
   padding-left: 90px;
   -webkit-box-shadow: 0 4px 1px rgba(0, 0, 0, 0.05);
@@ -1459,7 +1461,7 @@ select {
   background-clip: padding-box;
 }
 .contact-other-section .other-info li a {
-  color: #666666;
+  color: #fff;
 }
 .contact-other-section .other-info li a:hover {
   color: #ec6952;
