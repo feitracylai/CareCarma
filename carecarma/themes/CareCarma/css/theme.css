@@ -1134,10 +1134,14 @@ input[type=text], input[type=password], input[type=select] {
 /*}*/
 
 .nav-pills .dropdown-menu li a, .nav-tabs .dropdown-menu li a, .account .dropdown-menu li a {
-    color: #fff;
+    color: #ec6952;
     font-weight: 400;
     font-size: 13px;
     padding: 4px 15px
+}
+
+.nav-pills .dropdown-menu li:hover a, .nav-tabs .dropdown-menu li:hover a, .account .dropdown-menu li:hover a{
+    color: #fff;
 }
 
 .nav-pills .dropdown-menu li a i, .nav-tabs .dropdown-menu li a i, .account .dropdown-menu li a i {
@@ -1154,7 +1158,7 @@ input[type=text], input[type=password], input[type=select] {
 .nav-pills .dropdown-menu li:hover, .nav-tabs .dropdown-menu li:hover, .account .dropdown-menu li:hover, .nav-pills .dropdown-menu li.selected, .nav-tabs .dropdown-menu li.selected, .account .dropdown-menu li.selected {
     border-left: 3px solid #e80000;
     color: #fff !important;
-    background-color: #d9534f !important
+    background-color: #ec6952 !important
 }
 
 .nav-pills.preferences .dropdown .dropdown-toggle {
@@ -1494,7 +1498,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .form-control:focus {
-    border: 2px solid #6fdbe8;
+    border: 2px solid #ff9999;
     outline: 0;
     box-shadow: none
 }
