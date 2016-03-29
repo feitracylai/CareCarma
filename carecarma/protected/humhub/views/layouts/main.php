@@ -129,6 +129,7 @@ AppAsset::register($this);
     <!-- end: second top navigation bar -->
 
     <?php echo \humhub\modules\tour\widgets\Tour::widget(); ?>
+    <br>
 
     <!-- start: show content (and check, if exists a sublayout -->
     <?php if (isset($this->context->subLayout) && $this->context->subLayout != "") : ?>

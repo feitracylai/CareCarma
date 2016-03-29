@@ -93,6 +93,8 @@
 body {
     padding-top: 130px;
     background-color: #ededed;
+    /*background:#fff url('../img/bg-screen-4.jpg') no-repeat fixed;*/
+    background-size: cover;
     color: #777;
     font-family: 'Open Sans', sans-serif
 }
@@ -479,6 +481,15 @@ input[type=text], input[type=password], input[type=select] {
     color: #fff
 }
 
+#topbar-first .topbar-actions .dropdown-menu a{
+    color: #ec6952;
+}
+
+#topbar-first .topbar-actions .dropdown-menu a:hover{
+    background-color: #ec6952;
+    color: #fff;
+}
+
 #topbar-first .caret {
     border-top-color: #bebebe
 }
@@ -596,7 +607,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 #topbar-second .nav > li > a:hover, #topbar-second .nav > li > a:active, #topbar-second .nav > li > a:focus {
-    border-bottom: 3px solid #6fdbe8;
+    border-bottom: 3px solid #ec6952;
     background-color: #f7f7f7;
     color: #555;
     text-decoration: none
@@ -636,7 +647,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 #topbar-second .nav > li > a:hover, #topbar-second .nav .open > a, #topbar-second .nav > li.active {
-    border-bottom: 3px solid #6fdbe8;
+    border-bottom: 3px solid #ec6952;
     background-color: #f7f7f7;
     color: #555
 }
@@ -706,7 +717,7 @@ input[type=text], input[type=password], input[type=select] {
 
 .media-list li:hover, .media-list li.selected {
     background-color: #f7f7f7;
-    border-left: 3px solid #6fdbe8
+    border-left: 3px solid #ec6952
 }
 
 .media-left, .media > .pull-left {
@@ -869,7 +880,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .panel .statistics .entry .count {
-    color: #6fdbe8;
+    color: #555;
     font-weight: 600;
     font-size: 20px;
     line-height: .8em
@@ -952,6 +963,13 @@ input[type=text], input[type=password], input[type=select] {
     background: -ms-linear-gradient(top, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, .38) 100%);
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, .38) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#94000000', GradientType=0)
+}
+
+.panel-profile .panel-profile-header .btn-info {
+    background: #fff;
+    color: #ff7461 !important;
+    border: 1px solid #ff7461;
+    padding: 4px 7px;
 }
 
 .panel-profile .panel-profile-header .img-profile-data h1 {
@@ -1100,8 +1118,9 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .nav-pills .dropdown-menu, .nav-tabs .dropdown-menu, .account .dropdown-menu {
-    background-color: #ec6952;
-    border: none
+    /*background-color: #ec6952;*/
+    background-color: #fff;
+    border: none;
 }
 
 .nav-pills .dropdown-menu li.divider, .nav-tabs .dropdown-menu li.divider, .account .dropdown-menu li.divider {
@@ -1110,9 +1129,9 @@ input[type=text], input[type=password], input[type=select] {
     margin: 9px 1px !important
 }
 
-.nav-pills .dropdown-menu li, .nav-tabs .dropdown-menu li, .account .dropdown-menu li {
-    border-left: 3px solid #ec6952
-}
+/*.nav-pills .dropdown-menu li, .nav-tabs .dropdown-menu li, .account .dropdown-menu li {*/
+    /*border-left: 3px solid #ec6952*/
+/*}*/
 
 .nav-pills .dropdown-menu li a, .nav-tabs .dropdown-menu li a, .account .dropdown-menu li a {
     color: #fff;
@@ -1353,18 +1372,18 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .btn-info {
-    background: #6fdbe8;
+    background: #ff7461;
     color: #fff !important
 }
 
 .btn-info:hover, .btn-info:focus {
-    background: #59d6e4 !important;
+    background: #ec9b90 !important;
     text-decoration: none
 }
 
 .btn-info:active, .btn-info.active {
     outline: 0;
-    background: #59d6e4
+    background: #ec9b90
 }
 
 .btn-info[disabled], .btn-info.disabled {
@@ -1589,7 +1608,7 @@ a.label-danger:hover {
 }
 
 .label-success {
-    background-color: #6fdbe8
+    background-color: #ff9999
 }
 
 a.label-success:hover {
@@ -1669,7 +1688,7 @@ a.list-group-item:hover, a.list-group-item.active, a.list-group-item.active:hove
     z-index: 2;
     color: #555;
     background-color: #f7f7f7;
-    border-left: 3px solid #6fdbe8 !important
+    border-left: 3px solid #ec6952 !important
 }
 
 @media screen and (max-width: 768px) {
@@ -1802,7 +1821,7 @@ a.list-group-item:hover, a.list-group-item.active, a.list-group-item.active:hove
 }
 
 .progress-bar-info {
-    background-color: #6fdbe8;
+    background-color: #ec6952;
     -webkit-box-shadow: none;
     box-shadow: none
 }
@@ -1945,6 +1964,20 @@ table td a:hover {
 .grid-view .summary {
     font-size: 12px;
     color: #bac2c7
+}
+
+.grid-view .table .btn-primary{
+    border: 1px solid #ec6952;
+    padding: 1px 4px;
+    background: #fff;
+    color: #ec6952 !important;
+}
+
+.grid-view .table .btn-primary:hover, .grid-view .table .btn-primary:focus{
+    border: none;
+    padding: 1px 5px;
+    background: #ec6952;
+    color: #fff !important;
 }
 
 .tags .tag {
@@ -2519,7 +2552,7 @@ input.placeholder, textarea.placeholder {
 .loader .sk-spinner-three-bounce div {
     width: 12px;
     height: 12px;
-    background-color: #6fdbe8;
+    background-color: #ff9999;
     border-radius: 100%;
     display: inline-block;
     -webkit-animation: sk-threeBounceDelay 1.4s infinite ease-in-out;
