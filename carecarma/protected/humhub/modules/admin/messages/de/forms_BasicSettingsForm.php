@@ -1,6 +1,7 @@
 <?php
 return array (
   'Base URL' => 'Basis URL',
+  'Date input format' => 'Datumsformat',
   'Default language' => 'Standardsprache',
   'Default space' => 'Standardspace',
   'Invalid space' => 'Ungültiger Space',

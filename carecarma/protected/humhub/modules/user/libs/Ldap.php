@@ -99,16 +99,23 @@ class Ldap extends \yii\base\Component
     {
         try {
             $username = $this->ldap->getCanonicalAccountName($username, \Zend\Ldap\Ldap::ACCTNAME_FORM_DN);
+            // check Password
             $this->ldap->bind($username, $password);
-
+            // disconnect id needed here because otherwise binding/ldap connection again can cause errors.
+            $this->ldap->disconnect();
+            
             // Update Users Data
             $node = $this->ldap->getNode($username);
             $this->handleLdapUser($node);
-
             return true;
         } catch (\Zend\Ldap\Exception\LdapException $ex) {
+            // log errors other than invalid credentials
+            if ($ex->getCode() !== LdapException::LDAP_INVALID_CREDENTIALS) {
+                Yii::error('LDAP Error: ' . $ex->getMessage());
+            }
             return false;
         } catch (Exception $ex) {
+            Yii::error('LDAP Error: ' . $ex->getMessage());
             return false;
         }
     }
@@ -135,12 +142,23 @@ class Ldap extends \yii\base\Component
             }
 
 
-            foreach (User::find()->where(['auth_mode' => User::AUTH_MODE_LDAP])->andWhere(['!=', 'status', User::STATUS_DISABLED])->each() as $user) {
+            foreach (User::find()->where(['auth_mode' => User::AUTH_MODE_LDAP])->each() as $user) {
                 if (!in_array($user->id, $ldapUserIds)) {
-                    // User no longer available in ldap
-                    $user->status = User::STATUS_DISABLED;
-                    $user->save();
-                    Yii::warning('Disabled user ' . $user->username . ' (' . $user->id . ') - Not found in LDAP!');
+                    if($user->status != User::STATUS_DISABLED) {
+                        // User no longer available in ldap
+                        $user->status = User::STATUS_DISABLED;
+                        \humhub\modules\user\models\Setting::Set($user->id, 'disabled_by_ldap', true, 'user');
+                        $user->save();
+                        Yii::warning('Disabled user ' . $user->username . ' (' . $user->id . ') - Not found in LDAP!');
+                    }
+                } else {
+                    if($user->status == User::STATUS_DISABLED && \humhub\modules\user\models\Setting::Get($user->id, 'disabled_by_ldap', 'user', false)) {
+                        // User no longer available in ldap
+                        $user->status = User::STATUS_ENABLED;
+                        \humhub\modules\user\models\Setting::Set($user->id, 'disabled_by_ldap', '', 'user');
+                        $user->save();
+                        Yii::info('Reenabled disabled user ' . $user->username . ' (' . $user->id . ') - Found again in LDAP!');
+                    }
                 }
             }
         } catch (Exception $ex) {
@@ -213,17 +231,30 @@ class Ldap extends \yii\base\Component
             // Update Profile Fields
             foreach (ProfileField::find()->andWhere(['!=', 'ldap_attribute', ''])->all() as $profileField) {
                 $ldapAttribute = $profileField->ldap_attribute;
+                $ldapValue = $node->getAttribute($ldapAttribute, 0);
                 $profileFieldName = $profileField->internal_name;
-                $user->profile->$profileFieldName = $node->getAttribute($ldapAttribute, 0);
+
+                // Handle date fields (formats are specified in config)
+                if (isset(Yii::$app->params['ldap']['dateFields'][$ldapAttribute]) && $ldapValue != '') {
+                    $dateFormat = Yii::$app->params['ldap']['dateFields'][$ldapAttribute];
+                    $date = \DateTime::createFromFormat($dateFormat, $ldapValue);
+                    if ($date !== false) {
+                        $ldapValue = $date->format('Y-m-d');
+                    } else {
+                        $ldapValue = "";
+                    }
+                }
+
+                $user->profile->$profileFieldName = $ldapValue;
             }
 
             if ($user->profile->validate() && $user->profile->save()) {
                 $this->trigger(self::EVENT_UPDATE_USER, new ParameterEvent(['user' => $user, 'node' => $node]));
             } else {
-                Yii::error('Could not create or update ldap user profile! (' . print_r($user->profile->getErrors(), true) . ")");
+                Yii::error('Could not create or update ldap user profil for user ' . $user->username . '! (' . print_r($user->profile->getErrors(), true) . ")");
             }
         } else {
-            Yii::error('Could not create or update ldap user '.$user->username.'! (' . print_r($user->getErrors(), true) . ")");
+            Yii::error('Could not create or update ldap user: ' . $user->username . '! (' . print_r($user->getErrors(), true) . ")");
         }
 
         return $user;

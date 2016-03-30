@@ -82,7 +82,7 @@ class DirectoryController extends \humhub\modules\directory\components\Controlle
         $searchOptions = [
             'model' => \humhub\modules\user\models\User::className(),
             'page' => $page,
-            'pageSize' => Setting::Get('paginationSize'),
+            'pageSize' => $this->module->pageSize,
         ];
 
         if ($this->module->memberListSortField != "") {
@@ -126,7 +126,7 @@ class DirectoryController extends \humhub\modules\directory\components\Controlle
             'model' => \humhub\modules\space\models\Space::className(),
             'page' => $page,
             'sortField' => ($keyword == '') ? 'title' : null,
-            'pageSize' => Setting::Get('paginationSize'),
+            'pageSize' => $this->module->pageSize,
         ]);
 
         $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
@@ -150,9 +150,7 @@ class DirectoryController extends \humhub\modules\directory\components\Controlle
      */
     public function actionGroups()
     {
-        $user  = \humhub\modules\user\models\User::find()->where(['id' => Yii::$app->user->id])->one();
-        $groups = \humhub\modules\user\models\Group::find()->where(['id' => $user->group_id])->orderBy(['name' => SORT_ASC])->all();
-//        $groups = \humhub\modules\user\models\Group::find()->orderBy(['name' => SORT_ASC])->all();
+        $groups = \humhub\modules\user\models\Group::find()->orderBy(['name' => SORT_ASC])->all();
 
         \yii\base\Event::on(Sidebar::className(), Sidebar::EVENT_INIT, function($event) {
             $event->sender->addWidget(\humhub\modules\directory\widgets\GroupStatistics::className(), [], ['sortOrder' => 10]);
