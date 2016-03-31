@@ -148,12 +148,9 @@ input[type=text], input[type=password], input[type=select] {
 
 
 .login-container {
-    background: #708fa0 url('../img/bg-screen-1.jpg') no-repeat fixed top;
-    /*background-color: #708fa0;*/
-    /*background-image: linear-gradient(to right, #708fa0 0, #8fa7b4 50%, #8fa7b4 100%), linear-gradient(to right, #7f9baa 0, #bdcbd3 51%, #adbfc9 100%);*/
+    background: #fff url('../img/bg-screen-1.jpg') no-repeat fixed top;
     background-size: cover;
     position: relative;
-    /*padding-top: 40px*/
 }
 
 
@@ -747,7 +744,8 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .media .media-body {
-    font-size: 13px
+    font-size: 13px;
+    padding-left: 10px;
 }
 
 .media .media-body h4.media-heading {
@@ -824,7 +822,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .modal .dropdown-menu li a, .panel .dropdown-menu li a, .nav-tabs .dropdown-menu li a {
-    color: #555;
+    color: #ec6952;
     font-size: 14px;
     font-weight: 400;
     padding: 4px 15px
@@ -839,7 +837,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .modal .dropdown-menu li:hover, .panel .dropdown-menu li:hover, .nav-tabs .dropdown-menu li:hover, .modal .dropdown-menu li.selected, .panel .dropdown-menu li.selected, .nav-tabs .dropdown-menu li.selected {
-    border-left: 3px solid #6fdbe8;
+    border-left: 3px solid #ec6b60;
     background-color: #f7f7f7 !important
 }
 
@@ -1206,7 +1204,8 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-    background-color: #708fa0
+   background-color: #ec6952;
+
 }
 
 .nav-tabs {
@@ -1294,8 +1293,17 @@ input[type=text], input[type=password], input[type=select] {
     padding: 8px 16px
 }
 
+.login-container .btn-primary{
+    background: #ec6952;
+    color: #fff !important;
+}
+
+.login-container .btn-primary:hover , .login-container .btn-primary:focus{
+    background: #ec9b90;
+}
+
 .login-container .login-button .btn{
-    padding: 8px 112px
+    padding: 8px 112px;
 }
 
 .login-container .register-button .btn{
@@ -1353,13 +1361,15 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .btn-primary {
-    background: #ec6952;
-    color: #fff !important;
-
+    background: #fff;
+    color: #ec6952 !important;
+    border: 1px solid #ec6952;
 }
 
 .btn-primary:hover, .btn-primary:focus {
-    background: #ec9b90;
+    border: 1px solid #ec6952;
+    background: #ec6952;
+    color: #fff !important;
     text-decoration: none
 }
 
@@ -1897,7 +1907,8 @@ table .time {
 }
 
 table td a:hover {
-    color: #6fdbe8
+    color: #ec6952;
+    text-decoration: underline;
 }
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
@@ -2147,7 +2158,7 @@ ul.tag_input {
 }
 
 ul.tag_input.focus {
-    border: 2px solid #6fdbe8;
+    border: 2px solid #ff9999;
     outline: 0;
     box-shadow: none
 }
