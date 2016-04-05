@@ -50,7 +50,7 @@ class Space extends ContentContainerActiveRecord implements \humhub\modules\sear
     // UserGroups
     const USERGROUP_OWNER = 'owner';
     const USERGROUP_ADMIN = 'admin';
-    const USERGROUP_MODERATOR = 'moderator';
+    const USERGROUP_MODERATOR = 'device';
     const USERGROUP_MEMBER = 'member';
     const USERGROUP_USER = 'user';
     const USERGROUP_GUEST = 'guest';
@@ -474,7 +474,7 @@ class Space extends ContentContainerActiveRecord implements \humhub\modules\sear
         $groups = [
             self::USERGROUP_OWNER => 'Owner',
             self::USERGROUP_ADMIN => 'Administrators',
-            self::USERGROUP_MODERATOR => 'Moderators',
+            self::USERGROUP_MODERATOR => 'Device User',
             self::USERGROUP_MEMBER => 'Members',
             self::USERGROUP_USER => 'Users'
         ];

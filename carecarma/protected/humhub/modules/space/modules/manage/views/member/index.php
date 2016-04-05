@@ -3,6 +3,7 @@
 use humhub\widgets\GridView;
 use yii\helpers\Html;
 use humhub\modules\space\models\Space;
+use humhub\modules\space\models\Membership;
 use humhub\modules\space\modules\manage\widgets\MemberMenu;
 ?>
 <?= MemberMenu::widget(['space' => $space]); ?>
@@ -35,6 +36,9 @@ use humhub\modules\space\modules\manage\widgets\MemberMenu;
                     if ($space->isSpaceOwner($data->user->id)) {
                         return true;
                     }
+                            if ($data->group_id == $space::USERGROUP_MODERATOR){
+                                return true;
+                            }
                     return false;
                 },
                         'filter' => $groups,
