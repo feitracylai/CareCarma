@@ -246,7 +246,11 @@ class DeviceController extends Controller
                 $form->models['UserPassword']->setPassword($form->models['UserPassword']->newPassword);
                 $form->models['UserPassword']->save();
 
-//                return $this->redirect(Url::to(['index']));
+                // Become Care Receiver in this space
+                $space->addMember($form->models['User']->id);
+                $space->setCareReceiver($form->models['User']->id);
+
+
                 return $this->redirect($space->createUrl('/space/manage/device'));
             }
         }
@@ -255,6 +259,24 @@ class DeviceController extends Controller
             'hForm' => $form,
             'space' => $space
         ));
+    }
+
+    public function actionRemove()
+    {
+        $this->forcePostRequest();
+
+        $space = $this->getSpace();
+        $user = User::findOne(['id' => Yii::$app->request->get('id')]);
+        $membership = $space->getMembership($user->id);
+
+        if ($membership != null) {
+            $membership->group_id = Space::USERGROUP_MEMBER;
+            $membership->save();
+            return true;
+        }
+
+        // Redirect  back to Administration page
+        return $this->htmlRedirect($space->createUrl('/space/manage/device'));
     }
 
 

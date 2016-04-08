@@ -43,7 +43,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                             }
                     ],
                     [
-                        'header' => Yii::t('SpaceModule.views_admin_members', 'Actions'),
+                        'header' => Yii::t('SpaceModule.views_admin_receiver', 'Actions'),
                         'class' => 'yii\grid\ActionColumn',
                         'buttons' => [
                             'view' => function () {
@@ -53,7 +53,8 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                                 if ($space->isSpaceOwner($model->user->id) || Yii::$app->user->id == $model->user->id) {
                                     return;
                                 }
-                                return Html::a('<i class="fa fa-times"></i>', Url::toRoute(['delete', 'user_id' => $model->user->id]), ['class' => 'btn btn-danger btn-xs tt']);
+//                                return Html::a('<i class="fa fa-times"></i>', Url::toRoute(['delete', 'user_id' => $model->user->id]), ['class' => 'btn btn-danger btn-xs tt']);
+                                return Html::a('<i class="fa fa-times"></i>', $space->createUrl('index', ['userGuid' => $model->user->guid]), ['class' => 'btn btn-danger btn-xs tt', 'data-method' => 'POST', 'data-confirm' => 'Are you sure?']);
                             },
                             'update' => function($url, $model) use ($space){
                                 return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['edit', 'sguid' => $space->guid, 'id' => $model->user->id
