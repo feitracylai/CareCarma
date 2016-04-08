@@ -2,6 +2,7 @@
 
 use humhub\widgets\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use humhub\modules\space\models\Space;
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\modules\manage\widgets\DeviceMenu;
@@ -10,7 +11,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
 <br/>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo Yii::t('SpaceModule.views_admin_members', '<strong>Device</strong> users'); ?>
+        <?php echo Yii::t('SpaceModule.views_admin_receiver', '<strong>Care</strong> Receiver'); ?>
     </div>
     <div class="panel-body">
         <div class="table-responsive">
@@ -35,7 +36,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                         'value' =>
                             function ($data) use (&$groups) {
                                 if ($data->last_visit == '') {
-                                    return Yii::t('SpaceModule.views_admin_members', 'never');
+                                    return Yii::t('SpaceModule.views_admin_receiver', 'never');
                                 }
 
                                 return humhub\widgets\TimeAgo::widget(['timestamp' => $data->last_visit]);
@@ -52,10 +53,12 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                                 if ($space->isSpaceOwner($model->user->id) || Yii::$app->user->id == $model->user->id) {
                                     return;
                                 }
-                                return Html::a(Yii::t('SpaceModule.views_admin_members', 'Remove'), $space->createUrl('reject-applicant', ['userGuid' => $model->user->guid]), ['class' => 'btn btn-danger btn-sm', 'data-method' => 'POST', 'data-confirm' => 'Are you sure?']);
+                                return Html::a('<i class="fa fa-times"></i>', Url::toRoute(['delete', 'user_id' => $model->user->id]), ['class' => 'btn btn-danger btn-xs tt']);
                             },
-                            'update' => function () {
-                                return;
+                            'update' => function($url, $model) use ($space){
+                                return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['edit', 'sguid' => $space->guid, 'id' => $model->user->id
+
+                                ]), ['class' => 'btn btn-primary btn-xs tt']);
                             },
                         ],
                     ],

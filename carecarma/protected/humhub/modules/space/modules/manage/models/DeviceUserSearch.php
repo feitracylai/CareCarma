@@ -74,6 +74,7 @@ class DeviceUserSearch extends Membership
 
         $query->andFilterWhere(['like', 'profile.lastname', $this->getAttribute('user.profile.lastname')]);
         $query->andFilterWhere(['like', 'profile.firstname', $this->getAttribute('user.profile.firstname')]);
+        $query->andFilterWhere(['like', 'user.id', $this->getAttribute('user.id')]);
         $query->andFilterWhere(['like', 'user.username', $this->getAttribute('user.username')]);
         $query->andFilterWhere(['like', 'user.email', $this->getAttribute('user.email')]);
 

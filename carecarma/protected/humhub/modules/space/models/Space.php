@@ -474,7 +474,7 @@ class Space extends ContentContainerActiveRecord implements \humhub\modules\sear
         $groups = [
             self::USERGROUP_OWNER => 'Owner',
             self::USERGROUP_ADMIN => 'Administrators',
-            self::USERGROUP_MODERATOR => 'Device User',
+            self::USERGROUP_MODERATOR => 'Care Receiver',
             self::USERGROUP_MEMBER => 'Members',
             self::USERGROUP_USER => 'Users'
         ];

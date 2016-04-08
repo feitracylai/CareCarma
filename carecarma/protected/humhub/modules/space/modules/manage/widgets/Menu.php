@@ -56,7 +56,7 @@ class Menu extends \humhub\widgets\BaseMenu
 
             if ($this->space->isSpaceOwner()) {
                 $this->addItem(array(
-                    'label' => Yii::t('SpaceModule.widgets_SpaceAdminMenuWidget', 'Device User'),
+                    'label' => Yii::t('SpaceModule.widgets_SpaceAdminMenuWidget', 'Care receiver'),
                     'group' => 'admin',
                     'url' => $this->space->createUrl('/space/manage/device'),
                     'icon' => '<i class="fa fa-headphones"></i>',
