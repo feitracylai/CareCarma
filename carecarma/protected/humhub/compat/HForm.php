@@ -144,6 +144,9 @@ class HForm extends \yii\base\Component
             if ($definition['type'] == 'submit') {
                 $output .= \yii\helpers\Html::submitButton($definition['label'], ['name' => $buttonName, 'class' => $definition['class']]);
                 $output .= "&nbsp;";
+            } elseif ($definition['type'] == 'delete') {
+                $output .= \yii\helpers\Html::submitButton( $definition['label'], ['name' => $buttonName, 'class' => $definition['class'], 'data-confirm' => $definition['data-confirm']]);
+                $output .= "&nbsp;";
             }
         }
         return $output;

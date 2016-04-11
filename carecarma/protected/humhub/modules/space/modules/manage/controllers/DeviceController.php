@@ -118,7 +118,7 @@ class DeviceController extends Controller
                 'class' => 'btn btn-primary',
             ),
             'delete' => array(
-                'type' => 'submit',
+                'type' => 'delete',
                 'label' => Yii::t('SpaceModule.controllers_DeviceController', 'Delete'),
                 'class' => 'btn btn-danger',
                 'data-method' => 'POST',

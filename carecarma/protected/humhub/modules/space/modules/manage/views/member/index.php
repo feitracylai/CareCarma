@@ -22,7 +22,7 @@ use humhub\modules\space\modules\manage\widgets\MemberMenu;
 
             echo GridView::widget([
                 'dataProvider' => $dataProvider,
-                //'filterModel' => $searchModel,
+                'filterModel' => $searchModel,
                 'columns' => [
                     'user.username',
                     'user.profile.firstname',

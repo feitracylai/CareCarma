@@ -501,12 +501,13 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 #topbar-first .btn-enter {
-    background-color: #7f9baa;
-    margin: 6px 0
+    background-color: #ec6952;
+    margin: 21px 0;
+
 }
 
 #topbar-first .btn-enter:hover {
-    background-color: #89a2b0
+    background-color: #d9534f
 }
 
 #topbar-first .media-list a {
@@ -970,8 +971,8 @@ input[type=text], input[type=password], input[type=select] {
 
 .panel-profile .panel-profile-header .btn-info {
     background: #fff;
-    color: #ff7461 !important;
-    border: 1px solid #ff7461;
+    color: #ec6952 !important;
+    border: 1px solid #ec6952;
     padding: 4px 7px;
 }
 
@@ -1959,7 +1960,7 @@ table td a:hover {
 }
 
 .grid-view .filters input:focus, .grid-view .filters select:focus {
-    border: 2px solid #6fdbe8;
+    border: 2px solid #ff7461;
     outline: 0;
     box-shadow: none
 }
@@ -2057,9 +2058,10 @@ ul.tag_input li img {
 }
 
 .userInput, .spaceInput {
-    background-color: #6fdbe8;
+    background-color: #fff;
     font-weight: 600;
-    color: #fff;
+    color: #ec6952;
+    border: 1px solid #ec6952;
     border-radius: 3px;
     font-size: 12px !important;
     padding: 2px;
