@@ -14,6 +14,9 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
         <?php echo Yii::t('SpaceModule.views_admin_receiver', '<strong>Care</strong> Receiver'); ?>
     </div>
     <div class="panel-body">
+        <p>
+            <?php echo Yii::t('SpaceModule.views_admin_receiver', 'In this overview you can find every registered care receiver in this space and manage him.'); ?>
+        </p>
         <div class="table-responsive">
             <?php
             $groups = $space->getUserGroups();
@@ -50,11 +53,9 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                                 return;
                             },
                             'delete' => function ($url, $model) use ($space) {
-                                if ($space->isSpaceOwner($model->user->id) || Yii::$app->user->id == $model->user->id) {
-                                    return;
-                                }
+
 //                                return Html::a('<i class="fa fa-times"></i>', Url::toRoute(['delete', 'user_id' => $model->user->id]), ['class' => 'btn btn-danger btn-xs tt']);
-                                return Html::a('<i class="fa fa-times"></i>', $space->createUrl('index', ['userGuid' => $model->user->guid]), ['class' => 'btn btn-danger btn-xs tt', 'data-method' => 'POST', 'data-confirm' => 'Are you sure?']);
+                                return Html::a('<i class="fa fa-times"></i>', $space->createUrl('remove', ['userGuid' => $model->user->guid]), ['class' => 'btn btn-danger btn-xs tt', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? This person will become a general member in this space.']);
                             },
                             'update' => function($url, $model) use ($space){
                                 return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['edit', 'sguid' => $space->guid, 'id' => $model->user->id

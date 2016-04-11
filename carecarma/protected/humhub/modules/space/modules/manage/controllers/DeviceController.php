@@ -5,6 +5,7 @@ namespace humhub\modules\space\modules\manage\controllers;
 
 use Yii;
 use yii\helpers\Url;
+use yii\helpers\Html;
 use yii\data\ArrayDataProvider;
 use yii\web\HttpException;
 use humhub\modules\user\models\User;
@@ -15,6 +16,7 @@ use humhub\modules\space\models\Space;
 use humhub\modules\space\modules\manage\components\Controller;
 use humhub\modules\space\modules\manage\models\DeviceUserSearch;
 use humhub\compat\HForm;
+
 
 
 /**
@@ -119,6 +121,8 @@ class DeviceController extends Controller
                 'type' => 'submit',
                 'label' => Yii::t('SpaceModule.controllers_DeviceController', 'Delete'),
                 'class' => 'btn btn-danger',
+                'data-method' => 'POST',
+                'data-confirm' => 'Are you sure? This person will become a general member in this space.'
             ),
         );
 
@@ -135,7 +139,8 @@ class DeviceController extends Controller
         // This feature is used primary for testing, maybe remove this in future
 
         if ($form->submitted('delete')) {
-            return $this->redirect(Url::toRoute(['/space/manage/device/delete', 'id' => $user->id]));
+//            return $this->redirect(Url::toRoute(['/space/manage/device/delete', 'id' => $user->id]));
+            return $this->redirect($space->createUrl('/space/manage/device/remove', ['userGuid' => $user->guid, 'sguid' => $space->guid]));
         }
 
         return $this->render('edit', array(
@@ -263,20 +268,15 @@ class DeviceController extends Controller
 
     public function actionRemove()
     {
-        $this->forcePostRequest();
+//        $this->forcePostRequest();
 
         $space = $this->getSpace();
-        $user = User::findOne(['id' => Yii::$app->request->get('id')]);
-        $membership = $space->getMembership($user->id);
+        $userGuid = Yii::$app->request->get('userGuid');
+        $user = User::findOne(array('guid' => $userGuid));
 
-        if ($membership != null) {
-            $membership->group_id = Space::USERGROUP_MEMBER;
-            $membership->save();
-            return true;
-        }
-
+        $space->setMember($user->id);
         // Redirect  back to Administration page
-        return $this->htmlRedirect($space->createUrl('/space/manage/device'));
+        return $this->htmlRedirect($space->createUrl('/space/manage/device/index'));
     }
 
 

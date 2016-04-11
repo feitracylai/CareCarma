@@ -163,6 +163,22 @@ class SpaceModelMembership extends Behavior
         return false;
     }
 
+    public function setMember($userId = "")
+    {
+
+        if ($userId == 0)
+            $userId = Yii::$app->user->id;
+
+        $membership = $this->getMembership($userId);
+        if ($membership != null) {
+            $membership->group_id = Space::USERGROUP_MEMBER;
+            $membership->save();
+            return true;
+        }
+        return false;
+    }
+
+
     /**
      * Returns the SpaceMembership Record for this Space
      *

@@ -13,10 +13,13 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
 <br/>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo Yii::t('SpaceModule.views_admin_receiver', '<strong>Add</strong> Care Receiver'); ?>
+        <?php echo Yii::t('SpaceModule.views_admin_receiver_add', '<strong>Add</strong> Care Receiver'); ?>
+
     </div>
     <div class="panel-body">
-
+        <p>
+            <?php echo Yii::t('SpaceModule.views_admin_receiver_add', 'You can create a new account for a care receiver.'); ?>
+        </p>
         <?php $form = \yii\widgets\ActiveForm::begin(); ?>
         <?php echo $hForm->render($form); ?>
         <?php \yii\widgets\ActiveForm::end(); ?>
