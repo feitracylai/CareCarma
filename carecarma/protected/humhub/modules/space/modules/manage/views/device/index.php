@@ -11,11 +11,18 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
 <br/>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo Yii::t('SpaceModule.views_admin_receiver', '<strong>Care</strong> Receiver'); ?>
+        <?php echo Yii::t('SpaceModule.views_admin_receiver', '<strong>Current</strong> Care Receiver'); ?>
     </div>
     <div class="panel-body">
         <p>
-            <?php echo Yii::t('SpaceModule.views_admin_receiver', 'In this overview you can find every registered care receiver in this space and manage him.'); ?>
+            <?php
+            if ($dataProvider->totalCount == 0){
+                echo ('');
+            }else {
+                echo Yii::t('SpaceModule.views_admin_receiver', 'In this overview you can find every registered care receiver in this space and manage him.');
+            }
+            ?>
+
         </p>
         <div class="table-responsive">
             <?php
@@ -24,48 +31,53 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
 //            unset($groups[Space::USERGROUP_GUEST]);
 //            unset($groups[Space::USERGROUP_USER]);
 
-            echo GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'columns' => [
-                    'user.username',
-                    'user.email',
-                    'user.profile.firstname',
-                    'user.profile.lastname',
+            if ($dataProvider->totalCount == 0){
+                echo ('There is no Care Receiver in your space.<br>If you want to create an account for someone who do not have interface, please "Add Account".');
+            }else {
+                echo GridView::widget([
+                    'dataProvider' => $dataProvider,
+//                'filterModel' => $searchModel,
+                    'columns' => [
+                        'user.username',
+                        'user.email',
+                        'user.profile.firstname',
+                        'user.profile.lastname',
 
-                    [
-                        'attribute' => 'last_visit',
-                        'format' => 'raw',
-                        'value' =>
-                            function ($data) use (&$groups) {
-                                if ($data->last_visit == '') {
-                                    return Yii::t('SpaceModule.views_admin_receiver', 'never');
+                        [
+                            'attribute' => 'last_visit',
+                            'format' => 'raw',
+                            'value' =>
+                                function ($data) use (&$groups) {
+                                    if ($data->last_visit == '') {
+                                        return Yii::t('SpaceModule.views_admin_receiver', 'never');
+                                    }
+
+                                    return humhub\widgets\TimeAgo::widget(['timestamp' => $data->last_visit]);
                                 }
-
-                                return humhub\widgets\TimeAgo::widget(['timestamp' => $data->last_visit]);
-                            }
-                    ],
-                    [
-                        'header' => Yii::t('SpaceModule.views_admin_receiver', 'Actions'),
-                        'class' => 'yii\grid\ActionColumn',
-                        'buttons' => [
-                            'view' => function () {
-                                return;
-                            },
-                            'delete' => function ($url, $model) use ($space) {
+                        ],
+                        [
+                            'header' => Yii::t('SpaceModule.views_admin_receiver', 'Actions'),
+                            'class' => 'yii\grid\ActionColumn',
+                            'buttons' => [
+                                'view' => function () {
+                                    return;
+                                },
+                                'delete' => function ($url, $model) use ($space) {
 
 //                                return Html::a('<i class="fa fa-times"></i>', Url::toRoute(['delete', 'user_id' => $model->user->id]), ['class' => 'btn btn-danger btn-xs tt']);
-                                return Html::a('<i class="fa fa-times"></i>', $space->createUrl('remove', ['userGuid' => $model->user->guid]), ['class' => 'btn btn-danger btn-xs tt', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? This person will become a general member in this space.']);
-                            },
-                            'update' => function($url, $model) use ($space){
-                                return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['edit', 'sguid' => $space->guid, 'id' => $model->user->id
+                                    return Html::a('<i class="fa fa-times"></i>', $space->createUrl('remove', ['userGuid' => $model->user->guid]), ['class' => 'btn btn-danger btn-xs tt', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? This person will become a general member in this space.']);
+                                },
+                                'update' => function($url, $model) use ($space){
+                                    return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['edit', 'sguid' => $space->guid, 'id' => $model->user->id
 
-                                ]), ['class' => 'btn btn-primary btn-xs tt']);
-                            },
+                                    ]), ['class' => 'btn btn-primary btn-xs tt']);
+                                },
+                            ],
                         ],
                     ],
-                ],
-            ]);
+                ]);
+            }
+
             ?>
         </div>
     </div>
