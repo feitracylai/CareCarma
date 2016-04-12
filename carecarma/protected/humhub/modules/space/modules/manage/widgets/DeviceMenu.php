@@ -18,7 +18,7 @@ class DeviceMenu extends \humhub\widgets\BaseMenu
     public function init()
     {
         $this->addItem(array(
-            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'List'),
+            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'List Care Receiver'),
             'url' => $this->space->createUrl('/space/manage/device/index'),
             'sortOrder' => 100,
             'isActive' => (Yii::$app->controller->action->id == 'index' && Yii::$app->controller->id === 'device'),

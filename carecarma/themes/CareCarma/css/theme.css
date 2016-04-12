@@ -11,39 +11,39 @@
 }
 
 .colorPrimary {
-    color: #708fa0 !important
+    color: #ec6952 !important
 }
 
 .backgroundPrimary {
-    background: #708fa0 !important
+    background: #ec6952 !important
 }
 
 .borderPrimary {
-    border-color: #708fa0 !important
+    border-color: #ec6952 !important
 }
 
 .colorInfo {
-    color: #6fdbe8 !important
+    color: #ec9b90 !important
 }
 
 .backgroundInfo {
-    background: #6fdbe8 !important
+    background: #ec9b90 !important
 }
 
 .borderInfo {
-    border-color: #6fdbe8 !important
+    border-color: #ec9b90 !important
 }
 
 .colorSuccess {
-    color: #97d271 !important
+    color: #6fdbe8 !important
 }
 
 .backgroundSuccess {
-    background: #97d271 !important
+    background: #6fdbe8 !important
 }
 
 .borderSuccess {
-    border-color: #97d271 !important
+    border-color: #6fdbe8 !important
 }
 
 .colorWarning {
@@ -1577,7 +1577,7 @@ input:-moz-placeholder {
 }
 
 .help-block {
-    display: none;
+    display: block;
     color: #aeaeae !important;
     font-size: 12px
 }
@@ -2417,6 +2417,7 @@ ul.tour-list li a {
 
 ul.tour-list li a .fa {
     width: 16px
+
 }
 
 ul.tour-list li.completed a {

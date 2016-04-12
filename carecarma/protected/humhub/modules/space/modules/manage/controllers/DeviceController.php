@@ -121,7 +121,6 @@ class DeviceController extends Controller
                 'type' => 'delete',
                 'label' => Yii::t('SpaceModule.controllers_DeviceController', 'Delete'),
                 'class' => 'btn btn-danger',
-                'data-method' => 'POST',
                 'data-confirm' => 'Are you sure? This person will become a general member in this space.'
             ),
         );

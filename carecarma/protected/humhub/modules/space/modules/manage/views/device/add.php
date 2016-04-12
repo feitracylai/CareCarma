@@ -18,7 +18,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
     </div>
     <div class="panel-body">
         <p>
-            <?php echo Yii::t('SpaceModule.views_admin_receiver_add', 'You can create a new account for a care receiver.'); ?>
+            <?php echo Yii::t('SpaceModule.views_admin_receiver_add', 'You can create a new account for a care receiver here.'); ?>
         </p>
         <?php $form = \yii\widgets\ActiveForm::begin(); ?>
         <?php echo $hForm->render($form); ?>

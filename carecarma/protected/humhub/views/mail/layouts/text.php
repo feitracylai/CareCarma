@@ -7,4 +7,4 @@ use humhub\models\Setting;
 <?= $content; ?>
 
 
-Powered by HumHub (http://www.humhub.org)
+Powered by Gen-9 Inc. (http://www.gen9.com)

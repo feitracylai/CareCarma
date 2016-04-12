@@ -692,8 +692,7 @@ use humhub\models\Setting;
                                                                 <td align="center" valign="top"
                                                                     style="font-size: 11px;  line-height: 18px; font-weight:300; text-align: center; font-family:Open Sans,Arail,Tahoma, Helvetica, Arial, sans-serif;">
                                                                     <span style="text-decoration: none; color: #a3a2a2;">Powered by <a
-                                                                            href="http://www.humhub.org"
-                                                                            style="text-decoration: none; color: #a3a2a2;">HumHub</a> </span>
+                                                                            style="text-decoration: none; color: #a3a2a2;">Gen-9 Inc.</a> </span>
 
                                                                 </td>
 

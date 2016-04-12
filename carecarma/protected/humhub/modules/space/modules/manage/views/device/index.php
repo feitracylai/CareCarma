@@ -19,7 +19,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
             if ($dataProvider->totalCount == 0){
                 echo ('There is no Care Receiver in your space.');
             }else {
-                echo Yii::t('SpaceModule.views_admin_receiver', 'In this overview you can find every registered care receiver in this space and manage him.');
+                echo Yii::t('SpaceModule.views_admin_receiver', 'In this overview you can find every registered care receiver in this space and manage his account.');
             }
             ?>
 
@@ -32,7 +32,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
 //            unset($groups[Space::USERGROUP_USER]);
 
             if ($dataProvider->totalCount == 0){
-                echo ('If you want to create an account for someone who do not have interface, please "Add Account".');
+                echo ('If you want to create account of a care receiver, please "Add Account".');
             }else {
                 echo GridView::widget([
                     'dataProvider' => $dataProvider,
