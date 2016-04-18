@@ -269,6 +269,10 @@ input[type=text], input[type=password], input[type=select] {
     display: inline;
 }
 
+#account-login-form .login-parallel .form-group .help-block{
+    display: none;
+}
+
 .login-parallel label{
     margin: 0 0 0 0;
 }
@@ -1579,7 +1583,8 @@ input:-moz-placeholder {
 .help-block {
     display: block;
     color: #aeaeae !important;
-    font-size: 12px
+    font-size: 12px;
+    text-align: left;
 }
 
 .input-group-addon {
@@ -2788,7 +2793,7 @@ img.bounceIn {
 
     a.list-group-item:hover, a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus {
         border: none !important;
-        background: #708fa0 !important;
+        background: #ec6952 !important;
         color: #fff !important
     }
 

@@ -14,6 +14,7 @@ use Yii;
  * @property string $contact_email
  * @property string $nickname
  * @property integer $user_id
+ * @property string $isRead
  */
 class Contact extends \yii\db\ActiveRecord
 {
@@ -35,7 +36,7 @@ class Contact extends \yii\db\ActiveRecord
             [['contact_mobile'], 'number'],
             [['contact_email'], 'email'],
             [['user_id'], 'integer'],
-            [['contact_first', 'contact_last', 'contact_mobile', 'nickname'], 'string', 'max' => 255],
+            [['contact_first', 'contact_last', 'contact_mobile', 'nickname', 'isRead'], 'string', 'max' => 255],
             [['contact_email'], 'string', 'max' => 100]
         ];
     }

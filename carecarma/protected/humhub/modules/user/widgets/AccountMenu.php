@@ -51,7 +51,7 @@ class AccountMenu extends BaseMenu
             'icon' => '<i class="fa fa-pencil-square-o"></i>',
             'group' => 'account',
             'url' => Url::toRoute('/user/contact'),
-            'sortOrder' => 105,
+            'sortOrder' => 110,
             'isActive' => (Yii::$app->controller->id == 'contact'),
         ));
 
@@ -60,7 +60,7 @@ class AccountMenu extends BaseMenu
             'icon' => '<i class="fa fa-wrench"></i>',
             'group' => 'account',
             'url' => Url::toRoute('/user/account/edit-settings'),
-            'sortOrder' => 110,
+            'sortOrder' => 120,
             'isActive' => (Yii::$app->controller->action->id == "edit-settings"),
         ));
 
@@ -72,7 +72,7 @@ class AccountMenu extends BaseMenu
                 'icon' => '<i class="fa fa-rocket"></i>',
                 'group' => 'account',
                 'url' => Url::toRoute('//user/account/edit-modules'),
-                'sortOrder' => 120,
+                'sortOrder' => 130,
                 'isActive' => (Yii::$app->controller->action->id == "editModules"),
             ));
         }

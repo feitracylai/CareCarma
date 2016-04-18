@@ -13,6 +13,8 @@ use humhub\modules\user\models\ContactSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use humhub\libs\GCM;
+use humhub\libs\Push;
 
 
 /**
@@ -21,17 +23,6 @@ use yii\filters\VerbFilter;
  */
 class ContactController extends Controller
 {
-//    public function behaviors()
-//    {
-//        return [
-//            'verbs' => [
-//                'class' => VerbFilter::className(),
-//                'actions' => [
-//                    'delete' => ['post'],
-//                ],
-//            ],
-//        ];
-//    }
 
     public $subLayout = "@humhub/modules/user/views/account/_layout";
 
@@ -114,25 +105,6 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 255,
                 ),
-//                'auth_mode' => array(
-//                    'type' => 'dropdownlist',
-//                    'disabled' => 'disabled',
-//                    'class' => 'form-control',
-//                    'readonly' => 'true',
-//                    'items' => array(
-//                        User::AUTH_MODE_LOCAL => Yii::t('AdminModule.controllers_UserController', 'Local'),
-//                        User::AUTH_MODE_LDAP => Yii::t('AdminModule.controllers_UserController', 'LDAP'),
-//                    ),
-//                ),
-//                'status' => array(
-//                    'type' => 'dropdownlist',
-//                    'class' => 'form-control',
-//                    'items' => array(
-//                        User::STATUS_ENABLED => Yii::t('AdminModule.controllers_UserController', 'Enabled'),
-//                        User::STATUS_DISABLED => Yii::t('AdminModule.controllers_UserController', 'Disabled'),
-//                        User::STATUS_NEED_APPROVAL => Yii::t('AdminModule.controllers_UserController', 'Unapproved'),
-//                    ),
-//                ),
             ),
         );
 
@@ -164,6 +136,29 @@ class ContactController extends Controller
 
         if ($form->submitted('save') && $form->validate()) {
             if ($form->save()) {
+
+                $form->models['Contact']->isRead = 'false';
+                $user = User::findOne(['id' => $contact->user_id]);
+
+                if ($user->gcmId != null){
+                    $gcm = new GCM();
+                    $push = new Push();
+
+                    $push->setTitle('contact');
+                    $push->setData('update');
+
+
+
+                    $gcm_registration_id = $user->gcmId;
+//                    $gcm_registration_id = 'mOCdyAu3Z5s:APA91bH6SWfeHb2bDluKmUVvRAFEA4KkMYfvRmK0BCvod5-fwJvLpAq59Mqy47M82704PguTwd4gFKpv31446iE86mn1J86eaPfYXGZJp2ZxKjVJwzKO6lTqVXzNo001kkZnAI2uqg69';
+
+//                    $gcm->send($gcm_registration_id, 'contact_update');
+                $gcm->send($gcm_registration_id, $push->getPush());
+
+
+                }
+
+
                 return $this->redirect(Url::toRoute('/user/contact'));
             }
         }
@@ -267,14 +262,26 @@ class ContactController extends Controller
 
 //            $form->models['Contact']->status = User::STATUS_ENABLED;
             if ($form->models['Contact']->save()) {
-//                // Save User Profile
-//                $form->models['Profile']->user_id = $form->models['User']->id;
-//                $form->models['Profile']->save();
-//
-//                // Save User Password
-//                $form->models['UserPassword']->user_id = $form->models['User']->id;
-//                $form->models['UserPassword']->setPassword($form->models['UserPassword']->newPassword);
-//                $form->models['UserPassword']->save();
+
+                $user = User::findOne(['id' => $contactModel->user_id]);
+
+                if ($user->gcmId != null){
+                    $gcm = new GCM();
+                    $push = new Push();
+
+                    $push->setTitle('contact');
+                    $push->setData('add');
+
+
+
+                    $gcm_registration_id = $user->gcmId;
+
+                    $gcm->send($gcm_registration_id, $push->getPush());
+
+
+                }
+
+
 
                 return $this->redirect(Url::to(['index']));
             }
@@ -310,6 +317,27 @@ class ContactController extends Controller
 //                }
 //            }
             $contact->delete();
+
+            $user = User::findOne(['id' => $contact->user_id]);
+
+            if ($user->gcmId != null){
+                $gcm = new GCM();
+                $push = new Push();
+
+                $push->setTitle('contact');
+                $push->setData('delete');
+
+
+
+                $gcm_registration_id = $user->gcmId;
+//                    $gcm_registration_id = 'mOCdyAu3Z5s:APA91bH6SWfeHb2bDluKmUVvRAFEA4KkMYfvRmK0BCvod5-fwJvLpAq59Mqy47M82704PguTwd4gFKpv31446iE86mn1J86eaPfYXGZJp2ZxKjVJwzKO6lTqVXzNo001kkZnAI2uqg69';
+
+//                    $gcm->send($gcm_registration_id, 'contact_update');
+                $gcm->send($gcm_registration_id, $push->getPush());
+
+
+            }
+
             return $this->redirect(Url::to(['/user/contact']));
         }
 

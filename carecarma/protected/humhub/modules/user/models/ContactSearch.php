@@ -7,6 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use humhub\modules\user\models\Contact;
 
+
 /**
  * ContactSearch represents the model behind the search form about `humhub\modules\user\models\contact`.
  */

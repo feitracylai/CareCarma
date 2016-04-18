@@ -37,6 +37,7 @@ use humhub\modules\user\components\ActiveQueryUser;
  * @property string $last_login
  * @property integer $visibility
  * @property integer $contentcontainer_id
+ * @property string $gcmId
  */
 class User extends ContentContainerActiveRecord implements \yii\web\IdentityInterface, \humhub\modules\search\interfaces\Searchable
 {
@@ -96,7 +97,8 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             [['email'], 'unique'],
             [['username'], 'unique'],
             [['guid'], 'unique'],
-            [['wall_id'], 'unique']
+            [['wall_id'], 'unique'],
+            [['gcmId'], 'string', 'max' => 255]
         ];
     }
 
@@ -214,6 +216,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
     {
         return $this->hasOne(Group::className(), ['id' => 'group_id']);
     }
+
     
     public function isActive()
     {
