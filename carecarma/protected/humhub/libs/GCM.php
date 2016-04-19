@@ -51,9 +51,9 @@ class GCM
 
 
 
-        $api_key = 'AIzaSyBdBwCEr5JUprgPriCb80WKUxHh69KqRBg';//my key for feitracylai@gmail.com
+//        $api_key = 'AIzaSyBdBwCEr5JUprgPriCb80WKUxHh69KqRBg';//my key for feitracylai@gmail.com
 
-//        $api_key = 'AIzaSyDdjFeemcBi8Zi6VFMFG7RjS9JTM-As2jE';
+        $api_key = 'AIzaSyDdjFeemcBi8Zi6VFMFG7RjS9JTM-As2jE';
 
         // Set POST variables
         $url = 'https://gcm-http.googleapis.com/gcm/send';
