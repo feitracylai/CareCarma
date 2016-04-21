@@ -146,7 +146,7 @@ class ContactController extends Controller
 
                     $push->setTitle('contact');
                     $push->setData('update');
-
+                    $push->setAID($contact->AndroidId);
 
 
                     $gcm_registration_id = $user->gcmId;
@@ -326,13 +326,11 @@ class ContactController extends Controller
 
                 $push->setTitle('contact');
                 $push->setData('delete');
-
+                $push->setAID($contact->AndroidId);
 
 
                 $gcm_registration_id = $user->gcmId;
-//                    $gcm_registration_id = 'mOCdyAu3Z5s:APA91bH6SWfeHb2bDluKmUVvRAFEA4KkMYfvRmK0BCvod5-fwJvLpAq59Mqy47M82704PguTwd4gFKpv31446iE86mn1J86eaPfYXGZJp2ZxKjVJwzKO6lTqVXzNo001kkZnAI2uqg69';
 
-//                    $gcm->send($gcm_registration_id, 'contact_update');
                 $gcm->send($gcm_registration_id, $push->getPush());
 
 

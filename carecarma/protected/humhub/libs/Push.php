@@ -19,6 +19,9 @@ class Push
     //sender in message
     private $sender;
 
+    //AndroidId in contact
+    private $aID;
+
     // flag indicating background task on push received
     private $is_background;
 
@@ -41,6 +44,10 @@ class Push
         $this->sender = $sender;
     }
 
+    public function setAID($aID){
+        $this->aID = $aID;
+    }
+
     public function setIsBackground($is_background){
         $this->is_background = $is_background;
     }
@@ -57,6 +64,7 @@ class Push
         $res['data'] = $this->data;
         $res['title'] = $this->title;
         $res['sender'] = $this->sender;
+        $res['aID'] = $this->aID;
 
         return $res;
     }

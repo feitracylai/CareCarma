@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "contact".
  *
  * @property integer $contact_id
+ * @property string $AndroidId
  * @property string $contact_first
  * @property string $contact_last
  * @property string $contact_mobile
@@ -37,6 +38,7 @@ class Contact extends \yii\db\ActiveRecord
             [['contact_email'], 'email'],
             [['user_id'], 'integer'],
             [['contact_first', 'contact_last', 'contact_mobile', 'nickname', 'isRead'], 'string', 'max' => 255],
+            [['AndroidId'], 'string', 'max' => 100],
             [['contact_email'], 'string', 'max' => 100]
         ];
     }
