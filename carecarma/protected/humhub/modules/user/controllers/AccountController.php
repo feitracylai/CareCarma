@@ -12,7 +12,10 @@ use Yii;
 use \humhub\components\Controller;
 use \yii\helpers\Url;
 use \yii\web\HttpException;
+use \humhub\libs\GCM;
+use \humhub\libs\Push;
 use \humhub\modules\user\models\User;
+use \humhub\modules\user\models\Device;
 
 /**
  * AccountController provides all standard actions for the current logged in
@@ -69,6 +72,75 @@ class AccountController extends Controller
         }
 
         return $this->render('edit', array('hForm' => $form));
+    }
+
+
+    public function actionEditDevice()
+    {
+        $user = Yii::$app->user->getIdentity();
+        $model = new \humhub\modules\user\models\forms\AccountDevice();
+
+
+
+        if ($model->load(Yii::$app->request->post())&& $model->validate()) {
+            $device = Device::find()->where(['device_id' => $model->deviceId])->one();
+            if ($device!=null) {
+                $user->device_id = $model->deviceId;
+
+                if ($device->gcmId != null) {
+                    $user->gcmId = $device->gcmId;
+
+                    $gcm = new GCM();
+                    $push = new Push();
+
+                    $push->setTitle('user id');
+                    $push->setData($user->getId());
+
+
+                    $gcm_registration_id = $user->gcmId;
+
+                    $gcm->send($gcm_registration_id, $push->getPush());
+                }
+
+                $user->save();
+                Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
+            } else {
+                $model->addError('deviceId', 'Invalid input! Please make sure that you entered the correct device ID.');
+            }
+
+        }
+
+        return $this->render('editDevice', array('model' => $model, 'user' => $user));
+
+    }
+
+    public function actionDeleteDevice()
+    {
+
+        $user = Yii::$app->user->getIdentity();
+
+        if ($user->gcmId != null) {
+
+            $gcm = new GCM();
+            $push = new Push();
+
+            $push->setTitle('user');
+            $push->setData('delete device');
+
+
+            $gcm_registration_id = $user->gcmId;
+
+            $gcm->send($gcm_registration_id, $push->getPush());
+        }
+
+
+        $user->device_id = null;
+        $user->gcmId = null;
+        $user->save();
+
+
+
+        return $this->redirect(Url::to(['/user/account/edit-device']));
     }
 
     /**

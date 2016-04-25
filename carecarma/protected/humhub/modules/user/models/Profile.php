@@ -137,7 +137,7 @@ class Profile extends \yii\db\ActiveRecord
          * Yii::t('UserModule.models_Profile', 'Skype Nickname')
          * Yii::t('UserModule.models_Profile', 'MSN')
          * Yii::t('UserModule.models_Profile', 'XMPP Jabber Address')
-         * 
+         *
          * Yii::t('UserModule.models_Profile', 'Url')
          * Yii::t('UserModule.models_Profile', 'Facebook URL')
          * Yii::t('UserModule.models_Profile', 'LinkedIn URL')

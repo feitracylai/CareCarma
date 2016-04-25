@@ -38,6 +38,7 @@ use humhub\modules\user\components\ActiveQueryUser;
  * @property integer $visibility
  * @property integer $contentcontainer_id
  * @property string $gcmId
+ * @property string $device_id
  */
 class User extends ContentContainerActiveRecord implements \yii\web\IdentityInterface, \humhub\modules\search\interfaces\Searchable
 {
@@ -98,7 +99,8 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             [['username'], 'unique'],
             [['guid'], 'unique'],
             [['wall_id'], 'unique'],
-            [['gcmId'], 'string', 'max' => 255]
+            [['gcmId'], 'string', 'max' => 255],
+            [['device_id'], 'string', 'max' => 45],
         ];
     }
 
@@ -125,7 +127,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
         $scenarios = parent::scenarios();
         $scenarios['login'] = ['username', 'password'];
         $scenarios['editAdmin'] = ['username', 'email', 'group_id', 'super_admin', 'status'];
-        $scenarios['registration'] = ['username', 'email', 'group_id'];
+        $scenarios['registration'] = ['username', 'email', 'group_id', 'device_id'];
         return $scenarios;
     }
 

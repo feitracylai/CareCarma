@@ -47,7 +47,6 @@ class AccountMenu extends BaseMenu
 
         $this->addItem(array(
             'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Contact'),
-//            'id' => 'contact',
             'icon' => '<i class="fa fa-pencil-square-o"></i>',
             'group' => 'account',
             'url' => Url::toRoute('/user/contact'),
@@ -56,11 +55,20 @@ class AccountMenu extends BaseMenu
         ));
 
         $this->addItem(array(
+            'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Device setting'),
+            'icon' => '<i class="fa fa-headphones"></i>',
+            'group' => 'account',
+            'url' => Url::toRoute('/user/account/edit-device'),
+            'sortOrder' => 130,
+            'isActive' => (Yii::$app->controller->action->id == "edit-device"),
+        ));
+
+        $this->addItem(array(
             'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Settings'),
             'icon' => '<i class="fa fa-wrench"></i>',
             'group' => 'account',
             'url' => Url::toRoute('/user/account/edit-settings'),
-            'sortOrder' => 120,
+            'sortOrder' => 140,
             'isActive' => (Yii::$app->controller->action->id == "edit-settings"),
         ));
 
@@ -72,7 +80,7 @@ class AccountMenu extends BaseMenu
                 'icon' => '<i class="fa fa-rocket"></i>',
                 'group' => 'account',
                 'url' => Url::toRoute('//user/account/edit-modules'),
-                'sortOrder' => 130,
+                'sortOrder' => 150,
                 'isActive' => (Yii::$app->controller->action->id == "editModules"),
             ));
         }
