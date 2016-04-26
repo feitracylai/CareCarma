@@ -6,7 +6,7 @@ class m160422_201214_device_create_trigger extends Migration
 {
     public function up()
     {
-        //$this->addColumn('user','device_id', 'varchar(45) DEFAULT NULL');
+        $this->addColumn('user','device_id', 'varchar(45) DEFAULT NULL');
 
         $this->execute('
             CREATE TRIGGER after_device_update
