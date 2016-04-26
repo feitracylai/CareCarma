@@ -21,7 +21,7 @@ use yii\helpers\Url;
         <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Current device ID :</strong>'); ?>
             <div style="margin: 0 20px">
                 <?php echo CHtml::encode(Yii::$app->user->getIdentity()->device_id) ?>
-                <?php echo Html::a(Yii::t('UserModule.views_account_editDevice', 'Delete'), Url::to(['delete-device', 'id' => Yii::$app->user->getIdentity()->id]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>
+                <?php echo Html::a(Yii::t('UserModule.views_account_editDevice', 'Delete'), Url::toRoute(['/user/account/delete-device', 'id' => $model->deviceId]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>
 
             </div>
         <?php endif; ?>

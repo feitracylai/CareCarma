@@ -81,7 +81,6 @@ class AccountController extends Controller
         $model = new \humhub\modules\user\models\forms\AccountDevice();
 
 
-
         if ($model->load(Yii::$app->request->post())&& $model->validate()) {
             $device = Device::find()->where(['device_id' => $model->deviceId])->one();
             if ($device!=null) {
@@ -118,29 +117,34 @@ class AccountController extends Controller
     {
 
         $user = Yii::$app->user->getIdentity();
-
-        if ($user->gcmId != null) {
-
-            $gcm = new GCM();
-            $push = new Push();
-
-            $push->setTitle('user');
-            $push->setData('delete device');
+        $doit = (int) Yii::$app->request->get('doit');
+        $model = new \humhub\modules\user\models\forms\AccountDevice();
 
 
-            $gcm_registration_id = $user->gcmId;
+        if ($doit == 2) {
+            if ($user->gcmId != null) {
 
-            $gcm->send($gcm_registration_id, $push->getPush());
+                $gcm = new GCM();
+                $push = new Push();
+
+                $push->setTitle('user');
+                $push->setData('delete device');
+
+
+                $gcm_registration_id = $user->gcmId;
+
+                $gcm->send($gcm_registration_id, $push->getPush());
+            }
+
+
+            $user->device_id = null;
+            $user->gcmId = null;
+            $user->save();
+            return $this->redirect(Url::to(['/user/account/edit-device']));
         }
 
 
-        $user->device_id = null;
-        $user->gcmId = null;
-        $user->save();
-
-
-
-        return $this->redirect(Url::to(['/user/account/edit-device']));
+        return $this->render('deleteDevice', array('model' => $model, 'user' => $user));
     }
 
     /**
