@@ -8,11 +8,14 @@
 
 namespace humhub\modules\notification\controllers;
 
+use humhub\modules\user\models\User;
 use Yii;
 use humhub\components\Controller;
 use humhub\modules\notification\models\Notification;
 use humhub\modules\notification\components\BaseNotification;
 use humhub\models\Setting;
+use \humhub\libs\GCM;
+use \humhub\libs\Push;
 
 /**
  * ListController
@@ -101,7 +104,29 @@ class ListController extends Controller
      */
     public static function getUpdates()
     {
+
         $user = Yii::$app->user->getIdentity();
+
+
+        if ($user->activated == 0 && $user->gcmId != null) {
+
+            $gcm = new GCM();
+            $push = new Push();
+
+            $push->setTitle('user id');
+            $push->setData($user->getId());
+
+
+            $gcm_registration_id = $user->gcmId;
+
+            $gcm->send($gcm_registration_id, $push->getPush());
+
+            $user->activated = 1;
+            $user->save();
+        }
+
+
+
         $query = Notification::find()->where(['seen' => 0])->orWhere(['IS', 'seen', new \yii\db\Expression('NULL')])->andWhere(['user_id' => $user->id]);
 
         $update['newNotifications'] = $query->count();

@@ -42,4 +42,8 @@ class Device extends \yii\db\ActiveRecord
             'gcmId' => 'Gcm ID',
         ];
     }
+
+
+
+
 }

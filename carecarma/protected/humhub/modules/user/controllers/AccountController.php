@@ -99,6 +99,8 @@ class AccountController extends Controller
                     $gcm_registration_id = $user->gcmId;
 
                     $gcm->send($gcm_registration_id, $push->getPush());
+
+                    $user->activated = 1;
                 }
 
                 $user->save();
@@ -139,6 +141,7 @@ class AccountController extends Controller
 
             $user->device_id = null;
             $user->gcmId = null;
+            $user->activated = null;
             $user->save();
             return $this->redirect(Url::to(['/user/account/edit-device']));
         }
