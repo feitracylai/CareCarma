@@ -2,7 +2,10 @@
 
 namespace humhub\modules\mail\models;
 
+use humhub\modules\user\models\User;
 use Yii;
+use humhub\libs\GCM;
+use humhub\libs\Push;
 
 
 /**
@@ -54,5 +57,20 @@ class DeviceMessage extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'isRead' => 'Is Read',
         ];
+    }
+
+    public function notify()
+    {
+        $user = User::findOne(['id' => $this->user_id]);
+
+        $gcm = new GCM();
+        $push = new Push();
+
+        $push->setTitle('message');
+        $push->setSender($this->from_id);
+        $push->setData($this->id);
+
+        $gcm_registration_id = $user->gcmId;
+        $gcm->send($gcm_registration_id, $push->getPush());
     }
 }

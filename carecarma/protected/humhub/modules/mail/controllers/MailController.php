@@ -105,7 +105,7 @@ class MailController extends Controller
             $messageEntry->user_id = Yii::$app->user->id;
             $messageEntry->content = $replyForm->message;
             $messageEntry->save();
-            $messageEntry->notify();
+//            $messageEntry->notify();
 
             File::attachPrecreated($messageEntry, Yii::$app->request->post('fileUploaderHiddenGuidField'));
 
@@ -121,6 +121,7 @@ class MailController extends Controller
                     $deviceMessage->content = $replyForm->message;
                     $deviceMessage->updated_at = new \yii\db\Expression('NOW()');
                     $deviceMessage->save();
+                    $deviceMessage->notify();
                 }
 
             }
@@ -338,31 +339,21 @@ class MailController extends Controller
                     $deviceMessage->content = $model->message;
                     $deviceMessage->updated_at = new \yii\db\Expression('NOW()');
                     $deviceMessage->save();
+                    $deviceMessage->notify();
                 }
 
             }
 
             // Inform recipients (We need to add all before)
-            foreach ($model->getRecipients() as $recipient) {
-                try {
-                    $message->notify($recipient);
-                } catch(\Exception $e) {
-                    Yii::error('Could not send notification e-mail to: '. $recipient->username.". Error:". $e->getMessage());
-                }
-
-                //send notification to device
-//                if ($recipient->gcmId != null) {
-//                    $gcm = new GCM();
-//                    $push = new Push();
-//
-//                    $push->setTitle('message');
-//                    $push->setData($model->message);
-//
-//                    $gcm_registration_id = $recipient->gcmId;
-//                    $gcm->send($gcm_registration_id, $push->getPush());
+//            foreach ($model->getRecipients() as $recipient) {
+//                try {
+//                    $message->notify($recipient);
+//                } catch(\Exception $e) {
+//                    Yii::error('Could not send notification e-mail to: '. $recipient->username.". Error:". $e->getMessage());
 //                }
-
-            }
+//
+//                //send notification to device
+//            }
 
             // Attach User Message
             $userMessage = new UserMessage();

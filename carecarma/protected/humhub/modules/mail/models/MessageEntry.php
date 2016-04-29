@@ -114,16 +114,16 @@ class MessageEntry extends ActiveRecord
             Yii::setAlias('@mailmodule', Yii::$app->getModule('mail')->getBasePath());
 
             if ($user->activated == 1){
-                $gcm = new GCM();
-                $push = new Push();
-
-                $push->setTitle('message');
-                $push->setSender($this->user_id);
-                $push->setData($this->content);
-
-                $gcm_registration_id = $user->gcmId;
-                $gcm->send($gcm_registration_id, $push->getPush());
-
+//                $gcm = new GCM();
+//                $push = new Push();
+//
+//                $push->setTitle('message');
+//                $push->setSender($this->user_id);
+//                $push->setData($this->content);
+//
+//                $gcm_registration_id = $user->gcmId;
+//                $gcm->send($gcm_registration_id, $push->getPush());
+//
                 continue;
             }
 
