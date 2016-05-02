@@ -113,7 +113,7 @@ class MailController extends Controller
             foreach (UserMessage::find()->where(['message_id' => $message->id])->each() as $userMessage) {
                 $user = User::findOne(['id' => $userMessage->user_id]);
 
-                if ($user->activated == 1 && $user->id != Yii::$app->user->id) {
+                if ($user->gcmId != null && $user->id != Yii::$app->user->id) {
                     $deviceMessage = new DeviceMessage();
                     $deviceMessage->message_id = $message->id;
                     $deviceMessage->user_id = $user->id;
@@ -331,7 +331,7 @@ class MailController extends Controller
                 $userMessage->user_id = $recipient->id;
                 $userMessage->save();
 
-                if ($recipient->activated == 1){
+                if ($recipient->gcmId != null){
                     $deviceMessage = new DeviceMessage();
                     $deviceMessage->message_id = $message->id;
                     $deviceMessage->user_id = $recipient->id;
@@ -345,15 +345,15 @@ class MailController extends Controller
             }
 
             // Inform recipients (We need to add all before)
-//            foreach ($model->getRecipients() as $recipient) {
-//                try {
-//                    $message->notify($recipient);
-//                } catch(\Exception $e) {
-//                    Yii::error('Could not send notification e-mail to: '. $recipient->username.". Error:". $e->getMessage());
-//                }
-//
-//                //send notification to device
-//            }
+            foreach ($model->getRecipients() as $recipient) {
+                try {
+                    $message->notify($recipient);
+                } catch(\Exception $e) {
+                    Yii::error('Could not send notification e-mail to: '. $recipient->username.". Error:". $e->getMessage());
+                }
+
+                //send notification to device
+            }
 
             // Attach User Message
             $userMessage = new UserMessage();

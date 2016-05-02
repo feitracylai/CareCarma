@@ -10,6 +10,7 @@ use Yii;
  * @property integer $id
  * @property string $device_id
  * @property string $gcmId
+ * @property integer $user_id
  */
 class Device extends \yii\db\ActiveRecord
 {
@@ -29,6 +30,7 @@ class Device extends \yii\db\ActiveRecord
         return [
             [['device_id'], 'string', 'max' => 45],
             [['gcmId'], 'string', 'max' => 255],
+            [['user_id'], 'integer']
         ];
     }
 

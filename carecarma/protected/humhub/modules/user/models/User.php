@@ -39,7 +39,6 @@ use humhub\modules\user\components\ActiveQueryUser;
  * @property integer $contentcontainer_id
  * @property string $gcmId
  * @property string $device_id
- * @property integer $activated
  */
 class User extends ContentContainerActiveRecord implements \yii\web\IdentityInterface, \humhub\modules\search\interfaces\Searchable
 {
@@ -87,7 +86,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
     {
         return [
             [['username', 'email'], 'required'],
-            [['wall_id', 'group_id', 'status', 'super_admin', 'created_by', 'updated_by', 'visibility', 'activated'], 'integer'],
+            [['wall_id', 'group_id', 'status', 'super_admin', 'created_by', 'updated_by', 'visibility'], 'integer'],
             [['tags'], 'string'],
             [['last_activity_email', 'created_at', 'updated_at', 'last_login'], 'safe'],
             [['guid'], 'string', 'max' => 45],

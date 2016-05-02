@@ -85,6 +85,8 @@ class AccountController extends Controller
             $device = Device::find()->where(['device_id' => $model->deviceId])->one();
             if ($device!=null) {
                 $user->device_id = $model->deviceId;
+                $device->user_id = $user->id;
+                $device->save();
 
                 if ($device->gcmId != null) {
                     $user->gcmId = $device->gcmId;
@@ -100,7 +102,6 @@ class AccountController extends Controller
 
                     $gcm->send($gcm_registration_id, $push->getPush());
 
-                    $user->activated = 1;
                 }
 
                 $user->save();
@@ -137,12 +138,15 @@ class AccountController extends Controller
 
                 $gcm->send($gcm_registration_id, $push->getPush());
             }
-
+            $device = Device::findOne(['user_id' => $user->id]);
+            $device->user_id = null;
+            $device->save();
 
             $user->device_id = null;
             $user->gcmId = null;
-            $user->activated = null;
             $user->save();
+
+
             return $this->redirect(Url::to(['/user/account/edit-device']));
         }
 
