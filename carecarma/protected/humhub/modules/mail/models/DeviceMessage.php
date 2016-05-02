@@ -67,7 +67,6 @@ class DeviceMessage extends \yii\db\ActiveRecord
         $push = new Push();
 
         $push->setTitle('message');
-        $push->setSender($this->from_id);
         $push->setData($this->id);
 
         $gcm_registration_id = $user->gcmId;
