@@ -86,6 +86,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
     {
         return [
             [['username', 'email'], 'required'],
+            [['device_id'], 'required', 'on' => 'editCare'],
             [['wall_id', 'group_id', 'status', 'super_admin', 'created_by', 'updated_by', 'visibility'], 'integer'],
             [['tags'], 'string'],
             [['last_activity_email', 'created_at', 'updated_at', 'last_login'], 'safe'],
@@ -99,6 +100,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             [['username'], 'unique'],
             [['guid'], 'unique'],
             [['wall_id'], 'unique'],
+            [['device_id'], 'unique'],
             [['gcmId'], 'string', 'max' => 255],
             [['device_id'], 'string', 'max' => 45],
         ];
@@ -126,8 +128,9 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
     {
         $scenarios = parent::scenarios();
         $scenarios['login'] = ['username', 'password'];
-        $scenarios['editAdmin'] = ['username', 'email', 'group_id', 'super_admin', 'status'];
-        $scenarios['registration'] = ['username', 'email', 'group_id', 'device_id'];
+        $scenarios['editAdmin'] = ['username', 'email', 'super_admin', 'status', 'device_id'];
+        $scenarios['registration'] = ['username', 'email', 'device_id'];
+        $scenarios['editCare'] = ['username', 'email', 'device_id'];
         return $scenarios;
     }
 
@@ -155,6 +158,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             'updated_by' => 'Updated By',
             'last_login' => 'Last Login',
             'visibility' => 'Visibility',
+            'device_id' => 'Device ID',
         ];
     }
 
@@ -307,9 +311,9 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             $this->time_zone = \humhub\models\Setting::Get('timeZone');
         }
 
-        if ($this->group_id == "") {
-            throw new \yii\base\Exception("Could not save user without group!");
-        }
+//        if ($this->group_id == "") {
+//            throw new \yii\base\Exception("Could not save user without group!");
+//        }
 
         return parent::beforeSave($insert);
     }

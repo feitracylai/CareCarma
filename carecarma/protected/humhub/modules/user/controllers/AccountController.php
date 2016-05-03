@@ -78,35 +78,54 @@ class AccountController extends Controller
     public function actionEditDevice()
     {
         $user = Yii::$app->user->getIdentity();
+        $deviceOld = Device::findOne(['device_id' => $user->device_id]);
         $model = new \humhub\modules\user\models\forms\AccountDevice();
 
 
         if ($model->load(Yii::$app->request->post())&& $model->validate()) {
+
             $device = Device::find()->where(['device_id' => $model->deviceId])->one();
             if ($device!=null) {
-                $user->device_id = $model->deviceId;
-                $device->user_id = $user->id;
-                $device->save();
+                if ($device != $deviceOld) {
+                    $deviceOld->user_id = null;
+                    $deviceOld->save();
 
-                if ($device->gcmId != null) {
-                    $user->gcmId = $device->gcmId;
+                    $user->device_id = $model->deviceId;
+                    $device->user_id = $user->id;
+                    $device->save();
 
-                    $gcm = new GCM();
-                    $push = new Push();
+                    if ($device->gcmId != null ) {
+                        $user->gcmId = $device->gcmId;
 
-                    $push->setTitle('user id');
-                    $push->setData($user->getId());
+                        $gcm = new GCM();
+                        $push = new Push();
+
+                        $push->setTitle('user id');
+                        $push->setData($user->getId());
 
 
-                    $gcm_registration_id = $user->gcmId;
+                        $gcm_registration_id = $user->gcmId;
 
-                    $gcm->send($gcm_registration_id, $push->getPush());
+                        $gcm->send($gcm_registration_id, $push->getPush());
+
+                    }
+                    if($deviceOld != null) {
+                        $gcmOld = new GCM();
+                        $pushOld = new Push();
+                        $pushOld->setTitle('user');
+                        $pushOld->setData('delete device');
+                        $gcmOld->send($deviceOld->gcmId, $pushOld->getPush());
+                    }
+
+
+
+                    $user->save();
 
                 }
 
-                $user->save();
                 Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
-            } else {
+            }
+            else {
                 $model->addError('deviceId', 'Invalid input! Please make sure that you entered the correct device ID.');
             }
 

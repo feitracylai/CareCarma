@@ -3,11 +3,14 @@
 
 namespace humhub\modules\space\modules\manage\controllers;
 
+use humhub\modules\user\models\Device;
 use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\data\ArrayDataProvider;
 use yii\web\HttpException;
+use humhub\libs\GCM;
+use humhub\libs\Push;
 use humhub\modules\user\models\User;
 use humhub\modules\user\models\Password;
 use humhub\modules\user\models\Group;
@@ -51,11 +54,12 @@ class DeviceController extends Controller
     {
         $space = $this->getSpace();
         $user = User::findOne(['id' => Yii::$app->request->get('id')]);
+        $deviceOld = Device::findOne(['device_id' => $user->device_id]);
 
         if ($user == null)
             throw new \yii\web\HttpException(404, Yii::t('SpaceModule.controllers_DeviceController', 'User not found!'));
 
-        $user->scenario = 'editAdmin';
+        $user->scenario = 'editCare';
         $user->profile->scenario = 'editAdmin';
         $profile = $user->profile;
 
@@ -77,35 +81,14 @@ class DeviceController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 100,
                 ),
-                'group_id' => array(
-                    'type' => 'dropdownlist',
+                'device_id'=> array(
+                    'type' => 'text',
                     'class' => 'form-control',
-                    'items' => \yii\helpers\ArrayHelper::map(Group::find()->all(), 'id', 'name'),
-                ),
-                'super_admin' => array(
-                    'type' => 'checkbox',
-                ),
-                'auth_mode' => array(
-                    'type' => 'dropdownlist',
-                    'disabled' => 'disabled',
-                    'class' => 'form-control',
-                    'readonly' => 'true',
-                    'items' => array(
-                        User::AUTH_MODE_LOCAL => Yii::t('AdminModule.controllers_UserController', 'Local'),
-                        User::AUTH_MODE_LDAP => Yii::t('AdminModule.controllers_UserController', 'LDAP'),
-                    ),
-                ),
-                'status' => array(
-                    'type' => 'dropdownlist',
-                    'class' => 'form-control',
-                    'items' => array(
-                        User::STATUS_ENABLED => Yii::t('AdminModule.controllers_UserController', 'Enabled'),
-                        User::STATUS_DISABLED => Yii::t('AdminModule.controllers_UserController', 'Disabled'),
-                        User::STATUS_NEED_APPROVAL => Yii::t('AdminModule.controllers_UserController', 'Unapproved'),
-                    ),
+                    'maxlength' => 45,
                 ),
             ),
         );
+
 
         // Add Profile Form
         $definition['elements']['Profile'] = array_merge(array('type' => 'form'), $profile->getFormDefinition());
@@ -130,9 +113,58 @@ class DeviceController extends Controller
         $form->models['Profile'] = $profile;
 
         if ($form->submitted('save') && $form->validate()) {
-            if ($form->save()) {
-                return $this->redirect(Url::toRoute(['/space/manage/device/index', 'sguid' => $space->guid]));
+            $device = Device::findOne(['device_id' => $form->models['User']->device_id]);
+
+            if ($device != null) {
+
+                if ($form->save()) {
+
+                    if ($device != $deviceOld){
+
+
+                        if($device->gcmId != null) {
+
+                            $gcm = new GCM();
+                            $push = new Push();
+
+                            $push->setTitle('user id');
+                            $push->setData($form->models['User']->id);
+
+
+                            $gcm_registration_id = $device->gcmId;
+
+                            $gcm->send($gcm_registration_id, $push->getPush());
+
+                        }
+                        if ($deviceOld->gcmId != null) {
+                            $gcmOld = new GCM();
+                            $pushOld = new Push();
+                            $pushOld->setTitle('user');
+                            $pushOld->setData('delete device');
+                            $gcmOld->send($deviceOld->gcmId, $pushOld->getPush());
+
+
+                        }
+
+                        $deviceOld->user_id = null;
+                        $deviceOld->save();
+                    }
+
+
+
+                    $user->gcmId = $device->gcmId;
+                    $user->save();
+
+                    $device->user_id = $form->models['User']->id;
+                    $device->save();
+
+                    return $this->redirect(Url::toRoute(['/space/manage/device/index', 'sguid' => $space->guid]));
+                }
             }
+            else {
+                $form->models['User']->addError('device_id', 'Invalid input! Please make sure that you entered the correct device ID.');
+            }
+
         }
 
         // This feature is used primary for testing, maybe remove this in future
@@ -152,7 +184,9 @@ class DeviceController extends Controller
     {
         $space = $this->getSpace();
         $userModel = new User();
-        $userModel->scenario = 'registration';
+        $userModel->scenario = 'editCare';
+
+        $deviceModel = new \humhub\modules\user\models\forms\AccountDevice();
 
         $userPasswordModel = new Password();
         $userPasswordModel->scenario = 'registration';
@@ -164,18 +198,6 @@ class DeviceController extends Controller
         $definition = array();
         $definition['elements'] = array();
 
-        $groupModels = \humhub\modules\user\models\Group::find()->orderBy('name ASC')->all();
-        $defaultUserGroup = \humhub\models\Setting::Get('defaultUserGroup', 'authentication_internal');
-        $groupFieldType = "dropdownlist";
-        if ($defaultUserGroup != "") {
-            $groupFieldType = "hidden";
-        } else if (count($groupModels) == 1) {
-            $groupFieldType = "hidden";
-            $defaultUserGroup = $groupModels[0]->id;
-        }
-        if ($groupFieldType == 'hidden') {
-            $userModel->group_id = $defaultUserGroup;
-        }
         // Add User Form
         $definition['elements']['User'] = array(
             'type' => 'form',
@@ -191,14 +213,15 @@ class DeviceController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 100,
                 ),
-                'group_id' => array(
-                    'type' => $groupFieldType,
+                'device_id'=> array(
+                    'type' => 'text',
                     'class' => 'form-control',
-                    'items' => \yii\helpers\ArrayHelper::map($groupModels, 'id', 'name'),
-                    'value' => $defaultUserGroup,
+                    'maxlength' => 45,
                 ),
             ),
         );
+
+
 
         // Add User Password Form
         $definition['elements']['UserPassword'] = array(
@@ -235,29 +258,55 @@ class DeviceController extends Controller
         $form->models['UserPassword'] = $userPasswordModel;
         $form->models['Profile'] = $profileModel;
 
+
         if ($form->submitted('save') && $form->validate()) {
 
             $this->forcePostRequest();
 
             $form->models['User']->status = User::STATUS_ENABLED;
-            if ($form->models['User']->save()) {
-                // Save User Profile
-                $form->models['Profile']->user_id = $form->models['User']->id;
-                $form->models['Profile']->save();
+            $device = Device::find()->where(['device_id' => $form->models['User']->device_id])->one();
+            if ($device != null) {
+                if ($form->models['User']->save()) {
+                    // Save User Profile
+                    $form->models['Profile']->user_id = $form->models['User']->id;
+                    $form->models['Profile']->save();
 
-                // Save User Password
-                $form->models['UserPassword']->user_id = $form->models['User']->id;
-                $form->models['UserPassword']->setPassword($form->models['UserPassword']->newPassword);
-                $form->models['UserPassword']->save();
+                    // Save User Password
+                    $form->models['UserPassword']->user_id = $form->models['User']->id;
+                    $form->models['UserPassword']->setPassword($form->models['UserPassword']->newPassword);
+                    $form->models['UserPassword']->save();
 
-                // Become Care Receiver in this space
-                $space->addMember($form->models['User']->id);
-                $space->setCareReceiver($form->models['User']->id);
+                    // Become Care Receiver in this space
+                    $space->addMember($form->models['User']->id);
+                    $space->setCareReceiver($form->models['User']->id);
+
+                    $device->user_id = $form->models['User']->id;
+                    $device->save();
+
+                    if($device->gcmId != null) {
+
+                        $gcm = new GCM();
+                        $push = new Push();
+
+                        $push->setTitle('user id');
+                        $push->setData($form->models['User']->id);
 
 
-                return $this->redirect($space->createUrl('/space/manage/device'));
+                        $gcm_registration_id = $device->gcmId;
+
+                        $gcm->send($gcm_registration_id, $push->getPush());
+                    }
+
+
+                    return $this->redirect($space->createUrl('/space/manage/device'));
+                }
             }
+            else {
+                $form->models['User']->addError('device_id', 'Invalid input! Please make sure that you entered the correct device ID.');
+            }
+
         }
+
 
         return $this->render('add', array(
             'hForm' => $form,
