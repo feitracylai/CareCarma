@@ -60,7 +60,7 @@ class DeviceController extends Controller
             throw new \yii\web\HttpException(404, Yii::t('SpaceModule.controllers_DeviceController', 'User not found!'));
 
         $user->scenario = 'editCare';
-        $user->profile->scenario = 'editAdmin';
+        $user->profile->scenario = 'editCare';
         $profile = $user->profile;
 
         // Build Form Definition

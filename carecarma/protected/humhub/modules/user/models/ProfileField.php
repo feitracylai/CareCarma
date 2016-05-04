@@ -20,6 +20,7 @@ use Yii;
  * @property integer $show_at_registration
  * @property integer $editable
  * @property integer $visible
+ * @property integer $care_edit
  * @property string $created_at
  * @property integer $created_by
  * @property string $updated_at
@@ -53,7 +54,7 @@ class ProfileField extends \yii\db\ActiveRecord
     {
         return array(
             array(['profile_field_category_id', 'field_type_class', 'internal_name', 'title', 'sort_order'], 'required'),
-            array(['profile_field_category_id', 'required', 'editable', 'show_at_registration', 'visible', 'sort_order', 'created_by', 'updated_by'], 'integer'),
+            array(['profile_field_category_id', 'required', 'editable', 'care_edit', 'show_at_registration', 'visible', 'sort_order', 'created_by', 'updated_by'], 'integer'),
             array(['module_id', 'field_type_class', 'title'], 'string', 'max' => 255),
             array('internal_name', 'string', 'max' => 100),
             array(['ldap_attribute', 'translation_category'], 'string', 'max' => 255),
@@ -86,8 +87,9 @@ class ProfileField extends \yii\db\ActiveRecord
             'field_type_class' => Yii::t('UserModule.models_ProfileField', 'Fieldtype'),
             'field_type_config' => Yii::t('UserModule.models_ProfileField', 'Type Config'),
             'internal_name' => Yii::t('UserModule.models_ProfileField', 'Internal Name'),
-            'visible' => Yii::t('UserModule.models_ProfileField', 'Visible'),
+            'visible' => Yii::t('UserModule.models_ProfileField', 'Visible(main for account profile setting)'),
             'editable' => Yii::t('UserModule.models_ProfileField', 'Editable'),
+            'care_edit' => Yii::t('UserModule.models_ProfileField', 'Show at carereceiver'),
             'ldap_attribute' => Yii::t('UserModule.models_ProfileField', 'LDAP Attribute'),
             'show_at_registration' => Yii::t('UserModule.models_ProfileField', 'Show at registration'),
             'translation_category' => Yii::t('UserModule.models_ProfileField', 'Translation Category ID'),
@@ -202,6 +204,9 @@ class ProfileField extends \yii\db\ActiveRecord
                         'type' => 'checkbox',
                     ),
                     'editable' => array(
+                        'type' => 'checkbox',
+                    ),
+                    'care_edit' => array(
                         'type' => 'checkbox',
                     ),
                     'profile_field_category_id' => array(

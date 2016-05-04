@@ -90,6 +90,7 @@ class Profile extends \yii\db\ActiveRecord
         $scenarios['editAdmin'] = array();
         $scenarios['registration'] = array();
         $scenarios['editProfile'] = array();
+        $scenarios['editCare'] = array();
 
         $fields = array();
         foreach (ProfileField::find()->all() as $profileField) {
@@ -99,6 +100,9 @@ class Profile extends \yii\db\ActiveRecord
             }
             if ($profileField->show_at_registration) {
                 $scenarios['registration'][] = $profileField->internal_name;
+            }
+            if ($profileField->care_edit) {
+                $scenarios['editCare'][] = $profileField->internal_name;
             }
         }
         return $scenarios;
@@ -180,7 +184,10 @@ class Profile extends \yii\db\ActiveRecord
 
             foreach (ProfileField::find()->orderBy('sort_order')->where(['profile_field_category_id' => $profileFieldCategory->id])->all() as $profileField) {
 
-                if (!$profileField->visible && $this->scenario != 'editAdmin')
+                if (!$profileField->visible && $this->scenario != 'editAdmin' && $this->scenario != 'editCare')
+                    continue;
+
+                if ($this->scenario == 'editCare' && !$profileField->care_edit)
                     continue;
 
                 if ($this->scenario == 'registration' && !$profileField->show_at_registration)
