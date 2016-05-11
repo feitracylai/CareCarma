@@ -24,7 +24,7 @@ class AccountDevice extends \yii\base\Model
     {
         return array(
             'currentPassword' => Yii::t('UserModule.forms_AccountDeviceForm', 'Current password'),
-            'deviceId' => Yii::t('UserModule.forms_AccountDeviceForm', 'Device ID'),
+            'deviceId' => Yii::t('UserModule.forms_AccountDeviceForm', 'New Device ID'),
         );
     }
 

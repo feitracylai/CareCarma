@@ -53,6 +53,17 @@ class Menu extends \humhub\widgets\BaseMenu
 #            'isActive' => (Yii::$app->controller->id == "admin" && Yii::$app->controller->action->id == "index"),
 #        ));
 
+//        if ($this->space->isSpaceOwner()) {
+                $this->addItem(array(
+                    'label' => Yii::t('SpaceModule.widgets_SpaceMenuWidget', 'Care receiver'),
+                    'group' => 'modules',
+                    'url' => $this->space->createUrl('/space/manage/device'),
+                    'icon' => '<i class="fa fa-headphones"></i>',
+                    'sortOrder' => 210,
+                    'isActive' => (Yii::$app->controller->id == "device"),
+                ));
+//            }
+
 
         parent::init();
     }

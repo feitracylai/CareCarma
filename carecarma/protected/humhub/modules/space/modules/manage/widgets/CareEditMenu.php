@@ -1,0 +1,76 @@
+<?php
+/**
+ * Created by wufei
+ */
+
+namespace humhub\modules\space\modules\manage\widgets;
+
+use Yii;
+
+
+class CareEditMenu extends \humhub\widgets\BaseMenu
+{
+    public $template = "@humhub/widgets/views/tabMenu";
+
+    public $space;
+
+    public function init()
+
+    {
+        $id =  Yii::$app->request->get('id');
+
+        $this->addItem(array(
+            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Back'),
+            'url' => $this->space->createUrl('/space/manage/device/index'),
+            'sortOrder' => 100,
+            'isActive' => (Yii::$app->controller->action->id == 'index' && Yii::$app->controller->id === 'device'),
+        ));
+
+        $this->addItem(array(
+            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Edit Account'),
+            'url' => $this->space->createUrl('/space/manage/device/edit',['id' => $id]),
+            'sortOrder' => 200,
+            'isActive' => (Yii::$app->controller->action->id == 'edit' && Yii::$app->controller->id === 'device'),
+        ));
+
+
+        $this->addItem(array(
+            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Profile'),
+            'url' => $this->space->createUrl('/space/manage/device/profile',['id' => $id]),
+            'sortOrder' => 300,
+            'isActive' => (Yii::$app->controller->action->id == 'profile' && Yii::$app->controller->id === 'device'),
+        ));
+
+        $this->addItem(array(
+            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Device Setting'),
+            'url' => $this->space->createUrl('/space/manage/device/device',['id' => $id]),
+            'sortOrder' => 400,
+            'isActive' => (Yii::$app->controller->action->id == 'device' && Yii::$app->controller->id === 'device'),
+        ));
+
+        $this->addItem(array(
+            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Contacts'),
+            'url' => $this->space->createUrl('/space/manage/device/contact',['id' => $id]),
+            'sortOrder' => 500,
+            'isActive' => (Yii::$app->controller->action->id == 'contact' && Yii::$app->controller->id === 'device'),
+        ));
+
+        $this->addItem(array(
+            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Settings'),
+            'url' => $this->space->createUrl('/space/manage/device/settings',['id' => $id]),
+            'sortOrder' => 600,
+            'isActive' => (Yii::$app->controller->action->id == 'settings' && Yii::$app->controller->id === 'device'),
+        ));
+
+        $this->addItem(array(
+            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Delete account'),
+            'url' => $this->space->createUrl('/space/manage/device/delete',['id' => $id]),
+            'sortOrder' => 1000,
+            'isActive' => (Yii::$app->controller->action->id == 'delete' && Yii::$app->controller->id === 'device'),
+        ));
+
+        parent::init();
+    }
+
+
+}

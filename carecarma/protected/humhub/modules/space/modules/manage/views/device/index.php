@@ -19,7 +19,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
             if ($dataProvider->totalCount == 0){
                 echo ('There is no Care Receiver in your space.');
             }else {
-                echo Yii::t('SpaceModule.views_admin_receiver', 'In this overview you can find every registered care receiver in this space and manage his account.');
+                echo Yii::t('SpaceModule.views_admin_receiver', 'In this overview you can find every registered care receiver in this space. ');
             }
             ?>
 
@@ -59,18 +59,27 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                             'header' => Yii::t('SpaceModule.views_admin_receiver', 'Actions'),
                             'class' => 'yii\grid\ActionColumn',
                             'buttons' => [
-                                'view' => function () {
-                                    return;
+                                'view' => function($url,$model) use ($space) {
+                                    return Html::a('<i class="fa fa-eye"></i>', Url::toRoute(['report', 'sguid' => $space->guid, 'id' => $model->user->id
+
+                                    ]), ['class' => 'btn btn-primary btn-xs tt']);
                                 },
                                 'delete' => function ($url,$model) use ($space) {
 
 //                                return Html::a('<i class="fa fa-times"></i>', Url::toRoute(['delete', 'user_id' => $model->user->id]), ['class' => 'btn btn-danger btn-xs tt']);
-                                    return Html::a('<i class="fa fa-times"></i>', $space->createUrl('remove', ['userGuid' => $model->user->guid]), ['class' => 'btn btn-danger btn-xs tt', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? This person will become a general member in this space.']);
+//                                    return Html::a('<i class="fa fa-times"></i>', $space->createUrl('remove', ['userGuid' => $model->user->guid]), ['class' => 'btn btn-danger btn-xs tt', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? This person will become a general member in this space.']);
+                                    return;
                                 },
                                 'update' => function($url,$model) use ($space){
-                                    return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['edit', 'sguid' => $space->guid, 'id' => $model->user->id
+                                    if ($space->isSpaceOwner()){
+                                        return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['edit', 'sguid' => $space->guid, 'id' => $model->user->id
 
-                                    ]), ['class' => 'btn btn-primary btn-xs tt']);
+                                        ]), ['class' => 'btn btn-primary btn-xs tt']);
+                                    }
+                                    else
+                                        return;
+
+
                                 },
                             ],
                         ],

@@ -54,16 +54,16 @@ class Menu extends \humhub\widgets\BaseMenu
                 'isActive' => (Yii::$app->controller->id == "member"),
             ));
 
-            if ($this->space->isSpaceOwner()) {
-                $this->addItem(array(
-                    'label' => Yii::t('SpaceModule.widgets_SpaceAdminMenuWidget', 'Care receiver'),
-                    'group' => 'admin',
-                    'url' => $this->space->createUrl('/space/manage/device'),
-                    'icon' => '<i class="fa fa-headphones"></i>',
-                    'sortOrder' => 210,
-                    'isActive' => (Yii::$app->controller->id == "device"),
-                ));
-            }
+//            if ($this->space->isSpaceOwner()) {
+//                $this->addItem(array(
+//                    'label' => Yii::t('SpaceModule.widgets_SpaceAdminMenuWidget', 'Care receiver'),
+//                    'group' => 'admin',
+//                    'url' => $this->space->createUrl('/space/manage/device'),
+//                    'icon' => '<i class="fa fa-headphones"></i>',
+//                    'sortOrder' => 210,
+//                    'isActive' => (Yii::$app->controller->id == "device"),
+//                ));
+//            }
 
 
             $this->addItem(array(
