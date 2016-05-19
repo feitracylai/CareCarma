@@ -198,7 +198,7 @@ class DeviceController extends Controller
         // Add User Form
         $definition['elements']['User'] = array(
             'type' => 'form',
-            'title' => Yii::t('UserModule.controllers_AuthController', 'Account'),
+            'title' => Yii::t('SpaceModule.controllers_DeviceController', 'Account'),
             'elements' => array(
                 'username' => array(
                     'type' => 'text',
@@ -246,7 +246,7 @@ class DeviceController extends Controller
             'save' => array(
                 'type' => 'submit',
                 'class' => 'btn btn-primary',
-                'label' => Yii::t('UserModule.controllers_AuthController', 'Create account'),
+                'label' => Yii::t('SpaceModule.controllers_DeviceController', 'Create account'),
             ),
         );
 
@@ -323,7 +323,7 @@ class DeviceController extends Controller
 
 
         if ($emailModel->load(Yii::$app->request->post()) && $emailModel->validate() && $emailModel->sendChangeEmail()) {
-            Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
+            Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
 //                    return $this->render('changeEmail_success', array('model' => $emailModel));
         }
 
@@ -383,11 +383,10 @@ class DeviceController extends Controller
 
 
                     $user->save();
-
                 }
 
 
-                Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
+                Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
 
             }
             else {
@@ -416,7 +415,7 @@ class DeviceController extends Controller
         $definition['buttons'] = array(
             'save' => array(
                 'type' => 'submit',
-                'label' => Yii::t('UserModule.controllers_AccountController', 'Save profile'),
+                'label' => Yii::t('SpaceModule.controllers_DeviceController', 'Save profile'),
                 'class' => 'btn btn-primary'
             ),
         );
@@ -428,7 +427,7 @@ class DeviceController extends Controller
             // Trigger search refresh
             $user->save();
 
-            Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
+            Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
             return $this->redirect(Url::to(['edit']));
         }
 
@@ -439,20 +438,25 @@ class DeviceController extends Controller
         ));
     }
 
-    public function actionContact() {
-        $space = $this->getSpace();
-        $user = User::findOne(['id' => Yii::$app->request->get('id')]);
+//    public function actionContact() {
+//        $space = $this->getSpace();
+//        $user = User::findOne(['id' => Yii::$app->request->get('id')]);
+//
+//        $searchModel = new ContactSearch();
+//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $user->id);
+//
+//        return $this->render('contact/index', [
+//            'searchModel' => $searchModel,
+//            'dataProvider' => $dataProvider,
+//            'space' => $space,
+//            'user' => $user,
+//        ]);
+//    }
 
-        $searchModel = new ContactSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $user->id);
+//    public function actionContact() {
+//        return $this->redirect('/space/manage/contact');
+//    }
 
-        return $this->render('contact', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'space' => $space,
-            'user' => $user,
-        ]);
-    }
 
     public function actionSettings() {
         $space = $this->getSpace();
@@ -481,7 +485,7 @@ class DeviceController extends Controller
             $user->visibility = $model->visibility;
             $user->save();
 
-            Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
+            Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
         }
 
         return $this->render('settings', array('space' => $space, 'model' => $model, 'languages' => Yii::$app->params['availableLanguages']));

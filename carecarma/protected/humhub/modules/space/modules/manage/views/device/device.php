@@ -15,16 +15,16 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
     </div>
     <div class="panel-body">
         <p>
-            <?php echo Yii::t('UserModule.views_account_editDevice', 'If you have bought a device, please connect it to your account'); ?>
+            <?php echo Yii::t('UserModule.views_account_editDevice', 'If {first} {last} changed device, please connect it here', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
         </p>
 
         <?php $form = ActiveForm::begin(); ?>
 
         <div class="form-group">
-            <?php if(Yii::$app->user->getIdentity()->device_id != null) : ?>
+            <?php if($user->device_id != null) : ?>
                 <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Current device ID :</strong>'); ?>
                 <div style="margin: 0 20px">
-                    <?php echo CHtml::encode(Yii::$app->user->getIdentity()->device_id) ?>
+                    <?php echo CHtml::encode($user->device_id) ?>
 <!--                    --><?php //echo Html::a(Yii::t('UserModule.views_account_editDevice', 'Delete'), Url::toRoute(['/user/account/delete-device', 'id' => $model->deviceId]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>
 
                 </div>
