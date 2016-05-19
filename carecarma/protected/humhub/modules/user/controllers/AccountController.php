@@ -80,6 +80,7 @@ class AccountController extends Controller
         $user = Yii::$app->user->getIdentity();
         $deviceOld = Device::findOne(['device_id' => $user->device_id]);
         $model = new \humhub\modules\user\models\forms\AccountDevice();
+        $model->scenario = 'userDevice';
 
 
         if ($model->load(Yii::$app->request->post())&& $model->validate()) {
@@ -294,6 +295,7 @@ class AccountController extends Controller
     {
         $user = Yii::$app->user->getIdentity();
         $model = new \humhub\modules\user\models\forms\AccountEmailing();
+        $model->scenario = 'userEmail';
 
         $model->receive_email_activities = $user->getSetting("receive_email_activities", 'core', \humhub\models\Setting::Get('receive_email_activities', 'mailing'));
         $model->receive_email_notifications = $user->getSetting("receive_email_notifications", 'core', \humhub\models\Setting::Get('receive_email_notifications', 'mailing'));
@@ -321,6 +323,7 @@ class AccountController extends Controller
         }
 
         $model = new \humhub\modules\user\models\forms\AccountChangeEmail;
+        $model->scenario = 'userEmail';
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->sendChangeEmail()) {
             return $this->render('changeEmail_success', array('model' => $model));

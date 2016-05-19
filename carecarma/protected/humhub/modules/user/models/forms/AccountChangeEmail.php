@@ -42,7 +42,8 @@ class AccountChangeEmail extends \yii\base\Model
     public function rules()
     {
         return array(
-            array(['currentPassword', 'newEmail'], 'required'),
+            array('newEmail', 'required'),
+            array('currentPassword', 'required', 'on' => 'userEmail'),
             array('currentPassword', \humhub\modules\user\components\CheckPasswordValidator::className()),
             array('newEmail', 'email'),
             array('newEmail', 'unique', 'targetAttribute' => 'email', 'targetClass' => \humhub\modules\user\models\User::className(), 'message' => '{attribute} "{value}" is already in use!'),
