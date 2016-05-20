@@ -21,10 +21,12 @@ class CareEditMenu extends \humhub\widgets\BaseMenu
         $id =  Yii::$app->request->get('id');
 
         $this->addItem(array(
-            'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu', 'Back'),
+            'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu', ' Back'),
             'url' => $this->space->createUrl('/space/manage/device/index'),
             'sortOrder' => 100,
+            'icon' => '<i class="fa fa-backward"></i>',
             'isActive' => (Yii::$app->controller->action->id == 'index' && Yii::$app->controller->id === 'device'),
+
         ));
 
         $this->addItem(array(
