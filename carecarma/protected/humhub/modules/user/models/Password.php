@@ -74,7 +74,7 @@ class Password extends \yii\db\ActiveRecord
             [['algorithm'], 'string', 'max' => 20],
             [['currentPassword'], \humhub\modules\user\components\CheckPasswordValidator::className(), 'on' => 'changePassword'],
             [['newPassword', 'newPasswordConfirm', 'currentPassword'], 'required', 'on' => 'changePassword'],
-            [['newPassword', 'newPasswordConfirm'], 'string', 'min' => 5, 'max' => 255, 'on' => 'changePassword'],
+            [['newPassword', 'newPasswordConfirm'], 'string', 'min' => 8, 'max' => 255],
             [['newPasswordConfirm'], 'compare', 'compareAttribute' => 'newPassword', 'on' => 'changePassword'],
             [['newPasswordConfirm'], 'compare', 'compareAttribute' => 'newPassword', 'on' => 'registration'],
         ];

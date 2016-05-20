@@ -11,7 +11,7 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
 <br/>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Device</strong> setting'); ?>
+        <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>{first} {last}</strong> device setting', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
     </div>
     <div class="panel-body">
         <p>

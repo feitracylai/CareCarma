@@ -176,6 +176,12 @@ class HForm extends \yii\base\Component
             if (isset($definition['prompt']) && $definition['prompt']) {
                 $options['prompt'] = $definition['prompt'];
             }
+            if (isset($definition['placeholder']) && $definition['placeholder']) {
+                $options['placeholder'] = $definition['placeholder'];
+            }
+            if (isset($definition['title']) && $definition['title']) {
+                $options['title'] = $definition['title'];
+            }
             if (isset($definition['label']) && $definition['label']) {
                 $options['label'] = $definition['label'];
             }

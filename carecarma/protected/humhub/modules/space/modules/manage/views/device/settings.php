@@ -10,7 +10,7 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
 <br/>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo Yii::t('UserModule.views_account_editSettings', '<strong>User</strong> settings'); ?>
+        <?php echo Yii::t('UserModule.views_account_editSettings', '<strong>{first} {last}</strong> settings', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
     </div>
     <div class="panel-body">
         <?php $form = ActiveForm::begin(['id' => 'basic-settings-form']); ?>

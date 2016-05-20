@@ -62,10 +62,14 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                                 'view' => function($url,$model) use ($space) {
                                     return Html::a('<i class="fa fa-eye"></i>', Url::toRoute(['report', 'sguid' => $space->guid, 'id' => $model->user->id
 
-                                    ]), ['class' => 'btn btn-primary btn-xs tt']);
+                                    ]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View his/her health report']);
                                 },
                                 'delete' => function ($url,$model) use ($space) {
+                                    if ($space->isSpaceOwner()){
+                                        return Html::a('<i class="fa fa-times"></i>', Url::toRoute(['delete', 'sguid' => $space->guid, 'id' => $model->user->id
 
+                                        ]), ['class' => 'btn btn-danger btn-xs tt', 'title' => 'Delete account or Move to regular member']);
+                                    }
 //                                return Html::a('<i class="fa fa-times"></i>', Url::toRoute(['delete', 'user_id' => $model->user->id]), ['class' => 'btn btn-danger btn-xs tt']);
 //                                    return Html::a('<i class="fa fa-times"></i>', $space->createUrl('remove', ['userGuid' => $model->user->guid]), ['class' => 'btn btn-danger btn-xs tt', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? This person will become a general member in this space.']);
                                     return;
@@ -73,8 +77,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                                 'update' => function($url,$model) use ($space){
                                     if ($space->isSpaceOwner()){
                                         return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['edit', 'sguid' => $space->guid, 'id' => $model->user->id
-
-                                        ]), ['class' => 'btn btn-primary btn-xs tt']);
+                                        ]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Edit his/her account']);
                                     }
                                     else
                                         return;

@@ -204,16 +204,22 @@ class DeviceController extends Controller
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 25,
+                    'title' => 'Pick a username for Care Receiver in this system. You can use letters, numbers, and periods. Between 4 to 25 characters.',
+
+
                 ),
                 'email' => array(
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 100,
+                    'title' => 'Use a common email address of this Care Receiver that can be used to log in this system and receive notifications from this system'
+
                 ),
                 'device_id'=> array(
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 45,
+                    'title' => 'Check the device ID in order details.'
                 ),
             ),
         );
@@ -229,6 +235,8 @@ class DeviceController extends Controller
                     'type' => 'password',
                     'class' => 'form-control',
                     'maxlength' => 255,
+                    'minlength' => 8,
+                    'title' => 'Use at least 8 characters. This Care Receiver can use it to log in this system.'
                 ),
                 'newPasswordConfirm' => array(
                     'type' => 'password',
@@ -313,7 +321,7 @@ class DeviceController extends Controller
 
     public function actionEdit() {
         $space = $this->getSpace();
-        $user =  User::findOne(['id' => Yii::$app->request->get('id')]);
+        $user =  $this->getCare();
 
 
         $emailModel = new \humhub\modules\user\models\forms\AccountChangeEmail;
@@ -338,7 +346,7 @@ class DeviceController extends Controller
 
     public function actionDevice(){
         $space = $this->getSpace();
-        $user =  User::findOne(['id' => Yii::$app->request->get('id')]);
+        $user =  $this->getCare();
 
 
         $deviceOld = Device::findOne(['device_id' => $user->device_id]);
@@ -407,7 +415,7 @@ class DeviceController extends Controller
 
     public function actionProfile() {
         $space = $this->getSpace();
-        $user = User::findOne(['id' => Yii::$app->request->get('id')]);
+        $user = $this->getCare();
 
         // Get Form Definition
         $user->profile->scenario = 'editCare';
@@ -460,7 +468,8 @@ class DeviceController extends Controller
 
     public function actionSettings() {
         $space = $this->getSpace();
-        $user = User::findOne(['id' => Yii::$app->request->get('id')]);
+        $user = $this->getCare();
+
 
         $model = new \humhub\modules\user\models\forms\AccountSettings();
         $model->language = $user->language;
@@ -488,7 +497,12 @@ class DeviceController extends Controller
             Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
         }
 
-        return $this->render('settings', array('space' => $space, 'model' => $model, 'languages' => Yii::$app->params['availableLanguages']));
+        return $this->render('settings', array(
+            'space' => $space,
+            'user' => $user,
+            'model' => $model,
+            'languages' => Yii::$app->params['availableLanguages'
+            ]));
     }
 
 
@@ -496,7 +510,7 @@ class DeviceController extends Controller
     {
         $isSpaceOwner = false;
         $space = $this->getSpace();
-        $user = User::findOne(['id' => Yii::$app->request->get('id')]);
+        $user = $this->getCare();
 
         if ($user->auth_mode != User::AUTH_MODE_LOCAL) {
             throw new HttpException(500, 'This is not a local account! You cannot delete it. (e.g. LDAP)!');
@@ -526,7 +540,7 @@ class DeviceController extends Controller
 
     public function actionReport() {
         $space = $this->getSpace();
-        $user = User::findOne(['id' => Yii::$app->request->get('id')]);
+        $user = $this->getCare();
 
         return $this->render('report', array(
             'space' => $space,
@@ -545,6 +559,10 @@ class DeviceController extends Controller
         $space->setMember($user->id);
         // Redirect  back to Administration page
         return $this->htmlRedirect($space->createUrl('/space/manage/device/index'));
+    }
+
+    public function getCare(){
+        return User::findOne(['id' => Yii::$app->request->get('id')]);
     }
 
 
