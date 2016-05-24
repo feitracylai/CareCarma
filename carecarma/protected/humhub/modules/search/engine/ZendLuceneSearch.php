@@ -8,6 +8,7 @@
 
 namespace humhub\modules\search\engine;
 
+use humhub\modules\user\models\User;
 use Yii;
 use humhub\modules\search\interfaces\Searchable;
 use humhub\modules\content\models\Content;
@@ -238,6 +239,18 @@ class ZendLuceneSearch extends Search
             }
             $spaceBaseQuery->addSubquery($spaceIdQuery, true);
             $query->addSubquery($spaceBaseQuery, true);
+        }
+
+        if (count($options['limitUsers']) > 0) {
+
+            $userBaseQuery = new \ZendSearch\Lucene\Search\Query\Boolean();
+            $userBaseQuery->addSubquery(new \ZendSearch\Lucene\Search\Query\Term(new \ZendSearch\Lucene\Index\Term(User::className(), 'containerModel')), true);
+            $userIdQuery = new \ZendSearch\Lucene\Search\Query\MultiTerm();
+            foreach ($options['limitUsers'] as $user) {
+                $userIdQuery->addTerm(new \ZendSearch\Lucene\Index\Term($user->id, 'containerPk'));
+            }
+            $userBaseQuery->addSubquery($userIdQuery, true);
+            $query->addSubquery($userBaseQuery, true);
         }
 
         return $query;

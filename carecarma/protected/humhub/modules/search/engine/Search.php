@@ -176,6 +176,11 @@ abstract class Search extends \yii\base\Component
             $options['limitSpaces'] = array();
         }
 
+        if (!isset($options['limitUsers'])) {
+            $options['limitUsers'] = array();
+        }
+
+
         return $options;
     }
 

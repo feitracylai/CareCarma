@@ -2,6 +2,10 @@
 
 namespace humhub\modules\user\controllers;
 
+use humhub\modules\directory\controllers\DirectoryController;
+use humhub\modules\space\models\Membership;
+use humhub\modules\space\models\Space;
+use humhub\modules\user\models\forms\AccountContacts;
 use humhub\modules\user\models\ProfileField;
 use Yii;
 use yii\helpers\Url;
@@ -33,8 +37,9 @@ class ContactController extends Controller
      */
     public function actionIndex()
     {
+        $id = Yii::$app->user->id;
         $searchModel = new ContactSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -183,17 +188,28 @@ class ContactController extends Controller
 
         $contactModel->user_id = Yii::$app->user->id;
 
+        $page = (int) Yii::$app->request->get('page', 1);
         $keyword = Yii::$app->request->get('keyword', "");
-        $model = new InviteForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            foreach ($model->getInvites() as $InviteUser) {
-                $contactModel->contact_first = $InviteUser->profile->firstname;
-                $contactModel->contact_last = $InviteUser->profile->lastname;
-                $contactModel->contact_mobile = $InviteUser->profile->mobile;
-                $contactModel->contact_email = $InviteUser->email;
-            }
-        }
+        $searchOptions = [
+            'model' => \humhub\modules\user\models\User::className(),
+            'page' => $page,
+//            'pageSize' => DirectoryController::className()->module->pageSize,
+        ];
+
+        $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
+
+        $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
+
+
+//        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+//            foreach ($model->getInvites() as $InviteUser) {
+//                $contactModel->contact_first = $InviteUser->profile->firstname;
+//                $contactModel->contact_last = $InviteUser->profile->lastname;
+//                $contactModel->contact_mobile = $InviteUser->profile->mobile;
+//                $contactModel->contact_email = $InviteUser->email;
+//            }
+//        }
 
         // Build Form Definition
         $definition = array();
@@ -234,11 +250,6 @@ class ContactController extends Controller
             ),
         );
 
-//        if ($inviteModel->load(Yii::$app->request->post()) && $inviteModel->validate()){
-//            foreach ($inviteModel->getInvites() as $inviteUser) {
-//                $
-//            }
-//        }
 
 
         // Get Form Definition
@@ -285,8 +296,54 @@ class ContactController extends Controller
             }
         }
 
-        return $this->render('add', array('hForm' => $form, 'keyword' => $keyword, 'model' => $model));
+        return $this->render('add', array(
+            'hForm' => $form,
+            'keyword' => $keyword,
+            'users' => $searchResultSet->getResultInstances(),
+            'pagination' => $pagination
+        ));
     }
+//    public function actionAdd() {
+//        $keyword = Yii::$app->request->get('keyword', "");
+//        $page = (int) Yii::$app->request->get('page', 1);
+////        $groupId = (int) Yii::$app->request->get('groupId', "");
+////
+////        $group = null;
+////        if ($groupId) {
+////            $group = \humhub\modules\user\models\Group::findOne(['id' => $groupId]);
+////        }
+//
+//        $searchOptions = [
+//            'model' => \humhub\modules\user\models\User::className(),
+//            'page' => $page,
+////            'pageSize' => Yii::$app->directory->module->pageSize,
+//        ];
+//
+////        if ($this->module->memberListSortField != "") {
+////            $searchOptions['sortField'] = $this->module->memberListSortField;
+////        }
+//
+////        if ($group !== null) {
+////            $searchOptions['filters'] = ['groupId' => $group->id];
+////        }
+//
+//        $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
+//
+//        $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
+//
+////        \yii\base\Event::on(Sidebar::className(), Sidebar::EVENT_INIT, function($event) {
+////            $event->sender->addWidget(\humhub\modules\directory\widgets\NewMembers::className(), [], ['sortOrder' => 10]);
+////            $event->sender->addWidget(\humhub\modules\directory\widgets\MemberStatistics::className(), [], ['sortOrder' => 20]);
+////        });
+//
+//        return $this->render('add', array(
+//
+//            'keyword' => $keyword,
+////            'group' => $group,
+//            'users' => $searchResultSet->getResultInstances(),
+//            'pagination' => $pagination
+//        ));
+//    }
 
     /**
      * Deletes a user permanently
@@ -340,6 +397,64 @@ class ContactController extends Controller
         return $this->render('delete', array('model' => $contact));
     }
 
+    public function actionImport()
+    {
+        $userSpaces = Membership::findAll(['user_id' => Yii::$app->user->id]);
+        $spacesId = array();
+        $contacts = array();
+        foreach ($userSpaces as $space){
+            if ($space !== null)
+            {
+                $spaceId = $space->space_id;
+                foreach (Membership::find()->where(['space_id' => $spaceId])->each() as $spaceContact){
+                    $userId = $spaceContact->user_id;
+                    if ($userId != Yii::$app->user->id){
+                        $contacts[] = User::findOne(['id' => $userId]);
+                    }
+
+                }
+                $spacesId[] = $spaceId;
+            }
+        }
+        $sId = implode(',', $spacesId);
+
+
+
+        $keyword = Yii::$app->request->get('keyword', "");
+        $page = (int) Yii::$app->request->get('page', 1);
+//        $groupId = (int) Yii::$app->request->get('groupId', "");
+//
+//        $group = null;
+//        if ($groupId) {
+//            $group = \humhub\modules\user\models\Group::findOne(['id' => $groupId]);
+//        }
+
+        $searchOptions = [
+            'model' => \humhub\modules\user\models\User::className(),
+            'page' => $page,
+            'limitUsers' => $contacts,
+//            'pageSize' => $this->module->pageSize,
+        ];
+
+//        $searchOptions['filters'] = ['groupId' => 2];
+//        $searchOptions['limitUsers'] = [User::findOne(['id' => 1])];
+
+
+
+        $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
+
+        $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
+
+
+
+        return $this->render('import', array(
+            'keyword' => $keyword,
+//            'group' => $group,
+            'spacesId' => $sId,
+            'users' => $searchResultSet->getResultInstances(),
+            'pagination' => $pagination
+        ));
+    }
 //    /**
 //     * Displays a single contact model.
 //     * @param integer $id
