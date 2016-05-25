@@ -11,10 +11,10 @@
 //***********************************************
 //***********************************************
 
-$server = "192.168.2.185";
-$username = "xinlong";
-$password = "xinlong";
-$database = "carecarma";
+$server = "aayw45sqck55w7.c81l6jttxgta.us-east-1.rds.amazonaws.com:3306";
+$username = "root";
+$password = "2439Lona";
+$database = "ebdb";
 date_default_timezone_set('America/Kentucky/Louisville');
 
 $conn = new mysqli($server, $username, $password, $database);
