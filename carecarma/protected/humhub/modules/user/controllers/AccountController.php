@@ -295,7 +295,6 @@ class AccountController extends Controller
     {
         $user = Yii::$app->user->getIdentity();
         $model = new \humhub\modules\user\models\forms\AccountEmailing();
-        $model->scenario = 'userEmail';
 
         $model->receive_email_activities = $user->getSetting("receive_email_activities", 'core', \humhub\models\Setting::Get('receive_email_activities', 'mailing'));
         $model->receive_email_notifications = $user->getSetting("receive_email_notifications", 'core', \humhub\models\Setting::Get('receive_email_notifications', 'mailing'));
