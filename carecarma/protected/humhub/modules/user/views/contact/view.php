@@ -17,6 +17,7 @@ use yii\helpers\Url;
                 'contact_mobile',
                 'contact_email:email',
                 'nickname',
+                'relation',
 
             ],
         ]);

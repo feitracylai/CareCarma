@@ -40,9 +40,10 @@ class ContactSearch extends Contact
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $id)
     {
-        $query = contact::find()->where(['user_id' => Yii::$app->user->id])->orderBy('contact_last');
+//        $query = contact::find()->where(['user_id' => Yii::$app->user->id])->orderBy('contact_last');
+        $query = contact::find()->where(['user_id' => $id])->orderBy('contact_last');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

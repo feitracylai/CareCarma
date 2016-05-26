@@ -25,7 +25,6 @@ use yii\widgets\ActiveForm;
                 <div class="form-group form-group-search">
                     <?php echo Html::textInput("keyword", $keyword, array("class" => "form-control form-search", "placeholder" => Yii::t('UserModule.views_contact_import', 'search for users'))); ?>
                     <?php echo Html::submitButton(Yii::t('UserModule.views_contact_import', 'Search'), array('class' => 'btn btn-default btn-sm form-button-search')); ?>
-                    <?php echo Yii::t('UserModule.views_contact_import', 'spaces = {spaces}', array('{spaces}' => $spacesId)); ?>
                 </div>
             </div>
             <div class="col-md-3"></div>
@@ -51,7 +50,7 @@ use yii\widgets\ActiveForm;
                         <?= \humhub\modules\user\widgets\UserFollowButton::widget(['user' => $user, 'followOptions' => ['class' => 'btn btn-primary btn-sm'], 'unfollowOptions' => ['class' => 'btn btn-info btn-sm']]); ?>
                    </div>-->
 
-                    <a href="#" class="pull-left contact">
+                    <a href="#" class="pull-left contact" id="image-<?php echo $user->guid; ?>">
                         <img class="media-object img-rounded"
                              src="<?php echo $user->getProfileImage()->getUrl(); ?>" width="50"
                              height="50" alt="50x50" data-src="holder.js/50x50"
@@ -65,7 +64,6 @@ use yii\widgets\ActiveForm;
                             <?php if ($user->group != null && $user->group->id != 1) { ?>
                                 <small>(<?php echo Html::encode($user->group->name); ?>)</small><?php } ?>
                         </h4>
-                        <!--<h5><?php echo Html::encode($user->profile->title); ?></h5>-->
 
 
 
@@ -73,17 +71,30 @@ use yii\widgets\ActiveForm;
 
                 </div>
 
-                <div class="contactInfo" hidden>
+                <div class="contactInfo" id="info-<?php echo $user->guid; ?>" hidden>
                     <hr>
                     <div class="middle">
-                        <?php echo Yii::t('UserModule.views_contact_import', 'Phone : {mobile}', array('{mobile}' => $user->profile->mobile)); ?>
+                        <?php $form = \yii\widgets\ActiveForm::begin(); ?>
+                        <?php
+                            $model->contact_user_id = $user->id;
+                            $model->contact_first = $user->profile->firstname;
+                            $model->contact_last = $user->profile->lastname;
+                            $model->contact_mobile = $user->profile->mobile;
+                            $model->contact_email = $user->email;
+                        ?>
+                        <?php echo $hForm->render($form); ?>
+                        <?php \yii\widgets\ActiveForm::end(); ?>
                     </div>
 
                 </div>
+                <script type="text/javascript">
+                    $('#image-<?php echo $user->guid; ?>').click(function(){
 
+                        $('#info-<?php echo $user->guid; ?>').toggle();
+                    })
+                </script>
             </li>
 
-<!--            <hr>-->
         <?php endforeach; ?>
         <!-- END: Results -->
     </ul>
@@ -93,8 +104,4 @@ use yii\widgets\ActiveForm;
     <?php echo \humhub\widgets\LinkPager::widget(['pagination' => $pagination]); ?>
 </div>
 
-<script type="text/javascript">
-    $('.contact').click(function(){
-        $('.contactInfo').show();
-    })
-</script>
+

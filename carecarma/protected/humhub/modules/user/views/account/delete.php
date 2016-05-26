@@ -32,6 +32,8 @@ use \humhub\compat\CHtml;
 
         <?php CActiveForm::end(); ?>
     <?php } ?>
+    <hr>
+
 </div>
 
 

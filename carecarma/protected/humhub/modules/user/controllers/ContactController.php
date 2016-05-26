@@ -17,8 +17,6 @@ use humhub\modules\user\models\ContactSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use humhub\libs\GCM;
-use humhub\libs\Push;
 
 
 /**
@@ -110,6 +108,12 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 255,
                 ),
+                'relation' => array(
+                    'type' => 'dropdownlist',
+                    'class' => 'form-control',
+                    'prompt' => '--Select--',
+                    'items' => Yii::$app->params['availableRelationship'],
+                )
             ),
         );
 
@@ -144,23 +148,7 @@ class ContactController extends Controller
 
                 $form->models['Contact']->isRead = 'false';
                 $user = User::findOne(['id' => $contact->user_id]);
-
-                if ($user->gcmId != null){
-                    $gcm = new GCM();
-                    $push = new Push();
-
-                    $push->setTitle('contact');
-                    $push->setData('update');
-                    $push->setAID($contact->AndroidId);
-
-
-                    $gcm_registration_id = $user->gcmId;
-
-                $gcm->send($gcm_registration_id, $push->getPush());
-
-
-                }
-
+                $contact->notifyDevice($user, 'update');
 
                 return $this->redirect(Url::toRoute('/user/contact'));
             }
@@ -184,7 +172,6 @@ class ContactController extends Controller
     public function actionAdd()
     {
         $contactModel = new Contact();
-//        $contactModel->scenario = 'addContact';
 
         $contactModel->user_id = Yii::$app->user->id;
 
@@ -201,15 +188,6 @@ class ContactController extends Controller
 
         $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
 
-
-//        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-//            foreach ($model->getInvites() as $InviteUser) {
-//                $contactModel->contact_first = $InviteUser->profile->firstname;
-//                $contactModel->contact_last = $InviteUser->profile->lastname;
-//                $contactModel->contact_mobile = $InviteUser->profile->mobile;
-//                $contactModel->contact_email = $InviteUser->email;
-//            }
-//        }
 
         // Build Form Definition
         $definition = array();
@@ -247,6 +225,12 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 255,
                 ),
+                'relation' => array(
+                    'type' => 'dropdownlist',
+                    'class' => 'form-control',
+                    'prompt' => '--Select--',
+                    'items' => Yii::$app->params['availableRelationship'],
+                ),
             ),
         );
 
@@ -273,23 +257,7 @@ class ContactController extends Controller
             if ($form->models['Contact']->save()) {
 
                 $user = User::findOne(['id' => $contactModel->user_id]);
-
-                if ($user->gcmId != null){
-                    $gcm = new GCM();
-                    $push = new Push();
-
-                    $push->setTitle('contact');
-                    $push->setData('add');
-
-
-
-                    $gcm_registration_id = $user->gcmId;
-
-                    $gcm->send($gcm_registration_id, $push->getPush());
-
-
-                }
-
+                $contactModel->notifyDevice($user, 'add');
 
 
                 return $this->redirect(Url::to(['index']));
@@ -364,32 +332,10 @@ class ContactController extends Controller
         if ($doit == 2) {
 //
 //            $this->forcePostRequest();
-//
-//            foreach (\humhub\modules\space\models\Membership::GetUserSpaces($contact->id) as $space) {
-//                if ($space->isSpaceOwner($contact->id)) {
-//                    $space->addMember(Yii::$app->user->id);
-//                    $space->setSpaceOwner(Yii::$app->user->id);
-//                }
-//            }
             $contact->delete();
 
             $user = User::findOne(['id' => $contact->user_id]);
-
-            if ($user->gcmId != null){
-                $gcm = new GCM();
-                $push = new Push();
-
-                $push->setTitle('contact');
-                $push->setData('delete');
-                $push->setAID($contact->AndroidId);
-
-
-                $gcm_registration_id = $user->gcmId;
-
-                $gcm->send($gcm_registration_id, $push->getPush());
-
-
-            }
+            $contact->notifyDevice($user, 'delete');
 
             return $this->redirect(Url::to(['/user/contact']));
         }
@@ -400,7 +346,6 @@ class ContactController extends Controller
     public function actionImport()
     {
         $userSpaces = Membership::findAll(['user_id' => Yii::$app->user->id]);
-        $spacesId = array();
         $contacts = array();
         foreach ($userSpaces as $space){
             if ($space !== null)
@@ -413,10 +358,8 @@ class ContactController extends Controller
                     }
 
                 }
-                $spacesId[] = $spaceId;
             }
         }
-        $sId = implode(',', $spacesId);
 
 
 
@@ -445,12 +388,85 @@ class ContactController extends Controller
 
         $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
 
+        $contactModel = new Contact();
+        $contactModel->user_id = Yii::$app->user->id;
 
 
+        // Build Form Definition
+        $definition = array();
+        $definition['elements'] = array();
+        // Add User Form
+        $definition['elements']['Contact'] = array(
+            'type' => 'form',
+            'elements' => array(
+                'contact_first' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                    'readonly' => 'true',
+                ),
+                'contact_last' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                    'readonly' => 'true',
+                ),
+                'contact_mobile' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'contact_email' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
+                'nickname' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'relation' => array(
+                    'type' => 'dropdownlist',
+                    'class' => 'form-control',
+                    'prompt' => '--Select--',
+                    'items' => Yii::$app->params['availableRelationship'],
+                )
+            ),
+        );
+
+
+
+
+        // Get Form Definition
+        $definition['buttons'] = array(
+            'save' => array(
+                'type' => 'submit',
+                'label' => Yii::t('UserModule.controllers_ContactController', 'Save'),
+                'class' => 'btn btn-primary',
+            )
+        );
+
+
+        $form = new HForm($definition);
+        $form->models['Contact'] = $contactModel;
+
+
+        if ($form->submitted('save') && $form->validate()) {
+            if ($form->save()) {
+
+                $form->models['Contact']->isRead = 'false';
+                $user = User::findOne(['id' => $contactModel->user_id]);
+                $contactModel->notifyDevice($user,'add');
+                
+                return $this->redirect(Url::toRoute('/user/contact/import'));
+            }
+        }
         return $this->render('import', array(
             'keyword' => $keyword,
 //            'group' => $group,
-            'spacesId' => $sId,
+            'hForm' => $form,
+            'model' => $contactModel,
             'users' => $searchResultSet->getResultInstances(),
             'pagination' => $pagination
         ));

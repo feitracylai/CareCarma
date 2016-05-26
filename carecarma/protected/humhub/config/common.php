@@ -145,6 +145,48 @@ $config = [
             // Administrators can change profile image/banners of alle users
             'adminCanChangeProfileImages' => false
         ],
+        'availableRelationship' => [
+            'Immediate Family' => [
+                'dad' => 'father',
+                'mon' => 'mother',
+                'son' => 'son',
+                'dau' => 'daughter',
+                'bro' => 'brother',
+                'sis' => 'sister',
+                'husb' => 'husband',
+                'wife' => 'wife',
+            ],
+            'Different Generations' => [
+                'g_g_dad' => 'great grandfather',
+                'g_g_mon' => 'great grandmother',
+                'g_dad' => 'grandfather',
+                'g_mon' => 'grandmother',
+                'g_son' => 'grandson',
+                'g_dau' => 'granddaughter',
+                'g_g_son' => 'great grandson',
+                'g_g_dau' => 'great granddaugter',
+            ],
+            'Extended Relation' => [
+                'unc' => 'uncle',
+                'aunt' => 'aunt',
+                'cous' => 'cousin',
+                'nep' => 'nephew',
+                'nie' => 'niece'
+            ],
+            'The In-law' => [
+                'dad_i_l' => 'father-in-law',
+                'mon_i_l' => 'mother-in-law',
+                'son_i_l' => 'son-in-law',
+                'dau_i_l' => 'daughter-in-law',
+                'bro_i_l' => 'brother-in-law',
+                'sis_i_l' => 'sister-in-law'
+            ],
+            'Other relative' => [
+                'fd' => 'friend',
+                'nei' => 'neighbour'
+            ],
+            'Care Giver' => [],
+        ],
         'ldap' => [
             // LDAP date field formats
             'dateFields' => [

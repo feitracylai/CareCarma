@@ -8,7 +8,9 @@ use yii\helpers\Html;
 use humhub\widgets\GridView;
 ?>
 <div class="panel panel-default">
-    <div class="panel-heading"><?php echo Yii::t('UserModule.views_contact_index', '<strong>Contact</strong> information'); ?></div>
+    <div class="panel-heading">
+        <?php echo Yii::t('UserModule.views_contact_index', '<strong>Contact</strong> information'); ?>
+    </div>
     <div class="panel-body">
         <?= \humhub\modules\user\widgets\ContactMenu::widget(); ?>
         <p />
@@ -21,14 +23,6 @@ use humhub\widgets\GridView;
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'columns' => [
-//                [
-//                    'attribute' => 'contact_id',
-//                    'options' => ['style' => 'width:40px;'],
-//                    'format' => 'raw',
-//                    'value' => function($data) {
-//                return $data->contact_id;
-//            },
-//                ],
                 'contact_first',
                 'contact_last',
                 'contact_mobile',
