@@ -2,10 +2,13 @@
 
 namespace humhub\modules\mail\models;
 
+use humhub\modules\user\models;
 use humhub\modules\user\models\User;
+use humhub\modules\user\models\Device;
 use Yii;
 use humhub\libs\GCM;
 use humhub\libs\Push;
+use yii\base\Model;
 
 
 /**
@@ -19,10 +22,15 @@ use humhub\libs\Push;
  * @property string $updated_at
  * @property string $isRead
  */
-//make some change to the DeviceMessage: make it a independent class, not extends from ActiveRecord
+//make some change to the DeviceMessage: make it a independent class, extends from Model, not extends from ActiveRecord
 //class DeviceMessage extends \yii\db\ActiveRecord
-class DeviceMessage
+class DeviceMessage extends Model
 {
+    public $message_id;
+    public $user_id;
+    public $from_id;
+    public $content;
+
 //    /**
 //     * @inheritdoc
 //     */
@@ -45,9 +53,9 @@ class DeviceMessage
 //        ];
 //    }
 
-    /**
-     * @inheritdoc
-     */
+//    /**
+//     * @inheritdoc
+//     */
 //    public function attributeLabels()
 //    {
 //        return [
@@ -59,17 +67,30 @@ class DeviceMessage
 //        ];
 //    }
 
+    public function getData()
+    {
+        return [
+            ['message'=>'$message_id'],
+            ['user_id'=>'$user_id'],
+            ['from_id'=>'$from_id'],
+            ['content'=>'$content']
+        ];
+    }
+
     public function notify()
     {
+        //get the user info(device_id)
         $user = User::findOne(['id' => $this->user_id]);
+        //get the device info(gcm_id)
+        $device = Device::findOne(['device_id' => $user->device_id]);
 
         $gcm = new GCM();
-        $push = new Push();
+//        $push = new Push();
+//
+//        $push->setTitle('message');
+//        $push->setData($this->id);
 
-        $push->setTitle('message');
-        $push->setData($this->id);
-
-        $gcm_registration_id = $user->gcmId;
-        $gcm->send($gcm_registration_id, $push->getPush());
+        $gcm_registration_id = $device->gcmId;
+        $gcm->send($gcm_registration_id, $this->getData());
     }
 }

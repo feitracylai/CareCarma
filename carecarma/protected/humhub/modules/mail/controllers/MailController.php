@@ -333,6 +333,7 @@ class MailController extends Controller
                 $userMessage->user_id = $recipient->id;
                 $userMessage->save();
 
+                // get info of each recipient and use notify() to send the message through GCM
                 if ($recipient->gcmId != null){
                     $deviceMessage = new DeviceMessage();
                     $deviceMessage->message_id = $message->id;
