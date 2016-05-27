@@ -64,9 +64,9 @@ class MailController extends Controller
         }
 
         return $this->render('/mail/index', array(
-                    'userMessages' => $userMessages,
-                    'messageId' => $messageId,
-                    'pagination' => $pagination
+            'userMessages' => $userMessages,
+            'messageId' => $messageId,
+            'pagination' => $pagination
         ));
     }
 
@@ -137,17 +137,17 @@ class MailController extends Controller
         $message->seen(Yii::$app->user->id);
 
         return $this->renderAjax('/mail/show', [
-                    'message' => $message,
-                    'replyForm' => $replyForm,
+            'message' => $message,
+            'replyForm' => $replyForm,
         ]);
     }
-    
+
     private function checkMessagePermissions($message)
     {
         if ($message == null) {
             throw new HttpException(404, 'Could not find message!');
         }
-        
+
         if(!$message->isParticipant(Yii::$app->user->getIdentity())) {
             throw new HttpException(403, 'Access denied!');
         }
@@ -186,11 +186,11 @@ class MailController extends Controller
 
         return $this->renderAjax('/mail/adduser', array('inviteForm' => $inviteForm));
     }
-    
+
     /**
      * Used by user picker, searches user which are allwed messaging permissions
      * for the current user (v1.1).
-     * 
+     *
      * @return type
      */
     public function actionSearchUser()
@@ -198,7 +198,7 @@ class MailController extends Controller
         Yii::$app->response->format = 'json';
         return $this->getUserPickerResult(Yii::$app->request->get('keyword'));
     }
-    
+
     private function getUserPickerResult($keyword) {
         if (version_compare(Yii::$app->version, '1.1', 'lt')) {
             return $this->findUserByFilter($keyword, 10);
@@ -217,10 +217,10 @@ class MailController extends Controller
     }
 
     /**
-     * User picker search for adding additional users to a conversaion, 
+     * User picker search for adding additional users to a conversaion,
      * searches user which are allwed messaging permissions for the current user (v1.1).
      * Disables users already participating in a conversation.
-     * 
+     *
      * @return type
      */
     public function actionSearchAddUser()
@@ -231,23 +231,23 @@ class MailController extends Controller
         if ($message == null) {
             throw new HttpException(404, 'Could not find message!');
         }
-             
+
         $result = $this->getUserPickerResult(Yii::$app->request->get('keyword'));
-        
+
         //Disable already participating users
         foreach($result as $i=>$user) {
             if($this->isParticipant($message, $user)) {
                 $result[$i++]['disabled'] = true;
             }
         }
-        
+
         return $result;
     }
-    
+
     /**
      * Checks if a user (user json representation) is participant of a given
      * message.
-     * 
+     *
      * @param type $message
      * @param type $user
      * @return boolean
@@ -324,7 +324,9 @@ class MailController extends Controller
             $messageEntry->save();
             File::attachPrecreated($messageEntry, Yii::$app->request->post('fileUploaderHiddenGuidField'));
 
-            // Attach also Recipients
+            // Attach also Recipients, send message to each recipient
+            // 1.add data into database "user_message"
+            // 2.send message through GCM to each recipient who have the device
             foreach ($model->getRecipients() as $recipient) {
                 $userMessage = new UserMessage();
                 $userMessage->message_id = $message->id;
@@ -334,10 +336,12 @@ class MailController extends Controller
                 if ($recipient->gcmId != null){
                     $deviceMessage = new DeviceMessage();
                     $deviceMessage->message_id = $message->id;
+                    //send to one of the recipient, and the recipient ony need to reply to the message sender
                     $deviceMessage->user_id = $recipient->id;
                     $deviceMessage->from_id = Yii::$app->user->id;
                     $deviceMessage->content = $model->message;
-                    $deviceMessage->updated_at = new \yii\db\Expression('NOW()');
+                    // I dont think we need updated_at
+                    //$deviceMessage->updated_at = new \yii\db\Expression('NOW()');
                     $deviceMessage->save();
                     $deviceMessage->notify();
                 }
@@ -365,7 +369,7 @@ class MailController extends Controller
 
             return $this->htmlRedirect(['index', 'id' => $message->id]);
         }
-        
+
         return $this->renderAjax('create', array('model' => $model));
     }
 
@@ -471,8 +475,8 @@ class MailController extends Controller
         if ($message != null) {
 
             $userMessage = UserMessage::findOne([
-                        'user_id' => Yii::$app->user->id,
-                        'message_id' => $message->id
+                'user_id' => Yii::$app->user->id,
+                'message_id' => $message->id
             ]);
             if ($userMessage != null) {
                 return $message;

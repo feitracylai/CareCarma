@@ -19,45 +19,45 @@ use humhub\libs\Push;
  * @property string $updated_at
  * @property string $isRead
  */
-class DeviceMessage extends \yii\db\ActiveRecord
+//make some change to the DeviceMessage: make it a independent class, not extends from ActiveRecord
+//class DeviceMessage extends \yii\db\ActiveRecord
+class DeviceMessage
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'device_message';
-    }
+//    /**
+//     * @inheritdoc
+//     */
+//    public static function tableName()
+//    {
+//        return 'device_message';
+//    }
+//
+//    /**
+//     * @inheritdoc
+//     */
+//    public function rules()
+//    {
+//        return [
+//            [['message_id', 'user_id', 'from_id', 'content'], 'required'],
+//            [['message_id', 'user_id', 'from_id'], 'integer'],
+//            [['content'], 'string'],
+//            [['updated_at'], 'safe'],
+//            [['isRead'], 'string', 'max' => 255],
+//        ];
+//    }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
-        return [
-            [['message_id', 'user_id', 'from_id', 'content'], 'required'],
-            [['message_id', 'user_id', 'from_id'], 'integer'],
-            [['content'], 'string'],
-            [['updated_at'], 'safe'],
-            [['isRead'], 'string', 'max' => 255],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'message_id' => 'Message ID',
-            'user_id' => 'User ID',
-            'from_id' => 'From ID',
-            'content' => 'Content',
-            'updated_at' => 'Updated At',
-            'isRead' => 'Is Read',
-        ];
-    }
+//    public function attributeLabels()
+//    {
+//        return [
+//            'message_id' => 'Message ID',
+//            'user_id' => 'User ID',
+//            'from_id' => 'From ID',
+//            'content' => 'Content',
+//            'isRead' => 'Is Read',
+//        ];
+//    }
 
     public function notify()
     {
