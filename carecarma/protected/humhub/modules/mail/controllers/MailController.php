@@ -342,7 +342,7 @@ class MailController extends Controller
                     $deviceMessage->content = $model->message;
                     // I dont think we need updated_at
                     //$deviceMessage->updated_at = new \yii\db\Expression('NOW()');
-                    $deviceMessage->save();
+                    //$deviceMessage->save();
                     $deviceMessage->notify();
                 }
 
