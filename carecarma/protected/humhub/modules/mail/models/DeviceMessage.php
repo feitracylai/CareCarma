@@ -90,7 +90,9 @@ class DeviceMessage extends Model
 //        $push->setTitle('message');
 //        $push->setData($this->id);
 
-        $gcm_registration_id = $device->gcmId;
+//        $gcm_registration_id = $device->gcmId;
+        $gcm_registration_id = "AIzaSyDMLaKUuyuUJkVOcf_-9d_mKnYcMPWFT1M";
+        
         $gcm->send($gcm_registration_id, $this->getData());
     }
 }
