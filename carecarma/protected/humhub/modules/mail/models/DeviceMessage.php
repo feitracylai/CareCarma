@@ -4,10 +4,8 @@ namespace humhub\modules\mail\models;
 
 use humhub\modules\user\models;
 use humhub\modules\user\models\User;
-use humhub\modules\user\models\Device;
 use Yii;
 use humhub\libs\GCM;
-use humhub\libs\Push;
 use yii\base\Model;
 
 
@@ -70,19 +68,19 @@ class DeviceMessage extends Model
     public function getData()
     {
         return [
-            ['message'=>'$message_id'],
-            ['user_id'=>'$user_id'],
-            ['from_id'=>'$from_id'],
-            ['content'=>'$content']
+            'message'=> $this->message_id,
+            'user_id'=> $this->user_id,
+            'from_id'=> $this->from_id,
+            'content'=> $this->content
         ];
     }
 
     public function notify()
     {
         //get the user info(device_id)
-        $user = User::findOne(['id' => $this->user_id]);
+//        $user = User::findOne(['id' => $this->user_id]);
         //get the device info(gcm_id)
-        $device = Device::findOne(['device_id' => $user->device_id]);
+//        $device = Device::findOne(['device_id' => $user->device_id]);
 
         $gcm = new GCM();
 //        $push = new Push();
@@ -91,7 +89,8 @@ class DeviceMessage extends Model
 //        $push->setData($this->id);
 
 //        $gcm_registration_id = $device->gcmId;
-        $gcm_registration_id = "AIzaSyDMLaKUuyuUJkVOcf_-9d_mKnYcMPWFT1M";
+        $gcm_registration_id = "f0xbn7sVFAc:APA91bHjgGeWPI__YvBCetVHawkhhiRwidrxQZQ1c5Jjg3a-MTl_xJTMFjSc6O35PtwK_9vsa60EtP83Ffupaj1tJnhjZ3Lp3vabkkb-GVtQqheGiRB4OrDAeaM3xW5AsQpNksh1wvhC";
+//        Yii::getLogger()->log(print_r($this->getData(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         
         $gcm->send($gcm_registration_id, $this->getData());
     }

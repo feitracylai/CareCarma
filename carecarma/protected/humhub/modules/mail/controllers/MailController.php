@@ -334,18 +334,20 @@ class MailController extends Controller
                 $userMessage->save();
 
                 // get info of each recipient and use notify() to send the message through GCM
-                if ($recipient->gcmId != null){
-                    $deviceMessage = new DeviceMessage();
-                    $deviceMessage->message_id = $message->id;
-                    //send to one of the recipient, and the recipient ony need to reply to the message sender
-                    $deviceMessage->user_id = $recipient->id;
-                    $deviceMessage->from_id = Yii::$app->user->id;
-                    $deviceMessage->content = $model->message;
-                    // I dont think we need updated_at
-                    //$deviceMessage->updated_at = new \yii\db\Expression('NOW()');
-                    //$deviceMessage->save();
-                    $deviceMessage->notify();
-                }
+//                if ($recipient->gcmId != null){
+                $deviceMessage = new DeviceMessage();
+                $deviceMessage->message_id = $message->id;
+                //send to one of the recipient, and the recipient ony need to reply to the message sender
+                $deviceMessage->user_id = $recipient->id;
+                $deviceMessage->from_id = Yii::$app->user->id;
+                $deviceMessage->content = $model->message;
+                // I dont think we need updated_at
+                //$deviceMessage->updated_at = new \yii\db\Expression('NOW()');
+                //$deviceMessage->save();
+//                Yii::getLogger()->log(print_r($deviceMessage,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+                $deviceMessage->notify();
+//                }
 
             }
 
