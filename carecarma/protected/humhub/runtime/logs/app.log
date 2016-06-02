@@ -1,0 +1,829 @@
+2016-06-02 18:37:01 [127.0.0.1][-][-][error][yii\base\InvalidConfigException] yii\base\InvalidConfigException: User::identityClass must be set. in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\User.php:156
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Object.php(107): yii\web\User->init()
+#1 [internal function]: yii\base\Object->__construct(Array)
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\di\Container.php(368): ReflectionClass->newInstanceArgs(Array)
+#3 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\di\Container.php(153): yii\di\Container->build('yii\\web\\User', Array, Array)
+#4 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\BaseYii.php(344): yii\di\Container->get('yii\\web\\User', Array, Array)
+#5 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\di\ServiceLocator.php(133): yii\BaseYii::createObject(Array)
+#6 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\di\ServiceLocator.php(71): yii\di\ServiceLocator->get('user')
+#7 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\components\bootstrap\LanguageSelector.php(25): yii\di\ServiceLocator->__get('user')
+#8 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(315): humhub\components\bootstrap\LanguageSelector->bootstrap(Object(humhub\components\Application))
+#9 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(63): yii\base\Application->bootstrap()
+#10 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(267): yii\web\Application->bootstrap()
+#11 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Object.php(107): yii\base\Application->init()
+#12 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(206): yii\base\Object->__construct(Array)
+#13 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->__construct(Array)
+#14 {main}
+2016-06-02 18:37:00 [127.0.0.1][-][-][info][application] $_GET = [
+    'r' => 'mail/mail/test'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'V1B8zMCoAoUAABzEEZEAAAA-'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'language=d85ae4496a91932879df649c721131c52349339b10f2de6539b835196abf94bba%3A2%3A%7Bi%3A0%3Bs%3A8%3A%22language%22%3Bi%3A1%3Bs%3A2%3A%22en%22%3B%7D; PHPSESSID=3r93mh24tl3c4bvnfa1inga6h2; _csrf=4dd26d1a6068b4f2994a8302a39ef75e3872ebf2b1304ae2f076b2868b35c59ca%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22PbE0r-lVdMT_HYw9V3zsUnEBFSGLuUof%22%3B%7D; _identity=504656adf40817b056a79b12aec420e17d3a9ab84ecae91ab3ce4d21e310a65aa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A50%3A%22%5B1%2C%227118d570-1153-448d-bede-91f878e7297c%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Simon\\Applications\\Git\\cmd;C:\\Simon\\Applications\\MAMP\\bin\\php\\php5.6.21;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\simonxu14\\AppData\\Roaming\\Composer\\vendor\\bin'
+    'SystemRoot' => 'C:\\windows'
+    'COMSPEC' => 'C:\\windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\windows'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.2.31 (Win32) DAV/2 mod_ssl/2.2.31 OpenSSL/1.0.2e mod_fcgid/2.3.9 mod_wsgi/3.4 Python/2.7.6 PHP/7.0.6 mod_perl/2.0.8 Perl/v5.16.3'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/Simon/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'testemail@test.com'
+    'SCRIPT_FILENAME' => 'C:/Simon/Applications/MAMP/htdocs/CareCarma/carecarma/index_test.php'
+    'REMOTE_PORT' => '53722'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=mail%2Fmail%2Ftest'
+    'REQUEST_URI' => '//CareCarma/carecarma/index_test.php?r=mail%2Fmail%2Ftest'
+    'SCRIPT_NAME' => '/CareCarma/carecarma/index_test.php'
+    'PHP_SELF' => '/CareCarma/carecarma/index_test.php'
+    'REQUEST_TIME_FLOAT' => 1464892620.002
+    'REQUEST_TIME' => 1464892620
+]
+2016-06-02 18:38:01 [127.0.0.1][-][3r93mh24tl3c4bvnfa1inga6h2][error][yii\i18n\PhpMessageSource::loadFallbackMessages] The message file for category 'yii' does not exist: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh_cn/yii.php Fallback file does not exist as well: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh/yii.php
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\components\i18n\I18N.php:29
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php:32
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php:96
+2016-06-02 18:38:01 [127.0.0.1][-][3r93mh24tl3c4bvnfa1inga6h2][error][yii\base\ErrorException:256] yii\base\ErrorException: Exception 'yii\base\InvalidParamException' with message 'The file or directory to be published does not exist: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\vendor\bower/jquery/dist' 
+
+in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php:452
+
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetBundle.php(179): yii\web\AssetManager->publish('C:\\Simon\\Applic...', Array)
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php(266): yii\web\AssetBundle->publish(Object(yii\web\AssetManager))
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php(237): yii\web\AssetManager->loadBundle('yii\\web\\JqueryA...', Array, true)
+#3 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(284): yii\web\AssetManager->getBundle('yii\\web\\JqueryA...')
+#4 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(289): yii\web\View->registerAssetBundle('yii\\web\\JqueryA...', NULL)
+#5 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(289): yii\web\View->registerAssetBundle('yii\\web\\YiiAsse...', NULL)
+#6 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetBundle.php(123): yii\web\View->registerAssetBundle('yii\\validators\\...')
+#7 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\validators\RequiredValidator.php(108): yii\web\AssetBundle::register(Object(humhub\components\View))
+#8 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(711): yii\validators\RequiredValidator->clientValidateAttribute(Object(humhub\modules\user\models\forms\AccountLogin), 'username', Object(humhub\components\View))
+#9 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(216): yii\widgets\ActiveField->getClientOptions()
+#10 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(206): yii\widgets\ActiveField->begin()
+#11 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(162): yii\widgets\ActiveField->render()
+#12 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php(32): yii\widgets\ActiveField->__toString()
+#13 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Simon\\Applic...')
+#14 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Simon\\Applic...', Array)
+#15 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Simon\\Applic...', Array, Object(humhub\modules\user\controllers\AuthController))
+#16 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(378): yii\base\View->render('login', Array, Object(humhub\modules\user\controllers\AuthController))
+#17 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php(96): yii\base\Controller->render('login', Array)
+#18 [internal function]: humhub\modules\user\controllers\AuthController->actionLogin()
+#19 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#20 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(154): yii\base\InlineAction->runWithParams(Array)
+#21 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Module.php(454): yii\base\Controller->runAction('login', Array)
+#22 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(84): yii\base\Module->runAction('user/auth/login', Array)
+#23 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#24 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#25 {main} in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\ErrorHandler.php:299
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(256, 'Exception 'yii\\...', 'C:\\Simon\\Applic...', 299, Array)
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\ErrorHandler.php(299): trigger_error('Exception 'yii\\...', 256)
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(164): yii\base\ErrorHandler::convertExceptionToError(Object(yii\base\InvalidParamException))
+#3 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php(32): yii\widgets\ActiveField->__toString()
+#4 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Simon\\Applic...')
+#5 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Simon\\Applic...', '[<span class="s...')
+#6 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Simon\\Applic...', Array, Object(humhub\modules\user\controllers\AuthController))
+#7 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(378): yii\base\View->render('login', Array, Object(humhub\modules\user\controllers\AuthController))
+#8 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php(96): yii\base\Controller->render('login', Array)
+#9 [internal function]: humhub\modules\user\controllers\AuthController->actionLogin()
+#10 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#11 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(154): yii\base\InlineAction->runWithParams(Array)
+#12 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Module.php(454): yii\base\Controller->runAction('login', Array)
+#13 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(84): yii\base\Module->runAction('user/auth/login', Array)
+#14 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#15 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#16 {main}
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php:32
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php:96
+2016-06-02 18:38:00 [127.0.0.1][-][3r93mh24tl3c4bvnfa1inga6h2][info][application] $_GET = [
+    'r' => 'user/auth/login'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'V1B9CMCoAoUAABzEEZIAAAA6'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'pm_getting-started-panel=expanded; pm_share-panel=expanded; language=d85ae4496a91932879df649c721131c52349339b10f2de6539b835196abf94bba%3A2%3A%7Bi%3A0%3Bs%3A8%3A%22language%22%3Bi%3A1%3Bs%3A2%3A%22en%22%3B%7D; PHPSESSID=3r93mh24tl3c4bvnfa1inga6h2; _csrf=4dd26d1a6068b4f2994a8302a39ef75e3872ebf2b1304ae2f076b2868b35c59ca%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22PbE0r-lVdMT_HYw9V3zsUnEBFSGLuUof%22%3B%7D; _identity=504656adf40817b056a79b12aec420e17d3a9ab84ecae91ab3ce4d21e310a65aa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A50%3A%22%5B1%2C%227118d570-1153-448d-bede-91f878e7297c%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Simon\\Applications\\Git\\cmd;C:\\Simon\\Applications\\MAMP\\bin\\php\\php5.6.21;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\simonxu14\\AppData\\Roaming\\Composer\\vendor\\bin'
+    'SystemRoot' => 'C:\\windows'
+    'COMSPEC' => 'C:\\windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\windows'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.2.31 (Win32) DAV/2 mod_ssl/2.2.31 OpenSSL/1.0.2e mod_fcgid/2.3.9 mod_wsgi/3.4 Python/2.7.6 PHP/7.0.6 mod_perl/2.0.8 Perl/v5.16.3'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/Simon/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'testemail@test.com'
+    'SCRIPT_FILENAME' => 'C:/Simon/Applications/MAMP/htdocs/CareCarma/carecarma/index_test.php'
+    'REMOTE_PORT' => '53738'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=user%2Fauth%2Flogin'
+    'REQUEST_URI' => '/CareCarma/carecarma/index_test.php?r=user%2Fauth%2Flogin'
+    'SCRIPT_NAME' => '/CareCarma/carecarma/index_test.php'
+    'PHP_SELF' => '/CareCarma/carecarma/index_test.php'
+    'REQUEST_TIME_FLOAT' => 1464892680.096
+    'REQUEST_TIME' => 1464892680
+]
+2016-06-02 19:23:15 [127.0.0.1][-][-][error][yii\i18n\PhpMessageSource::loadFallbackMessages] The message file for category 'yii' does not exist: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh_cn/yii.php Fallback file does not exist as well: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh/yii.php
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\components\i18n\I18N.php:29
+2016-06-02 19:23:15 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "site/login". in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Module.php:460
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(84): yii\base\Module->runAction('site/login', Array)
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php:96
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#2 {main}
+2016-06-02 19:23:14 [127.0.0.1][-][-][info][application] $_GET = [
+    'r' => 'site/login'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'V1CHosCoAoUAABzEEd8AAAA-'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'pm_getting-started-panel=expanded; pm_share-panel=expanded; language=d85ae4496a91932879df649c721131c52349339b10f2de6539b835196abf94bba%3A2%3A%7Bi%3A0%3Bs%3A8%3A%22language%22%3Bi%3A1%3Bs%3A2%3A%22en%22%3B%7D; _csrf=cacb45fb94b5ee6ecae996e18bc82dc31cba18a4ec0937af0527a3f5fb24a9d5a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22cVqehe2TbB5QtIs83TiReb4UAtgfRS7T%22%3B%7D; PHPSESSID=k4th4js1ubiilsejarrqm2cg62; _identity=504656adf40817b056a79b12aec420e17d3a9ab84ecae91ab3ce4d21e310a65aa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A50%3A%22%5B1%2C%227118d570-1153-448d-bede-91f878e7297c%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Simon\\Applications\\Git\\cmd;C:\\Simon\\Applications\\MAMP\\bin\\php\\php5.6.21;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\simonxu14\\AppData\\Roaming\\Composer\\vendor\\bin'
+    'SystemRoot' => 'C:\\windows'
+    'COMSPEC' => 'C:\\windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\windows'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.2.31 (Win32) DAV/2 mod_ssl/2.2.31 OpenSSL/1.0.2e mod_fcgid/2.3.9 mod_wsgi/3.4 Python/2.7.6 PHP/7.0.6 mod_perl/2.0.8 Perl/v5.16.3'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/Simon/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'testemail@test.com'
+    'SCRIPT_FILENAME' => 'C:/Simon/Applications/MAMP/htdocs/CareCarma/carecarma/index_test.php'
+    'REMOTE_PORT' => '59745'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=site%2Flogin'
+    'REQUEST_URI' => '/CareCarma/carecarma/index_test.php?r=site%2Flogin'
+    'SCRIPT_NAME' => '/CareCarma/carecarma/index_test.php'
+    'PHP_SELF' => '/CareCarma/carecarma/index_test.php'
+    'REQUEST_TIME_FLOAT' => 1464895394.566
+    'REQUEST_TIME' => 1464895394
+]
+2016-06-02 19:23:28 [127.0.0.1][-][-][error][yii\i18n\PhpMessageSource::loadFallbackMessages] The message file for category 'yii' does not exist: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh_cn/yii.php Fallback file does not exist as well: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh/yii.php
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\components\i18n\I18N.php:29
+2016-06-02 19:23:28 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "site/login". in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Module.php:460
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(84): yii\base\Module->runAction('site/login', Array)
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php:96
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#2 {main}
+2016-06-02 19:23:27 [127.0.0.1][-][-][info][application] $_GET = [
+    'r' => 'site/login'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'V1CHr8CoAoUAABzEEeEAAAA9'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'pm_getting-started-panel=expanded; pm_share-panel=expanded; language=d85ae4496a91932879df649c721131c52349339b10f2de6539b835196abf94bba%3A2%3A%7Bi%3A0%3Bs%3A8%3A%22language%22%3Bi%3A1%3Bs%3A2%3A%22en%22%3B%7D; _csrf=cacb45fb94b5ee6ecae996e18bc82dc31cba18a4ec0937af0527a3f5fb24a9d5a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22cVqehe2TbB5QtIs83TiReb4UAtgfRS7T%22%3B%7D; PHPSESSID=la4t0ffsu64j8dqgiq5tbrp6n1; _identity=504656adf40817b056a79b12aec420e17d3a9ab84ecae91ab3ce4d21e310a65aa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A50%3A%22%5B1%2C%227118d570-1153-448d-bede-91f878e7297c%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Simon\\Applications\\Git\\cmd;C:\\Simon\\Applications\\MAMP\\bin\\php\\php5.6.21;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\simonxu14\\AppData\\Roaming\\Composer\\vendor\\bin'
+    'SystemRoot' => 'C:\\windows'
+    'COMSPEC' => 'C:\\windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\windows'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.2.31 (Win32) DAV/2 mod_ssl/2.2.31 OpenSSL/1.0.2e mod_fcgid/2.3.9 mod_wsgi/3.4 Python/2.7.6 PHP/7.0.6 mod_perl/2.0.8 Perl/v5.16.3'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/Simon/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'testemail@test.com'
+    'SCRIPT_FILENAME' => 'C:/Simon/Applications/MAMP/htdocs/CareCarma/carecarma/index_test.php'
+    'REMOTE_PORT' => '59747'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=site%2Flogin'
+    'REQUEST_URI' => '/CareCarma/carecarma/index_test.php?r=site%2Flogin'
+    'SCRIPT_NAME' => '/CareCarma/carecarma/index_test.php'
+    'PHP_SELF' => '/CareCarma/carecarma/index_test.php'
+    'REQUEST_TIME_FLOAT' => 1464895407
+    'REQUEST_TIME' => 1464895407
+]
+2016-06-02 19:23:32 [127.0.0.1][-][-][error][yii\i18n\PhpMessageSource::loadFallbackMessages] The message file for category 'yii' does not exist: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh_cn/yii.php Fallback file does not exist as well: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh/yii.php
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\components\i18n\I18N.php:29
+2016-06-02 19:23:32 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "site/login". in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Module.php:460
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(84): yii\base\Module->runAction('site/login', Array)
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php:96
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#2 {main}
+2016-06-02 19:23:31 [127.0.0.1][-][-][info][application] $_GET = [
+    'r' => 'site/login'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'V1CHs8CoAoUAABzEEeIAAAA8'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'pm_getting-started-panel=expanded; pm_share-panel=expanded; language=d85ae4496a91932879df649c721131c52349339b10f2de6539b835196abf94bba%3A2%3A%7Bi%3A0%3Bs%3A8%3A%22language%22%3Bi%3A1%3Bs%3A2%3A%22en%22%3B%7D; _csrf=cacb45fb94b5ee6ecae996e18bc82dc31cba18a4ec0937af0527a3f5fb24a9d5a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22cVqehe2TbB5QtIs83TiReb4UAtgfRS7T%22%3B%7D; PHPSESSID=la4t0ffsu64j8dqgiq5tbrp6n1; _identity=504656adf40817b056a79b12aec420e17d3a9ab84ecae91ab3ce4d21e310a65aa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A50%3A%22%5B1%2C%227118d570-1153-448d-bede-91f878e7297c%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Simon\\Applications\\Git\\cmd;C:\\Simon\\Applications\\MAMP\\bin\\php\\php5.6.21;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\simonxu14\\AppData\\Roaming\\Composer\\vendor\\bin'
+    'SystemRoot' => 'C:\\windows'
+    'COMSPEC' => 'C:\\windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\windows'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.2.31 (Win32) DAV/2 mod_ssl/2.2.31 OpenSSL/1.0.2e mod_fcgid/2.3.9 mod_wsgi/3.4 Python/2.7.6 PHP/7.0.6 mod_perl/2.0.8 Perl/v5.16.3'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/Simon/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'testemail@test.com'
+    'SCRIPT_FILENAME' => 'C:/Simon/Applications/MAMP/htdocs/CareCarma/carecarma/index_test.php'
+    'REMOTE_PORT' => '59748'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=site%2Flogin'
+    'REQUEST_URI' => '/CareCarma/carecarma/index_test.php?r=site%2Flogin'
+    'SCRIPT_NAME' => '/CareCarma/carecarma/index_test.php'
+    'PHP_SELF' => '/CareCarma/carecarma/index_test.php'
+    'REQUEST_TIME_FLOAT' => 1464895411.055
+    'REQUEST_TIME' => 1464895411
+]
+2016-06-02 19:24:11 [127.0.0.1][-][-][error][yii\i18n\PhpMessageSource::loadFallbackMessages] The message file for category 'yii' does not exist: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh_cn/yii.php Fallback file does not exist as well: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh/yii.php
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\components\i18n\I18N.php:29
+2016-06-02 19:24:11 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "site/login". in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Module.php:460
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(84): yii\base\Module->runAction('site/login', Array)
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php:96
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#2 {main}
+2016-06-02 19:24:10 [127.0.0.1][-][-][info][application] $_GET = [
+    'r' => 'site/login'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'V1CH2sCoAoUAABzEEeUAAAA8'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'pm_getting-started-panel=expanded; pm_share-panel=expanded; language=d85ae4496a91932879df649c721131c52349339b10f2de6539b835196abf94bba%3A2%3A%7Bi%3A0%3Bs%3A8%3A%22language%22%3Bi%3A1%3Bs%3A2%3A%22en%22%3B%7D; _csrf=cacb45fb94b5ee6ecae996e18bc82dc31cba18a4ec0937af0527a3f5fb24a9d5a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22cVqehe2TbB5QtIs83TiReb4UAtgfRS7T%22%3B%7D; PHPSESSID=la4t0ffsu64j8dqgiq5tbrp6n1; _identity=504656adf40817b056a79b12aec420e17d3a9ab84ecae91ab3ce4d21e310a65aa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A50%3A%22%5B1%2C%227118d570-1153-448d-bede-91f878e7297c%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Simon\\Applications\\Git\\cmd;C:\\Simon\\Applications\\MAMP\\bin\\php\\php5.6.21;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\simonxu14\\AppData\\Roaming\\Composer\\vendor\\bin'
+    'SystemRoot' => 'C:\\windows'
+    'COMSPEC' => 'C:\\windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\windows'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.2.31 (Win32) DAV/2 mod_ssl/2.2.31 OpenSSL/1.0.2e mod_fcgid/2.3.9 mod_wsgi/3.4 Python/2.7.6 PHP/7.0.6 mod_perl/2.0.8 Perl/v5.16.3'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/Simon/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'testemail@test.com'
+    'SCRIPT_FILENAME' => 'C:/Simon/Applications/MAMP/htdocs/CareCarma/carecarma/index_test.php'
+    'REMOTE_PORT' => '59777'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=site%2Flogin'
+    'REQUEST_URI' => '/CareCarma/carecarma/index_test.php?r=site%2Flogin'
+    'SCRIPT_NAME' => '/CareCarma/carecarma/index_test.php'
+    'PHP_SELF' => '/CareCarma/carecarma/index_test.php'
+    'REQUEST_TIME_FLOAT' => 1464895450.078
+    'REQUEST_TIME' => 1464895450
+]
+2016-06-02 19:25:10 [127.0.0.1][-][-][error][yii\i18n\PhpMessageSource::loadFallbackMessages] The message file for category 'yii' does not exist: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh_cn/yii.php Fallback file does not exist as well: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh/yii.php
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\components\i18n\I18N.php:29
+2016-06-02 19:25:10 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "site/login". in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Module.php:460
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(84): yii\base\Module->runAction('site/login', Array)
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php:96
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#2 {main}
+2016-06-02 19:25:09 [127.0.0.1][-][-][info][application] $_GET = [
+    'r' => 'site/login'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'V1CIFcCoAoUAABzEEegAAAA7'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'pm_getting-started-panel=expanded; pm_share-panel=expanded; language=d85ae4496a91932879df649c721131c52349339b10f2de6539b835196abf94bba%3A2%3A%7Bi%3A0%3Bs%3A8%3A%22language%22%3Bi%3A1%3Bs%3A2%3A%22en%22%3B%7D; _csrf=cacb45fb94b5ee6ecae996e18bc82dc31cba18a4ec0937af0527a3f5fb24a9d5a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22cVqehe2TbB5QtIs83TiReb4UAtgfRS7T%22%3B%7D; PHPSESSID=la4t0ffsu64j8dqgiq5tbrp6n1; _identity=504656adf40817b056a79b12aec420e17d3a9ab84ecae91ab3ce4d21e310a65aa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A50%3A%22%5B1%2C%227118d570-1153-448d-bede-91f878e7297c%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Simon\\Applications\\Git\\cmd;C:\\Simon\\Applications\\MAMP\\bin\\php\\php5.6.21;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\simonxu14\\AppData\\Roaming\\Composer\\vendor\\bin'
+    'SystemRoot' => 'C:\\windows'
+    'COMSPEC' => 'C:\\windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\windows'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.2.31 (Win32) DAV/2 mod_ssl/2.2.31 OpenSSL/1.0.2e mod_fcgid/2.3.9 mod_wsgi/3.4 Python/2.7.6 PHP/7.0.6 mod_perl/2.0.8 Perl/v5.16.3'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/Simon/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'testemail@test.com'
+    'SCRIPT_FILENAME' => 'C:/Simon/Applications/MAMP/htdocs/CareCarma/carecarma/index_test.php'
+    'REMOTE_PORT' => '59794'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=site%2Flogin'
+    'REQUEST_URI' => '/CareCarma/carecarma/index_test.php?r=site%2Flogin'
+    'SCRIPT_NAME' => '/CareCarma/carecarma/index_test.php'
+    'PHP_SELF' => '/CareCarma/carecarma/index_test.php'
+    'REQUEST_TIME_FLOAT' => 1464895509.198
+    'REQUEST_TIME' => 1464895509
+]
+2016-06-02 19:25:35 [127.0.0.1][-][la4t0ffsu64j8dqgiq5tbrp6n1][error][yii\i18n\PhpMessageSource::loadFallbackMessages] The message file for category 'yii' does not exist: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh_cn/yii.php Fallback file does not exist as well: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh/yii.php
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\components\i18n\I18N.php:29
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php:32
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php:96
+2016-06-02 19:25:35 [127.0.0.1][-][la4t0ffsu64j8dqgiq5tbrp6n1][error][yii\base\ErrorException:256] yii\base\ErrorException: Exception 'yii\base\InvalidParamException' with message 'The file or directory to be published does not exist: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\vendor\bower/jquery/dist' 
+
+in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php:452
+
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetBundle.php(179): yii\web\AssetManager->publish('C:\\Simon\\Applic...', Array)
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php(266): yii\web\AssetBundle->publish(Object(yii\web\AssetManager))
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php(237): yii\web\AssetManager->loadBundle('yii\\web\\JqueryA...', Array, true)
+#3 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(284): yii\web\AssetManager->getBundle('yii\\web\\JqueryA...')
+#4 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(289): yii\web\View->registerAssetBundle('yii\\web\\JqueryA...', NULL)
+#5 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(289): yii\web\View->registerAssetBundle('yii\\web\\YiiAsse...', NULL)
+#6 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetBundle.php(123): yii\web\View->registerAssetBundle('yii\\validators\\...')
+#7 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\validators\RequiredValidator.php(108): yii\web\AssetBundle::register(Object(humhub\components\View))
+#8 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(711): yii\validators\RequiredValidator->clientValidateAttribute(Object(humhub\modules\user\models\forms\AccountLogin), 'username', Object(humhub\components\View))
+#9 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(216): yii\widgets\ActiveField->getClientOptions()
+#10 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(206): yii\widgets\ActiveField->begin()
+#11 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(162): yii\widgets\ActiveField->render()
+#12 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php(32): yii\widgets\ActiveField->__toString()
+#13 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Simon\\Applic...')
+#14 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Simon\\Applic...', Array)
+#15 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Simon\\Applic...', Array, Object(humhub\modules\user\controllers\AuthController))
+#16 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(378): yii\base\View->render('login', Array, Object(humhub\modules\user\controllers\AuthController))
+#17 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php(96): yii\base\Controller->render('login', Array)
+#18 [internal function]: humhub\modules\user\controllers\AuthController->actionLogin()
+#19 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#20 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(154): yii\base\InlineAction->runWithParams(Array)
+#21 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Module.php(454): yii\base\Controller->runAction('login', Array)
+#22 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(84): yii\base\Module->runAction('user/auth/login', Array)
+#23 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#24 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#25 {main} in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\ErrorHandler.php:299
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(256, 'Exception 'yii\\...', 'C:\\Simon\\Applic...', 299, Array)
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\ErrorHandler.php(299): trigger_error('Exception 'yii\\...', 256)
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(164): yii\base\ErrorHandler::convertExceptionToError(Object(yii\base\InvalidParamException))
+#3 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php(32): yii\widgets\ActiveField->__toString()
+#4 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Simon\\Applic...')
+#5 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Simon\\Applic...', '[<span class="s...')
+#6 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Simon\\Applic...', Array, Object(humhub\modules\user\controllers\AuthController))
+#7 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(378): yii\base\View->render('login', Array, Object(humhub\modules\user\controllers\AuthController))
+#8 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php(96): yii\base\Controller->render('login', Array)
+#9 [internal function]: humhub\modules\user\controllers\AuthController->actionLogin()
+#10 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#11 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(154): yii\base\InlineAction->runWithParams(Array)
+#12 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Module.php(454): yii\base\Controller->runAction('login', Array)
+#13 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(84): yii\base\Module->runAction('user/auth/login', Array)
+#14 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#15 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#16 {main}
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php:32
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php:96
+2016-06-02 19:25:34 [127.0.0.1][-][la4t0ffsu64j8dqgiq5tbrp6n1][info][application] $_GET = [
+    'r' => 'user/auth/login'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'V1CILsCoAoUAABzEEesAAAA8'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'pm_getting-started-panel=expanded; pm_share-panel=expanded; language=d85ae4496a91932879df649c721131c52349339b10f2de6539b835196abf94bba%3A2%3A%7Bi%3A0%3Bs%3A8%3A%22language%22%3Bi%3A1%3Bs%3A2%3A%22en%22%3B%7D; _csrf=cacb45fb94b5ee6ecae996e18bc82dc31cba18a4ec0937af0527a3f5fb24a9d5a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22cVqehe2TbB5QtIs83TiReb4UAtgfRS7T%22%3B%7D; PHPSESSID=la4t0ffsu64j8dqgiq5tbrp6n1; _identity=504656adf40817b056a79b12aec420e17d3a9ab84ecae91ab3ce4d21e310a65aa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A50%3A%22%5B1%2C%227118d570-1153-448d-bede-91f878e7297c%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Simon\\Applications\\Git\\cmd;C:\\Simon\\Applications\\MAMP\\bin\\php\\php5.6.21;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\simonxu14\\AppData\\Roaming\\Composer\\vendor\\bin'
+    'SystemRoot' => 'C:\\windows'
+    'COMSPEC' => 'C:\\windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\windows'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.2.31 (Win32) DAV/2 mod_ssl/2.2.31 OpenSSL/1.0.2e mod_fcgid/2.3.9 mod_wsgi/3.4 Python/2.7.6 PHP/7.0.6 mod_perl/2.0.8 Perl/v5.16.3'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/Simon/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'testemail@test.com'
+    'SCRIPT_FILENAME' => 'C:/Simon/Applications/MAMP/htdocs/CareCarma/carecarma/index_test.php'
+    'REMOTE_PORT' => '59809'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=user%2Fauth%2Flogin'
+    'REQUEST_URI' => '/CareCarma/carecarma/index_test.php?r=user%2Fauth%2Flogin'
+    'SCRIPT_NAME' => '/CareCarma/carecarma/index_test.php'
+    'PHP_SELF' => '/CareCarma/carecarma/index_test.php'
+    'REQUEST_TIME_FLOAT' => 1464895534.65
+    'REQUEST_TIME' => 1464895534
+]
+2016-06-02 19:27:13 [127.0.0.1][1][la4t0ffsu64j8dqgiq5tbrp6n1][error][yii\base\InvalidParamException] yii\base\InvalidParamException: The file or directory to be published does not exist: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\vendor\bower/jquery/dist in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php:452
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetBundle.php(179): yii\web\AssetManager->publish('C:\\Simon\\Applic...', Array)
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php(266): yii\web\AssetBundle->publish(Object(yii\web\AssetManager))
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php(237): yii\web\AssetManager->loadBundle('yii\\web\\JqueryA...', Array, true)
+#3 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(284): yii\web\AssetManager->getBundle('yii\\web\\JqueryA...')
+#4 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetBundle.php(123): yii\web\View->registerAssetBundle('yii\\web\\JqueryA...')
+#5 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(439): yii\web\AssetBundle::register(Object(humhub\components\View))
+#6 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\widgets\AjaxButton.php(73): yii\web\View->registerJs('$('#h69281w0')....')
+#7 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Widget.php(98): humhub\widgets\AjaxButton->run()
+#8 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\widgets\views\modalConfirm.php(65): yii\base\Widget::widget(Array)
+#9 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Simon\\Applic...')
+#10 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Simon\\Applic...', Array)
+#11 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Simon\\Applic...', Array, Object(humhub\widgets\ModalConfirm))
+#12 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Widget.php(191): yii\base\View->render('modalConfirm', Array, Object(humhub\widgets\ModalConfirm))
+#13 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\widgets\ModalConfirm.php(120): yii\base\Widget->render('modalConfirm', Array)
+#14 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Widget.php(98): humhub\widgets\ModalConfirm->run()
+#15 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\mail\views\mail\show.php(34): yii\base\Widget::widget(Array)
+#16 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Simon\\Applic...')
+#17 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Simon\\Applic...', Array)
+#18 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(210): yii\base\View->renderFile('C:\\Simon\\Applic...', Array, Object(humhub\modules\mail\controllers\MailController))
+#19 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Controller.php(47): yii\web\View->renderAjax('/mail/show', Array, Object(humhub\modules\mail\controllers\MailController))
+#20 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\mail\controllers\MailController.php(141): yii\web\Controller->renderAjax('/mail/show', Array)
+#21 [internal function]: humhub\modules\mail\controllers\MailController->actionShow()
+#22 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#23 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(154): yii\base\InlineAction->runWithParams(Array)
+#24 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Module.php(454): yii\base\Controller->runAction('show', Array)
+#25 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(84): yii\base\Module->runAction('mail/mail/show', Array)
+#26 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#27 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#28 {main}
+2016-06-02 19:27:11 [127.0.0.1][1][la4t0ffsu64j8dqgiq5tbrp6n1][info][application] $_GET = [
+    'r' => 'mail/mail/show'
+    'id' => '30'
+    '_' => '1464895599865'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'V1CIj8CoAoUAABzEEgEAAAA8'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_X_CSRF_TOKEN' => 'Tmx0UWF3dXotOgU0CRJHLiwuQQAVPgZCfTgdAwQVQS8PGBM3MyRCLg=='
+    'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+    'HTTP_REFERER' => 'http://localhost/CareCarma/carecarma/index_test.php?r=mail%2Fmail%2Findex'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'pm_getting-started-panel=expanded; pm_share-panel=expanded; language=d85ae4496a91932879df649c721131c52349339b10f2de6539b835196abf94bba%3A2%3A%7Bi%3A0%3Bs%3A8%3A%22language%22%3Bi%3A1%3Bs%3A2%3A%22en%22%3B%7D; _csrf=cacb45fb94b5ee6ecae996e18bc82dc31cba18a4ec0937af0527a3f5fb24a9d5a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22cVqehe2TbB5QtIs83TiReb4UAtgfRS7T%22%3B%7D; PHPSESSID=la4t0ffsu64j8dqgiq5tbrp6n1; _identity=504656adf40817b056a79b12aec420e17d3a9ab84ecae91ab3ce4d21e310a65aa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A50%3A%22%5B1%2C%227118d570-1153-448d-bede-91f878e7297c%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Simon\\Applications\\Git\\cmd;C:\\Simon\\Applications\\MAMP\\bin\\php\\php5.6.21;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\simonxu14\\AppData\\Roaming\\Composer\\vendor\\bin'
+    'SystemRoot' => 'C:\\windows'
+    'COMSPEC' => 'C:\\windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\windows'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.2.31 (Win32) DAV/2 mod_ssl/2.2.31 OpenSSL/1.0.2e mod_fcgid/2.3.9 mod_wsgi/3.4 Python/2.7.6 PHP/7.0.6 mod_perl/2.0.8 Perl/v5.16.3'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/Simon/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'testemail@test.com'
+    'SCRIPT_FILENAME' => 'C:/Simon/Applications/MAMP/htdocs/CareCarma/carecarma/index_test.php'
+    'REMOTE_PORT' => '59861'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=mail%2Fmail%2Fshow&id=30&_=1464895599865'
+    'REQUEST_URI' => '/CareCarma/carecarma/index_test.php?r=mail%2Fmail%2Fshow&id=30&_=1464895599865'
+    'SCRIPT_NAME' => '/CareCarma/carecarma/index_test.php'
+    'PHP_SELF' => '/CareCarma/carecarma/index_test.php'
+    'REQUEST_TIME_FLOAT' => 1464895631.697
+    'REQUEST_TIME' => 1464895631
+]
+2016-06-02 19:28:47 [127.0.0.1][-][la4t0ffsu64j8dqgiq5tbrp6n1][error][yii\i18n\PhpMessageSource::loadFallbackMessages] The message file for category 'yii' does not exist: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh_cn/yii.php Fallback file does not exist as well: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh/yii.php
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\components\i18n\I18N.php:29
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php:32
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php:96
+2016-06-02 19:28:47 [127.0.0.1][-][la4t0ffsu64j8dqgiq5tbrp6n1][error][yii\base\ErrorException:256] yii\base\ErrorException: Exception 'yii\base\InvalidParamException' with message 'The file or directory to be published does not exist: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\vendor\bower/jquery/dist' 
+
+in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php:452
+
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetBundle.php(179): yii\web\AssetManager->publish('C:\\Simon\\Applic...', Array)
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php(266): yii\web\AssetBundle->publish(Object(yii\web\AssetManager))
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php(237): yii\web\AssetManager->loadBundle('yii\\web\\JqueryA...', Array, true)
+#3 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(284): yii\web\AssetManager->getBundle('yii\\web\\JqueryA...')
+#4 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(289): yii\web\View->registerAssetBundle('yii\\web\\JqueryA...', NULL)
+#5 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(289): yii\web\View->registerAssetBundle('yii\\web\\YiiAsse...', NULL)
+#6 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetBundle.php(123): yii\web\View->registerAssetBundle('yii\\validators\\...')
+#7 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\validators\RequiredValidator.php(108): yii\web\AssetBundle::register(Object(humhub\components\View))
+#8 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(711): yii\validators\RequiredValidator->clientValidateAttribute(Object(humhub\modules\user\models\forms\AccountLogin), 'username', Object(humhub\components\View))
+#9 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(216): yii\widgets\ActiveField->getClientOptions()
+#10 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(206): yii\widgets\ActiveField->begin()
+#11 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(162): yii\widgets\ActiveField->render()
+#12 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php(32): yii\widgets\ActiveField->__toString()
+#13 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Simon\\Applic...')
+#14 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Simon\\Applic...', Array)
+#15 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Simon\\Applic...', Array, Object(humhub\modules\user\controllers\AuthController))
+#16 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(378): yii\base\View->render('login', Array, Object(humhub\modules\user\controllers\AuthController))
+#17 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php(96): yii\base\Controller->render('login', Array)
+#18 [internal function]: humhub\modules\user\controllers\AuthController->actionLogin()
+#19 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#20 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(154): yii\base\InlineAction->runWithParams(Array)
+#21 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Module.php(454): yii\base\Controller->runAction('login', Array)
+#22 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(84): yii\base\Module->runAction('user/auth/login', Array)
+#23 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#24 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#25 {main} in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\ErrorHandler.php:299
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(256, 'Exception 'yii\\...', 'C:\\Simon\\Applic...', 299, Array)
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\ErrorHandler.php(299): trigger_error('Exception 'yii\\...', 256)
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(164): yii\base\ErrorHandler::convertExceptionToError(Object(yii\base\InvalidParamException))
+#3 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php(32): yii\widgets\ActiveField->__toString()
+#4 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Simon\\Applic...')
+#5 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Simon\\Applic...', '[<span class="s...')
+#6 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Simon\\Applic...', Array, Object(humhub\modules\user\controllers\AuthController))
+#7 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(378): yii\base\View->render('login', Array, Object(humhub\modules\user\controllers\AuthController))
+#8 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php(96): yii\base\Controller->render('login', Array)
+#9 [internal function]: humhub\modules\user\controllers\AuthController->actionLogin()
+#10 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#11 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(154): yii\base\InlineAction->runWithParams(Array)
+#12 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Module.php(454): yii\base\Controller->runAction('login', Array)
+#13 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(84): yii\base\Module->runAction('user/auth/login', Array)
+#14 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#15 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#16 {main}
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php:32
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php:96
+2016-06-02 19:28:46 [127.0.0.1][-][la4t0ffsu64j8dqgiq5tbrp6n1][info][application] $_GET = [
+    'r' => 'user/auth/login'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'V1CI7sCoAoUAABzEEgQAAAA9'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'pm_getting-started-panel=expanded; pm_share-panel=expanded; language=d85ae4496a91932879df649c721131c52349339b10f2de6539b835196abf94bba%3A2%3A%7Bi%3A0%3Bs%3A8%3A%22language%22%3Bi%3A1%3Bs%3A2%3A%22en%22%3B%7D; _csrf=cacb45fb94b5ee6ecae996e18bc82dc31cba18a4ec0937af0527a3f5fb24a9d5a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22cVqehe2TbB5QtIs83TiReb4UAtgfRS7T%22%3B%7D; PHPSESSID=la4t0ffsu64j8dqgiq5tbrp6n1; _identity=504656adf40817b056a79b12aec420e17d3a9ab84ecae91ab3ce4d21e310a65aa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A50%3A%22%5B1%2C%227118d570-1153-448d-bede-91f878e7297c%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Simon\\Applications\\Git\\cmd;C:\\Simon\\Applications\\MAMP\\bin\\php\\php5.6.21;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\simonxu14\\AppData\\Roaming\\Composer\\vendor\\bin'
+    'SystemRoot' => 'C:\\windows'
+    'COMSPEC' => 'C:\\windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\windows'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.2.31 (Win32) DAV/2 mod_ssl/2.2.31 OpenSSL/1.0.2e mod_fcgid/2.3.9 mod_wsgi/3.4 Python/2.7.6 PHP/7.0.6 mod_perl/2.0.8 Perl/v5.16.3'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/Simon/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'testemail@test.com'
+    'SCRIPT_FILENAME' => 'C:/Simon/Applications/MAMP/htdocs/CareCarma/carecarma/index_test.php'
+    'REMOTE_PORT' => '59890'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=user%2Fauth%2Flogin'
+    'REQUEST_URI' => '/CareCarma/carecarma/index_test.php?r=user%2Fauth%2Flogin'
+    'SCRIPT_NAME' => '/CareCarma/carecarma/index_test.php'
+    'PHP_SELF' => '/CareCarma/carecarma/index_test.php'
+    'REQUEST_TIME_FLOAT' => 1464895726.743
+    'REQUEST_TIME' => 1464895726
+]
+2016-06-02 19:29:36 [127.0.0.1][-][la4t0ffsu64j8dqgiq5tbrp6n1][error][yii\base\UnknownClassException] yii\base\UnknownClassException: Unable to find 'humhub\modules\user\models\UserTest' in file: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma/protected/humhub/modules/user/models/UserTest.php. Namespace missing? in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\BaseYii.php:291
+Stack trace:
+#0 [internal function]: yii\BaseYii::autoload('humhub\\modules\\...')
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\User.php(632): spl_autoload_call('humhub\\modules\\...')
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\User.php(181): yii\web\User->renewAuthStatus()
+#3 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\User.php(351): yii\web\User->getIdentity()
+#4 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Component.php(130): yii\web\User->getIsGuest()
+#5 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\components\bootstrap\LanguageSelector.php(25): yii\base\Component->__get('isGuest')
+#6 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(315): humhub\components\bootstrap\LanguageSelector->bootstrap(Object(humhub\components\Application))
+#7 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(63): yii\base\Application->bootstrap()
+#8 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(267): yii\web\Application->bootstrap()
+#9 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Object.php(107): yii\base\Application->init()
+#10 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(206): yii\base\Object->__construct(Array)
+#11 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->__construct(Array)
+#12 {main}
+2016-06-02 19:29:34 [127.0.0.1][-][la4t0ffsu64j8dqgiq5tbrp6n1][info][application] $_GET = [
+    'r' => 'user/auth/login'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'V1CJHsCoAoUAABzEEgUAAAA8'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'pm_getting-started-panel=expanded; pm_share-panel=expanded; language=d85ae4496a91932879df649c721131c52349339b10f2de6539b835196abf94bba%3A2%3A%7Bi%3A0%3Bs%3A8%3A%22language%22%3Bi%3A1%3Bs%3A2%3A%22en%22%3B%7D; _csrf=cacb45fb94b5ee6ecae996e18bc82dc31cba18a4ec0937af0527a3f5fb24a9d5a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22cVqehe2TbB5QtIs83TiReb4UAtgfRS7T%22%3B%7D; PHPSESSID=la4t0ffsu64j8dqgiq5tbrp6n1; _identity=504656adf40817b056a79b12aec420e17d3a9ab84ecae91ab3ce4d21e310a65aa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A50%3A%22%5B1%2C%227118d570-1153-448d-bede-91f878e7297c%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Simon\\Applications\\Git\\cmd;C:\\Simon\\Applications\\MAMP\\bin\\php\\php5.6.21;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\simonxu14\\AppData\\Roaming\\Composer\\vendor\\bin'
+    'SystemRoot' => 'C:\\windows'
+    'COMSPEC' => 'C:\\windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\windows'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.2.31 (Win32) DAV/2 mod_ssl/2.2.31 OpenSSL/1.0.2e mod_fcgid/2.3.9 mod_wsgi/3.4 Python/2.7.6 PHP/7.0.6 mod_perl/2.0.8 Perl/v5.16.3'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/Simon/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'testemail@test.com'
+    'SCRIPT_FILENAME' => 'C:/Simon/Applications/MAMP/htdocs/CareCarma/carecarma/index_test.php'
+    'REMOTE_PORT' => '59905'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=user%2Fauth%2Flogin'
+    'REQUEST_URI' => '/CareCarma/carecarma/index_test.php?r=user%2Fauth%2Flogin'
+    'SCRIPT_NAME' => '/CareCarma/carecarma/index_test.php'
+    'PHP_SELF' => '/CareCarma/carecarma/index_test.php'
+    'REQUEST_TIME_FLOAT' => 1464895774.899
+    'REQUEST_TIME' => 1464895774
+]
+2016-06-02 19:30:01 [127.0.0.1][-][la4t0ffsu64j8dqgiq5tbrp6n1][error][yii\i18n\PhpMessageSource::loadFallbackMessages] The message file for category 'yii' does not exist: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh_cn/yii.php Fallback file does not exist as well: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2/messages/zh/yii.php
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\components\i18n\I18N.php:29
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php:32
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php:96
+2016-06-02 19:30:01 [127.0.0.1][-][la4t0ffsu64j8dqgiq5tbrp6n1][error][yii\base\ErrorException:256] yii\base\ErrorException: Exception 'yii\base\InvalidParamException' with message 'The file or directory to be published does not exist: C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\vendor\bower/jquery/dist' 
+
+in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php:452
+
+Stack trace:
+#0 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetBundle.php(179): yii\web\AssetManager->publish('C:\\Simon\\Applic...', Array)
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php(266): yii\web\AssetBundle->publish(Object(yii\web\AssetManager))
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetManager.php(237): yii\web\AssetManager->loadBundle('yii\\web\\JqueryA...', Array, true)
+#3 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(284): yii\web\AssetManager->getBundle('yii\\web\\JqueryA...')
+#4 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(289): yii\web\View->registerAssetBundle('yii\\web\\JqueryA...', NULL)
+#5 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\View.php(289): yii\web\View->registerAssetBundle('yii\\web\\YiiAsse...', NULL)
+#6 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\AssetBundle.php(123): yii\web\View->registerAssetBundle('yii\\validators\\...')
+#7 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\validators\RequiredValidator.php(108): yii\web\AssetBundle::register(Object(humhub\components\View))
+#8 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(711): yii\validators\RequiredValidator->clientValidateAttribute(Object(humhub\modules\user\models\forms\AccountLogin), 'username', Object(humhub\components\View))
+#9 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(216): yii\widgets\ActiveField->getClientOptions()
+#10 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(206): yii\widgets\ActiveField->begin()
+#11 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(162): yii\widgets\ActiveField->render()
+#12 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php(32): yii\widgets\ActiveField->__toString()
+#13 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Simon\\Applic...')
+#14 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Simon\\Applic...', Array)
+#15 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Simon\\Applic...', Array, Object(humhub\modules\user\controllers\AuthController))
+#16 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(378): yii\base\View->render('login', Array, Object(humhub\modules\user\controllers\AuthController))
+#17 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php(96): yii\base\Controller->render('login', Array)
+#18 [internal function]: humhub\modules\user\controllers\AuthController->actionLogin()
+#19 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#20 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(154): yii\base\InlineAction->runWithParams(Array)
+#21 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Module.php(454): yii\base\Controller->runAction('login', Array)
+#22 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(84): yii\base\Module->runAction('user/auth/login', Array)
+#23 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#24 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#25 {main} in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\ErrorHandler.php:299
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(256, 'Exception 'yii\\...', 'C:\\Simon\\Applic...', 299, Array)
+#1 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\ErrorHandler.php(299): trigger_error('Exception 'yii\\...', 256)
+#2 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\widgets\ActiveField.php(164): yii\base\ErrorHandler::convertExceptionToError(Object(yii\base\InvalidParamException))
+#3 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php(32): yii\widgets\ActiveField->__toString()
+#4 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(325): require('C:\\Simon\\Applic...')
+#5 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(247): yii\base\View->renderPhpFile('C:\\Simon\\Applic...', '[<span class="s...')
+#6 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\View.php(149): yii\base\View->renderFile('C:\\Simon\\Applic...', Array, Object(humhub\modules\user\controllers\AuthController))
+#7 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(378): yii\base\View->render('login', Array, Object(humhub\modules\user\controllers\AuthController))
+#8 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php(96): yii\base\Controller->render('login', Array)
+#9 [internal function]: humhub\modules\user\controllers\AuthController->actionLogin()
+#10 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\InlineAction.php(55): call_user_func_array(Array, Array)
+#11 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Controller.php(154): yii\base\InlineAction->runWithParams(Array)
+#12 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Module.php(454): yii\base\Controller->runAction('login', Array)
+#13 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\web\Application.php(84): yii\base\Module->runAction('user/auth/login', Array)
+#14 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#15 C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\index_test.php(25): yii\base\Application->run()
+#16 {main}
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\views\auth\login.php:32
+    in C:\Simon\Applications\MAMP\htdocs\CareCarma\carecarma\protected\humhub\modules\user\controllers\AuthController.php:96
+2016-06-02 19:29:59 [127.0.0.1][-][la4t0ffsu64j8dqgiq5tbrp6n1][info][application] $_GET = [
+    'r' => 'user/auth/login'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'V1CJN8CoAoUAABzEEgYAAAA9'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4'
+    'HTTP_COOKIE' => 'pm_getting-started-panel=expanded; pm_share-panel=expanded; language=d85ae4496a91932879df649c721131c52349339b10f2de6539b835196abf94bba%3A2%3A%7Bi%3A0%3Bs%3A8%3A%22language%22%3Bi%3A1%3Bs%3A2%3A%22en%22%3B%7D; _csrf=cacb45fb94b5ee6ecae996e18bc82dc31cba18a4ec0937af0527a3f5fb24a9d5a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22cVqehe2TbB5QtIs83TiReb4UAtgfRS7T%22%3B%7D; PHPSESSID=la4t0ffsu64j8dqgiq5tbrp6n1; _identity=504656adf40817b056a79b12aec420e17d3a9ab84ecae91ab3ce4d21e310a65aa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A50%3A%22%5B1%2C%227118d570-1153-448d-bede-91f878e7297c%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Simon\\Applications\\Git\\cmd;C:\\Simon\\Applications\\MAMP\\bin\\php\\php5.6.21;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\simonxu14\\AppData\\Roaming\\Composer\\vendor\\bin'
+    'SystemRoot' => 'C:\\windows'
+    'COMSPEC' => 'C:\\windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\windows'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.2.31 (Win32) DAV/2 mod_ssl/2.2.31 OpenSSL/1.0.2e mod_fcgid/2.3.9 mod_wsgi/3.4 Python/2.7.6 PHP/7.0.6 mod_perl/2.0.8 Perl/v5.16.3'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => 'C:/Simon/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'testemail@test.com'
+    'SCRIPT_FILENAME' => 'C:/Simon/Applications/MAMP/htdocs/CareCarma/carecarma/index_test.php'
+    'REMOTE_PORT' => '59914'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=user%2Fauth%2Flogin'
+    'REQUEST_URI' => '/CareCarma/carecarma/index_test.php?r=user%2Fauth%2Flogin'
+    'SCRIPT_NAME' => '/CareCarma/carecarma/index_test.php'
+    'PHP_SELF' => '/CareCarma/carecarma/index_test.php'
+    'REQUEST_TIME_FLOAT' => 1464895799.912
+    'REQUEST_TIME' => 1464895799
+]

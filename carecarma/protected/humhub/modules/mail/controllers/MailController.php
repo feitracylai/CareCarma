@@ -299,6 +299,7 @@ class MailController extends Controller
     public function actionCreate()
     {
         $userGuid = Yii::$app->request->get('userGuid');
+        Yii::getLogger()->log(print_r($userGuid,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $model = new CreateMessage();
 
         // Preselect user if userGuid is given
@@ -334,20 +335,20 @@ class MailController extends Controller
                 $userMessage->save();
 
                 // get info of each recipient and use notify() to send the message through GCM
-//                if ($recipient->gcmId != null){
-                $deviceMessage = new DeviceMessage();
-                $deviceMessage->message_id = $message->id;
-                //send to one of the recipient, and the recipient ony need to reply to the message sender
-                $deviceMessage->user_id = $recipient->id;
-                $deviceMessage->from_id = Yii::$app->user->id;
-                $deviceMessage->content = $model->message;
-                // I dont think we need updated_at
-                //$deviceMessage->updated_at = new \yii\db\Expression('NOW()');
-                //$deviceMessage->save();
-//                Yii::getLogger()->log(print_r($deviceMessage,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                if ($recipient->gcmId != null){
+                    $deviceMessage = new DeviceMessage();
+                    $deviceMessage->message_id = $message->id;
+                    //send to one of the recipient, and the recipient ony need to reply to the message sender
+                    $deviceMessage->user_id = $recipient->id;
+                    $deviceMessage->from_id = Yii::$app->user->id;
+                    $deviceMessage->content = $model->message;
+                    // I dont think we need updated_at
+                    //$deviceMessage->updated_at = new \yii\db\Expression('NOW()');
+                    //$deviceMessage->save();
+                    //Yii::getLogger()->log(print_r($deviceMessage,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
-                $deviceMessage->notify();
-//                }
+                    $deviceMessage->notify();
+                }
 
             }
 
@@ -487,5 +488,11 @@ class MailController extends Controller
         }
 
         return null;
+    }
+
+    public function actionTest()
+    {
+//        $userGuid = Yii::$app->request->get('userGuid');
+        Yii::getLogger()->log(print_r("SimonSimon",true),yii\log\Logger::LEVEL_INFO,'MyLog');
     }
 }
