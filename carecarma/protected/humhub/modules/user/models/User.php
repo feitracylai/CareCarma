@@ -346,6 +346,16 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
         return parent::afterSave($insert, $changedAttributes);
     }
 
+    public function updateUserContacts () {
+        $contacts = Contact::findAll(['contact_user_id' => $this->id]);
+        foreach ($contacts as $contact) {
+            $contact->contact_email = $this->email;
+            $contact->contact_mobile = $this->profile->mobile;
+            $contact->save();
+            $contact->notifyDevice('update');
+        }
+    }
+
     public function setUpApproved()
     {
         $userInvite = Invite::findOne(['email' => $this->email]);

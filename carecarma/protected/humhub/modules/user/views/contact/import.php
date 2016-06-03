@@ -50,6 +50,7 @@ use yii\widgets\ActiveForm;
                         <?= \humhub\modules\user\widgets\UserFollowButton::widget(['user' => $user, 'followOptions' => ['class' => 'btn btn-primary btn-sm'], 'unfollowOptions' => ['class' => 'btn btn-info btn-sm']]); ?>
                    </div>-->
 
+
                     <a href="#" class="pull-left contact" id="image-<?php echo $user->guid; ?>">
                         <img class="media-object img-rounded"
                              src="<?php echo $user->getProfileImage()->getUrl(); ?>" width="50"
@@ -81,6 +82,7 @@ use yii\widgets\ActiveForm;
                             $model->contact_last = $user->profile->lastname;
                             $model->contact_mobile = $user->profile->mobile;
                             $model->contact_email = $user->email;
+
                         ?>
                         <?php echo $hForm->render($form); ?>
                         <?php \yii\widgets\ActiveForm::end(); ?>

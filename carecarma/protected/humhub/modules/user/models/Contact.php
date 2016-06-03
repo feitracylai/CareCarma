@@ -61,23 +61,30 @@ class Contact extends \yii\db\ActiveRecord
             'nickname' => Yii::t('UserModule.models_Contact', 'Nickname'),
             'user_id' => Yii::t('UserModule.models_Contact', 'User ID'),
             'relation' => Yii::t('UserModule.models_Contact', 'Relation'),
+            'contact_user_id' => Yii::t('UserModule.models_Contact', 'contact ID'),
         ];
     }
 
-    public function notifyDevice($user, $data) {
-        if ($user->gcmId != null){
-            $gcm = new GCM();
-            $push = new Push();
+    public function notifyDevice($data) {
+        $user = User::findOne(['id' => $this->user_id]);
+        if ($user->device_id != null){
+            $device = Device::findOne(['device_id' => $user->device_id]);
+            if ($device->gcmId != null){
+                $gcm = new GCM();
+                $push = new Push();
 
-            $push->setTitle('contact');
-            $push->setData($data);
+                $push->setTitle('contact');
+                $push->setData($data);
 
-            $gcm_registration_id = $user->gcmId;
+                $gcm_registration_id = $device->gcmId;
 
-            $gcm->send($gcm_registration_id, $push->getPush());
+                $gcm->send($gcm_registration_id, $push->getPush());
 
+            }
         }
+
     }
+
 
 
 }

@@ -49,8 +49,8 @@ class AccountMenu extends BaseMenu
             'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Contact'),
             'icon' => '<i class="fa fa-pencil-square-o"></i>',
             'group' => 'account',
-            'url' => Url::toRoute('/user/contact/'),
-            'sortOrder' => 110,
+            'url' => Url::toRoute('/user/contact/index'),
+            'sortOrder' => 120,
             'isActive' => (Yii::$app->controller->id == 'contact'),
         ));
 

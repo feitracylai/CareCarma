@@ -67,6 +67,9 @@ class AccountController extends Controller
             // Trigger search refresh
             $user->save();
 
+            //user in the contacts also change
+            $user->updateUserContacts();
+
             Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
             return $this->redirect(Url::to(['edit']));
         }
@@ -86,42 +89,29 @@ class AccountController extends Controller
         if ($model->load(Yii::$app->request->post())&& $model->validate()) {
 
             $device = Device::find()->where(['device_id' => $model->deviceId])->one();
+
             if ($device!=null) {
-                if ($device != $deviceOld) {
-                    $deviceOld->user_id = null;
-                    $deviceOld->save();
 
-                    $user->device_id = $model->deviceId;
-                    $device->user_id = $user->id;
-                    $device->save();
+                $user->device_id = $model->deviceId;
+                $user->save();
 
-                    if ($device->gcmId != null ) {
-                        $user->gcmId = $device->gcmId;
+                if ($device->gcmId != null ) {
 
-                        $gcm = new GCM();
-                        $push = new Push();
+                    $gcm = new GCM();
+                    $push = new Push();
 
-                        $push->setTitle('user id');
-                        $push->setData($user->getId());
+                    $push->setTitle('binding');
+//                    $push->setData(Yii::t('UserModule.controllers_AccountController', '{user_id = {id}}', array('{id}' => $user->getId())));
+                    $push->setData($user->getId());
 
-
-                        $gcm_registration_id = $user->gcmId;
-
-                        $gcm->send($gcm_registration_id, $push->getPush());
-
-                    }
-                    if($deviceOld != null) {
-                        $gcmOld = new GCM();
-                        $pushOld = new Push();
-                        $pushOld->setTitle('user');
-                        $pushOld->setData('delete device');
-                        $gcmOld->send($deviceOld->gcmId, $pushOld->getPush());
-                    }
-
-
-
-                    $user->save();
-
+                    $gcm_registration_id = $device->gcmId;
+                    $gcm->send($gcm_registration_id, $push->getPush());
+                }
+                if($deviceOld != null && $deviceOld->gcmId != null) {
+                    $gcmOld = new GCM();
+                    $pushOld = new Push();
+                    $pushOld->setTitle('binding delete');
+                    $gcmOld->send($deviceOld->gcmId, $pushOld->getPush());
                 }
 
                 Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
@@ -145,25 +135,19 @@ class AccountController extends Controller
 
 
         if ($doit == 2) {
-            if ($user->gcmId != null) {
+
+            $device = Device::findOne(['user_id' => $user->id]);
+            if ($device->gcmId != null) {
 
                 $gcm = new GCM();
                 $push = new Push();
-
-                $push->setTitle('user');
-                $push->setData('delete device');
-
-
-                $gcm_registration_id = $user->gcmId;
-
+                $push->setTitle('binding delete');
+                $gcm_registration_id = $device->gcmId;
                 $gcm->send($gcm_registration_id, $push->getPush());
             }
-            $device = Device::findOne(['user_id' => $user->id]);
-            $device->user_id = null;
-            $device->save();
+
 
             $user->device_id = null;
-            $user->gcmId = null;
             $user->save();
 
 
@@ -325,6 +309,8 @@ class AccountController extends Controller
         $model->scenario = 'userEmail';
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->sendChangeEmail()) {
+            $user->updateUserContacts();
+
             return $this->render('changeEmail_success', array('model' => $model));
         }
 

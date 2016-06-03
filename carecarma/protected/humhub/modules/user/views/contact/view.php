@@ -4,7 +4,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
 <div class="panel panel-default">
-    <div class="panel-heading"><?php echo Yii::t('UserModule.views_contact_delete', 'Contact: <strong>{contact_first} {contact_last}</strong>', array('{contact_first}' => $model->contact_first, '{contact_last}' => $model->contact_last)); ?></div>
+    <div class="panel-heading">
+        <?php echo Yii::t('UserModule.views_contact_delete', 'Contact: <strong>{contact_first} {contact_last}</strong>', array('{contact_first}' => $model->contact_first, '{contact_last}' => $model->contact_last)); ?>
+    </div>
     <div class="panel-body">
 
 

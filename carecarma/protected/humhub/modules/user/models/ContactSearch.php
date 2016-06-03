@@ -42,7 +42,6 @@ class ContactSearch extends Contact
      */
     public function search($params, $id)
     {
-//        $query = contact::find()->where(['user_id' => Yii::$app->user->id])->orderBy('contact_last');
         $query = contact::find()->where(['user_id' => $id])->orderBy('contact_last');
 
         $dataProvider = new ActiveDataProvider([
@@ -52,7 +51,6 @@ class ContactSearch extends Contact
 
         $dataProvider->setSort([
             'attributes' => [
-//                'contact_id',
                 'contact_first',
                 'contact_last',
                 'contact_mobile',
