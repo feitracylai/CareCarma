@@ -27,6 +27,11 @@ use humhub\modules\user\models\forms\AccountRecoverPassword;
 class AuthController extends Controller
 {
 
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+
     //public $layout = '//layouts/main1';
     public $layout = "@humhub/modules/user/views/layouts/main";
     public $subLayout = "_layout";
@@ -56,6 +61,7 @@ class AuthController extends Controller
 
         // Show/Allow Anonymous Registration
         $loginModel = new \humhub\modules\user\models\forms\AccountLogin;
+        Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         if ($loginModel->load(Yii::$app->request->post()) && $loginModel->login()) {
             if (Yii::$app->request->getIsAjax()) {
                 return $this->htmlRedirect(Yii::$app->user->returnUrl);

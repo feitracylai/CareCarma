@@ -28,6 +28,10 @@ use humhub\modules\user\widgets\UserPicker;
  */
 class MailController extends Controller
 {
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
 
     public function behaviors()
     {
@@ -299,7 +303,7 @@ class MailController extends Controller
     public function actionCreate()
     {
         $userGuid = Yii::$app->request->get('userGuid');
-        Yii::getLogger()->log(print_r($userGuid,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
         $model = new CreateMessage();
 
         // Preselect user if userGuid is given
@@ -309,7 +313,7 @@ class MailController extends Controller
                 $model->recipient = $user->guid;
             }
         }
-
+        Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
             // Create new Message
@@ -493,6 +497,7 @@ class MailController extends Controller
     public function actionTest()
     {
 //        $userGuid = Yii::$app->request->get('userGuid');
-        Yii::getLogger()->log(print_r("SimonSimon",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
     }
+
 }
