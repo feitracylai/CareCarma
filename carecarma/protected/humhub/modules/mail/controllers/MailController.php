@@ -303,6 +303,7 @@ class MailController extends Controller
     public function actionCreate()
     {
         $userGuid = Yii::$app->request->get('userGuid');
+        Yii::getLogger()->log(print_r(Yii::$app->request->get('userGuid'),true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
         $model = new CreateMessage();
 
@@ -498,6 +499,61 @@ class MailController extends Controller
     {
 //        $userGuid = Yii::$app->request->get('userGuid');
         Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r(Yii::$app->user->id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $model = new CreateMessage();
+        $data = Yii::$app->request->post();
+        $message_data = $data['CreateMessage'];
+        $recipient = $message_data['recipient'];
+        $title = $message_data['title'];
+        $content = $message_data['message'];
+        $model->recipient = $recipient;
+        $model->title = $title;
+        $model->message = $content;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $message = new Message();
+            $message->title = $model->title;
+            $message->save();
+
+            $messageEntry = new MessageEntry();
+            $messageEntry->message_id = $message->id;
+            $messageEntry->user_id = Yii::$app->user->id;
+            $messageEntry->content = $model->message;
+            $messageEntry->save();
+            File::attachPrecreated($messageEntry, Yii::$app->request->post('fileUploaderHiddenGuidField'));
+
+            foreach ($model->getRecipients() as $recipient) {
+                $userMessage = new UserMessage();
+                $userMessage->message_id = $message->id;
+                $userMessage->user_id = $recipient->id;
+                $userMessage->save();
+
+                if ($recipient->device_id != null){
+
+                    $deviceMessage = new DeviceMessage();
+                    $deviceMessage->message_id = $message->id;
+                    $deviceMessage->user_id = $recipient->id;
+                    $deviceMessage->from_id = Yii::$app->user->id;
+                    $deviceMessage->content = $model->message;
+                    $deviceMessage->notify();
+                }
+
+            }
+
+            foreach ($model->getRecipients() as $recipient) {
+                try {
+                    $message->notify($recipient);
+                } catch(\Exception $e) {
+                    Yii::error('Could not send notification e-mail to: '. $recipient->username.". Error:". $e->getMessage());
+                }
+            }
+
+            $userMessage = new UserMessage();
+            $userMessage->message_id = $message->id;
+            $userMessage->user_id = Yii::$app->user->id;
+            $userMessage->is_originator = 1;
+            $userMessage->last_viewed = new \yii\db\Expression('NOW()');
+            $userMessage->save();
+        }
     }
 
 }
