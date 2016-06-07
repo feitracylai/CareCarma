@@ -7,6 +7,8 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use \humhub\modules\space\models\Space;
+
 ?>
 
 <div class="panel panel-default">
@@ -62,9 +64,11 @@ use yii\widgets\ActiveForm;
                     <div class="media-body">
                         <h4 class="media-heading"><a
                                 href="<?php echo $user->getUrl(); ?>"><?php echo Html::encode($user->displayName); ?></a>
-                            <?php if ($user->group != null && $user->group->id != 1) { ?>
-                                <small>(<?php echo Html::encode($user->group->name); ?>)</small><?php } ?>
                         </h4>
+                        <?php if ($details[$user->id] != null && $details[$user->id] != 0) { ?>
+                            <small>(<?php echo Yii::t('UserModule.views_contact_connect', '{detail}', array('{detail}' => Space::findOne(['id' => $details[$user->id]])->name )); ?>)</small>
+                        <?php } ?>
+
 
 
 

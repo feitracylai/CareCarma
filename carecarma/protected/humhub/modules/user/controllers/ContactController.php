@@ -289,6 +289,7 @@ class ContactController extends Controller
     {
         $userSpaces = Membership::findAll(['user_id' => Yii::$app->user->id]);
         $contacts = array();
+        $spaces = array();
         foreach ($userSpaces as $space){
             if ($space !== null)
             {
@@ -298,6 +299,7 @@ class ContactController extends Controller
                     $existContact = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $userId]);
                     if ($userId != Yii::$app->user->id && !$existContact){
                         $contacts[] = User::findOne(['id' => $userId]);
+                        $spaces[$userId] = $spaceId;
                     }
                 }
             }
@@ -310,7 +312,6 @@ class ContactController extends Controller
             'model' => \humhub\modules\user\models\User::className(),
             'page' => $page,
             'limitUsers' => $contacts,
-//            'pageSize' => $this->module->pageSize,
         ];
 
         $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
@@ -393,6 +394,7 @@ class ContactController extends Controller
             'hForm' => $form,
             'model' => $contactModel,
             'users' => $searchResultSet->getResultInstances(),
+            'details' => $spaces,
             'pagination' => $pagination
         ));
     }
@@ -415,7 +417,7 @@ class ContactController extends Controller
                     $existContact = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $userId]);
                     if ($userId != Yii::$app->user->id && !$existContact){
                         $users[] = User::findOne(['id' => $userId]);
-                        $spaces[] = ['user_id' => $userId, 'space_id' => $spaceId];
+                        $spaces[$userId] = $spaceId;
                     }
                 }
             }
@@ -424,7 +426,7 @@ class ContactController extends Controller
         foreach (Profile::findAll(['mobile' => $contact->contact_mobile]) as $userProfile) {
             $userId =  $userProfile->user_id;
             $users[] = User::findOne(['id' => $userId]);
-            $spaces[] = ['user_id' => $userProfile->user_id, 'space_id' => 0];
+            $spaces[$userId] = 0;
         }
 
 
@@ -474,5 +476,7 @@ class ContactController extends Controller
 
         return $this->redirect(Url::toRoute(['/user/contact/edit', 'id' => $id]));
     }
+
+
 
 }

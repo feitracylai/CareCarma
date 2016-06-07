@@ -7,6 +7,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use \humhub\modules\space\models\Space;
 ?>
 
     <div class="panel panel-default">
@@ -24,6 +25,7 @@ use yii\widgets\ActiveForm;
                     <div class="form-group form-group-search">
                         <?php echo Html::textInput("keyword", $keyword, array("class" => "form-control form-search", "placeholder" => Yii::t('UserModule.views_contact_connect', 'search for users'))); ?>
                         <?php echo Html::submitButton(Yii::t('UserModule.views_contact_connect', 'Search'), array('class' => 'btn btn-default btn-sm form-button-search')); ?>
+<!--                        --><?php //echo Yii::t('UserModule.views_contact_connect', 'details = [{details}]', array('{details}' => implode(',', $details)));?>
                     </div>
                 </div>
                 <div class="col-md-3"></div>
@@ -66,37 +68,17 @@ use yii\widgets\ActiveForm;
                                     href="<?php echo $user->getUrl(); ?>"><?php echo Html::encode($user->displayName); ?></a>
 
                             </h4>
-                            <?php if ($user->group != null && $user->group->id != 1) { ?>
-                                <small>(<?php echo Html::encode($user->group->name); ?>)</small><?php } ?>
+                            <?php if ($details[$user->id] != null && $details[$user->id] != 0) { ?>
+                                <small>(<?php echo Yii::t('UserModule.views_contact_connect', '{detail}', array('{detail}' => Space::findOne(['id' => $details[$user->id]])->name )); ?>)</small>
+                            <?php } ?>
+
 
 
                         </div>
 
                     </div>
 
-<!--                    <div class="contactInfo" id="info---><?php //echo $user->guid; ?><!--" hidden>-->
-<!--                        <hr>-->
-<!--                        <div class="middle">-->
-<!--                            --><?php //$form = \yii\widgets\ActiveForm::begin(); ?>
-<!--                            --><?php
-//                            $model->contact_user_id = $user->id;
-//                            $model->contact_first = $user->profile->firstname;
-//                            $model->contact_last = $user->profile->lastname;
-//                            $model->contact_mobile = $user->profile->mobile;
-//                            $model->contact_email = $user->email;
-//
-//                            ?>
-<!--                            --><?php //echo $hForm->render($form); ?>
-<!--                            --><?php //\yii\widgets\ActiveForm::end(); ?>
-<!--                        </div>-->
-<!---->
-<!--                    </div>-->
-                    <script type="text/javascript">
-                        $('#image-<?php echo $user->guid; ?>').click(function(){
 
-                            $('#info-<?php echo $user->guid; ?>').toggle();
-                        })
-                    </script>
                 </li>
 
             <?php endforeach; ?>
