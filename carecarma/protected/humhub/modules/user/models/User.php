@@ -267,6 +267,13 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
         Setting::deleteAll(['user_id' => $this->id]);
         Contact::deleteAll(['user_id' => $this->id]);
 
+        $asOtherContact = Contact::findAll(['contact_user_id' => $this->id]);
+        foreach ($asOtherContact as $contact) {
+
+            $contact->contact_user_id = NULL;
+            $contact->save();
+        }
+
         return parent::beforeDelete();
     }
 
