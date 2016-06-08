@@ -111,32 +111,24 @@ class MailController extends Controller
             $messageEntry->save();
 //            $messageEntry->notify();
 
-            File::attachPrecreated($messageEntry, Yii::$app->request->post('fileUploaderHiddenGuidField'));
+//            File::attachPrecreated($messageEntry, Yii::$app->request->post('fileUploaderHiddenGuidField'));
 
             //device
             foreach (UserMessage::find()->where(['message_id' => $message->id])->each() as $userMessage) {
                 $user = User::findOne(['id' => $userMessage->user_id]);
 
-                if ($user->gcmId != null && $user->id != Yii::$app->user->id) {
+                if ($user->device_id != null && $user->id != Yii::$app->user->id) {
                     $deviceMessage = new DeviceMessage();
                     $deviceMessage->message_id = $message->id;
                     $deviceMessage->user_id = $user->id;
                     $deviceMessage->from_id = Yii::$app->user->id;
-                    $deviceMessage->content = $replyForm->message;
-                    $deviceMessage->updated_at = new \yii\db\Expression('NOW()');
-                    $deviceMessage->save();
+                    $deviceMessage->content = $messageEntry->content;
                     $deviceMessage->notify();
                 }
 
             }
-
             return $this->htmlRedirect(['index', 'id' => $message->id]);
         }
-
-
-
-
-
         // Marks message as seen
         $message->seen(Yii::$app->user->id);
 
@@ -145,6 +137,12 @@ class MailController extends Controller
             'replyForm' => $replyForm,
         ]);
     }
+
+
+
+
+
+
 
     private function checkMessagePermissions($message)
     {
@@ -303,7 +301,7 @@ class MailController extends Controller
     public function actionCreate()
     {
         $userGuid = Yii::$app->request->get('userGuid');
-        Yii::getLogger()->log(print_r(Yii::$app->request->get('userGuid'),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        Yii::getLogger()->log(print_r(Yii::$app->request->get('userGuid'),true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
         $model = new CreateMessage();
 
@@ -316,7 +314,7 @@ class MailController extends Controller
         }
         Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
+//            Yii::getLogger()->log(print_r($model->recipient,true),yii\log\Logger::LEVEL_INFO,'MyLog');
             // Create new Message
             $message = new Message();
             $message->title = $model->title;
@@ -339,19 +337,28 @@ class MailController extends Controller
                 $userMessage->user_id = $recipient->id;
                 $userMessage->save();
 
-                // get info of each recipient and use notify() to send the message through GCM
-                if ($recipient->gcmId != null){
+//                // get info of each recipient and use notify() to send the message through GCM
+//                if ($recipient->gcmId != null){
+//                    $deviceMessage = new DeviceMessage();
+//                    $deviceMessage->message_id = $message->id;
+//                    //send to one of the recipient, and the recipient ony need to reply to the message sender
+//                    $deviceMessage->user_id = $recipient->id;
+//                    $deviceMessage->from_id = Yii::$app->user->id;
+//                    $deviceMessage->content = $model->message;
+//                    // I dont think we need updated_at
+//                    //$deviceMessage->updated_at = new \yii\db\Expression('NOW()');
+//                    //$deviceMessage->save();
+//                    //Yii::getLogger()->log(print_r($deviceMessage,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//
+//                    $deviceMessage->notify();
+//                }
+                if ($recipient->device_id != null){
+
                     $deviceMessage = new DeviceMessage();
                     $deviceMessage->message_id = $message->id;
-                    //send to one of the recipient, and the recipient ony need to reply to the message sender
                     $deviceMessage->user_id = $recipient->id;
                     $deviceMessage->from_id = Yii::$app->user->id;
                     $deviceMessage->content = $model->message;
-                    // I dont think we need updated_at
-                    //$deviceMessage->updated_at = new \yii\db\Expression('NOW()');
-                    //$deviceMessage->save();
-                    //Yii::getLogger()->log(print_r($deviceMessage,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-
                     $deviceMessage->notify();
                 }
 
@@ -495,21 +502,24 @@ class MailController extends Controller
         return null;
     }
 
-    public function actionTest()
+    public function actionDevicecreate()
     {
 //        $userGuid = Yii::$app->request->get('userGuid');
         Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        Yii::getLogger()->log(print_r(Yii::$app->user->id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        Yii::getLogger()->log(print_r(Yii::$app->user->id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $model = new CreateMessage();
         $data = Yii::$app->request->post();
         $message_data = $data['CreateMessage'];
-        $recipient = $message_data['recipient'];
+        $recipient_user_id = $message_data['recipient'];
+        $user = User::findOne(['id' => $recipient_user_id]);
+        $recipient = $user->guid;
+        Yii::getLogger()->log(print_r($recipient,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $title = $message_data['title'];
         $content = $message_data['message'];
         $model->recipient = $recipient;
         $model->title = $title;
         $model->message = $content;
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->validate()) {
             $message = new Message();
             $message->title = $model->title;
             $message->save();
@@ -556,4 +566,57 @@ class MailController extends Controller
         }
     }
 
+    public function actionDeviceread() {
+//        Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $data = Yii::$app->request->post();
+        $message_data = $data['ReadMessage'];
+        $message_id = $message_data['message_id'];
+        $user_id = Yii::$app->user->id;
+        $userMessage = UserMessage::findOne(['message_id' => $message_id, 'user_id' => $user_id]);
+        $userMessage->last_viewed = new \yii\db\Expression('NOW()');
+        $userMessage->updated_at = new \yii\db\Expression('NOW()');
+        $userMessage->updated_by = Yii::$app->user->id;
+//        Yii::getLogger()->log(print_r($userMessage,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $userMessage->save();
+    }
+
+    public function actionDevicereply() {
+        $data = Yii::$app->request->post();
+        $message_data = $data['ReplyMessage'];
+        $message_id = $message_data['message_id'];
+        $content = $message_data['content'];
+        $messageEntry = new MessageEntry();
+        $messageEntry->message_id = $message_id;
+        $messageEntry->user_id = Yii::$app->user->id;
+        $messageEntry->content = $content;
+        $messageEntry->created_at = new \yii\db\Expression('NOW()');
+        $messageEntry->created_by = Yii::$app->user->id;
+        $messageEntry->updated_at = new \yii\db\Expression('NOW()');
+        $messageEntry->updated_by = Yii::$app->user->id;
+        $messageEntry->save();
+        
+        $message = Message::findOne(['id' => $message_id]);
+        $message->updated_at = new \yii\db\Expression('NOW()');
+        $message->updated_by = Yii::$app->user->id;
+        $message->save();
+
+        $userMessage = UserMessage::findOne(['message_id' => $message_id, 'user_id' => Yii::$app->user->id]);
+        $userMessage->last_viewed = new \yii\db\Expression('NOW()');
+        $userMessage->updated_at = new \yii\db\Expression('NOW()');
+        $userMessage->updated_by = Yii::$app->user->id;
+        $userMessage->save();
+
+        foreach (UserMessage::find()->where(['message_id' => $message_id])->each() as $userM) {
+            $user = User::findOne(['id' => $userM->user_id]);
+            if ($user->device_id != null && $user->id != Yii::$app->user->id) {
+                $deviceMessage = new DeviceMessage();
+                $deviceMessage->message_id = $message_id;
+                $deviceMessage->user_id = $user->id;
+                $deviceMessage->from_id = Yii::$app->user->id;
+                $deviceMessage->content = $content;
+                $deviceMessage->notify();
+            }
+        }
+
+    }
 }
