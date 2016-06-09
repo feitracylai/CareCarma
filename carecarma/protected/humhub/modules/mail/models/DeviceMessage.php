@@ -2,10 +2,13 @@
 
 namespace humhub\modules\mail\models;
 
+use humhub\modules\user\models;
 use humhub\modules\user\models\User;
+use humhub\modules\user\models\Device;
 use Yii;
 use humhub\libs\GCM;
-use humhub\libs\Push;
+use yii\base\Model;
+
 
 
 /**
@@ -19,57 +22,81 @@ use humhub\libs\Push;
  * @property string $updated_at
  * @property string $isRead
  */
-class DeviceMessage extends \yii\db\ActiveRecord
+//make some change to the DeviceMessage: make it a independent class, extends from Model, not extends from ActiveRecord
+//class DeviceMessage extends \yii\db\ActiveRecord
+class DeviceMessage extends Model
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'device_message';
-    }
+    public $message_id;
+    public $user_id;
+    public $from_id;
+    public $content;
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
+//    /**
+//     * @inheritdoc
+//     */
+//    public static function tableName()
+//    {
+//        return 'device_message';
+//    }
+//
+//    /**
+//     * @inheritdoc
+//     */
+//    public function rules()
+//    {
+//        return [
+//            [['message_id', 'user_id', 'from_id', 'content'], 'required'],
+//            [['message_id', 'user_id', 'from_id'], 'integer'],
+//            [['content'], 'string'],
+//            [['updated_at'], 'safe'],
+//            [['isRead'], 'string', 'max' => 255],
+//        ];
+//    }
+
+//    /**
+//     * @inheritdoc
+//     */
+//    public function attributeLabels()
+//    {
+//        return [
+//            'message_id' => 'Message ID',
+//            'user_id' => 'User ID',
+//            'from_id' => 'From ID',
+//            'content' => 'Content',
+//            'isRead' => 'Is Read',
+//        ];
+//    }
+
+    public function getData()
     {
         return [
-            [['message_id', 'user_id', 'from_id', 'content'], 'required'],
-            [['message_id', 'user_id', 'from_id'], 'integer'],
-            [['content'], 'string'],
-            [['updated_at'], 'safe'],
-            [['isRead'], 'string', 'max' => 255],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'message_id' => 'Message ID',
-            'user_id' => 'User ID',
-            'from_id' => 'From ID',
-            'content' => 'Content',
-            'updated_at' => 'Updated At',
-            'isRead' => 'Is Read',
+            'message'=> $this->message_id,
+            'user_id'=> $this->user_id,
+            'from_id'=> $this->from_id,
+            'content'=> $this->content
         ];
     }
 
     public function notify()
     {
-        $user = User::findOne(['id' => $this->user_id]);
+        //get the user info(device_id)
+//        $user = User::findOne(['id' => $this->user_id]);
+        //get the device info(gcm_id)
+//        $device = Device::findOne(['device_id' => $user->device_id]);
 
         $gcm = new GCM();
-        $push = new Push();
+//        $push = new Push();
+//
+//        $push->setTitle('message');
+//        $push->setData($this->id);
 
-        $push->setTitle('message');
-        $push->setData($this->id);
-
-        $gcm_registration_id = $user->gcmId;
-        $gcm->send($gcm_registration_id, $push->getPush());
+        $user = User::findOne(['id' => $this->user_id]);
+        $device = Device::findOne(['id' => $user->device_id]);
+        $gcm_id = $device->gcmId;
+        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        $gcm_registration_id = "eeajUUBkwG0:APA91bGZIyJ0XEO29JnDFhaJWFGLRw8mvJ4foQFfL_vcnQuEqXzaokLZdTeitpi8nvdlpurCIbcryd4AzM1x_FQVgAYbVvNpHOO0wTD4XuYi3OiMOlkVnk8-xcM9lbCbLFQ7qq1GALSs";
+//        Yii::getLogger()->log(print_r($this->getData(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        
+        $gcm->send($gcm_id, $this->getData());
     }
 }

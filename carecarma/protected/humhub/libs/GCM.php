@@ -7,6 +7,7 @@
  */
 
 namespace humhub\libs;
+use Yii;
 
 
 class GCM
@@ -23,6 +24,7 @@ class GCM
             'to' => $to,
             'data' => $message,
         );
+//        Yii::getLogger()->log(print_r($fields,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         return $this->sendPushNotification($fields);
     }
 
@@ -53,8 +55,12 @@ class GCM
 
 //        $api_key = 'AIzaSyBdBwCEr5JUprgPriCb80WKUxHh69KqRBg';//my key for feitracylai@gmail.com
 
-//        $api_key = 'AIzaSyDdjFeemcBi8Zi6VFMFG7RjS9JTM-As2jE'; //older one
-		$api_key = 'AIzaSyDmDMFo7dG37wqR3HFK4bWFjLL0-GIKvkY';
+//<<<<<<< HEAD
+////        $api_key = 'AIzaSyDdjFeemcBi8Zi6VFMFG7RjS9JTM-As2jE'; //older one
+//		$api_key = 'AIzaSyDmDMFo7dG37wqR3HFK4bWFjLL0-GIKvkY';
+//=======
+        $api_key = 'AIzaSyD37LIRkywiFS7Y9uEFxRadKHSksTK4sNA';
+//>>>>>>> message
 
         // Set POST variables
         $url = 'https://gcm-http.googleapis.com/gcm/send';
@@ -80,6 +86,7 @@ class GCM
 
         // Execute post
         $result = curl_exec($ch);
+        Yii::getLogger()->log(print_r($result,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         if ($result === FALSE) {
             die('Curl failed: ' . curl_error($ch));
         }

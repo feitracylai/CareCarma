@@ -24,9 +24,16 @@ $config = [
                     'logVars' => ['_GET', '_SERVER'],
                 ],
                 [
-                    'class' => 'yii\log\DbTarget',
-                    'levels' => ['error', 'warning'],
-                    'logVars' => ['_GET', '_SERVER'],
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+//                    'logVars' => ['_GET', '_SERVER'],
+                    'logVars' =>[],//被收集记录的额外数据如 'logVars' => ['_GET', '_POST', '_FILES', '_COOKIE', '_SESSION','_SERVER'],
+                    //指定日志策略
+                    'categories' => ['MyLog'],
+                    //指定日志目录
+                    'logFile' => '@app/runtime/logs/Mylog/info.log',
+                    'maxFileSize' => 1024 * 2,
+                    'maxLogFiles' => 100,
                 ],
             ],
         ],
