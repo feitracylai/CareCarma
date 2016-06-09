@@ -32,7 +32,6 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
                 'contact_last',
                 'contact_mobile',
                 'contact_email:email',
-                'nickname',
                 [
                     'header' => 'Actions',
                     'class' => 'yii\grid\ActionColumn',

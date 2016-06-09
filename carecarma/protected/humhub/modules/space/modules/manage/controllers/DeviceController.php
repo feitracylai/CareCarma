@@ -452,7 +452,7 @@ class DeviceController extends Controller
 
         $space->setMember($user->id);
         // Redirect  back to Administration page
-        return $this->htmlRedirect($space->createUrl('/space/manage/device/index'));
+        return $this->htmlRedirect($space->createUrl('/space/manage/device', ['sguid' => $space->guid]));
     }
 
     public function getCare(){

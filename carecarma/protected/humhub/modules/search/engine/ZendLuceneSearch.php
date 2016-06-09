@@ -241,7 +241,7 @@ class ZendLuceneSearch extends Search
             $query->addSubquery($spaceBaseQuery, true);
         }
 
-        if (count($options['limitUsers']) > 0) {
+        if (count($options['limitUsers']) >= 0) {
 
             $userBaseQuery = new \ZendSearch\Lucene\Search\Query\Boolean();
             $userBaseQuery->addSubquery(new \ZendSearch\Lucene\Search\Query\Term(new \ZendSearch\Lucene\Index\Term(User::className(), 'containerModel')), true);
