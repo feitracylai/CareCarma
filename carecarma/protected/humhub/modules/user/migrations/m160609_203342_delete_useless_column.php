@@ -6,11 +6,6 @@ class m160609_203342_delete_useless_column extends Migration
 {
     public function up()
     {
-        $this->dropColumn('user', 'gcmId');
-        $this->dropColumn('device', 'user_id');
-        $this->dropColumn('contact', 'AndroidId');
-        $this->dropColumn('contact', 'isRead');
-        $this->execute('DROP TRIGGER IF EXISTS after_device_update');
         $this->dropTable('device_message');
     }
 
