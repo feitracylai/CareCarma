@@ -27,8 +27,6 @@ use yii\grid\GridView;
                 <div class="media-body">
                     <h4 class="media-heading"><a
                             href="#"><?php echo Html::encode($user->displayName); ?></a>
-                        <?php if ($user->group != null && $user->group->id != 1) { ?>
-                            <small>(<?php echo Html::encode($user->group->name); ?>)</small><?php } ?>
                     </h4>
                 </div>
 

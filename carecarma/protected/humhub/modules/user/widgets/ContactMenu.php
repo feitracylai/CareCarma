@@ -36,7 +36,7 @@ class ContactMenu extends BaseMenu
         ));
 
         $this->addItem(array(
-            'label' => Yii::t('UserModule.views_account_editContact', 'Import contact'),
+            'label' => Yii::t('UserModule.views_account_editContact', 'Import new contact'),
             'url' => Url::toRoute(['/user/contact/import']),
             'sortOrder' => 300,
             'isActive' => (Yii::$app->controller->action->id == 'import'),

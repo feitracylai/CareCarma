@@ -48,15 +48,11 @@ use \humhub\modules\space\modules\manage\widgets\ContactMenu;
 <!--            --><?php //echo Yii::t('UserModule.views_contact_import','user = {user}', array('{user}' => $user->id)); ?>
 
             <li>
-                <div class="media">
-
-                    <!-- Follow Handling -->
-<!--                    <div class="pull-right">
-                        <?= \humhub\modules\user\widgets\UserFollowButton::widget(['user' => $user, 'followOptions' => ['class' => 'btn btn-primary btn-sm'], 'unfollowOptions' => ['class' => 'btn btn-info btn-sm']]); ?>
-                   </div>-->
+                <div class="media" id="media-<?php echo $user->guid; ?>">
 
 
-                    <a href="#" class="pull-left contact" id="image-<?php echo $user->guid; ?>">
+
+                    <a href="#" class="pull-left contact">
                         <img class="media-object img-rounded"
                              src="<?php echo $user->getProfileImage()->getUrl(); ?>" width="50"
                              height="50" alt="50x50" data-src="holder.js/50x50"
@@ -65,8 +61,8 @@ use \humhub\modules\space\modules\manage\widgets\ContactMenu;
 
 
                     <div class="media-body">
-                        <h4 class="media-heading"><a
-                                href="<?php echo $user->getUrl(); ?>"><?php echo Html::encode($user->displayName); ?></a>
+                        <h4 class="media-heading">
+                            <?php echo Html::encode($user->displayName); ?>
                         </h4>
                         <?php if ($details[$user->id] != null && $details[$user->id] != 0) { ?>
                             <small>(<?php echo Yii::t('UserModule.views_contact_connect', '{detail}', array('{detail}' => Space::findOne(['id' => $details[$user->id]])->name )); ?>)</small>
@@ -97,7 +93,7 @@ use \humhub\modules\space\modules\manage\widgets\ContactMenu;
 
                 </div>
                 <script type="text/javascript">
-                    $('#image-<?php echo $user->guid; ?>').click(function(){
+                    $('#media-<?php echo $user->guid; ?>').click(function(){
 
                         $('#info-<?php echo $user->guid; ?>').toggle();
                     })
