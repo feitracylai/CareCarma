@@ -216,6 +216,10 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
         return $this->hasOne(Profile::className(), ['user_id' => 'id']);
     }
 
+    public function getDevice() {
+        return $this->hasOne(Device::className(), ['device_id' => 'device_id']);
+    }
+
     public function getGroup()
     {
         return $this->hasOne(Group::className(), ['id' => 'group_id']);
