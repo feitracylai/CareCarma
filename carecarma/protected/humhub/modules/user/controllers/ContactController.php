@@ -8,17 +8,16 @@ use humhub\modules\space\models\Space;
 use humhub\modules\user\models\ProfileField;
 use humhub\modules\user\models\Profile;
 use Yii;
-//use yii\debug\models\search\Profile;
 use yii\helpers\Url;
 use humhub\compat\HForm;
 use humhub\modules\space\models\forms\InviteForm;
 use humhub\modules\user\models\Contact;
 use humhub\modules\user\models\User;
 use humhub\modules\user\models\ContactSearch;
+use yii\log\Logger;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\HttpException;
 
 
 /**
@@ -61,7 +60,7 @@ class ContactController extends Controller
 
 
 
-        return $this->render('view', array('model' => $contact));
+        return $this->render('view', array('contact' => $contact));
     }
 
     public function actionEdit()
@@ -91,16 +90,6 @@ class ContactController extends Controller
                     'maxlength' => 255,
                     'readonly' => 'true',
                 ),
-                'contact_mobile' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'contact_email' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 100,
-                ),
                 'nickname' => array(
                     'type' => 'text',
                     'class' => 'form-control',
@@ -111,23 +100,51 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'prompt' => '--Select--',
                     'items' => Yii::$app->params['availableRelationship'],
-                )
+                ),
+                'contact_mobile' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'device_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                    'readonly' => 'true',
+                ),
+                'home_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'work_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'contact_email' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
+
             ),
         );
 
 
         // Get Form Definition
         $definition['buttons'] = array(
-            'save' => array(
-                'type' => 'submit',
-                'label' => Yii::t('UserModule.controllers_ContactController', 'Save'),
-                'class' => 'btn btn-primary',
-            ),
             'delete' => array(
                 'type' => 'submit',
                 'label' => Yii::t('UserModule.controllers_ContactController', 'Delete'),
-                'class' => 'btn btn-danger',
+                'class' => 'btn btn-danger ',
             ),
+            'save' => array(
+                'type' => 'submit',
+                'label' => Yii::t('UserModule.controllers_ContactController', 'Save'),
+                'class' => 'btn btn-primary pull-right',
+            ),
+
         );
 
         $form = new HForm($definition);
@@ -137,7 +154,6 @@ class ContactController extends Controller
         if ($form->submitted('save') && $form->validate()) {
             if ($form->save()) {
 
-                $form->models['Contact']->isRead = 'false';
                 $user = User::findOne(['id' => $contact->user_id]);
                 $contact->notifyDevice($user, 'update');
 
@@ -166,7 +182,6 @@ class ContactController extends Controller
         $searchOptions = [
             'model' => \humhub\modules\user\models\User::className(),
             'page' => $page,
-//            'pageSize' => DirectoryController::className()->module->pageSize,
         ];
 
         $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
@@ -195,16 +210,6 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 255,
                 ),
-                'contact_mobile' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'contact_email' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 100,
-                ),
                 'nickname' => array(
                     'type' => 'text',
                     'class' => 'form-control',
@@ -216,6 +221,33 @@ class ContactController extends Controller
                     'prompt' => '--Select--',
                     'items' => Yii::$app->params['availableRelationship'],
                 ),
+                'contact_mobile' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'device_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                    'readonly' => 'true',
+                ),
+                'home_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'work_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'contact_email' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
+
             ),
         );
 
@@ -344,16 +376,6 @@ class ContactController extends Controller
                     'maxlength' => 255,
                     'readonly' => 'true',
                 ),
-                'contact_mobile' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'contact_email' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 100,
-                ),
                 'nickname' => array(
                     'type' => 'text',
                     'class' => 'form-control',
@@ -364,7 +386,34 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'prompt' => '--Select--',
                     'items' => Yii::$app->params['availableRelationship'],
-                )
+                ),
+                'contact_mobile' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'device_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                    'readonly' => 'true',
+                ),
+                'home_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'work_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'contact_email' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
+
             ),
         );
 
@@ -439,7 +488,6 @@ class ContactController extends Controller
             'model' => \humhub\modules\user\models\User::className(),
             'page' => $page,
             'limitUsers' => $users,
-//            'pageSize' => $this->module->pageSize,
         ];
 
         $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
@@ -447,7 +495,16 @@ class ContactController extends Controller
 
         $connect_user_id = (int) Yii::$app->request->get('connect_id');
         if ($doit == 2) {
+            $contact_user = User::findOne(['id' => $connect_user_id]);
             $contact->contact_user_id = $connect_user_id;
+            $contact->contact_mobile = $contact_user->profile->mobile;
+            $contact->home_phone = $contact_user->profile->phone_private;
+            $contact->work_phone = $contact_user->profile->phone_work;
+            $contact->contact_email = $contact_user->email;
+            if ($contact_user->device_id != null)
+            {
+                $contact->device_phone = $contact_user->device->phone;
+            }
             $contact->save();
 
             $contact->notifyDevice('connect');

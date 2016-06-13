@@ -81,6 +81,11 @@ use \humhub\modules\space\models\Space;
                             $model->contact_first = $user->profile->firstname;
                             $model->contact_last = $user->profile->lastname;
                             $model->contact_mobile = $user->profile->mobile;
+                        if ($user->device_id != null) {
+                            $model->device_phone = $user->device->phone;
+                        }
+                            $model->home_phone = $user->profile->phone_private;
+                            $model->work_phone = $user->profile->phone_work;
                             $model->contact_email = $user->email;
 
                         ?>

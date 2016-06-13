@@ -37,10 +37,14 @@ use humhub\modules\user\models\User;
             'attributes' => [
                 'contact_first',
                 'contact_last',
-                'contact_mobile',
-                'contact_email:email',
                 'nickname',
                 'relation',
+                'contact_mobile',
+                'device_phone',
+                'home_phone',
+                'work_phone',
+                'contact_email',
+
 
             ],
         ]);

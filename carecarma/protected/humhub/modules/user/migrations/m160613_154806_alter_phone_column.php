@@ -6,7 +6,8 @@ class m160613_154806_alter_phone_column extends Migration
 {
     public function up()
     {
-        
+        $this->alterColumn('contact', 'relation', 'varchar(255) NOT NULL');
+        $this->alterColumn('contact', 'contact_mobile', 'varchar(255) NOT NULL');
         $this->alterColumn('contact', 'device_phone', 'varchar(255) NOT NULL');
         $this->alterColumn('contact', 'home_phone', 'varchar(255) NOT NULL');
         $this->alterColumn('contact', 'work_phone', 'varchar(255) NOT NULL');
