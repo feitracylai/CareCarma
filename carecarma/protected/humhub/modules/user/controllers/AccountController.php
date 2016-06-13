@@ -136,7 +136,7 @@ class AccountController extends Controller
 
         if ($doit == 2) {
 
-            $device = Device::findOne(['user_id' => $user->id]);
+            $device = Device::findOne(['device_id' => $user->device_id]);
             if ($device->gcmId != null) {
 
                 $gcm = new GCM();
@@ -259,6 +259,7 @@ class AccountController extends Controller
         $model = new \humhub\modules\user\models\forms\AccountDelete;
 
         if (!$isSpaceOwner && $model->load(Yii::$app->request->post()) && $model->validate()) {
+
             $user->delete();
             Yii::$app->user->logout();
             $this->redirect(Yii::$app->homeUrl);

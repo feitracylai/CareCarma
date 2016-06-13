@@ -4,6 +4,7 @@ use yii\widgets\ActiveForm;
 use \humhub\compat\CHtml;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use humhub\modules\user\models\Device;
 ?>
 
 <div class="panel-heading">
@@ -18,10 +19,18 @@ use yii\helpers\Url;
 
     <div class="form-group">
         <?php if(Yii::$app->user->getIdentity()->device_id != null) : ?>
-        <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Current device ID :</strong>'); ?>
+        <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Current device</strong>'); ?>
             <div style="margin: 0 20px">
-                <?php echo CHtml::encode(Yii::$app->user->getIdentity()->device_id) ?>
-                <?php echo Html::a(Yii::t('UserModule.views_account_editDevice', 'Delete'), Url::toRoute(['/user/account/delete-device', 'id' => $model->deviceId]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>
+                <p>
+                    ID:
+                    <?php echo CHtml::encode(Yii::$app->user->getIdentity()->device_id) ?>
+                    <br>
+                    Phone #:
+                    <?php echo CHtml::encode(Device::findOne(['device_id' => Yii::$app->user->getIdentity()->device_id])->phone ) ?>
+                    <?php echo Html::a(Yii::t('UserModule.views_account_editDevice', 'Delete'), Url::toRoute(['/user/account/delete-device', 'id' => $model->deviceId]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>
+
+                </p>
+
 
             </div>
         <?php endif; ?>
