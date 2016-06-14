@@ -22,17 +22,16 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
 
         <div class="form-group">
             <?php if($user->device_id != null) : ?>
-                <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Current device ID :</strong>'); ?>
+                <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Current Device</strong>'); ?>
                 <div style="margin: 0 20px">
+                    ID:
                     <?php echo CHtml::encode($user->device_id) ?>
-<!--                    --><?php //echo Html::a(Yii::t('UserModule.views_account_editDevice', 'Delete'), Url::toRoute(['/user/account/delete-device', 'id' => $model->deviceId]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>
-
+                    <br>
+                    Phone #:
+                    <?php echo CHtml::encode($user->device->phone) ?>
                 </div>
             <?php endif; ?>
         </div>
-<!--        <hr>-->
-<!---->
-<!--        --><?php //echo $form->field($model, 'currentPassword')->passwordInput(['maxlength' => 45]); ?>
 
 
         <?php echo $form->field($model, 'deviceId')->textInput(['maxlength' => 45]); ?>
