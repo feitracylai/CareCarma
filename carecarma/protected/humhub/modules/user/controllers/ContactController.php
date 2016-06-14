@@ -226,12 +226,6 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 255,
                 ),
-                'device_phone' =>array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                    'readonly' => 'true',
-                ),
                 'home_phone' =>array(
                     'type' => 'text',
                     'class' => 'form-control',
@@ -497,6 +491,8 @@ class ContactController extends Controller
         if ($doit == 2) {
             $contact_user = User::findOne(['id' => $connect_user_id]);
             $contact->contact_user_id = $connect_user_id;
+            $contact->contact_first = $contact_user->profile->firstname;
+            $contact->contact_last = $contact_user->profile->lastname;
             $contact->contact_mobile = $contact_user->profile->mobile;
             $contact->home_phone = $contact_user->profile->phone_private;
             $contact->work_phone = $contact_user->profile->phone_work;

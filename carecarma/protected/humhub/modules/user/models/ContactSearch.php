@@ -56,6 +56,7 @@ class ContactSearch extends Contact
                 'contact_mobile',
                 'contact_email',
                 'nickname',
+                'relation',
 
             ]
         ]);
@@ -77,7 +78,8 @@ class ContactSearch extends Contact
             ->andFilterWhere(['like', 'contact_last', $this->contact_last])
             ->andFilterWhere(['like', 'contact_mobile', $this->contact_mobile])
             ->andFilterWhere(['like', 'contact_email', $this->contact_email])
-            ->andFilterWhere(['like', 'nickname', $this->nickname]);
+            ->andFilterWhere(['like', 'nickname', $this->nickname])
+            ->andFilterWhere(['like', 'relation', $this->relation]);
 
         return $dataProvider;
     }

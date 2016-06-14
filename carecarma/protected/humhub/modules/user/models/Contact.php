@@ -38,7 +38,7 @@ class Contact extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['contact_first', 'contact_last', 'contact_mobile'], 'required'],
+            [['contact_first', 'contact_last'], 'required'],
             [['contact_mobile','device_phone','home_phone','work_phone'], 'number'],
             [['contact_email'], 'email'],
             [['user_id', 'contact_user_id'], 'integer'],
