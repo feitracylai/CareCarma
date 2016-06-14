@@ -39,16 +39,20 @@ use humhub\modules\user\models\User;
             'attributes' => [
                 'contact_first',
                 'contact_last',
-                'contact_mobile',
-                'contact_email:email',
                 'nickname',
+                'relation',
+                'contact_mobile',
+                'device_phone',
+                'home_phone',
+                'work_phone',
+                'contact_email',
 
             ],
         ]);
         ?>
 
         <br/>
-        <?php echo Html::a(Yii::t('UserModule.views_contact_delete', 'Back'), Url::toRoute(['/space/manage/contact', 'Cid' => $contact->contact_id, 'id' => $contact->user_id, 'sguid' => $space->guid]), array('class' => 'btn btn-primary')); ?>
+        <?php echo Html::a(Yii::t('UserModule.views_contact_delete', 'Back'), Url::toRoute(['/space/manage/contact', 'id' => $contact->user_id, 'sguid' => $space->guid]), array('class' => 'btn btn-primary')); ?>
 
 
     </div>

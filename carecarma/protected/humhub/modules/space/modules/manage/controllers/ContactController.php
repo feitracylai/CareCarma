@@ -96,7 +96,34 @@ class ContactController extends Controller
                     'maxlength' => 255,
                     'readonly' => 'true',
                 ),
+                'nickname' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'relation' => array(
+                    'type' => 'dropdownlist',
+                    'class' => 'form-control',
+                    'prompt' => '--Select--',
+                    'items' => Yii::$app->params['availableRelationship'],
+                ),
                 'contact_mobile' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'device_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                    'readonly' => 'true',
+                ),
+                'home_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'work_phone' =>array(
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 255,
@@ -105,11 +132,6 @@ class ContactController extends Controller
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 100,
-                ),
-                'nickname' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
                 ),
             ),
         );
@@ -136,7 +158,6 @@ class ContactController extends Controller
         if ($form->submitted('save') && $form->validate()) {
             if ($form->save()) {
 
-                $form->models['Contact']->isRead = 'false';
                 $contact->notifyDevice('update');
 
                 return $this->redirect(Url::toRoute(['/space/manage/contact','id' => $id, 'sguid' => $space->guid]));
@@ -186,16 +207,6 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 255,
                 ),
-                'contact_mobile' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'contact_email' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 100,
-                ),
                 'nickname' => array(
                     'type' => 'text',
                     'class' => 'form-control',
@@ -206,7 +217,27 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'prompt' => '--Select--',
                     'items' => Yii::$app->params['availableRelationship'],
-                )
+                ),
+                'contact_mobile' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'home_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'work_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'contact_email' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
             ),
         );
 
@@ -233,7 +264,7 @@ class ContactController extends Controller
 
                 $contactModel->notifyDevice('add');
 
-                return $this->redirect(Url::to(['/space/manage/contact/index','id' => $user->id, 'sguid' => $space->guid]));
+                return $this->redirect(Url::to(['/space/manage/contact','id' => $user->id, 'sguid' => $space->guid]));
             }
         }
 
@@ -334,16 +365,6 @@ class ContactController extends Controller
                     'maxlength' => 255,
                     'readonly' => 'true',
                 ),
-                'contact_mobile' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'contact_email' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 100,
-                ),
                 'nickname' => array(
                     'type' => 'text',
                     'class' => 'form-control',
@@ -354,7 +375,33 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'prompt' => '--Select--',
                     'items' => Yii::$app->params['availableRelationship'],
-                )
+                ),
+                'contact_mobile' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'device_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                    'readonly' => 'true',
+                ),
+                'home_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'work_phone' =>array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'contact_email' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
             ),
         );
 
@@ -415,9 +462,7 @@ class ContactController extends Controller
                 foreach (Membership::findAll(['space_id' => $spaceId, 'status' => 3]) as $spaceContact){
                     $userId = $spaceContact->user_id;
                     $existContact = Contact::findOne(['user_id' => $id, 'contact_user_id' => $userId]);
-//                    Yii::getLogger()->log($userId, Logger::LEVEL_INFO, 'MyLog');
                     if ($userId != $id && !$existContact){
-                        Yii::getLogger()->log($userId, Logger::LEVEL_INFO, 'MyLog');
                         $limitUsers[] = User::findOne(['id' => $userId]);
                         $spaces[$userId] = $spaceId;
                     }
@@ -426,7 +471,6 @@ class ContactController extends Controller
         }
 
 
-        Yii::getLogger()->log(count($limitUsers), Logger::LEVEL_INFO, 'MyLog');
 
         $keyword = Yii::$app->request->get('keyword', "");
         $page = (int) Yii::$app->request->get('page', 1);
@@ -444,12 +488,23 @@ class ContactController extends Controller
 
         $connect_user_id = (int) Yii::$app->request->get('connect_id');
         if ($doit == 2) {
+            $contact_user = User::findOne(['id' => $connect_user_id]);
             $contact->contact_user_id = $connect_user_id;
+            $contact->contact_first = $contact_user->profile->firstname;
+            $contact->contact_last = $contact_user->profile->lastname;
+            $contact->contact_mobile = $contact_user->profile->mobile;
+            $contact->home_phone = $contact_user->profile->phone_private;
+            $contact->work_phone = $contact_user->profile->phone_work;
+            $contact->contact_email = $contact_user->email;
+            if ($contact_user->device_id != null)
+            {
+                $contact->device_phone = $contact_user->device->phone;
+            }
             $contact->save();
 
             $contact->notifyDevice('connect');
 
-            return $this->redirect(Url::to(['/space/manage/contact/edit', 'Cid' => $Cid, 'id' => $id, 'sguid' => $thisSpace->guid]));
+            return $this->redirect(Url::to(['/space/manage/contact', 'id' => $id, 'sguid' => $thisSpace->guid]));
         }
 
         return $this->render('connect', array(

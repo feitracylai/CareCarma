@@ -45,7 +45,6 @@ use \humhub\modules\space\modules\manage\widgets\ContactMenu;
     <ul class="media-list">
         <!-- BEGIN: Results -->
         <?php foreach ($users as $user) : ?>
-<!--            --><?php //echo Yii::t('UserModule.views_contact_import','user = {user}', array('{user}' => $user->id)); ?>
 
             <li>
                 <div class="media" id="media-<?php echo $user->guid; ?>">
@@ -80,11 +79,16 @@ use \humhub\modules\space\modules\manage\widgets\ContactMenu;
                     <div class="middle">
                         <?php $form = \yii\widgets\ActiveForm::begin(); ?>
                         <?php
-                            $model->contact_user_id = $user->id;
-                            $model->contact_first = $user->profile->firstname;
-                            $model->contact_last = $user->profile->lastname;
-                            $model->contact_mobile = $user->profile->mobile;
-                            $model->contact_email = $user->email;
+                        $model->contact_user_id = $user->id;
+                        $model->contact_first = $user->profile->firstname;
+                        $model->contact_last = $user->profile->lastname;
+                        $model->contact_mobile = $user->profile->mobile;
+                        if ($user->device_id != null) {
+                            $model->device_phone = $user->device->phone;
+                        }
+                        $model->home_phone = $user->profile->phone_private;
+                        $model->work_phone = $user->profile->phone_work;
+                        $model->contact_email = $user->email;
 
                         ?>
                         <?php echo $hForm->render($form); ?>

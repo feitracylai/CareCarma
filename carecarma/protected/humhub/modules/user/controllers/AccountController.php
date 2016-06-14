@@ -94,6 +94,7 @@ class AccountController extends Controller
 
                 $user->device_id = $model->deviceId;
                 $user->save();
+                $user->updateUserContacts();
 
                 if ($device->gcmId != null ) {
 
@@ -149,7 +150,7 @@ class AccountController extends Controller
 
             $user->device_id = null;
             $user->save();
-
+            $user->updateUserContacts();
 
             return $this->redirect(Url::to(['/user/account/edit-device']));
         }

@@ -358,10 +358,22 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
     public function updateUserContacts () {
         $contacts = Contact::findAll(['contact_user_id' => $this->id]);
         foreach ($contacts as $contact) {
+            $contact->contact_first = $this->profile->firstname;
+            $contact->contact_last = $this->profile->lastname;
             $contact->contact_email = $this->email;
             $contact->contact_mobile = $this->profile->mobile;
+            $contact->home_phone = $this->profile->phone_private;
+            $contact->work_phone = $this->profile->phone_work;
+            if ($this->device_id != null)
+            {
+                $contact->device_phone = $this->device->phone;
+            }else {
+                $contact->device_phone = '';
+            }
             $contact->save();
             $contact->notifyDevice('update');
+
+
         }
     }
 

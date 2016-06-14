@@ -170,6 +170,11 @@ class DeviceController extends Controller
                             $contact->contact_last = $contact_user->profile->lastname;
                             $contact->contact_mobile = $contact_user->profile->mobile;
                             $contact->contact_email = $contact_user->email;
+                            $contact->home_phone = $contact_user->profile->phone_private;
+                            $contact->work_phone = $contact_user->profile->phone_work;
+                            if ($contact_user->device_id != null) {
+                                $contact->device_phone = $contact_user->device->phone;
+                            }
                             $contact->user_id = $form->models['User']->id;
                             $contact->save();
                         }
@@ -179,8 +184,6 @@ class DeviceController extends Controller
                     $space->addMember($form->models['User']->id);
                     $space->setCareReceiver($form->models['User']->id);
 
-                    $device->user_id = $form->models['User']->id;
-                    $device->save();
 
                     if($device->gcmId != null) {
 
@@ -252,15 +255,10 @@ class DeviceController extends Controller
             $device = Device::find()->where(['device_id' => $deviceModel->deviceId])->one();
             if ($device!=null) {
                 if ($device != $deviceOld) {
-                    $deviceOld->user_id = null;
-                    $deviceOld->save();
 
                     $user->device_id = $deviceModel->deviceId;
-                    $device->user_id = $user->id;
-                    $device->save();
 
                     if ($device->gcmId != null ) {
-                        $user->gcmId = $device->gcmId;
 
                         $gcm = new GCM();
                         $push = new Push();
@@ -269,7 +267,7 @@ class DeviceController extends Controller
                         $push->setData($user->getId());
 
 
-                        $gcm_registration_id = $user->gcmId;
+                        $gcm_registration_id = $device->gcmId;
 
                         $gcm->send($gcm_registration_id, $push->getPush());
 
@@ -285,6 +283,7 @@ class DeviceController extends Controller
 
 
                     $user->save();
+                    $user->updateUserContacts();
                 }
 
 
@@ -329,6 +328,8 @@ class DeviceController extends Controller
             // Trigger search refresh
             $user->save();
 
+            $user->updateUserContacts();
+
             Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
             return $this->redirect(Url::to(['edit']));
         }
@@ -340,24 +341,6 @@ class DeviceController extends Controller
         ));
     }
 
-//    public function actionContact() {
-//        $space = $this->getSpace();
-//        $user = User::findOne(['id' => Yii::$app->request->get('id')]);
-//
-//        $searchModel = new ContactSearch();
-//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $user->id);
-//
-//        return $this->render('contact/index', [
-//            'searchModel' => $searchModel,
-//            'dataProvider' => $dataProvider,
-//            'space' => $space,
-//            'user' => $user,
-//        ]);
-//    }
-
-//    public function actionContact() {
-//        return $this->redirect('/space/manage/contact');
-//    }
 
 
     public function actionSettings() {
