@@ -19,6 +19,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\HttpException;
+use yii\helpers\BaseJson;
 
 
 /**
@@ -478,6 +479,24 @@ class ContactController extends Controller
         return $this->redirect(Url::toRoute(['/user/contact/edit', 'id' => $id]));
     }
 
+    public function actionDeviceallcontact ()
+    {
+        $user_id = Yii::$app->user->id;
+        $contact = Contact::find()->where(['user_id' => $user_id])->all();
+
+        Yii::getLogger()->log(print_r(CJSON::encode(convertModelToArray($contact)),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+
+//        foreach ($contact_list->each() as $contact_user) {
+//            $contact_user;
+//        }
+    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    public function actionDevice ()
+    {
+        $data = Yii::$app->request->post();
+
+    }
 
 
 }
