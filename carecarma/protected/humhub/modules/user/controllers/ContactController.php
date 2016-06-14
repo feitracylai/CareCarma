@@ -565,7 +565,28 @@ class ContactController extends Controller
         $tel_number = $device_data['tel_number'];
         $device = new Device();
         $device->device_id = $device_id;
-        $device->token = $token;
+        $device->gcmId = $token;
+        $device->phone = $tel_number;
+        $device->save();
+
+        if ($this->checkDevice($device_id)) {
+            $user = User::findOne(['device_id' => $device_id]);
+            foreach (Contact::find()->where(['contact_user_id' => $user->id])->each() as $contact) {
+                $contact->device_phone = $tel_number;
+                $contact->save();
+            }
+        }
+    }
+
+    public function checkDevice ($device_id) {
+        $user = User::findOne(['device_id' => $device_id]);
+        $device = Device::findOne(['device_id' => $device_id]);
+        if ($user != null and $device != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
 
     }
 
