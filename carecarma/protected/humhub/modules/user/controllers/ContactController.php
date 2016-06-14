@@ -18,6 +18,9 @@ use yii\log\Logger;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\HttpException;
+use yii\helpers\BaseJson;
+use humhub\modules\user\models\Device;
 
 
 /**
@@ -26,6 +29,11 @@ use yii\filters\VerbFilter;
  */
 class ContactController extends Controller
 {
+
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
 
     public $subLayout = "@humhub/modules/user/views/account/_layout";
 
@@ -535,6 +543,31 @@ class ContactController extends Controller
         return $this->redirect(Url::toRoute(['/user/contact/edit', 'id' => $id]));
     }
 
+    public function actionDeviceallcontact ()
+    {
+        $user_id = Yii::$app->user->id;
+        $contact = Contact::find()->where(['user_id' => $user_id])->all();
+
+        Yii::getLogger()->log(print_r(CJSON::encode(convertModelToArray($contact)),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+
+//        foreach ($contact_list->each() as $contact_user) {
+//            $contact_user;
+//        }
+    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    public function actionDevice ()
+    {
+        $data = Yii::$app->request->post();
+        $device_data = $data['DeviceInfo'];
+        $device_id = $device_data['device_id'];
+        $token = $device_data['token'];
+        $tel_number = $device_data['tel_number'];
+        $device = new Device();
+        $device->device_id = $device_id;
+        $device->token = $token;
+
+    }
 
 
 }
