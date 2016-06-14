@@ -74,9 +74,23 @@ class BeaconController extends Controller
         $beacon_list = json_decode($json_data, TRUE);
 
         foreach ($beacon_list as $beacon) {
-            $beacon_id = $beacon['beacon_id'];
-            $distance = $beacon['distance'];
-            $datetime = $beacon['datetime'];
+
+            try {
+                $beacon_id = $beacon['beacon_id'];
+            } catch (Exception $e) {
+                $beacon_id = null;
+            }
+            if (array_key_exists("distance", $beacon)) {
+                $distance = $beacon['distance'];
+            } else {
+                $distance = null;
+            }
+            if (array_key_exists("datetime", $beacon)) {
+                $datetime = $beacon['datetime'];
+            } else {
+                $datetime = null;
+            }
+
             $model = new beacon();
             $model->user_id = Yii::$app->user->id;
             $model->beacon_id = $beacon_id;

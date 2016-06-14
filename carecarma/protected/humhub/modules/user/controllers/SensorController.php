@@ -69,21 +69,69 @@ class SensorController extends Controller
     public function actionCreate()
     {
 
+        Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $data = Yii::$app->request->post();
         $json_data = $data['Sensor'];
         $sensor_list = json_decode($json_data, TRUE);
 
         foreach ($sensor_list as $sensor) {
-            $accelX = $sensor['accelX'];
-            $accelY = $sensor['accelY'];
-            $accelZ = $sensor['accelZ'];
-            $gyroX = $sensor['GyroX'];
-            $gyroY = $sensor['GyroY'];
-            $gyroZ = $sensor['GyroZ'];
-            $compX = $sensor['CompX'];
-            $compY = $sensor['CompY'];
-            $compZ = $sensor['CompZ'];
-            $datetime = $sensor['datetime'];
+
+            if (array_key_exists("accelX", $sensor)) {
+                $accelX = $sensor['accelX'];
+            } else {
+                $accelX = null;
+            }
+            if (array_key_exists("accelY", $sensor)) {
+                $accelY = $sensor['accelY'];
+            } else {
+                $accelY = null;
+            }
+            if (array_key_exists("accelZ", $sensor)) {
+                $accelZ = $sensor['accelZ'];
+            } else {
+                $accelZ = null;
+            }
+
+            if (array_key_exists("GyroX", $sensor)) {
+                $gyroX = $sensor['GyroX'];
+            } else {
+                $gyroX = null;
+            }
+            if (array_key_exists("GyroY", $sensor)) {
+                $gyroY = $sensor['GyroY'];
+            } else {
+                $gyroY = null;
+            }
+            if (array_key_exists("GyroZ", $sensor)) {
+                $gyroZ = $sensor['GyroZ'];
+            } else {
+                $gyroZ = null;
+            }
+
+
+
+            if (array_key_exists("CompX", $sensor)) {
+                $compX = $sensor['CompX'];
+            } else {
+                $compX = null;
+            }
+            if (array_key_exists("CompY", $sensor)) {
+                $compY = $sensor['CompY'];
+            } else {
+                $compY = null;
+            }
+            if (array_key_exists("CompZ", $sensor)) {
+                $compZ = $sensor['CompZ'];
+            } else {
+                $compZ = null;
+            }
+
+            if (array_key_exists("datetime", $sensor)) {
+                $datetime = $sensor['datetime'];
+            } else {
+                $datetime = null;
+            }
+
             $model = new sensor();
             $model->user_id = Yii::$app->user->id;
             $model->datetime = $datetime;

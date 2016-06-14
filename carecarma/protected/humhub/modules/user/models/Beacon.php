@@ -29,8 +29,8 @@ class Beacon extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'beacon_id'], 'required'],
-            [['user_id', 'beacon_id'], 'integer'],
+            [['user_id'], 'required'],
+            [['user_id'], 'integer'],
             [['datetime'], 'safe'],
             [['distance'], 'string', 'max' => 100],
         ];
