@@ -71,6 +71,9 @@ class Contact extends \yii\db\ActiveRecord
     {
         if ($insert) {
 
+            if ($this->contact_mobile == null) {
+                $this->contact_mobile = '';
+            }
             if ($this->device_phone == null) {
                 $this->device_phone = '';
             }
