@@ -42,6 +42,20 @@ class ContactController extends Controller
         $searchModel = new ContactSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $user->id);
 
+        // Relationship Change
+        if (Yii::$app->request->post('dropDownColumnSubmit')) {
+            Yii::$app->response->format = 'json';
+            $contact = Contact::findOne(['contact_id' => Yii::$app->request->post('contact_id')]);
+            if ($contact === null) {
+                throw new \yii\web\HttpException(404, 'Could not find contacts!');
+            }
+
+            if ($contact->load(Yii::$app->request->post()) && $contact->validate() && $contact->save()) {
+                return Yii::$app->request->post();
+            }
+            return $contact->getErrors();
+        }
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -104,7 +118,6 @@ class ContactController extends Controller
                 'relation' => array(
                     'type' => 'dropdownlist',
                     'class' => 'form-control',
-                    'prompt' => '--Select--',
                     'items' => Yii::$app->params['availableRelationship'],
                 ),
                 'contact_mobile' => array(
@@ -215,7 +228,6 @@ class ContactController extends Controller
                 'relation' => array(
                     'type' => 'dropdownlist',
                     'class' => 'form-control',
-                    'prompt' => '--Select--',
                     'items' => Yii::$app->params['availableRelationship'],
                 ),
                 'contact_mobile' => array(
@@ -373,7 +385,6 @@ class ContactController extends Controller
                 'relation' => array(
                     'type' => 'dropdownlist',
                     'class' => 'form-control',
-                    'prompt' => '--Select--',
                     'items' => Yii::$app->params['availableRelationship'],
                 ),
                 'contact_mobile' => array(
