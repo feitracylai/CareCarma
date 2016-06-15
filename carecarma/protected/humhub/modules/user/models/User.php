@@ -38,6 +38,7 @@ use humhub\modules\user\components\ActiveQueryUser;
  * @property integer $visibility
  * @property integer $contentcontainer_id
  * @property string $device_id
+ * @property string $temp_password
  */
 class User extends ContentContainerActiveRecord implements \yii\web\IdentityInterface, \humhub\modules\search\interfaces\Searchable
 {
@@ -157,6 +158,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             'last_login' => 'Last Login',
             'visibility' => 'Visibility',
             'device_id' => 'Device ID',
+            'temp_password' => 'Temp Password',
         ];
     }
 

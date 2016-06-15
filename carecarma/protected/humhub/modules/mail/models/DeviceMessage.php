@@ -14,18 +14,17 @@ use yii\base\Model;
 /**
  * This is the model class for table "device_message".
  *
- * @property integer $id
+ * @property integer $type
  * @property integer $message_id
  * @property integer $user_id
  * @property integer $from_id
  * @property string $content
- * @property string $updated_at
- * @property string $isRead
  */
 //make some change to the DeviceMessage: make it a independent class, extends from Model, not extends from ActiveRecord
 //class DeviceMessage extends \yii\db\ActiveRecord
 class DeviceMessage extends Model
 {
+    public $type;
     public $message_id;
     public $user_id;
     public $from_id;
@@ -70,6 +69,7 @@ class DeviceMessage extends Model
     public function getData()
     {
         return [
+            'type' => $this->type,
             'message'=> $this->message_id,
             'user_id'=> $this->user_id,
             'from_id'=> $this->from_id,
@@ -89,11 +89,12 @@ class DeviceMessage extends Model
 //
 //        $push->setTitle('message');
 //        $push->setData($this->id);
-
+//        Yii::getLogger()->log(print_r($this->user_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $user = User::findOne(['id' => $this->user_id]);
-        $device = Device::findOne(['id' => $user->device_id]);
+        Yii::getLogger()->log(print_r($user->device_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $device = Device::findOne(['device_id' => $user->device_id]);
         $gcm_id = $device->gcmId;
-        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r($this->getData(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
 //        $gcm_registration_id = "eeajUUBkwG0:APA91bGZIyJ0XEO29JnDFhaJWFGLRw8mvJ4foQFfL_vcnQuEqXzaokLZdTeitpi8nvdlpurCIbcryd4AzM1x_FQVgAYbVvNpHOO0wTD4XuYi3OiMOlkVnk8-xcM9lbCbLFQ7qq1GALSs";
 //        Yii::getLogger()->log(print_r($this->getData(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         

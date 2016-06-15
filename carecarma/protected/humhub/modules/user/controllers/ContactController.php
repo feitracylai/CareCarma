@@ -21,6 +21,7 @@ use yii\filters\VerbFilter;
 use yii\web\HttpException;
 use yii\helpers\BaseJson;
 use humhub\modules\user\models\Device;
+use humhub\modules\user\models\ContactInfo;
 
 
 /**
@@ -163,7 +164,7 @@ class ContactController extends Controller
             if ($form->save()) {
 
                 $user = User::findOne(['id' => $contact->user_id]);
-                $contact->notifyDevice($user, 'update');
+                $contact->notifyDevice('update');
 
                 return $this->redirect(Url::toRoute('/user/contact'));
             }
@@ -275,8 +276,8 @@ class ContactController extends Controller
 //            $form->models['Contact']->status = User::STATUS_ENABLED;
             if ($form->models['Contact']->save()) {
 
-                $user = User::findOne(['id' => $contactModel->user_id]);
-                $contactModel->notifyDevice($user, 'add');
+//                $user = User::findOne(['id' => $contactModel->user_id]);
+                $contactModel->notifyDevice('add');
 
 
                 return $this->redirect(Url::to(['index']));
@@ -511,7 +512,7 @@ class ContactController extends Controller
             }
             $contact->save();
 
-            $contact->notifyDevice('connect');
+            $contact->notifyDevice('update');
 
             return $this->redirect(Url::to(['/user/contact']));
         }
@@ -542,14 +543,28 @@ class ContactController extends Controller
     public function actionDeviceallcontact ()
     {
         $user_id = Yii::$app->user->id;
-        $contact = Contact::find()->where(['user_id' => $user_id])->all();
-
-        Yii::getLogger()->log(print_r(CJSON::encode(convertModelToArray($contact)),true),yii\log\Logger::LEVEL_INFO,'MyLog');
-
-
-//        foreach ($contact_list->each() as $contact_user) {
-//            $contact_user;
-//        }
+//        $contact = Contact::find()->where(['user_id' => $user_id])->all();
+        $contact_list = array();
+        $contact_list['type'] = 'contact,all';
+        $contact_data = array();
+        foreach (Contact::find()->where(['user_id' => $user_id])->each() as $contact) {
+            $contactInfo = new ContactInfo();
+            $contactInfo->user_id = $user_id;
+            $contactInfo->contact_user_id = $contact->contact_user_id;
+            $contactInfo->contact_first = $contact->contact_first;
+            $contactInfo->contact_last = $contact->contact_last;
+            $contactInfo->nickname = $contact->nickname;
+            $contactInfo->relation = $contact->relation;
+            $contactInfo->contact_mobile = $contact->contact_mobile;
+            $contactInfo->contact_email = $contact->contact_email;
+            $contactInfo->home_phone = $contact->home_phone;
+            $contactInfo->work_phone = $contact->work_phone;
+            array_push($contact_data, $contactInfo);
+//            Yii::getLogger()->log(print_r(json_encode($contact->getAttributes(array('user_id', 'contact_user_id', 'nickname'))),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        }
+        $contact_list['data'] = $contact_data;
+        ContactInfo::notify($contact_list);
+        
     }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
     public function actionDevice ()
@@ -566,25 +581,44 @@ class ContactController extends Controller
         $device->save();
 
         if ($this->checkDevice($device_id)) {
-            $user = User::findOne(['device_id' => $device_id]);
-            foreach (Contact::find()->where(['contact_user_id' => $user->id])->each() as $contact) {
-                $contact->device_phone = $tel_number;
-                $contact->save();
-            }
+            $this->activation($device_id);
         }
     }
 
     public function checkDevice ($device_id) {
         $user = User::findOne(['device_id' => $device_id]);
         $device = Device::findOne(['device_id' => $device_id]);
-        if ($user != null and $device != null) {
+        $gcmId = $device->gcmId;
+        if ($user != null and $gcmId != null) {
             return true;
         }
         else {
             return false;
         }
+    }
+    
+    public function activation ($device_id) {
+        $user = User::findOne(['device_id' => $device_id]);
+        $device = Device::findOne(['device_id' => $device_id]);
+        foreach (Contact::find()->where(['contact_user_id' => $user->id])->each() as $contact) {
+            $contact->device_phone = $device->phone;
+            $contact->save();
+        }
 
+        $gcm = new GCM();
+        $device = Device::findOne(['id' => $user->device_id]);
+        $gcm_id = $device->gcmId;
+//        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+//        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $gcm->send($gcm_id, $this->getUsernamePassword($user));
+        $this->actionDeviceallcontact();
     }
 
-
+    public function getUsernamePassword($user) {
+        return [
+            'username' => $user->username,
+            'password' => $user->temp_password,
+        ];
+    }
 }

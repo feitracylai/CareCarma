@@ -93,27 +93,33 @@ class AccountController extends Controller
             if ($device!=null) {
 
                 $user->device_id = $model->deviceId;
+                $user->temp_pasword = $model->currentPassword;
                 $user->save();
                 $user->updateUserContacts();
 
-                if ($device->gcmId != null ) {
 
-                    $gcm = new GCM();
-                    $push = new Push();
-
-                    $push->setTitle('binding');
-//                    $push->setData(Yii::t('UserModule.controllers_AccountController', '{user_id = {id}}', array('{id}' => $user->getId())));
-                    $push->setData($user->getId());
-
-                    $gcm_registration_id = $device->gcmId;
-                    $gcm->send($gcm_registration_id, $push->getPush());
+                if ($this->checkDevice($user->device_id)) {
+                    $this->activation($user->device_id);
                 }
-                if($deviceOld != null && $deviceOld->gcmId != null) {
-                    $gcmOld = new GCM();
-                    $pushOld = new Push();
-                    $pushOld->setTitle('binding delete');
-                    $gcmOld->send($deviceOld->gcmId, $pushOld->getPush());
-                }
+
+//                if ($device->gcmId != null ) {
+//
+//                    $gcm = new GCM();
+//                    $push = new Push();
+//
+//                    $push->setTitle('binding');
+////                    $push->setData(Yii::t('UserModule.controllers_AccountController', '{user_id = {id}}', array('{id}' => $user->getId())));
+//                    $push->setData($user->getId());
+//
+//                    $gcm_registration_id = $device->gcmId;
+//                    $gcm->send($gcm_registration_id, $push->getPush());
+//                }
+//                if($deviceOld != null && $deviceOld->gcmId != null) {
+//                    $gcmOld = new GCM();
+//                    $pushOld = new Push();
+//                    $pushOld->setTitle('binding delete');
+//                    $gcmOld->send($deviceOld->gcmId, $pushOld->getPush());
+//                }
 
                 Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
             }
@@ -152,12 +158,74 @@ class AccountController extends Controller
             $user->save();
             $user->updateUserContacts();
 
+
+
             return $this->redirect(Url::to(['/user/account/edit-device']));
         }
 
 
         return $this->render('deleteDevice', array('model' => $model, 'user' => $user));
     }
+
+
+
+
+    public function checkDevice ($device_id) {
+        $user = User::findOne(['device_id' => $device_id]);
+        $device = Device::findOne(['device_id' => $device_id]);
+        $gcmId = $device->gcmId;
+        if ($user != null and $gcmId != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
+
+
+    public function activation ($device_id) {
+        $user = User::findOne(['device_id' => $device_id]);
+        $device = Device::findOne(['device_id' => $device_id]);
+        foreach (Contact::find()->where(['contact_user_id' => $user->id])->each() as $contact) {
+            $contact->device_phone = $device->phone;
+            $contact->save();
+        }
+
+        $gcm = new GCM();
+        $device = Device::findOne(['id' => $user->device_id]);
+        $gcm_id = $device->gcmId;
+//        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+//        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $gcm->send($gcm_id, $this->getUsernamePassword($user));
+//        $this->actionDeviceallcontact();
+    }
+
+    public function getUsernamePassword($user) {
+        return [
+            'username' => $user->username,
+            'password' => $user->temp_password,
+        ];
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Change Account

@@ -11,6 +11,7 @@ use Yii;
  * @property string $device_id
  * @property string $gcmId
  * @property string $phone
+ * @property string $temp_password
  */
 class Device extends \yii\db\ActiveRecord
 {
@@ -41,7 +42,8 @@ class Device extends \yii\db\ActiveRecord
         return [
             'device_id' => 'Device ID',
             'gcmId' => 'Gcm ID',
-            'phone' => 'Device Phone#'
+            'phone' => 'Device Phone#',
+            'temp_password' => 'Temp Password'
         ];
     }
 
