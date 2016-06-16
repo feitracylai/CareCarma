@@ -34,13 +34,26 @@ use humhub\modules\user\models\User;
         <?php } ?>
 
         <?php
+        $relationship = Yii::$app->params['availableRelationship'];
+        foreach ($relationship as $value) {
+            if (is_array($value)){
+                if (array_key_exists($contact->relation, $value)) {
+                    $relation = $value[$contact->relation];
+                }
+
+            }
+
+        }
         echo \yii\widgets\DetailView::widget([
             'model' => $contact,
             'attributes' => [
                 'contact_first',
                 'contact_last',
                 'nickname',
-                'relation',
+                [
+                    'label' => Yii::t('UserModule.views_contact_view','Relationship'),
+                    'value' => $relation,
+                ],
                 'contact_mobile',
                 'device_phone',
                 'home_phone',
@@ -54,6 +67,7 @@ use humhub\modules\user\models\User;
         <br/>
         <?php echo Html::a(Yii::t('UserModule.views_contact_delete', 'Back'), Url::toRoute(['/space/manage/contact', 'id' => $contact->user_id, 'sguid' => $space->guid]), array('class' => 'btn btn-primary')); ?>
 
+        <?php echo Html::a(Yii::t('UserModule.views_contact_view', 'Edit'), Url::toRoute(['/space/manage/contact/edit', 'Cid' => $contact->contact_id, 'id' => $contact->user_id, 'sguid' => $space->guid]), array('class' => 'btn btn-primary pull-right')); ?>
 
     </div>
 </div>
