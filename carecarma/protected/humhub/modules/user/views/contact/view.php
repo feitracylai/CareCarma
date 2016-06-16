@@ -6,7 +6,7 @@ use humhub\modules\user\models\User;
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo Yii::t('UserModule.views_contact_delete', '<strong>View</strong> Contact'); ?>
+        <?php echo Yii::t('UserModule.views_contact_view', '<strong>View</strong> Contact'); ?>
     </div>
     <div class="panel-body">
 
@@ -32,13 +32,28 @@ use humhub\modules\user\models\User;
         <?php } ?>
 
         <?php
+        $relationship = Yii::$app->params['availableRelationship'];
+        foreach ($relationship as $value) {
+            if (is_array($value)){
+                if (array_key_exists($contact->relation, $value)) {
+                    $relation = $value[$contact->relation];
+                }
+
+            }
+
+        }
+
+
         echo \yii\widgets\DetailView::widget([
             'model' => $contact,
             'attributes' => [
                 'contact_first',
                 'contact_last',
                 'nickname',
-                'relation',
+                [
+                    'label' => Yii::t('UserModule.views_contact_view','Relationship'),
+                    'value' => $relation,
+                ],
                 'contact_mobile',
                 'device_phone',
                 'home_phone',
@@ -51,9 +66,9 @@ use humhub\modules\user\models\User;
         ?>
 
         <br/>
-        <?php echo Html::a(Yii::t('UserModule.views_contact_delete', 'Back'), Url::toRoute(['/user/contact/index', 'id' => $contact->contact_id]), array('class' => 'btn btn-primary')); ?>
+        <?php echo Html::a(Yii::t('UserModule.views_contact_view', 'Back'), Url::toRoute('/user/contact/index'), array('class' => 'btn btn-primary')); ?>
 
-        <?php echo Html::a(Yii::t('UserModule.views_contact_delete', 'Edit'), Url::toRoute(['/user/contact/edit', 'id' => $contact->contact_id]), array('class' => 'btn btn-primary pull-right')); ?>
+        <?php echo Html::a(Yii::t('UserModule.views_contact_view', 'Edit'), Url::toRoute(['/user/contact/edit', 'id' => $contact->contact_id]), array('class' => 'btn btn-primary pull-right')); ?>
 
 
     </div>
