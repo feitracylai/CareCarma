@@ -109,7 +109,8 @@ class Contact extends \yii\db\ActiveRecord
         return [
             'type' => 'contact,delete',
             'user_id' => $this->user_id,
-            'contact_id' => $this->contact_id
+            'contact_id' => $this->contact_id,
+            'contact_user_id' => $this->contact_user_id
         ];
     }
 
