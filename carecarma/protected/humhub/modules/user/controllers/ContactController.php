@@ -476,6 +476,7 @@ class ContactController extends Controller
         $contact_data = array();
         foreach (Contact::find()->where(['user_id' => $user_id])->each() as $contact) {
             $contactInfo = new ContactInfo();
+            $contactInfo->contact_id = $contact->contact_id;
             $contactInfo->user_id = $user_id;
             $contactInfo->contact_user_id = $contact->contact_user_id;
             $contactInfo->contact_first = $contact->contact_first;
@@ -490,11 +491,19 @@ class ContactController extends Controller
 //            Yii::getLogger()->log(print_r(json_encode($contact->getAttributes(array('user_id', 'contact_user_id', 'nickname'))),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         }
         $contact_list['data'] = $contact_data;
-        ContactInfo::notify($contact_list);
-        
+//        ContactInfo::notify($contact_list);
 
-        $contact = Contact::find()->where(['user_id' => $user_id])->all();
-        Yii::getLogger()->log(print_r(CJSON::encode(convertModelToArray($contact)),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $gcm = new GCM();
+        $user = User::findOne(['id' => $contact_list['data'][0]->user_id]);
+        $device = Device::findOne(['device_id' => $user->device_id]);
+        $gcm_id = $device->gcmId;
+        Yii::getLogger()->log(print_r($contact_list,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+//        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $gcm->send($gcm_id, $contact_list);
+
+//        $contact = Contact::find()->where(['user_id' => $user_id])->all();
+//        Yii::getLogger()->log(print_r(CJSON::encode(convertModelToArray($contact)),true),yii\log\Logger::LEVEL_INFO,'MyLog');
 //        foreach ($contact_list->each() as $contact_user) {
 //            $contact_user;
 //        }
@@ -543,7 +552,6 @@ class ContactController extends Controller
 //        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         Yii::getLogger()->log(print_r($this->getUsernamePassword($user),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm->send($gcm_id, $this->getUsernamePassword($user));
-        $this->actionDeviceallcontact();
     }
 
     public function getUsernamePassword($user) {

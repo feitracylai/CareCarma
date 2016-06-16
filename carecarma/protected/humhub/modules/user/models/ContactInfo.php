@@ -13,8 +13,9 @@ use yii\base\Model;
 use humhub\libs\GCM;
 use Yii;
 
-class ContactInfo extends Model
+class ContactInfo
 {
+    public $contact_id;
     public $contact_first;
     public $contact_last;
     public $contact_mobile;
@@ -48,7 +49,7 @@ class ContactInfo extends Model
         $user = User::findOne(['id' => $contact_list['data'][0]['user_id']]);
         $device = Device::findOne(['id' => $user->device_id]);
         $gcm_id = $device->gcmId;
-//        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r($contact_list,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
 //        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm->send($gcm_id, $contact_list);
