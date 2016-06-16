@@ -91,6 +91,7 @@ class Contact extends \yii\db\ActiveRecord
     public function getAddPush() {
         return [
             'type' => 'contact,add',
+            'contact_id' => $this->contact_id,
             'contact_first' => $this->contact_first,
             'contact_last' => $this->contact_last,
             'contact_mobile' => $this->contact_mobile,
@@ -108,13 +109,14 @@ class Contact extends \yii\db\ActiveRecord
         return [
             'type' => 'contact,delete',
             'user_id' => $this->user_id,
-            'contact_user_id' => $this->contact_user_id,
+            'contact_id' => $this->contact_id
         ];
     }
 
     public function getUpdatePush() {
         return [
             'type' => 'contact,update',
+            'contact_id' => $this->contact_id,
             'contact_first' => $this->contact_first,
             'contact_last' => $this->contact_last,
             'contact_mobile' => $this->contact_mobile,
@@ -138,6 +140,7 @@ class Contact extends \yii\db\ActiveRecord
                 if ($device->gcmId != null){
                     $gcm = new GCM();
                     $gcm_registration_id = $device->gcmId;
+                    Yii::getLogger()->log(print_r($this->getAddPush(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $gcm->send($gcm_registration_id, $this->getAddPush());
 
                 }
@@ -151,6 +154,7 @@ class Contact extends \yii\db\ActiveRecord
                 if ($device->gcmId != null){
                     $gcm = new GCM();
                     $gcm_registration_id = $device->gcmId;
+                    Yii::getLogger()->log(print_r($this->getDeletePush(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $gcm->send($gcm_registration_id, $this->getDeletePush());
 
                 }
@@ -165,6 +169,7 @@ class Contact extends \yii\db\ActiveRecord
                 if ($device->gcmId != null){
                     $gcm = new GCM();
                     $gcm_registration_id = $device->gcmId;
+                    Yii::getLogger()->log(print_r($this->getUpdatePush(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $gcm->send($gcm_registration_id, $this->getUpdatePush());
 
                 }

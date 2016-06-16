@@ -93,7 +93,7 @@ class AccountController extends Controller
             if ($device!=null) {
 
                 $user->device_id = $model->deviceId;
-                $user->temp_pasword = $model->currentPassword;
+                $user->temp_password = $model->currentPassword;
                 $user->save();
                 $user->updateUserContacts();
 
@@ -194,7 +194,6 @@ class AccountController extends Controller
         }
 
         $gcm = new GCM();
-        $device = Device::findOne(['id' => $user->device_id]);
         $gcm_id = $device->gcmId;
 //        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
@@ -205,6 +204,7 @@ class AccountController extends Controller
 
     public function getUsernamePassword($user) {
         return [
+            'type' => 'active,login',
             'username' => $user->username,
             'password' => $user->temp_password,
         ];
