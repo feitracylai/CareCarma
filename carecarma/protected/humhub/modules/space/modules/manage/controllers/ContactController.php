@@ -513,7 +513,7 @@ class ContactController extends Controller
             }
             $contact->save();
 
-            $contact->notifyDevice('connect');
+            $contact->notifyDevice('update');
 
             return $this->redirect(Url::to(['/space/manage/contact', 'id' => $id, 'sguid' => $thisSpace->guid]));
         }

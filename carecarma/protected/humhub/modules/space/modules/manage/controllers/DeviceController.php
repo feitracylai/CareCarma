@@ -151,6 +151,11 @@ class DeviceController extends Controller
             if ($device != null) {
                 if ($form->models['User']->save()) {
                     // Save User Profile
+                    // save the temp_password
+                    $user_current = User::findOne(['id' => $userModel->id]);
+                    $user_current->temp_password = $userPasswordModel->newPassword;
+                    $user_current->save();
+
                     $form->models['Profile']->user_id = $form->models['User']->id;
                     $form->models['Profile']->save();
 
@@ -184,21 +189,10 @@ class DeviceController extends Controller
                     $space->addMember($form->models['User']->id);
                     $space->setCareReceiver($form->models['User']->id);
 
-
-                    if($device->gcmId != null) {
-
-                        $gcm = new GCM();
-                        $push = new Push();
-
-                        $push->setTitle('user id');
-                        $push->setData($form->models['User']->id);
-
-
-                        $gcm_registration_id = $device->gcmId;
-
-                        $gcm->send($gcm_registration_id, $push->getPush());
+                    // check if device fulfill all the rule of activation, if yes, activation
+                    if ($this->checkDevice($form->models['User']->device_id)) {
+                        $this->activation($form->models['User']->device_id);
                     }
-
 
                     return $this->redirect($space->createUrl('/space/manage/device'));
                 }
@@ -215,6 +209,69 @@ class DeviceController extends Controller
             'space' => $space
         ));
     }
+
+
+
+
+    public function checkDevice ($device_id) {
+        $user = User::findOne(['device_id' => $device_id]);
+        $device = Device::findOne(['device_id' => $device_id]);
+        $gcmId = $device->gcmId;
+        if ($user != null and $gcmId != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function activation ($device_id) {
+        $user = User::findOne(['device_id' => $device_id]);
+        $device = Device::findOne(['device_id' => $device_id]);
+        foreach (Contact::find()->where(['contact_user_id' => $user->id])->each() as $contact) {
+            $contact->device_phone = $device->phone;
+            $contact->save();
+        }
+        Yii::getLogger()->log(print_r("qweqweqwe",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $gcm = new GCM();
+        $gcm_id = $device->gcmId;
+//        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+//        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r($this->getUsernamePassword($user),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $gcm->send($gcm_id, $this->getUsernamePassword($user));
+    }
+
+    public function getUsernamePassword($user) {
+        return [
+            'type' => 'active,login',
+            'username' => $user->username,
+            'password' => $user->temp_password,
+        ];
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function actionEdit() {
         $space = $this->getSpace();
