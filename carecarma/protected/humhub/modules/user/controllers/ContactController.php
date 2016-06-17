@@ -552,6 +552,9 @@ class ContactController extends Controller
 //        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         Yii::getLogger()->log(print_r($this->getUsernamePassword($user),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm->send($gcm_id, $this->getUsernamePassword($user));
+        $user_new = User::findOne(['device_id' => $device_id]);
+        $user_new->temp_password = null;
+        $user_new->save();
     }
 
     public function getUsernamePassword($user) {
