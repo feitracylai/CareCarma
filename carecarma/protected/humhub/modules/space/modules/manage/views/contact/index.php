@@ -29,6 +29,7 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
         echo GridView::widget([
             'dataProvider' => $dataProvider,
 //            'filterModel' => $searchModel,
+            'summary' => false,
             'columns' => [
                 [
                     'label' => Yii::t('UserModule.views_contact_index', 'Name'),

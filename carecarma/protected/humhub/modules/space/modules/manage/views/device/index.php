@@ -37,6 +37,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                 echo GridView::widget([
                     'dataProvider' => $dataProvider,
 //                'filterModel' => $searchModel,
+                    'summary' => false,
                     'columns' => [
                         'user.username',
                         'user.email',

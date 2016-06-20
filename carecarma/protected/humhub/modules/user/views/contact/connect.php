@@ -46,16 +46,12 @@ use \humhub\modules\space\models\Space;
                 <li>
                     <div class="media">
 
-                        <!-- Follow Handling -->
-                        <!--                    <div class="pull-right">
-                        <?= \humhub\modules\user\widgets\UserFollowButton::widget(['user' => $user, 'followOptions' => ['class' => 'btn btn-primary btn-sm'], 'unfollowOptions' => ['class' => 'btn btn-info btn-sm']]); ?>
-                   </div>-->
                         <div class="pull-right" >
                             <?php echo Html::a(Yii::t('UserModule.views_contact_connect', 'Connect'), Url::toRoute(['/user/contact/connect', 'id' => $contact->contact_id, 'doit' => 2, 'connect_id' => $user->id]), array('class' => 'btn btn-danger btn-xs pull-right', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? Click "OK" if you want to connect this user account with your contact.')); ?>
                         </div>
 
 
-                        <a href="#" class="pull-left contact" id="image-<?php echo $user->guid; ?>">
+                        <a class="pull-left contact" id="image-<?php echo $user->guid; ?>">
                             <img class="media-object img-rounded"
                                  src="<?php echo $user->getProfileImage()->getUrl(); ?>" width="50"
                                  height="50" alt="50x50" data-src="holder.js/50x50"
@@ -64,8 +60,7 @@ use \humhub\modules\space\models\Space;
 
 
                         <div class="media-body">
-                            <h4 class="media-heading"><a
-                                    href="<?php echo $user->getUrl(); ?>"><?php echo Html::encode($user->displayName); ?></a>
+                            <h4 class="media-heading"><?php echo Html::encode($user->displayName); ?>
 
                             </h4>
                             <?php if ($details[$user->id] != null && $details[$user->id] != 0) { ?>
@@ -84,6 +79,8 @@ use \humhub\modules\space\models\Space;
             <?php endforeach; ?>
             <!-- END: Results -->
         </ul>
+
+
 
     </div>
     <div class="pagination-container">
