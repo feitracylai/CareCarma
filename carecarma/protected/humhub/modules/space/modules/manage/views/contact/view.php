@@ -36,6 +36,7 @@ use humhub\modules\user\models\User;
         <div class=<?php echo $detail; ?> >
             <?php
             $relationship = Yii::$app->params['availableRelationship'];
+            $relation = '';
             foreach ($relationship as $value) {
                 if (is_array($value)){
                     if (array_key_exists($contact->relation, $value)) {
