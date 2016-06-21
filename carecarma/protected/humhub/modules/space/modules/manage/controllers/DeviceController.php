@@ -4,6 +4,7 @@ use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\data\ArrayDataProvider;
+use yii\log\Logger;
 use yii\web\HttpException;
 use humhub\libs\GCM;
 use humhub\libs\Push;
@@ -14,19 +15,22 @@ use humhub\modules\user\models\Device;
 use humhub\modules\user\models\Contact;
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\models\Space;
-use humhub\modules\space\modules\manage\components\Controller;
 use humhub\modules\space\modules\manage\models\DeviceUserSearch;
 use humhub\compat\HForm;
+use humhub\modules\content\components\ContentContainerController;
 /**
  * Member Controller
  *
  * @author Luke
  */
-class DeviceController extends Controller
+class DeviceController extends ContentContainerController
 {
     /**
      * CareReceiver Administration Action
      */
+
+    public $hideSidebar = true;
+
     public function actionIndex()
     {
         $space = $this->getSpace();
@@ -185,12 +189,8 @@ class DeviceController extends Controller
             $contact->device_phone = $device->phone;
             $contact->save();
         }
-        Yii::getLogger()->log(print_r("qweqweqwe",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm = new GCM();
         $gcm_id = $device->gcmId;
-//        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-//        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        Yii::getLogger()->log(print_r($this->getUsernamePassword($user),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm->send($gcm_id, $this->getUsernamePassword($user));
         $user_new = User::findOne(['device_id' => $device_id]);
         $user_new->temp_password = null;
