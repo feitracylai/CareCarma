@@ -80,6 +80,9 @@ use \humhub\modules\space\models\Space;
             <!-- END: Results -->
         </ul>
 
+        <div class="panel-body">
+            <?php echo Html::a(Yii::t('UserModule.views_contact_connect', '<i class="fa fa-backward"></i> Back'), Url::toRoute(['/user/contact/edit', 'id' => $contact->contact_id]), array('class' => 'btn btn-primary')); ?>
+        </div>
 
 
     </div>
