@@ -42,14 +42,14 @@ class AccountMenu extends BaseMenu
             'group' => 'account',
             'url' => Url::toRoute('/user/account/edit'),
             'sortOrder' => 100,
-            'isActive' => (Yii::$app->controller->action->id == "edit"),
+            'isActive' => (Yii::$app->controller->action->id == "edit" && Yii::$app->controller->id == 'account'),
         ));
 
         $this->addItem(array(
             'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Contact'),
             'icon' => '<i class="fa fa-pencil-square-o"></i>',
             'group' => 'account',
-            'url' => Url::toRoute('/user/contact/index'),
+            'url' => Url::toRoute('/user/contact/'),
             'sortOrder' => 120,
             'isActive' => (Yii::$app->controller->id == 'contact'),
         ));
@@ -60,7 +60,7 @@ class AccountMenu extends BaseMenu
             'group' => 'account',
             'url' => Url::toRoute('/user/account/edit-device'),
             'sortOrder' => 130,
-            'isActive' => (Yii::$app->controller->action->id == "edit-device"),
+            'isActive' => (Yii::$app->controller->action->id == "edit-device" && Yii::$app->controller->id == 'account'),
         ));
 
         $this->addItem(array(
@@ -69,7 +69,7 @@ class AccountMenu extends BaseMenu
             'group' => 'account',
             'url' => Url::toRoute('/user/account/edit-settings'),
             'sortOrder' => 140,
-            'isActive' => (Yii::$app->controller->action->id == "edit-settings"),
+            'isActive' => (Yii::$app->controller->action->id == "edit-settings" && Yii::$app->controller->id == 'account'),
         ));
 
 
@@ -81,7 +81,7 @@ class AccountMenu extends BaseMenu
                 'group' => 'account',
                 'url' => Url::toRoute('//user/account/edit-modules'),
                 'sortOrder' => 150,
-                'isActive' => (Yii::$app->controller->action->id == "editModules"),
+                'isActive' => (Yii::$app->controller->action->id == "editModules" && Yii::$app->controller->id == 'account'),
             ));
         }
 
@@ -91,7 +91,7 @@ class AccountMenu extends BaseMenu
             'group' => 'account',
             'url' => Url::toRoute('//user/account/emailing/'),
             'sortOrder' => 200,
-            'isActive' => (Yii::$app->controller->action->id == "emailing"),
+            'isActive' => (Yii::$app->controller->action->id == "emailing" && Yii::$app->controller->id == 'account'),
         ));
 
         // LDAP users cannot change their e-mail address
@@ -102,7 +102,7 @@ class AccountMenu extends BaseMenu
                 'group' => 'account',
                 'url' => Url::toRoute('//user/account/change-email'),
                 'sortOrder' => 300,
-                'isActive' => (Yii::$app->controller->action->id == "change-email"),
+                'isActive' => (Yii::$app->controller->action->id == "change-email" && Yii::$app->controller->id == 'account'),
             ));
         }
 
@@ -114,7 +114,7 @@ class AccountMenu extends BaseMenu
                 'group' => 'account',
                 'url' => Url::toRoute('//user/account/change-password'),
                 'sortOrder' => 500,
-                'isActive' => (Yii::$app->controller->action->id == "change-password"),
+                'isActive' => (Yii::$app->controller->action->id == "change-password" && Yii::$app->controller->id == 'account'),
             ));
             $this->addItem(array(
                 'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Delete account'),
@@ -122,7 +122,7 @@ class AccountMenu extends BaseMenu
                 'group' => 'account',
                 'url' => Url::toRoute('//user/account/delete'),
                 'sortOrder' => 600,
-                'isActive' => (Yii::$app->controller->action->id == "delete"),
+                'isActive' => (Yii::$app->controller->action->id == "delete" && Yii::$app->controller->id == 'account'),
             ));
         }
 
