@@ -24,12 +24,14 @@ class DeviceMenu extends \humhub\widgets\BaseMenu
             'isActive' => (Yii::$app->controller->action->id == 'index' && Yii::$app->controller->id === 'device'),
         ));
 
-        $this->addItem(array(
-            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Add Account'),
-            'url' => $this->space->createUrl('/space/manage/device/add'),
-            'sortOrder' => 200,
-            'isActive' => (Yii::$app->controller->action->id == 'add' && Yii::$app->controller->id === 'device'),
-        ));
+        if ($this->space->isAdmin()){
+            $this->addItem(array(
+                'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Add Account'),
+                'url' => $this->space->createUrl('/space/manage/device/add'),
+                'sortOrder' => 200,
+                'isActive' => (Yii::$app->controller->action->id == 'add' && Yii::$app->controller->id === 'device'),
+            ));
+        }
 
         parent::init();
     }

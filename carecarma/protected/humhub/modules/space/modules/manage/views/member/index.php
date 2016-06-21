@@ -13,6 +13,7 @@ use humhub\modules\space\modules\manage\widgets\MemberMenu;
         <?php echo Yii::t('SpaceModule.views_admin_members', '<strong>Manage</strong> members'); ?>
     </div>
     <div class="panel-body">
+        <?php echo Yii::t('SpaceModule.views_admin_members', 'If you set someone in "Care Receiver" Group, his/her account can be managed by the administers in this space. And All of the member in this space can see the health report of his/her device.'); ?>
         <div class="table-responsive">
             <?php
             $groups = $space->getUserGroups();
@@ -23,6 +24,7 @@ use humhub\modules\space\modules\manage\widgets\MemberMenu;
             echo GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
+                'summary' => false,
                 'columns' => [
                     'user.username',
                     'user.profile.firstname',

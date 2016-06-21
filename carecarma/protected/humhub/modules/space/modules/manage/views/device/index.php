@@ -66,7 +66,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                                     ]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View his/her health report']);
                                 },
                                 'delete' => function ($url,$model) use ($space) {
-                                    if ($space->isSpaceOwner()){
+                                    if ($space->isAdmin()){
                                         return Html::a('<i class="fa fa-times"></i>', Url::toRoute(['delete', 'sguid' => $space->guid, 'id' => $model->user->id
 
                                         ]), ['class' => 'btn btn-danger btn-xs tt', 'title' => 'Delete account or Move to regular member']);
@@ -75,7 +75,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                                         return;
                                 },
                                 'update' => function($url,$model) use ($space){
-                                    if ($space->isSpaceOwner()){
+                                    if ($space->isAdmin()){
                                         return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['edit', 'sguid' => $space->guid, 'id' => $model->user->id
                                         ]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Edit his/her account']);
                                     }
