@@ -19,6 +19,7 @@ use humhub\modules\mail\models\forms\ReplyMessage;
 use humhub\modules\mail\models\forms\CreateMessage;
 use humhub\modules\mail\permissions\SendMail;
 use humhub\modules\user\widgets\UserPicker;
+use humhub\modules\space\models\Membership;
 
 /**
  * MailController provides messaging actions.
@@ -284,12 +285,23 @@ class MailController extends Controller
         $results = [];
         foreach ($query->all() as $user) {
             if ($user != null) {
-                $userInfo = array();
-                $userInfo['guid'] = $user->guid;
-                $userInfo['displayName'] = Html::encode($user->displayName);
-                $userInfo['image'] = $user->getProfileImage()->getUrl();
-                $userInfo['link'] = $user->getUrl();
-                $results[] = $userInfo;
+                $spaces = Membership::findAll(['user_id' => $user->id]);
+                foreach ($spaces as $memberSpace) {
+                    $spaceId = $memberSpace->space_id;
+                    $spaceUser = Membership::findAll(['space_id' => $spaceId, 'user_id' => Yii::$app->user->id]);
+                    if ($spaceUser != null){
+                        Yii::getLogger()->log($user->id, Logger::LEVEL_INFO, 'MyLog');
+                        $userInfo = array();
+                        $userInfo['guid'] = $user->guid;
+                        $userInfo['displayName'] = Html::encode($user->displayName);
+                        $userInfo['image'] = $user->getProfileImage()->getUrl();
+                        $userInfo['link'] = $user->getUrl();
+                        $results[] = $userInfo;
+                        break;
+                    }
+                }
+
+
             }
         }
         return $results;
