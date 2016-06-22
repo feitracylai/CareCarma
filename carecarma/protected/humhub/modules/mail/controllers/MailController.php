@@ -290,7 +290,6 @@ class MailController extends Controller
                     $spaceId = $memberSpace->space_id;
                     $spaceUser = Membership::findAll(['space_id' => $spaceId, 'user_id' => Yii::$app->user->id]);
                     if ($spaceUser != null){
-                        Yii::getLogger()->log($user->id, Logger::LEVEL_INFO, 'MyLog');
                         $userInfo = array();
                         $userInfo['guid'] = $user->guid;
                         $userInfo['displayName'] = Html::encode($user->displayName);
