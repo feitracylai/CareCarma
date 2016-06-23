@@ -2,12 +2,16 @@
 
 namespace humhub\modules\user\controllers;
 
+require '/../vendor/autoload.php';
+
 use Yii;
 use humhub\modules\user\models\beacon;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Aws\DynamoDb\Exception\DynamoDbException;
+use Aws\DynamoDb\Marshaler;
 
 /**
  * BeaconController implements the CRUD actions for beacon model.
@@ -106,6 +110,59 @@ class BeaconController extends Controller
 //                'model' => $model,
 //            ]);
 //        }
+    }
+
+    public function actionCreatedy()
+    {
+        Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+        $sdk = new \Aws\Sdk([
+            'region'   => 'us-east-1',
+            'version'  => 'latest'
+        ]);
+
+        $dynamodb = $sdk->createDynamoDb();
+        $marshaler = new Marshaler();
+        $tableName = 'beacon';
+
+        $data = Yii::$app->request->post();
+        $json_data = $data['Beacon'];
+        $beacon_list = json_decode($json_data, TRUE);
+//        Yii::getLogger()->log(print_r($beacon_list,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        foreach ($beacon_list as $beacon) {
+//            Yii::getLogger()->log(print_r($beacon,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+            $beacon_id = $beacon['beacon_id'];
+            $user_id = Yii::$app->user->id;
+            if (array_key_exists("distance", $beacon)) {
+                $distance = $beacon['distance'];
+            } else {
+                $distance = null;
+            }
+            if (array_key_exists("datetime", $beacon)) {
+                $datetime = $beacon['datetime'];
+            } else {
+                $datetime = null;
+            }
+            $json = json_encode([
+                'user_id' => $user_id,
+                'beacon_id' => $beacon_id,
+                'distance' => $distance,
+                'datetime' => $datetime
+            ]);
+            $params = [
+                'TableName' => $tableName,
+                'Item' => $marshaler->marshalJson($json)
+            ];
+
+            try {
+                $result = $dynamodb->putItem($params);
+//                Yii::getLogger()->log(print_r($result,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+            } catch (DynamoDbException $e) {
+                echo "Fail\n";
+                break;
+            }
+
+        }
     }
 
     /**
