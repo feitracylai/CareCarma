@@ -322,7 +322,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .topbar .dropdown-header .dropdown-header-link a {
-    color: #6fdbe8 !important;
+    color: #ec6952 !important;
     font-size: 12px;
     font-weight: 400
 }
@@ -635,7 +635,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 #topbar-second .nav > li > ul > li > a:hover, #topbar-second .nav > li > ul > li > a.active {
-    border-left: 3px solid #6fdbe8;
+    border-left: 3px solid #ec6952;
     background-color: #f7f7f7;
     color: #555
 }
@@ -1852,7 +1852,7 @@ a.list-group-item:hover, a.list-group-item.active, a.list-group-item.active:hove
 }
 
 .tooltip-inner {
-    background-color: #708fa0;
+    background-color: #ec6952;
     max-width: 400px;
     text-align: left;
     font-weight: 300;
@@ -1862,35 +1862,35 @@ a.list-group-item:hover, a.list-group-item.active, a.list-group-item.active:hove
 }
 
 .tooltip.top .tooltip-arrow {
-    border-top-color: #708fa0
+    border-top-color: #ec6952
 }
 
 .tooltip.top-left .tooltip-arrow {
-    border-top-color: #708fa0
+    border-top-color: #ec6952
 }
 
 .tooltip.top-right .tooltip-arrow {
-    border-top-color: #708fa0
+    border-top-color: #ec6952
 }
 
 .tooltip.right .tooltip-arrow {
-    border-right-color: #708fa0
+    border-right-color: #ec6952
 }
 
 .tooltip.left .tooltip-arrow {
-    border-left-color: #708fa0
+    border-left-color: #ec6952
 }
 
 .tooltip.bottom .tooltip-arrow {
-    border-bottom-color: #708fa0
+    border-bottom-color: #ec6952
 }
 
 .tooltip.bottom-left .tooltip-arrow {
-    border-bottom-color: #708fa0
+    border-bottom-color: #ec6952
 }
 
 .tooltip.bottom-right .tooltip-arrow {
-    border-bottom-color: #708fa0
+    border-bottom-color: #ec6952
 }
 
 .tooltip.in {
@@ -1950,6 +1950,7 @@ table td a:hover {
 .comment.guest-mode .media:last-child hr {
     display: none
 }
+
 
 .grid-view img {
     width: 24px;
@@ -2725,7 +2726,7 @@ img.bounceIn {
 }
 
 .md-editor.active {
-    border: 2px solid #6fdbe8 !important
+    border: 2px solid #ff9999 !important
 }
 
 @media (max-width: 767px) {

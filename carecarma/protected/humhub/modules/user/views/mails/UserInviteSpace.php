@@ -193,8 +193,8 @@ use humhub\models\Setting;
                                                         <!-- START: CONTENT -->
                                                         <?php echo Yii::t('UserModule.views_mails_UserInviteSpace', 'invited you to the family:'); ?>
                                                         <strong><?php echo Html::encode($space->name); ?></strong>
-                                                        at <?php echo Html::encode(Yii::$app->name); ?>.<?php echo Yii::t('UserModule.views_mails_UserInviteSpace', '<br>A social network to increase your communication and teamwork.<br>Register now
-                                                        to join this family.'); ?><br/>
+                                                        in <?php echo Html::encode(Yii::$app->name); ?>.<?php echo Yii::t('UserModule.views_mails_UserInviteSpace', '<br>A social network to increase your caring and communication in your family.Register now
+                                                        to join.'); ?><br/>
                                                         &nbsp;
                                                         <!-- END: CONTENT -->
                                                     </td>
@@ -218,7 +218,7 @@ use humhub\models\Setting;
                                             <!-- start button -->
                                             <table border="0" align="center" cellpadding="0" cellspacing="0">
                                                 <tr>
-                                                    <td width="auto"  align="center" valign="middle" height="32" style=" background-color:<?php echo Setting::Get('colorPrimary'); ?>;  border-radius:5px; background-clip: padding-box;font-size:14px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; text-align:center;  color:#ffffff; font-weight: 600; padding-left:30px; padding-right:30px; padding-top: 5px; padding-bottom: 5px;">
+                                                    <td width="auto"  align="center" valign="middle" height="32" style=" background-color:<?php echo Setting::Get('colorPrimary'); ?>;  border-radius:5px; background-clip: padding-box;font-size:20px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; text-align:center;  color:#ffffff; font-weight: 600; padding-left:30px; padding-right:30px; padding-top: 5px; padding-bottom: 5px;">
 
                                                         <span style="color: #ffffff; font-weight: 300;">
                                                             <a href="<?php echo Url::to(['/user/auth/create-account', 'token' => $token], true); ?>" style="text-decoration: none; color: #ffffff; font-weight: 300;">
