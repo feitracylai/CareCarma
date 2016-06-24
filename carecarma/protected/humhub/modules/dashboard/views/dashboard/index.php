@@ -1,5 +1,5 @@
 <?php
-$this->pageTitle = Yii::t('DashboardModule.views_dashboard_index', 'Dashboard');
+$this->pageTitle = Yii::t('DashboardModule.views_dashboard_index', 'Home');
 ?>
 <div class="container">
     <div class="row">
@@ -14,7 +14,7 @@ $this->pageTitle = Yii::t('DashboardModule.views_dashboard_index', 'Dashboard');
             echo \humhub\modules\content\widgets\Stream::widget([
                 'streamAction' => '//dashboard/dashboard/stream',
                 'showFilters' => false,
-                'messageStreamEmpty' => Yii::t('DashboardModule.views_dashboard_index', '<b>Your dashboard is empty!</b><br>Post something on your profile or join some families!'),
+                'messageStreamEmpty' => Yii::t('DashboardModule.views_dashboard_index', '<b>Your home is empty!</b><br>Post something on your profile or join some families!'),
             ]);
             ?>
         </div>
