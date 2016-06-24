@@ -528,7 +528,7 @@ use humhub\models\Setting;
                 <td align="center" valign="top" style="background-color: <?php echo Setting::Get('colorPrimary'); ?>; ">
 
                     <!-- start container 600 -->
-                    <table width="600" align="center" border="0" cellspacing="0" cellpadding="0" class="container" bgcolor="<?php echo Setting::Get('colorPrimary'); ?>"
+                    <table width="600" align="center" border="0" cellspacing="0" cellpadding="10px" class="container" bgcolor="<?php echo Setting::Get('colorPrimary'); ?>"
                            style="background-color: <?php echo Setting::Get('colorPrimary'); ?>; ">
                         <tr>
                             <td valign="top">
@@ -561,8 +561,8 @@ use humhub\models\Setting;
                                                                             <td style="font-size: 12px; line-height: 27px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; color:#ffffff; font-weight:300; text-align:center;">
                                                                                 <span
                                                                                     style="text-decoration: none; color: #ffffff;"><a
-                                                                                        href="<?php echo Url::to(['/'], true); ?>"
-                                                                                        style="font-size: 18px; line-height: 27px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; color:#ffffff; font-weight:600; text-align:left;"><?php echo Html::encode(Yii::$app->name); ?></a></span>
+                                                                                        href="http://carecarma.tk/"
+                                                                                        style="font-size: 25px; line-height: 25px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; color:#ffffff; font-weight:600; text-align:left;"><?php echo Html::encode(Yii::$app->name); ?></a></span>
 
                                                                             </td>
                                                                         </tr>
