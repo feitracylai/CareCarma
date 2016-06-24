@@ -68,7 +68,7 @@ class ContentContainerController extends Controller
             $this->contentContainer = Space::findOne(['guid' => $spaceGuid]);
 
             if ($this->contentContainer == null) {
-                throw new \yii\web\HttpException(404, Yii::t('base', 'Space not found!'));
+                throw new \yii\web\HttpException(404, Yii::t('base', 'Family not found!'));
             }
 
             $this->attachBehavior('SpaceControllerBehavior', array(

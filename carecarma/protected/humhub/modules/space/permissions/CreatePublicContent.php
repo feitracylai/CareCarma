@@ -46,7 +46,7 @@ class CreatePublicContent extends \humhub\libs\BasePermission
     /**
      * @inheritdoc
      */
-    protected $moduleId = 'space';
+    protected $moduleId = 'family';
 
     public function __construct($config = array()) {
         parent::__construct($config);

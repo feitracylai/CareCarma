@@ -5,7 +5,7 @@ use yii\helpers\Html;
 
 <div class="panel panel-default members" id="space-members-panel">
     <?php echo \humhub\widgets\PanelMenu::widget(['id' => 'space-members-panel']); ?>
-    <div class="panel-heading"><?php echo Yii::t('SpaceModule.widgets_views_spaceMembers', '<strong>Space</strong> members'); ?></div>
+    <div class="panel-heading"><?php echo Yii::t('SpaceModule.widgets_views_spaceMembers', '<strong>Family</strong> members'); ?></div>
     <div class="panel-body">
         <?php foreach ($members as $membership) : ?>
             <?php $user = $membership->user; ?>

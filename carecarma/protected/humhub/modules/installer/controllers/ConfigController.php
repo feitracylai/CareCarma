@@ -80,7 +80,7 @@ class ConfigController extends Controller
     public function actionIndex()
     {
         if (Setting::Get('name') == "") {
-            Setting::Set('name', "HumHub");
+            Setting::Set('name', "CareCarma");
         }
 
         \humhub\modules\installer\libs\InitialData::bootstrap();
@@ -428,7 +428,7 @@ class ConfigController extends Controller
             $form->models['User']->status = User::STATUS_ENABLED;
             $form->models['User']->super_admin = true;
             $form->models['User']->language = '';
-            $form->models['User']->tags = 'Administration, Support, HumHub';
+            $form->models['User']->tags = 'Administration, Support, CareCarma';
             $form->models['User']->last_activity_email = new \yii\db\Expression('NOW()');
             $form->models['User']->save();
 
@@ -448,8 +448,8 @@ class ConfigController extends Controller
 
             // Create Welcome Space
             $space = new Space();
-            $space->name = Yii::t("InstallerModule.controllers_ConfigController", "Welcome Space");
-            $space->description = Yii::t("InstallerModule.controllers_ConfigController", "Your first sample space to discover the platform.");
+            $space->name = Yii::t("InstallerModule.controllers_ConfigController", "Welcome Family");
+            $space->description = Yii::t("InstallerModule.controllers_ConfigController", "Your first family to discover the platform.");
             $space->join_policy = Space::JOIN_POLICY_FREE;
             $space->visibility = Space::VISIBILITY_ALL;
             $space->created_by = $userId;
@@ -464,7 +464,7 @@ class ConfigController extends Controller
 
             // Add Some Post to the Space
             $post = new \humhub\modules\post\models\Post();
-            $post->message = Yii::t("InstallerModule.controllers_ConfigController", "Yay! I've just installed HumHub ;Cool;");
+            $post->message = Yii::t("InstallerModule.controllers_ConfigController", "Yay! I've just installed CareCarma ;Cool;");
             $post->content->container = $space;
             $post->content->visibility = \humhub\modules\content\models\Content::VISIBILITY_PUBLIC;
             $post->save();

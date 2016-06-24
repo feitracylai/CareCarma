@@ -13,14 +13,14 @@ $this->registerCssFile('@web/resources/space/colorpicker/css/bootstrap-colorpick
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title"
-                id="myModalLabel"><?php echo Yii::t('SpaceModule.views_create_create', '<strong>Create</strong> new space'); ?></h4>
+                id="myModalLabel"><?php echo Yii::t('SpaceModule.views_create_create', '<strong>Create</strong> new family'); ?></h4>
         </div>
         <div class="modal-body">
 
             <hr>
             <br>
             <div class="row">
-                <div class="col-md-8"> <?php echo $form->field($model, 'name')->textInput(['id' => 'space-name', 'placeholder' => Yii::t('SpaceModule.views_create_create', 'space name'), 'maxlength' => 45]); ?></div>
+                <div class="col-md-8"> <?php echo $form->field($model, 'name')->textInput(['id' => 'space-name', 'placeholder' => Yii::t('SpaceModule.views_create_create', 'family name'), 'maxlength' => 45]); ?></div>
                 <div class="col-md-4">            <strong><?php echo Yii::t('SpaceModule.views_create_create', 'Color'); ?></strong>
 
                     <div class="input-group space-color-chooser" style="margin-top: 5px;">
@@ -31,7 +31,7 @@ $this->registerCssFile('@web/resources/space/colorpicker/css/bootstrap-colorpick
                     <br></div>
             </div>
 
-            <?php echo $form->field($model, 'description')->textarea(['placeholder' => Yii::t('SpaceModule.views_create_create', 'space description'), 'rows' => '3']); ?>
+            <?php echo $form->field($model, 'description')->textarea(['placeholder' => Yii::t('SpaceModule.views_create_create', 'family description'), 'rows' => '3']); ?>
 
             <a data-toggle="collapse" id="access-settings-link" href="#collapse-access-settings"
                style="font-size: 11px;"><i

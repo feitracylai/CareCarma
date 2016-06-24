@@ -30,7 +30,7 @@ use humhub\models\Setting;
                                                     <td width="auto"  align="center" valign="middle" height="28" style=" background-color:#ffffff; background-clip: padding-box; font-size:26px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; text-align:center;  color:#a3a2a2; font-weight: 300; padding-left:18px; padding-right:18px; ">
 
                                                         <span style="color: #555555; font-weight: 300;">
-                                                            <?php echo Yii::t('UserModule.views_mails_UserInviteSpace', 'You got a <strong>space</strong> invite'); ?>
+                                                            <?php echo Yii::t('UserModule.views_mails_UserInviteSpace', 'You got a <strong>family</strong> invite'); ?>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -191,10 +191,10 @@ use humhub\models\Setting;
                                                     <td  style="font-size: 14px; line-height: 22px; padding-left: 50px; padding-right: 50px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:#777777; font-weight:300; text-align:center; ">
 
                                                         <!-- START: CONTENT -->
-                                                        <?php echo Yii::t('UserModule.views_mails_UserInviteSpace', 'invited you to the space:'); ?>
+                                                        <?php echo Yii::t('UserModule.views_mails_UserInviteSpace', 'invited you to the family:'); ?>
                                                         <strong><?php echo Html::encode($space->name); ?></strong>
                                                         at <?php echo Html::encode(Yii::$app->name); ?>.<?php echo Yii::t('UserModule.views_mails_UserInviteSpace', '<br>A social network to increase your communication and teamwork.<br>Register now
-                                                        to join this space.'); ?><br/>
+                                                        to join this family.'); ?><br/>
                                                         &nbsp;
                                                         <!-- END: CONTENT -->
                                                     </td>

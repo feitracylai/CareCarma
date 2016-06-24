@@ -9,7 +9,7 @@ use yii\helpers\Url;
 
 
         <p>
-            <?php echo Yii::t('AdminModule.views_user_delete', 'Are you sure you want to delete this user? If this user is owner of some spaces, <b>you</b> will become owner of these spaces.'); ?>
+            <?php echo Yii::t('AdminModule.views_user_delete', 'Are you sure you want to delete this user? If this user is owner of some families, <b>you</b> will become owner of these families.'); ?>
         </p>
 
         <?php

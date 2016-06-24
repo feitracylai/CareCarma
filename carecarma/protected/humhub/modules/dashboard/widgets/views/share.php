@@ -12,12 +12,12 @@ use yii\helpers\Url;
     </div>
     <div class="panel-body">
 
-        <p>We are glad that you are using <a href="https://www.humhub.org" target="_blank" class="colorInfo">HumHub</a>. If you like it, please support the project and share HumHub with your friends and colleagues.</p>
+        <p>We are glad that you are using <a href="https://www.humhub.org" target="_blank" class="colorInfo">CareCarma</a>. If you like it, please support the project and share CareCarma with your friends and colleagues.</p>
 
         <a class="popup"
-           href="http://twitter.com/intent/tweet?status=I'm really impressed by @HumHub. An Open Source Social Network for team communication and collaboration. I love it! https://www.humhub.org">
+           href="http://twitter.com/intent/tweet?status=I'm really impressed by @CareCarma. An Open Source Social Network for team communication and collaboration. I love it! https://www.humhub.org">
             <div class="share-icon share-icon-twitter"><i class="fa fa-twitter"></i></div>
-            <div class="share-text"><?php echo Yii::t('DashboardModule.widgets_views_share', 'Tweet about HumHub'); ?></div>
+            <div class="share-text"><?php echo Yii::t('DashboardModule.widgets_views_share', 'Tweet about CareCarma'); ?></div>
         </a>
         <!--<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>-->
         <div class="clearfix"></div>

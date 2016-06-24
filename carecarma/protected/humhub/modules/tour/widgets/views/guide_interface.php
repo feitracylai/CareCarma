@@ -44,8 +44,8 @@ $this->context->loadResources($this);
             },
             {
                 element: "#space-menu",
-                title: <?php echo json_encode(Yii::t('TourModule.widgets_views_index', '<strong>Space</strong> Menu')); ?>,
-                content: <?php echo json_encode(Yii::t('TourModule.widgets_views_index', 'This is the most important menu and will probably be the one you use most often!<br><br>Access all the spaces you have joined and create new spaces here.<br><br>The next guide will show you how:')); ?> + "<br><br><a href='javascript:gotoSpace = true; tourCompleted();'><?php echo Yii::t("TourModule.widgets_views_index", "<strong>Start</strong> space guide"); ?></a><br><br>",
+                title: <?php echo json_encode(Yii::t('TourModule.widgets_views_index', '<strong>Family</strong> Menu')); ?>,
+                content: <?php echo json_encode(Yii::t('TourModule.widgets_views_index', 'This is the most important menu and will probably be the one you use most often!<br><br>Access all the families you have joined and create new families here.<br><br>The next guide will show you how:')); ?> + "<br><br><a href='javascript:gotoSpace = true; tourCompleted();'><?php echo Yii::t("TourModule.widgets_views_index", "<strong>Start</strong> space guide"); ?></a><br><br>",
                 placement: "bottom"
             }
         ]);

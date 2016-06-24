@@ -36,7 +36,7 @@ use humhub\modules\user\models\User;
 
 
     <strong><?php echo Yii::t('UserModule.views_account_emailing', 'Activities'); ?></strong><br/>
-    <?php echo Yii::t('UserModule.views_account_emailing', 'Get an email, by every activity from other users you follow or work<br>together in workspaces.'); ?>
+    <?php echo Yii::t('UserModule.views_account_emailing', 'Get an email, by every activity from other users you follow or work<br>together in family.'); ?>
 
     <?php echo $form->field($model, 'receive_email_activities')->dropdownList([
         User::RECEIVE_EMAIL_NEVER => Yii::t('UserModule.views_account_emailing', 'Never'),

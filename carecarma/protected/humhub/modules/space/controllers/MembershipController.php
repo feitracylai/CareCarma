@@ -54,7 +54,7 @@ class MembershipController extends \humhub\modules\content\components\ContentCon
         $space = $this->getSpace();
 
         if (!$space->isMember()) {
-            throw new HttpException(404, Yii::t('SpaceModule.controllers_SpaceController', 'This action is only available for workspace members!'));
+            throw new HttpException(404, Yii::t('SpaceModule.controllers_SpaceController', 'This action is only available for family members!'));
         }
 
         $results = array();
@@ -102,7 +102,7 @@ class MembershipController extends \humhub\modules\content\components\ContentCon
         $space = $this->getSpace();
 
         if (!$space->canJoin(Yii::$app->user->id))
-            throw new HttpException(500, Yii::t('SpaceModule.controllers_SpaceController', 'You are not allowed to join this space!'));
+            throw new HttpException(500, Yii::t('SpaceModule.controllers_SpaceController', 'You are not allowed to join this family!'));
 
         if ($space->join_policy == Space::JOIN_POLICY_APPLICATION) {
             // Redirect to Membership Request Form

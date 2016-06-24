@@ -5,12 +5,12 @@ use humhub\modules\space\models\Space;
 use humhub\modules\admin\widgets\SpaceGridView;
 ?>
 <div class="panel panel-default">
-    <div class="panel-heading"><?php echo Yii::t('AdminModule.views_space_index', '<strong>Manage</strong> spaces'); ?></div>
+    <div class="panel-heading"><?php echo Yii::t('AdminModule.views_space_index', '<strong>Manage</strong> families'); ?></div>
     <div class="panel-body">
         <?= \humhub\modules\admin\widgets\SpaceMenu::widget(); ?>        
         <p />
         <p>
-            <?php echo Yii::t('AdminModule.views_space_index', 'In this overview you can find every space and manage it.'); ?>
+            <?php echo Yii::t('AdminModule.views_space_index', 'In this overview you can find every family and manage it.'); ?>
         </p>
 
         <div class="table-responsive">

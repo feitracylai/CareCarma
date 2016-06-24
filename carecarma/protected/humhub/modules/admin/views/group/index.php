@@ -10,7 +10,7 @@ use humhub\widgets\GridView;
         <?= \humhub\modules\admin\widgets\GroupMenu::widget(); ?>
         <p />
         <p>
-            <?php echo Yii::t('AdminModule.views_groups_index', 'You can split users into different groups (for teams, departments etc.) and define standard spaces and admins for them.'); ?>
+            <?php echo Yii::t('AdminModule.views_groups_index', 'You can split users into different groups (for teams, departments etc.) and define standard families and admins for them.'); ?>
         </p>
 
         <?php

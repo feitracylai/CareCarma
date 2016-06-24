@@ -25,7 +25,7 @@ $this->registerJsVar('scSpaceListUrl', Url::to(['/space/list', 'ajax' => 1]));
 
         <?php
         if (!$currentSpace) {
-            echo '<i class="fa fa-dot-circle-o"></i><br>' . Yii::t('SpaceModule.widgets_views_spaceChooser', 'My spaces');
+            echo '<i class="fa fa-dot-circle-o"></i><br>' . Yii::t('SpaceModule.widgets_views_spaceChooser', 'My families');
         }
         ?>
         <!-- end: Show space image and name if chosen -->
@@ -80,7 +80,7 @@ $this->registerJsVar('scSpaceListUrl', Url::to(['/space/list', 'ajax' => 1]));
             <li>
                 <div class="dropdown-footer">
                     <?php
-                    echo Html::a(Yii::t('SpaceModule.widgets_views_spaceChooser', 'Create new space'), Url::to(['/space/create/create']), array('class' => 'btn btn-info col-md-12', 'data-target' => '#globalModal'));
+                    echo Html::a(Yii::t('SpaceModule.widgets_views_spaceChooser', 'Create new family'), Url::to(['/space/create/create']), array('class' => 'btn btn-info col-md-12', 'data-target' => '#globalModal'));
                     ?>
                 </div>
             </li>

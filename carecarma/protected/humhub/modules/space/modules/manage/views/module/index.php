@@ -9,9 +9,9 @@ use yii\helpers\Url;
     <div class="panel-body">
 
         <?php if (count($availableModules) == 0): ?>
-            <p><?php echo Yii::t('SpaceModule.views_admin_modules', 'Currently there are no modules available for this space!'); ?></p>
+            <p><?php echo Yii::t('SpaceModule.views_admin_modules', 'Currently there are no modules available for this family!'); ?></p>
         <?php else: ?>
-            <?php echo Yii::t('SpaceModule.views_admin_modules', 'Enhance this space with modules.'); ?><br>
+            <?php echo Yii::t('SpaceModule.views_admin_modules', 'Enhance this family with modules.'); ?><br>
         <?php endif; ?>
 
 

@@ -51,7 +51,7 @@ class Menu extends \humhub\widgets\BaseMenu
         ));
 
         $this->addItem(array(
-            'label' => Yii::t('DirectoryModule.views_directory_layout', 'Spaces'),
+            'label' => Yii::t('DirectoryModule.views_directory_layout', 'Families'),
             'group' => 'directory',
             'url' => Url::to(['/directory/directory/spaces']),
             'sortOrder' => 300,

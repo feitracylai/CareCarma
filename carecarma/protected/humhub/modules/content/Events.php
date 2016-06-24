@@ -82,7 +82,7 @@ class Events extends \yii\base\Object
                 }
             }
             if ($content->space_id != "" && $content->space == null) {
-                if ($integrityController->showFix("Deleting content id " . $content->id . " without valid space!")) {
+                if ($integrityController->showFix("Deleting content id " . $content->id . " without valid family!")) {
                     $content->delete();
                 }
             }

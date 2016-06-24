@@ -3,10 +3,10 @@
     <div class="panel panel_lightbox">
         <div class="content content_innershadow">
 
-            <h2><?php echo Yii::t('SpaceModule.widgets_views_requestMembershipSave', 'Request workspace membership'); ?></h2>
+            <h2><?php echo Yii::t('SpaceModule.widgets_views_requestMembershipSave', 'Request family membership'); ?></h2>
 
             <p>
-                <?php echo Yii::t('SpaceModule.widgets_views_requestMembershipSave', 'Your request was successfully submitted to the workspace administrators.'); ?><br/>
+                <?php echo Yii::t('SpaceModule.widgets_views_requestMembershipSave', 'Your request was successfully submitted to the family administrators.'); ?><br/>
             </p>
             <br/>
             <?php echo CHtml::link(Yii::t('SpaceModule.widgets_views_requestMembershipSave', 'Close'), '#', array('onclick'=>'redirect();//RequestWorkspacebox.close()', 'class' => 'button', 'style' => 'color: #fff;')); ?>

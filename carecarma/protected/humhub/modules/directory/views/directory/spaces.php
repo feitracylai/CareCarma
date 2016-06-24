@@ -7,7 +7,7 @@ use yii\helpers\Url;
 <div class="panel panel-default">
 
     <div class="panel-heading">
-        <?php echo Yii::t('DirectoryModule.views_directory_spaces', '<strong>Space</strong> directory'); ?>
+        <?php echo Yii::t('DirectoryModule.views_directory_spaces', '<strong>Family</strong> directory'); ?>
     </div>
 
     <div class="panel-body">
@@ -27,7 +27,7 @@ use yii\helpers\Url;
 
 
         <?php if (count($spaces) == 0): ?>
-            <p><?php echo Yii::t('DirectoryModule.views_directory_spaces', 'No spaces found!'); ?></p>
+            <p><?php echo Yii::t('DirectoryModule.views_directory_spaces', 'No families found!'); ?></p>
         <?php endif; ?>
 
     </div>
@@ -66,7 +66,7 @@ use yii\helpers\Url;
                     <?php if ($space->isMember()) { ?>
                         <i class="fa fa-user space-member-sign tt" data-toggle="tooltip" data-placement="top"
                            title=""
-                           data-original-title="<?php echo Yii::t('DirectoryModule.views_directory_spaces', 'You are a member of this space'); ?>"></i>
+                           data-original-title="<?php echo Yii::t('DirectoryModule.views_directory_spaces', 'You are a member of this family'); ?>"></i>
                     <?php } ?>
 
                     <div class="media-body">

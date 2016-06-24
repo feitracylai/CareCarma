@@ -9,12 +9,12 @@ use humhub\models\Setting;
     <?php \humhub\widgets\PanelMenu::widget(array('id' => 'spaces-statistics-panel')); ?>
 
     <div class="panel-heading">
-        <?php echo Yii::t('DirectoryModule.widgets_views_spaceStats', '<strong>Space</strong> stats'); ?>
+        <?php echo Yii::t('DirectoryModule.widgets_views_spaceStats', '<strong>Family</strong> stats'); ?>
     </div>
 
     <div class="panel-body">
         <div class="knob-container" style="text-align: center; opacity: 0;">
-            <strong><?php echo Yii::t('DirectoryModule.widgets_views_spaceStats', 'Total spaces'); ?></strong><br><br>
+            <strong><?php echo Yii::t('DirectoryModule.widgets_views_spaceStats', 'Total families'); ?></strong><br><br>
 
             <input id="spaces-total" class="knob" data-width="120" data-height="140" data-displayprevious="true" data-readOnly="true"
                    data-fgcolor="<?php echo Setting::Get('colorPrimary'); ?>" data-skin="tron"
@@ -26,7 +26,7 @@ use humhub\models\Setting;
         <hr>
 
         <div class="knob-container" style="text-align: center; opacity: 0;">
-            <strong><?php echo Yii::t('DirectoryModule.widgets_views_spaceStats', 'Private spaces'); ?></strong><br><br>
+            <strong><?php echo Yii::t('DirectoryModule.widgets_views_spaceStats', 'Private families'); ?></strong><br><br>
 
             <input id="spaces-private" class="knob" data-width="120" data-height="140" data-displayprevious="true" data-readOnly="true"
                    data-fgcolor="<?php echo Setting::Get('colorPrimary'); ?>"

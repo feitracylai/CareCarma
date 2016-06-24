@@ -12,7 +12,7 @@ use humhub\compat\CActiveForm;
         </div>
         <div class="modal-body">
 
-            <?php echo Yii::t('SpaceModule.views_space_requestMembership', 'Please shortly introduce yourself, to become an approved member of this space.'); ?>
+            <?php echo Yii::t('SpaceModule.views_space_requestMembership', 'Please shortly introduce yourself, to become an approved member of this family.'); ?>
 
             <br/>
             <br/>

@@ -124,7 +124,7 @@ class Invite extends \yii\db\ActiveRecord
             ]);
             $mail->setFrom([\humhub\models\Setting::Get('systemEmailAddress', 'mailing') => \humhub\models\Setting::Get('systemEmailName', 'mailing')]);
             $mail->setTo($this->email);
-            $mail->setSubject(Yii::t('UserModule.views_mails_UserInviteSpace', 'Space Invite'));
+            $mail->setSubject(Yii::t('UserModule.views_mails_UserInviteSpace', 'Family Invite'));
             $mail->send();
 
             // Switch back to users language

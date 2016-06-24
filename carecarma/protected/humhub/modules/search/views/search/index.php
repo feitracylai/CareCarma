@@ -18,7 +18,7 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
                         <div class="col-md-6">
                             <?php echo Html::beginForm(Url::to(['index']), 'GET'); ?>
                             <div class="form-group form-group-search">
-                                <?php echo Html::textInput('keyword', $keyword, array('placeholder' => Yii::t('SearchModule.views_search_index', 'Search for user, spaces and content'), 'class' => 'form-control form-search', 'id' => 'search-input-field')); ?>
+                                <?php echo Html::textInput('keyword', $keyword, array('placeholder' => Yii::t('SearchModule.views_search_index', 'Search for user, families and content'), 'class' => 'form-control form-search', 'id' => 'search-input-field')); ?>
                                 <?php echo Html::submitButton(Yii::t('base', 'Search'), array('class' => 'btn btn-default btn-sm form-button-search')); ?>
                             </div>
 
@@ -32,7 +32,7 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
 
                             <div id="collapse-search-settings" class="panel-collapse collapse">
                                 <br>
-                                <?php echo Yii::t('SearchModule.views_search_index', 'Search only in certain spaces:'); ?>
+                                <?php echo Yii::t('SearchModule.views_search_index', 'Search only in certain families:'); ?>
                                 <?php echo Html::textInput('limitSpaceGuids', $limitSpaceGuids, array('placeholder' => 'Specify space', 'style' => 'width:200px', 'id' => 'space_filter')); ?>
                                 <?php
                                 echo humhub\modules\space\widgets\Picker::widget([
@@ -88,7 +88,7 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
                            class="list-group-item <?php if ($scope == SearchController::SCOPE_SPACE): ?>active<?php endif; ?>">
                             <div>
                                 <div
-                                    class="edit_group "><?php echo Yii::t('SearchModule.views_search_index', 'Spaces'); ?>
+                                    class="edit_group "><?php echo Yii::t('SearchModule.views_search_index', 'Families'); ?>
                                     (<?php echo $totals[SearchController::SCOPE_SPACE]; ?>)
                                 </div>
                             </div>

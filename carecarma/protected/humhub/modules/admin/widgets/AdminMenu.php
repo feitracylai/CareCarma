@@ -63,7 +63,7 @@ class AdminMenu extends \humhub\widgets\BaseMenu
             'isVisible' => Yii::$app->user->isAdmin(),
         ));
         $this->addItem(array(
-            'label' => Yii::t('AdminModule.widgets_AdminMenuWidget', 'Spaces'),
+            'label' => Yii::t('AdminModule.widgets_AdminMenuWidget', 'Families'),
             'id' => 'spaces',
             'url' => Url::toRoute('/admin/space'),
             'icon' => '<i class="fa fa-inbox"></i>',

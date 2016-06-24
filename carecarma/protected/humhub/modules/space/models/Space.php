@@ -410,11 +410,11 @@ class Space extends ContentContainerActiveRecord implements \humhub\modules\sear
             return;
         }
         if ($visibility == self::VISIBILITY_NONE && !Yii::$app->user->permissionManager->can(new CreatePrivateSpace())) {
-            $this->addError($attribute, Yii::t('SpaceModule.models_Space', 'You cannot create private visible spaces!'));
+            $this->addError($attribute, Yii::t('SpaceModule.models_Space', 'You cannot create private visible family!'));
         }
 
         if (($visibility == self::VISIBILITY_REGISTERED_ONLY || $visibility == self::VISIBILITY_ALL) && !Yii::$app->user->permissionManager->can(new CreatePublicSpace())) {
-            $this->addError($attribute, Yii::t('SpaceModule.models_Space', 'You cannot create public visible spaces!' . $visibility));
+            $this->addError($attribute, Yii::t('SpaceModule.models_Space', 'You cannot create public visible family!' . $visibility));
         }
     }
 
