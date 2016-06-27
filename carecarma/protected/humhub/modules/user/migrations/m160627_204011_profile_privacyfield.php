@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m160627_200120_profile_privacyfield extends Migration
+class m160627_204011_profile_privacyfield extends Migration
 {
     public function up()
     {
@@ -12,7 +12,8 @@ class m160627_200120_profile_privacyfield extends Migration
                 'title' => 'Privacy',
                 'sort_order' => '900',
                 'visibility' => '1',
-                'translation_category' => 'UserModule.models_ProfileFieldCategory'
+                'translation_category' => 'UserModule.models_ProfileFieldCategory',
+                'is_system' => '1',
             ]);
 
             $row = (new \yii\db\Query())
@@ -37,17 +38,18 @@ class m160627_200120_profile_privacyfield extends Migration
                 'visible' => '1',
                 'show_at_registration' => '0',
                 'required' => '0',
+                'is_system' => '1',
                 'care_edit' => '1',
             ]);
 
             // Create column for profile field
-            $this->addColumn('profile', 'privacy', 'varchar(255) DEFAULT NULL');
+            $this->addColumn('profile', 'privacy', 'varchar(255) DEFAULT 1');
         }
     }
 
     public function down()
     {
-        echo "m160627_200120_profile_privacyfield cannot be reverted.\n";
+        echo "m160627_204011_profile_privacyfield cannot be reverted.\n";
 
         return false;
     }
