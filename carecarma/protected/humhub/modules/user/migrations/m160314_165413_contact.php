@@ -14,6 +14,8 @@ class m160314_165413_contact extends Migration
             'contact_email' => 'varchar(100) NOT NULL',
             'nickname' => 'varchar(255) NOT NULL',
             'user_id' => 'varchar(255) DEFAULT NULL',
+			'contact_user_id' => 'int(11) DEFAULT NULL',
+			'relation' => 'varchar(255) DEFAULT NULL',
         ), '');
 
 

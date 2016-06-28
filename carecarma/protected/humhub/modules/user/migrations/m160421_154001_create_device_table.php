@@ -11,6 +11,8 @@ class m160421_154001_create_device_table extends Migration
             'device_id' => 'varchar(45) DEFAULT NULL',
             'gcmId' => 'varchar(255) DEFAULT NULL',
         ), '');
+		
+		$this->addColumn('user','device_id', 'varchar(45) DEFAULT NULL');
     }
 
     public function down()
