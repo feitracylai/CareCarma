@@ -17,7 +17,7 @@ $this->pageTitle = Yii::t('base', 'Error');
             </div>
 
             <hr>
-            <a href="<?php echo Url::home() ?>" class="btn btn-primary"><?php echo Yii::t('base', 'Back to dashboard'); ?></a>
+            <a href="<?php echo Url::home() ?>" class="btn btn-primary"><?php echo Yii::t('base', 'Back to Home'); ?></a>
         </div>
     </div>
 </div>
