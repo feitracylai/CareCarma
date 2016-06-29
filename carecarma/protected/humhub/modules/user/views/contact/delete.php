@@ -27,9 +27,9 @@ use yii\helpers\Url;
 //        ?>
 
         <br/>
-        <?php echo Html::a(Yii::t('UserModule.views_contact_delete', 'Delete Contact'), Url::toRoute(['/user/contact/delete', 'id' => $model->contact_id, 'doit' => 2]), array('class' => 'btn btn-danger', 'data-method' => 'POST')); ?>
+        <?php echo Html::a(Yii::t('UserModule.views_contact_delete', 'Delete Contact'), $user->createUrl('delete', ['id' => $model->contact_id, 'doit' => 2]), array('class' => 'btn btn-danger', 'data-method' => 'POST')); ?>
         &nbsp;
-        <?php echo Html::a(Yii::t('UserModule.views_contact_delete', 'Back'), Url::toRoute(['/user/contact/index', 'id' => $model->contact_id]), array('class' => 'btn btn-primary')); ?>
+        <?php echo Html::a(Yii::t('UserModule.views_contact_delete', 'Back'), Url::toRoute('index'), array('class' => 'btn btn-primary')); ?>
 
 
     </div>

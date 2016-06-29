@@ -14,14 +14,14 @@ use humhub\modules\user\models\User;
 
         <?php if ($contact->contact_user_id != null){ ?>
             <?php
-            $user = User::findOne(['id' => $contact->contact_user_id]);
+            $contactUser = User::findOne(['id' => $contact->contact_user_id]);
             $detail = 'col-sm-8';
             ?>
             <div class="media col-sm-4">
 
-                <a href="<?php echo $user->getUrl(); ?>" class="pull- contact" id="image-<?php echo $user->guid; ?>">
+                <a href="<?php echo $contactUser->getUrl(); ?>" class="pull- contact" id="image-<?php echo $contactUser->guid; ?>">
                     <img class="media-object img-rounded"
-                         src="<?php echo $user->getProfileImage()->getUrl(); ?>" width="100"
+                         src="<?php echo $contactUser->getProfileImage()->getUrl(); ?>" width="100"
                          height="100" alt="100x100" data-src="holder.js/100x100"
                          style="width: 100px; height: 100px;">
                 </a>
@@ -69,9 +69,9 @@ use humhub\modules\user\models\User;
 
 
         <div class="col-sm-12">
-            <?php echo Html::a(Yii::t('UserModule.views_contact_view', 'Back'), Url::toRoute('/user/contact/index'), array('class' => 'btn btn-primary')); ?>
+            <?php echo Html::a(Yii::t('UserModule.views_contact_view', 'Back'),  Url::toRoute('index'), array('class' => 'btn btn-primary')); ?>
 
-            <?php echo Html::a(Yii::t('UserModule.views_contact_view', 'Edit'), Url::toRoute(['/user/contact/edit', 'id' => $contact->contact_id]), array('class' => 'btn btn-primary pull-right')); ?>
+            <?php echo Html::a(Yii::t('UserModule.views_contact_view', 'Edit'),  $user->createUrl('edit', ['id' => $contact->contact_id]), array('class' => 'btn btn-primary pull-right')); ?>
         </div>
 
 
