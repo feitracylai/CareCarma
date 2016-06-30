@@ -407,6 +407,9 @@ class ContactController extends Controller
         $doit = (int) Yii::$app->request->get('doit');
         $id = (int) Yii::$app->request->get('id');
         $contact = Contact::findOne(['contact_id' => $id, 'user_id' => $user->id]);
+        if ($contact == null) {
+            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
+        }
         $userSpaces = Membership::findAll(['user_id' => $user->id]);
         $users = array();
         $spaces = array();

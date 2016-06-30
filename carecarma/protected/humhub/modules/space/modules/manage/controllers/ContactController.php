@@ -37,7 +37,8 @@ class ContactController extends Controller
     public function actionIndex()
     {
         $space = $this->getSpace();
-        $user = User::findOne(['id' => Yii::$app->request->get('id')]);
+
+        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
 
         $searchModel = new ContactSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $user->id);
@@ -68,9 +69,9 @@ class ContactController extends Controller
     {
         $space = $this->getSpace();
         $Cid = (int) Yii::$app->request->get('Cid');
+        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
 
-
-        $contact = Contact::findOne(['contact_id' => $Cid]);
+        $contact = Contact::findOne(['contact_id' => $Cid, 'user_id' => $user->id]);
 
         if ($contact == null) {
             throw new \yii\web\HttpException(404, Yii::t('SpaceModule.controllers_ContactController', 'Contact not found!'));
@@ -78,14 +79,18 @@ class ContactController extends Controller
 
 
 
-        return $this->render('view', array('contact' => $contact, 'space' => $space));
+        return $this->render('view', array(
+            'contact' => $contact,
+            'space' => $space,
+            'user' => $user
+        ));
     }
 
     public function actionEdit()
     {
         $space = $this->getSpace();
-        $id = (int) Yii::$app->request->get('id');
-        $contact = Contact::findOne(['contact_id' => Yii::$app->request->get('Cid')]);
+        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
+        $contact = Contact::findOne(['contact_id' => Yii::$app->request->get('Cid'), 'user_id' => $user->id]);
 
         if ($contact == null)
             throw new \yii\web\HttpException(404, Yii::t('SpaceModule.controllers_ContactController', 'Contact not found!'));
@@ -173,19 +178,20 @@ class ContactController extends Controller
 
                 $contact->notifyDevice('update');
 
-                return $this->redirect(Url::toRoute(['/space/manage/contact','id' => $id, 'sguid' => $space->guid]));
+                return $this->redirect($space->createUrl('index', ['rguid' => $user->guid]));
             }
         }
 
 
         if ($form->submitted('delete')) {
-            return $this->redirect(Url::toRoute(['/space/manage/contact/delete', 'Cid' => $contact->contact_id,'id' => $contact->user_id, 'sguid' => $space->guid]));
+            return $this->redirect($space->createUrl('delete', ['Cid' => $contact->contact_id, 'rguid' => $user->guid]));
         }
 
         return $this->render('edit', array(
             'hForm' => $form,
             'space' => $space,
-            'contact' => $contact
+            'contact' => $contact,
+            'user' => $user,
             ));
     }
 
@@ -193,7 +199,7 @@ class ContactController extends Controller
     public function actionAdd()
     {
         $space = $this->getSpace();
-        $user = User::findOne(['id' => Yii::$app->request->get('id')]);
+        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
         $contactModel = new Contact();
 
         $contactModel->user_id = $user->id;
@@ -276,14 +282,13 @@ class ContactController extends Controller
 
                 $contactModel->notifyDevice('add');
 
-                return $this->redirect(Url::to(['/space/manage/contact','id' => $user->id, 'sguid' => $space->guid]));
+                return $this->redirect($space->createUrl('index', ['rguid' => $user->guid]));
             }
         }
 
         return $this->render('add', array(
             'hForm' => $form,
             'space' => $space,
-            'user' => $user,
         ));
     }
 
@@ -293,12 +298,12 @@ class ContactController extends Controller
     public function actionDelete()
     {
         $space = $this->getSpace();
-        $id = (int) Yii::$app->request->get('id');
+        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
         $Cid = (int) Yii::$app->request->get('Cid');
         $doit = (int) Yii::$app->request->get('doit');
 
 
-        $contact = Contact::findOne(['contact_id' => $Cid]);
+        $contact = Contact::findOne(['contact_id' => $Cid, 'user_id' => $user->id]);
 
         if ($contact == null) {
             throw new \yii\web\HttpException(404, Yii::t('SpaceModule.controllers_ContactController', 'Contact not found!'));
@@ -310,18 +315,22 @@ class ContactController extends Controller
 
             $contact->notifyDevice('delete');
 
-            return $this->redirect(Url::to(['/space/manage/contact/index','id' => $id, 'sguid' => $space->guid]));
+            return $this->redirect($space->createUrl('index', ['rguid' => $user->guid]));
         }
 
-        return $this->render('delete', array('model' => $contact, 'space' => $space));
+        return $this->render('delete', array(
+            'model' => $contact,
+            'space' => $space,
+            'user' => $user,
+            ));
     }
 
     public function actionImport()
     {
         $thisSpace = $this->getSpace();
-        $id = (int) Yii::$app->request->get('id');
+        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
 
-        $userSpaces = Membership::findAll(['user_id' => $id]);
+        $userSpaces = Membership::findAll(['user_id' => $user->id]);
         $contacts = array();
         $spaces = array();
         foreach ($userSpaces as $space){
@@ -330,8 +339,8 @@ class ContactController extends Controller
                 $spaceId = $space->space_id;
                 foreach (Membership::find()->where(['space_id' => $spaceId])->each() as $spaceContact){
                     $userId = $spaceContact->user_id;
-                    $existContact = Contact::findOne(['user_id' => $id, 'contact_user_id' => $userId]);
-                    if ($userId != $id && !$existContact){
+                    $existContact = Contact::findOne(['user_id' => $user->id, 'contact_user_id' => $userId]);
+                    if ($userId != $user->id && !$existContact){
                         $contacts[] = User::findOne(['id' => $userId]);
                         $spaces[$userId] = $spaceId;
                     }
@@ -351,7 +360,7 @@ class ContactController extends Controller
         $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
         $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
         $contactModel = new Contact();
-        $contactModel->user_id = $id;
+        $contactModel->user_id = $user->id;
 
         // Build Form Definition
         $definition = array();
@@ -434,7 +443,7 @@ class ContactController extends Controller
 
                 $contactModel->notifyDevice('add');
 
-                return $this->redirect(Url::toRoute(['/space/manage/contact/import','id' => $id, 'sguid' => $thisSpace->guid]));
+                return $this->redirect($space->createUrl('import', ['rguid' => $user->guid]));
             }
         }
         return $this->render('import', array(
@@ -444,19 +453,22 @@ class ContactController extends Controller
             'model' => $contactModel,
             'users' => $searchResultSet->getResultInstances(),
             'details' => $spaces,
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'receiver' => $user,
         ));
     }
 
     public function actionConnect()
     {
         $thisSpace = $this->getSpace();
-        $id = (int) Yii::$app->request->get('id');
+        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
 
         $doit = (int) Yii::$app->request->get('doit');
         $Cid = (int) Yii::$app->request->get('Cid');
-        $contact = Contact::findOne(['contact_id' => $Cid]);
-
+        $contact = Contact::findOne(['contact_id' => $Cid, 'user_id' => $user->id]);
+        if ($contact == null) {
+            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
+        }
         $limitUsers = array();
         $spaces = array();
         foreach (Profile::findAll(['mobile' => $contact->contact_mobile]) as $userProfile) {
@@ -464,7 +476,7 @@ class ContactController extends Controller
             $limitUsers[] = User::findOne(['id' => $userId]);
             $spaces[$userId] = 0;
         }
-        $userSpaces = Membership::findAll(['user_id' => $id]);
+        $userSpaces = Membership::findAll(['user_id' => $user->id]);
 
         foreach ($userSpaces as $space){
             if ($space !== null)
@@ -472,8 +484,8 @@ class ContactController extends Controller
                 $spaceId = $space->space_id;
                 foreach (Membership::findAll(['space_id' => $spaceId, 'status' => 3]) as $spaceContact){
                     $userId = $spaceContact->user_id;
-                    $existContact = Contact::findOne(['user_id' => $id, 'contact_user_id' => $userId]);
-                    if ($userId != $id && !$existContact){
+                    $existContact = Contact::findOne(['user_id' => $user->id, 'contact_user_id' => $userId]);
+                    if ($userId != $user->id && !$existContact){
                         $limitUsers[] = User::findOne(['id' => $userId]);
                         $spaces[$userId] = $spaceId;
                     }
@@ -515,7 +527,7 @@ class ContactController extends Controller
 
             $contact->notifyDevice('update');
 
-            return $this->redirect(Url::to(['/space/manage/contact', 'id' => $id, 'sguid' => $thisSpace->guid]));
+            return $this->redirect($thisSpace->createUrl('edit', ['Cid' => $contact->contact_id,'rguid' => $user->guid]));
         }
 
         return $this->render('connect', array(
@@ -525,17 +537,18 @@ class ContactController extends Controller
             'pagination' => $pagination,
             'contact' => $contact,
             'details' => $spaces,
-            'connnect_id' => $connect_user_id
+            'connnect_id' => $connect_user_id,
+            'receiver' => $user
         ));
     }
 
     public function actionDisconnect ()
     {
         $thisSpace = $this->getSpace();
-        $id = (int) Yii::$app->request->get('id');
+        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
 
         $Cid = (int) Yii::$app->request->get('Cid');
-        $contact = Contact::findOne(['contact_id' => $Cid]);
+        $contact = Contact::findOne(['contact_id' => $Cid, 'user_id' => $user->id]);
         if ($contact != null) {
             $contact->contact_user_id = null;
             $contact->save();
@@ -543,7 +556,7 @@ class ContactController extends Controller
         }
 
 
-        return $this->redirect(Url::toRoute(['/space/manage/contact/edit', 'Cid' => $Cid, 'id' => $id, 'sguid' => $thisSpace->guid]));
+        return $this->redirect($thisSpace->createUrl('edit', ['Cid' => $Cid,'rguid' => $user->guid]));
     }
 
 }
