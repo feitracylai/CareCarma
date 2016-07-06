@@ -34,7 +34,10 @@ use yii\grid\GridView;
             </div>
 
         <?php }else{ ?>
-            <?php echo Html::a(Yii::t('UserModule.views_contact_edit', 'Connect'), $user->createUrl('connect', ['id' => $contact->contact_id]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>
+        <div class="">
+            <?php echo Html::a('<i class="fa fa-user"></i> '.Yii::t('UserModule.views_contact_edit', 'Link to User'), $user->createUrl('connect', ['id' => $contact->contact_id]), array('class' => 'btn btn-primary')); ?>
+        </div>
+<!--        <br><br>-->
         <?php } ?>
         <hr>
         <?php $form = \yii\widgets\ActiveForm::begin(); ?>
