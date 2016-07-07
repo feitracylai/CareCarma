@@ -20,25 +20,25 @@ class ContactMenu extends \humhub\widgets\BaseMenu
 
     public function init()
     {
-        $id =  Yii::$app->request->get('id');
+        $rguid =  Yii::$app->request->get('rguid');
 
 
         $this->addItem(array(
             'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu', 'Overview'),
-            'url' => $this->space->createUrl('contact/index',['id' => $id]),
+            'url' => $this->space->createUrl('contact/index',['rguid' => $rguid]),
             'sortOrder' => 100,
             'isActive' => (Yii::$app->controller->action->id == 'index'&& Yii::$app->controller->id === 'contact'),
         ));
         $this->addItem(array(
             'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu', 'Add new contact'),
-            'url' => $this->space->createUrl('contact/add',['id' => $id]),
+            'url' => $this->space->createUrl('contact/add',['rguid' => $rguid]),
             'sortOrder' => 200,
             'isActive' => (Yii::$app->controller->action->id == 'add' && Yii::$app->controller->id === 'contact'),
         ));
 
         $this->addItem(array(
             'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu', 'Import new contact'),
-            'url' => $this->space->createUrl('contact/import',['id' => $id]),
+            'url' => $this->space->createUrl('contact/import',['rguid' => $rguid]),
             'sortOrder' => 300,
             'isActive' => (Yii::$app->controller->action->id == 'import' && Yii::$app->controller->id === 'contact'),
         ));

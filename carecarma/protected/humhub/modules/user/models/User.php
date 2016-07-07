@@ -8,6 +8,7 @@
 
 namespace humhub\modules\user\models;
 
+use humhub\modules\space\models\Membership;
 use Yii;
 use yii\base\Exception;
 use humhub\modules\content\components\ContentContainerActiveRecord;
@@ -69,6 +70,12 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
      */
     const VISIBILITY_REGISTERED_ONLY = 1; // Only for registered members
     const VISIBILITY_ALL = 2; // Visible for all (also guests)
+
+    /****User Group****/
+    const USERGROUP_SELF = 'u_self';
+    const USERGROUP_FRIEND = 'u_friend';
+    const USERGROUP_USER = 'u_user';
+    const USERGROUP_GUEST = 'u_guest';
 
     /**
      * @inheritdoc
@@ -574,6 +581,27 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
         }
 
         return false;
+    }
+
+    public function getUserGroup()
+    {
+        if (Yii::$app->user->isGuest) {
+            return self::USERGROUP_GUEST;
+        } elseif (Yii::$app->user->getIdentity()->id === $this->id) {
+            return self::USERGROUP_SELF;
+        }
+
+        $spaces = Membership::findAll(['user_id' => $this->id]);
+        foreach ($spaces as $memberSpace) {
+            $spaceId = $memberSpace->space_id;
+            $spaceMember = Membership::findAll(['space_id' => $spaceId, 'user_id' => Yii::$app->user->getIdentity()->id]);
+            if ($spaceMember != null) {
+                return self::USERGROUP_FRIEND;
+            }
+
+        }
+
+        return self::USERGROUP_USER;
     }
 
 }

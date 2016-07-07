@@ -23,7 +23,7 @@ use \humhub\modules\space\modules\manage\widgets\ContactMenu;
         <?=ContactMenu::widget(['space' => $space]); ?>
         <p />
         <!-- search form -->
-        <?php echo Html::beginForm(Url::to(['/user/contact/import']), 'get', array('class' => 'form-search')); ?>
+        <?php echo Html::beginForm($space->createUrl('import', ['rguid' => $receiver->guid]), 'get', array('class' => 'form-search')); ?>
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">

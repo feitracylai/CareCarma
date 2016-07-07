@@ -61,13 +61,13 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                             'class' => 'yii\grid\ActionColumn',
                             'buttons' => [
                                 'view' => function($url,$model) use ($space) {
-                                    return Html::a('<i class="fa fa-eye"></i>', Url::toRoute(['report', 'sguid' => $space->guid, 'id' => $model->user->id
+                                    return Html::a('<i class="fa fa-eye"></i>', Url::toRoute(['report', 'sguid' => $space->guid, 'rguid' => $model->user->guid
 
                                     ]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View his/her health report']);
                                 },
                                 'delete' => function ($url,$model) use ($space) {
                                     if ($space->isAdmin()){
-                                        return Html::a('<i class="fa fa-times"></i>', Url::toRoute(['delete', 'sguid' => $space->guid, 'id' => $model->user->id
+                                        return Html::a('<i class="fa fa-times"></i>', Url::toRoute(['delete', 'sguid' => $space->guid, 'rguid' => $model->user->guid
 
                                         ]), ['class' => 'btn btn-danger btn-xs tt', 'title' => 'Delete account or Move to regular member']);
                                     }
@@ -76,7 +76,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                                 },
                                 'update' => function($url,$model) use ($space){
                                     if ($space->isAdmin()){
-                                        return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['edit', 'sguid' => $space->guid, 'id' => $model->user->id
+                                        return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['edit', 'sguid' => $space->guid, 'rguid' => $model->user->guid
                                         ]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Edit his/her account']);
                                     }
                                     else

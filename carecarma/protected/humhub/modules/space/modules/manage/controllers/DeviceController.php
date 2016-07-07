@@ -18,6 +18,7 @@ use humhub\modules\space\models\Space;
 use humhub\modules\space\modules\manage\models\DeviceUserSearch;
 use humhub\compat\HForm;
 use humhub\modules\content\components\ContentContainerController;
+use humhub\modules\space\modules\manage\components\Controller;
 /**
  * Member Controller
  *
@@ -46,7 +47,12 @@ class DeviceController extends ContentContainerController
     }
     public function actionAdd()
     {
+
+
         $space = $this->getSpace();
+        if (!$space->isAdmin())
+            throw new HttpException(403, 'Access denied - Family Administrator only!');
+
         $userModel = new User();
         $userModel->scenario = 'editCare';
         $deviceModel = new \humhub\modules\user\models\forms\AccountDevice();
@@ -205,6 +211,9 @@ class DeviceController extends ContentContainerController
     }
     public function actionEdit() {
         $space = $this->getSpace();
+        if (!$space->isAdmin())
+            throw new HttpException(403, 'Access denied - Family Administrator only!');
+
         $user =  $this->getCare();
         $emailModel = new \humhub\modules\user\models\forms\AccountChangeEmail;
         if ($emailModel->load(Yii::$app->request->post()) && $emailModel->validate() && $emailModel->sendChangeEmail()) {
@@ -219,6 +228,9 @@ class DeviceController extends ContentContainerController
     }
     public function actionDevice(){
         $space = $this->getSpace();
+        if (!$space->isAdmin())
+            throw new HttpException(403, 'Access denied - Family Administrator only!');
+
         $user =  $this->getCare();
         $deviceOld = Device::findOne(['device_id' => $user->device_id]);
         $deviceModel = new \humhub\modules\user\models\forms\AccountDevice();
@@ -259,6 +271,9 @@ class DeviceController extends ContentContainerController
     }
     public function actionProfile() {
         $space = $this->getSpace();
+        if (!$space->isAdmin())
+            throw new HttpException(403, 'Access denied - Family Administrator only!');
+
         $user = $this->getCare();
         // Get Form Definition
         $user->profile->scenario = 'editCare';
@@ -287,6 +302,9 @@ class DeviceController extends ContentContainerController
     }
     public function actionSettings() {
         $space = $this->getSpace();
+        if (!$space->isAdmin())
+            throw new HttpException(403, 'Access denied - Family Administrator only!');
+
         $user = $this->getCare();
         $model = new \humhub\modules\user\models\forms\AccountSettings();
         $model->language = $user->language;
@@ -321,6 +339,9 @@ class DeviceController extends ContentContainerController
     {
         $isSpaceOwner = false;
         $space = $this->getSpace();
+        if (!$space->isAdmin())
+            throw new HttpException(403, 'Access denied - Family Administrator only!');
+
         $user = $this->getCare();
         if ($user->auth_mode != User::AUTH_MODE_LOCAL) {
             throw new HttpException(500, 'This is not a local account! You cannot delete it. (e.g. LDAP)!');
@@ -354,6 +375,9 @@ class DeviceController extends ContentContainerController
     {
 //        $this->forcePostRequest();
         $space = $this->getSpace();
+        if (!$space->isAdmin())
+            throw new HttpException(403, 'Access denied - Family Administrator only!');
+
         $userGuid = Yii::$app->request->get('userGuid');
         $user = User::findOne(array('guid' => $userGuid));
         $space->setMember($user->id);
@@ -361,7 +385,7 @@ class DeviceController extends ContentContainerController
         return $this->htmlRedirect($space->createUrl('/space/manage/device', ['sguid' => $space->guid]));
     }
     public function getCare(){
-        return User::findOne(['id' => Yii::$app->request->get('id')]);
+        return User::findOne(['guid' => Yii::$app->request->get('rguid')]);
     }
 }
 ?>

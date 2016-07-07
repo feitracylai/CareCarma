@@ -58,14 +58,14 @@ use humhub\widgets\GridView;
                     'class' => 'yii\grid\ActionColumn',
                     'options' => ['style' => 'width:80px; min-width:80px;'],
                     'buttons' => [
-                        'view' => function($url, $model) {
-                            return Html::a('<i class="fa fa-eye"></i>', Url::toRoute(['view', 'id' => $model->contact_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View']);
+                        'view' => function($url, $model) use ($user) {
+                            return Html::a('<i class="fa fa-eye"></i>', $user->createUrl('view', ['id' => $model->contact_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View']);
                         },
-                        'update' => function($url, $model) {
-                            return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['edit', 'id' => $model->contact_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Edit']);
+                        'update' => function($url, $model) use ($user) {
+                            return Html::a('<i class="fa fa-pencil"></i>',  $user->createUrl('edit', ['id' => $model->contact_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Edit']);
                         },
-                        'delete' => function($url, $model) {
-                            return Html::a('<i class="fa fa-times"></i>', Url::toRoute(['delete', 'id' => $model->contact_id]), ['class' => 'btn btn-danger btn-xs tt', 'title' => 'Delete']);
+                        'delete' => function($url, $model) use ($user) {
+                            return Html::a('<i class="fa fa-times"></i>',  $user->createUrl('delete', ['id' => $model->contact_id]), ['class' => 'btn btn-danger btn-xs tt', 'title' => 'Delete']);
                         }
                     ],
                 ],

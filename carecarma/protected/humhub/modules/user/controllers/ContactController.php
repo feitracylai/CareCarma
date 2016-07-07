@@ -41,6 +41,8 @@ class ContactController extends Controller
     public function actionIndex()
     {
         $id = Yii::$app->user->id;
+
+        $user = User::findOne(['id' => $id]);
         $searchModel = new ContactSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
 		
@@ -61,20 +63,26 @@ class ContactController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'user' => $user,
         ]);
     }
     public function actionView()
     {
+        $user = User::findOne(['guid' => Yii::$app->user->guid]);
         $id = (int) Yii::$app->request->get('id');
-        $contact = Contact::findOne(['contact_id' => $id]);
+        $contact = Contact::findOne(['contact_id' => $id, 'user_id' => $user->id]);
         if ($contact == null) {
             throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
         }
-        return $this->render('view', array('contact' => $contact));
+        return $this->render('view', array(
+            'contact' => $contact,
+            'user' => $user
+        ));
     }
     public function actionEdit()
     {
-        $contact = Contact::findOne(['contact_id' => Yii::$app->request->get('id')]);
+        $user = User::findOne(['guid' => Yii::$app->user->guid]);
+        $contact = Contact::findOne(['contact_id' => Yii::$app->request->get('id'), 'user_id' => $user->id]);
         if ($contact == null)
             throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
         // Build Form Definition
@@ -151,18 +159,18 @@ class ContactController extends Controller
         $form->models['Contact'] = $contact;
         if ($form->submitted('save') && $form->validate()) {
             if ($form->save()) {
-                $user = User::findOne(['id' => $contact->user_id]);
+               // $user = User::findOne(['id' => $contact->user_id]);
 
                 $contact->notifyDevice('update');
-//                $contact->notifyDevice($user, 'update');
                 return $this->redirect(Url::toRoute('/user/contact'));
             }
         }
         if ($form->submitted('delete')) {
-            return $this->redirect(Url::toRoute(['/user/contact/delete', 'id' => $contact->contact_id]));
+            return $this->redirect($user->createUrl('/user/contact/delete',[ 'id' => $contact->contact_id]));
         }
-        return $this->render('edit', array('hForm' => $form, 'contact' => $contact));
+        return $this->render('edit', array('hForm' => $form, 'contact' => $contact, 'user' => $user));
     }
+
     public function actionAdd()
     {
         $contactModel = new Contact();
@@ -260,19 +268,20 @@ class ContactController extends Controller
      */
     public function actionDelete()
     {
+        $user = User::findOne(['guid' => Yii::$app->user->guid]);
         $id = (int) Yii::$app->request->get('id');
         $doit = (int) Yii::$app->request->get('doit');
-        $contact = Contact::findOne(['contact_id' => $id]);
+        $contact = Contact::findOne(['contact_id' => $id, 'user_id' => $user->id]);
         if ($contact == null) {
             throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
         }
         if ($doit == 2) {
             $contact->delete();
-            $user = User::findOne(['id' => $contact->user_id]);
+           // $user = User::findOne(['id' => $contact->user_id]);
             $contact->notifyDevice('delete');
-            return $this->redirect(Url::to(['/user/contact']));
+            return $this->redirect(Url::toRoute('index'));
         }
-        return $this->render('delete', array('model' => $contact));
+        return $this->render('delete', array('model' => $contact, 'user' => $user));
     }
     public function actionImport()
     {
@@ -394,10 +403,14 @@ class ContactController extends Controller
     }
     public function actionConnect()
     {
+        $user = User::findOne(['guid' => Yii::$app->user->guid]);
         $doit = (int) Yii::$app->request->get('doit');
         $id = (int) Yii::$app->request->get('id');
-        $contact = Contact::findOne(['contact_id' => $id]);
-        $userSpaces = Membership::findAll(['user_id' => Yii::$app->user->id]);
+        $contact = Contact::findOne(['contact_id' => $id, 'user_id' => $user->id]);
+        if ($contact == null) {
+            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
+        }
+        $userSpaces = Membership::findAll(['user_id' => $user->id]);
         $users = array();
         $spaces = array();
         foreach ($userSpaces as $space){
@@ -414,7 +427,10 @@ class ContactController extends Controller
                 }
             }
         }
-        foreach (Profile::findAll(['mobile' => $contact->contact_mobile]) as $userProfile) {
+
+
+        $profiles = Profile::findAll(['mobile' => $contact->contact_mobile]);
+        foreach ($profiles as $userProfile) {
             $userId =  $userProfile->user_id;
             $users[] = User::findOne(['id' => $userId]);
             $spaces[$userId] = 0;
@@ -446,7 +462,7 @@ class ContactController extends Controller
 
             $contact->notifyDevice('update');
 //            $contact->notifyDevice('connect');
-            return $this->redirect(Url::to(['/user/contact']));
+            return $this->redirect($user->createUrl('/user/contact/edit', ['id' => $contact->contact_id]));
         }
         return $this->render('connect', array(
            'keyword' => $keyword,
@@ -454,19 +470,22 @@ class ContactController extends Controller
             'pagination' => $pagination,
             'contact' => $contact,
             'details' => $spaces,
-            'connnect_id' => $connect_user_id
+            'connnect_id' => $connect_user_id,
+            'thisUser' => $user,
         ));
     }
     public function actionDisconnect ()
     {
+        $user = User::findOne(['guid' => Yii::$app->user->guid]);
         $id = (int) Yii::$app->request->get('id');
-        $contact = Contact::findOne(['contact_id' => $id]);
+        $contact = Contact::findOne(['contact_id' => $id, 'user_id' => $user->id]);
         if ($contact != null) {
             $contact->contact_user_id = null;
             $contact->save();
         }
-        return $this->redirect(Url::toRoute(['/user/contact/edit', 'id' => $id]));
+        return $this->redirect($user->createUrl('edit', ['id' => $id]));
     }
+
     public function actionDeviceallcontact ()
     {
         $user_id = Yii::$app->user->id;
@@ -497,7 +516,6 @@ class ContactController extends Controller
         $user = User::findOne(['id' => $contact_list['data'][0]->user_id]);
         $device = Device::findOne(['device_id' => $user->device_id]);
         $gcm_id = $device->gcmId;
-        Yii::getLogger()->log(print_r($contact_list,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
 //        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm->send($gcm_id, $contact_list);
@@ -544,13 +562,11 @@ class ContactController extends Controller
             $contact->device_phone = $device->phone;
             $contact->save();
         }
-        Yii::getLogger()->log(print_r("qweqweqwe",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm = new GCM();
         $gcm_id = $device->gcmId;
 //        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
 //        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        Yii::getLogger()->log(print_r($this->getUsernamePassword($user),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm->send($gcm_id, $this->getUsernamePassword($user));
         $user_new = User::findOne(['device_id' => $device_id]);
         $user_new->temp_password = null;
@@ -564,4 +580,6 @@ class ContactController extends Controller
             'password' => $user->temp_password,
         ];
     }
+
+
 }

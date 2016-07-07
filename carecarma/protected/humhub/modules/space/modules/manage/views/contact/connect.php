@@ -20,7 +20,7 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
         <div class="panel-body">
 
             <!-- search form -->
-            <?php echo Html::beginForm(Url::to(['/user/contact/connect']), 'get', array('class' => 'form-search')); ?>
+            <?php echo Html::beginForm($space->createUrl('connect', ['Cid' => $contact->contact_id, 'rguid' => $receiver->guid]), 'get', array('class' => 'form-search')); ?>
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
@@ -49,7 +49,7 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
 
 
                         <div class="pull-right" >
-                            <?php echo Html::a(Yii::t('UserModule.views_contact_connect', 'Connect'), Url::toRoute(['/space/manage/contact/connect', 'Cid' => $contact->contact_id, 'doit' => 2, 'connect_id' => $user->id, 'id' => $contact->user_id, 'sguid' => $space->guid]), array('class' => 'btn btn-danger btn-xs pull-right', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? Click "OK" if you want to connect this user account with your contact.')); ?>
+                            <?php echo Html::a(Yii::t('UserModule.views_contact_connect', 'Connect'), $space->createUrl('connect', ['Cid' => $contact->contact_id, 'doit' => 2, 'connect_id' => $user->id,'rguid' => $receiver->guid]), array('class' => 'btn btn-danger btn-xs pull-right', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? Click "OK" if you want to connect this user account with your contact.')); ?>
                         </div>
 
 
@@ -81,6 +81,10 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
             <?php endforeach; ?>
             <!-- END: Results -->
         </ul>
+
+        <div class="panel-body">
+            <?php echo Html::a(Yii::t('UserModule.views_contact_connect', '<i class="fa fa-backward"></i> Back'), $space->createUrl('edit', ['Cid' => $contact->contact_id, 'rguid' => $receiver->guid]), array('class' => 'btn btn-primary')); ?>
+        </div>
 
     </div>
     <div class="pagination-container">

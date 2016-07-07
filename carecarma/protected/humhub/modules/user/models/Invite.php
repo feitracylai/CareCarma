@@ -8,7 +8,10 @@
 
 namespace humhub\modules\user\models;
 
+use humhub\models\Setting;
 use Yii;
+use yii\helpers\Url;
+use yii\log\Logger;
 
 /**
  * This is the model class for table "user_invite".
@@ -107,7 +110,7 @@ class Invite extends \yii\db\ActiveRecord
             $mail->setTo($this->email);
             $mail->setSubject(Yii::t('UserModule.views_mails_UserInviteSelf', 'Registration Link'));
             $mail->send();
-        } elseif ($this->source == self::SOURCE_INVITE) {
+        } elseif ($this->source == self::SOURCE_INVITE && $this->space_invite_id !== null) {
 
             // Switch to systems default language
             Yii::$app->language = \humhub\models\Setting::Get('defaultLanguage');
@@ -125,6 +128,30 @@ class Invite extends \yii\db\ActiveRecord
             $mail->setFrom([\humhub\models\Setting::Get('systemEmailAddress', 'mailing') => \humhub\models\Setting::Get('systemEmailName', 'mailing')]);
             $mail->setTo($this->email);
             $mail->setSubject(Yii::t('UserModule.views_mails_UserInviteSpace', 'Family Invite'));
+            $mail->send();
+
+            // Switch back to users language
+            if (Yii::$app->user->language !== "") {
+                Yii::$app->language = Yii::$app->user->language;
+            }
+        } elseif ($this->source == self::SOURCE_INVITE) {
+
+            // Switch to systems default language
+            Yii::$app->language = \humhub\models\Setting::Get('defaultLanguage');
+
+            $mail = Yii::$app->mailer->compose([
+                'html' => '@humhub/modules/user/views/mails/UserInvite',
+                'text' => '@humhub/modules/user/views/mails/plaintext/UserInvite'
+            ], [
+                'originator' => $this->originator,
+                'originatorName' => $this->originator->displayName,
+                'token' => $this->token,
+            ]);
+
+
+            $mail->setFrom([\humhub\models\Setting::Get('systemEmailAddress', 'mailing') => \humhub\models\Setting::Get('systemEmailName', 'mailing')]);
+            $mail->setTo($this->email);
+            $mail->setSubject(Yii::t('UserModule.invite', 'Invitation to join'));
             $mail->send();
 
             // Switch back to users language

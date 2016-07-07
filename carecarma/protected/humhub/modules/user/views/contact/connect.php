@@ -18,7 +18,7 @@ use \humhub\modules\space\models\Space;
         <div class="panel-body">
 
             <!-- search form -->
-            <?php echo Html::beginForm(Url::to(['/user/contact/connect']), 'get', array('class' => 'form-search')); ?>
+            <?php echo Html::beginForm($thisUser->createUrl('connect',['id' => $contact->contact_id]), 'get', array('class' => 'form-search')); ?>
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
@@ -47,7 +47,7 @@ use \humhub\modules\space\models\Space;
                     <div class="media">
 
                         <div class="pull-right" >
-                            <?php echo Html::a(Yii::t('UserModule.views_contact_connect', 'Connect'), Url::toRoute(['/user/contact/connect', 'id' => $contact->contact_id, 'doit' => 2, 'connect_id' => $user->id]), array('class' => 'btn btn-danger btn-xs pull-right', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? Click "OK" if you want to connect this user account with your contact.')); ?>
+                            <?php echo Html::a(Yii::t('UserModule.views_contact_connect', 'Connect'), $thisUser->createUrl('/user/contact/connect', ['id' => $contact->contact_id, 'doit' => 2, 'connect_id' => $user->id]), array('class' => 'btn btn-danger btn-xs pull-right', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? Click "OK" if you want to connect this user account with your contact.')); ?>
                         </div>
 
 
@@ -81,7 +81,7 @@ use \humhub\modules\space\models\Space;
         </ul>
 
         <div class="panel-body">
-            <?php echo Html::a(Yii::t('UserModule.views_contact_connect', '<i class="fa fa-backward"></i> Back'), Url::toRoute(['/user/contact/edit', 'id' => $contact->contact_id]), array('class' => 'btn btn-primary')); ?>
+            <?php echo Html::a(Yii::t('UserModule.views_contact_connect', '<i class="fa fa-backward"></i> Back'), $thisUser->createUrl('/user/contact/edit', ['id' => $contact->contact_id]), array('class' => 'btn btn-primary')); ?>
         </div>
 
 

@@ -31,9 +31,9 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
 //        ?>
 
         <br/>
-        <?php echo Html::a(Yii::t('SpaceModule.views_admin_receiver_contact_delete', 'Delete Contact'), Url::toRoute(['delete', 'Cid' => $model->contact_id, 'doit' => 2, 'id' => $model->user_id, 'sguid' => $space->guid]), array('class' => 'btn btn-danger', 'data-method' => 'POST')); ?>
+        <?php echo Html::a(Yii::t('SpaceModule.views_admin_receiver_contact_delete', 'Delete Contact'), $space->createUrl('delete', ['Cid' => $model->contact_id, 'doit' => 2, 'rguid' => $user->guid]), array('class' => 'btn btn-danger', 'data-method' => 'POST')); ?>
         &nbsp;
-        <?php echo Html::a(Yii::t('SpaceModule.views_admin_receiver_contact_delete', 'Back'), Url::toRoute(['index', 'Cid' => $model->contact_id, 'id' => $model->user_id, 'sguid' => $space->guid]), array('class' => 'btn btn-primary')); ?>
+        <?php echo Html::a(Yii::t('SpaceModule.views_admin_receiver_contact_delete', 'Back'), $space->createUrl('index', ['rguid' => $user->guid]), array('class' => 'btn btn-primary')); ?>
 
 
     </div>
