@@ -2772,13 +2772,19 @@ img.bounceIn {
     }
 }
 
-@media (max-width: 991px) {
+@media screen and (max-width: 991px) {
 
     .header {
         height: 51px;
     }
     body {
         padding-top: 100px;
+    }
+    
+    .login-container {
+        background: #fff url('../img/bg-mobile-1.jpg') no-repeat fixed top;
+        background-size: cover;
+        position: relative;
     }
 
     #login-logo-container {
