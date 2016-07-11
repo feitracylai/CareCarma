@@ -17,6 +17,7 @@ use humhub\libs\Push;
  * @property string $nickname
  * @property integer $user_id
  * @property integer $contact_user_id
+ * @property integer $linked
  * @property string $relation
  * @property string $device_phone
  * @property string $home_phone
@@ -38,10 +39,10 @@ class Contact extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['contact_first', 'contact_last'], 'required'],
+            [['contact_first', 'contact_last'], 'required', 'on' => 'editContact'],
             [['contact_mobile','device_phone','home_phone','work_phone'], 'number'],
             [['contact_email'], 'email'],
-            [['user_id', 'contact_user_id'], 'integer'],
+            [['user_id', 'contact_user_id', 'linked'], 'integer'],
             [['contact_first', 'contact_last', 'contact_mobile', 'nickname', 'relation','device_phone','home_phone','work_phone'], 'string', 'max' => 255],
             [['contact_email'], 'string', 'max' => 100]
         ];
@@ -65,6 +66,14 @@ class Contact extends \yii\db\ActiveRecord
             'relation' => Yii::t('UserModule.models_Contact', 'Relation'),
             'contact_user_id' => Yii::t('UserModule.models_Contact', 'contact ID'),
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['editContact'] = ['contact_first', 'contact_last', 'contact_mobile', 'home_phone', 'work_phone', 'contact_email', 'nickname'];
+        $scenarios['linkContact'] = ['user_id', 'contact_user_id', 'linked'];
+        return $scenarios;
     }
 
     public function beforeSave($insert)
@@ -141,7 +150,6 @@ class Contact extends \yii\db\ActiveRecord
                 if ($device->gcmId != null){
                     $gcm = new GCM();
                     $gcm_registration_id = $device->gcmId;
-                    Yii::getLogger()->log(print_r($this->getAddPush(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $gcm->send($gcm_registration_id, $this->getAddPush());
 
                 }
@@ -155,7 +163,6 @@ class Contact extends \yii\db\ActiveRecord
                 if ($device->gcmId != null){
                     $gcm = new GCM();
                     $gcm_registration_id = $device->gcmId;
-                    Yii::getLogger()->log(print_r($this->getDeletePush(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $gcm->send($gcm_registration_id, $this->getDeletePush());
 
                 }
@@ -170,7 +177,6 @@ class Contact extends \yii\db\ActiveRecord
                 if ($device->gcmId != null){
                     $gcm = new GCM();
                     $gcm_registration_id = $device->gcmId;
-                    Yii::getLogger()->log(print_r($this->getUpdatePush(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $gcm->send($gcm_registration_id, $this->getUpdatePush());
 
                 }

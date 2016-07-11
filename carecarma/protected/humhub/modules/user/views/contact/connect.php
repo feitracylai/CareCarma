@@ -15,6 +15,8 @@ use \humhub\modules\space\models\Space;
             <?php echo Yii::t('UserModule.views_contact_connect', '<strong>Connect</strong> user to contact <u>{first} {last}</u>', array('{first}' => $contact->contact_first, '{last}' => $contact->contact_last)); ?>
         </div>
 
+
+
         <div class="panel-body">
 
             <!-- search form -->
@@ -47,7 +49,7 @@ use \humhub\modules\space\models\Space;
                     <div class="media">
 
                         <div class="pull-right" >
-                            <?php echo Html::a(Yii::t('UserModule.views_contact_connect', 'Connect'), $thisUser->createUrl('/user/contact/connect', ['id' => $contact->contact_id, 'doit' => 2, 'connect_id' => $user->id]), array('class' => 'btn btn-danger btn-xs pull-right', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? Click "OK" if you want to connect this user account with your contact.')); ?>
+                            <?php echo Html::a(Yii::t('UserModule.views_contact_connect', 'Link'), $thisUser->createUrl('/user/contact/connect', ['id' => $contact->contact_id, 'doit' => 2, 'connect_id' => $user->id]), array('class' => 'btn btn-danger btn-xs pull-right', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? Click "OK" if you want to link this user to your contact.')); ?>
                         </div>
 
 

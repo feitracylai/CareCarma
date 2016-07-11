@@ -43,6 +43,7 @@ use humhub\widgets\GridView;
                     'label' => Yii::t('UserModule.views_contact_index', 'Relationship'),
                     'class' => 'humhub\libs\DropDownGridColumn',
                     'attribute' => 'relation',
+                    'options' => ['style' => 'width:160px; min-width:80px;'],
                     'submitAttributes' => ['contact_id'],
                     'dropDownOptions' =>  $relationship,
                     'value' =>
@@ -66,7 +67,8 @@ use humhub\widgets\GridView;
                         },
                         'delete' => function($url, $model) use ($user) {
                             return Html::a('<i class="fa fa-times"></i>',  $user->createUrl('delete', ['id' => $model->contact_id]), ['class' => 'btn btn-danger btn-xs tt', 'title' => 'Delete']);
-                        }
+                        },
+
                     ],
                 ],
             ],

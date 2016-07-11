@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use humhub\modules\user\models\Contact;
+use yii\log\Logger;
 
 
 /**
@@ -44,6 +45,7 @@ class ContactSearch extends Contact
     {
         $query = contact::find()->where(['user_id' => $id])->orderBy('contact_last');
 
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => ['pageSize' => 50],
@@ -73,6 +75,8 @@ class ContactSearch extends Contact
             'contact_id' => $this->contact_id,
             'user_id' => $this->user_id,
         ]);
+
+        $query->andFilterCompare('contact_first','<>NULL');
 
         $query->andFilterWhere(['like', 'contact_first', $this->contact_first])
             ->andFilterWhere(['like', 'contact_last', $this->contact_last])
