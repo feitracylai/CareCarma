@@ -47,6 +47,10 @@ use \humhub\modules\space\models\Space;
             <li>
                 <div class="media" id="media-<?php echo $user->guid; ?>">
 
+                    <div class="pull-right" >
+                        <?php echo Html::a('<i class="fa fa-plus"></i> '.Yii::t('UserModule.views_contact_connect', 'Add'), $thisUser->createUrl('/user/contact/import', ['doit' => 2, 'connect_id' => $user->id]), array('class' => 'btn btn-primary  pull-right', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? Click "OK" if you want to add this user in your contact.')); ?>
+                    </div>
+
 
                     <a href="#" class="pull-left contact"">
                         <img class="media-object img-rounded"
@@ -72,34 +76,36 @@ use \humhub\modules\space\models\Space;
 
                 </div>
 
-                <div class="contactInfo" id="info-<?php echo $user->guid; ?>" hidden>
-                    <hr>
-                    <div class="middle">
-                        <?php $form = \yii\widgets\ActiveForm::begin(); ?>
-                        <?php
-                            $model->contact_user_id = $user->id;
-                            $model->contact_first = $user->profile->firstname;
-                            $model->contact_last = $user->profile->lastname;
-                            $model->contact_mobile = $user->profile->mobile;
-                        if ($user->device_id != null) {
-                            $model->device_phone = $user->device->phone;
-                        }
-                            $model->home_phone = $user->profile->phone_private;
-                            $model->work_phone = $user->profile->phone_work;
-                            $model->contact_email = $user->email;
-
-                        ?>
-                        <?php echo $hForm->render($form); ?>
-                        <?php \yii\widgets\ActiveForm::end(); ?>
-                    </div>
-
-                </div>
+<!--              <div class="contactInfo" id="info---><?php //echo $user->guid; ?><!--" hidden>-->
+<!--                    <hr>-->
+<!--                    <div class="middle">-->
+<!--                        --><?php //$form = \yii\widgets\ActiveForm::begin(); ?>
+<!--                        --><?php
+//                            $model->contact_user_id = $user->id;
+//                            $model->contact_first = $user->profile->firstname;
+//                            $model->contact_last = $user->profile->lastname;
+//                            $model->contact_mobile = $user->profile->mobile;
+//                        if ($user->device_id != null) {
+//                            $model->device_phone = $user->device->phone;
+//                        }
+//                            $model->home_phone = $user->profile->phone_private;
+//                            $model->work_phone = $user->profile->phone_work;
+//                            $model->contact_email = $user->email;
+//
+//                        ?>
+<!--                        --><?php //echo $hForm->render($form); ?>
+<!--                        --><?php //\yii\widgets\ActiveForm::end(); ?>
+<!--                    </div>-->
+<!---->
+<!--                </div>-->
                 <script type="text/javascript">
-                    $('#media-<?php echo $user->guid; ?>').click(function(){
-
-                        $('#info-<?php echo $user->guid; ?>').toggle();
-                    })
+//                    $('#media-<?php //echo $user->guid; ?>//').click(function(){
+//
+//                        $('#info-<?php //echo $user->guid; ?>//').toggle();
+//                    })
                 </script>
+
+
             </li>
 
         <?php endforeach; ?>

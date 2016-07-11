@@ -14,6 +14,7 @@ use yii\base\Exception;
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\user\models\GroupAdmin;
 use humhub\modules\user\components\ActiveQueryUser;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "user".
@@ -175,7 +176,8 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             \humhub\components\behaviors\GUID::className(),
             \humhub\modules\user\behaviors\UserSetting::className(),
             \humhub\modules\user\behaviors\Followable::className(),
-            \humhub\modules\user\behaviors\UserModelModules::className()
+            \humhub\modules\user\behaviors\UserModelModules::className(),
+            \humhub\modules\user\behaviors\ContactLink::className(),
         );
     }
 
@@ -239,6 +241,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
     {
         return $this->status === User::STATUS_ENABLED;
     }
+
 
     /**
      * Before Delete of a User
@@ -544,6 +547,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
 
         return \yii\helpers\Url::toRoute($params, $scheme);
     }
+
 
     /**
      *

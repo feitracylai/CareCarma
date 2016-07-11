@@ -216,8 +216,10 @@ if ($isProfileOwner) {
                             array(
                                 'user' => $user,
                                 'widgets' => array(
-                                    array(\humhub\modules\user\widgets\ProfileEditButton::className(), array('user' => $user), array()),
-                                    array(\humhub\modules\user\widgets\UserFollowButton::className(), array('user' => $user), array()),
+                                    array(\humhub\modules\user\widgets\ProfileEditButton::className(), array('user' => $user), array('sortOrder' => 10)),
+                                    array(\humhub\modules\user\widgets\LinkButton::className(), array('user' => $user), array('sortOrder' => 20)),
+                                    array(\humhub\modules\user\widgets\UserFollowButton::className(), array('user' => $user), array('sortOrder' => 30)),
+
                                 )
                             ));
                         ?>
