@@ -9,18 +9,18 @@ use \yii\helpers\Url;
     <ul class="nav">
         <li class="dropdown account">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <div class="user-title pull-left hidden-xs">
-                    <strong><?php echo Html::encode(Yii::$app->user->getIdentity()->displayName); ?></strong><br/><span class="truncate"><?php echo Html::encode(Yii::$app->user->getIdentity()->profile->title); ?></span>
+                <div class="user-title pull-left ">
+                    <strong><?php echo Html::encode(Yii::$app->user->getIdentity()->displayName); ?></strong><br/><span class="truncate hidden-xs hidden-sm"><?php echo Html::encode(Yii::$app->user->getIdentity()->profile->title); ?></span>
                 </div>
 
-                <img id="user-account-image" class="img-rounded"
+                <img id="user-account-image " class="img-rounded hidden-xs hidden-sm"
                      src="<?php echo Yii::$app->user->getIdentity()->getProfileImage()->getUrl(); ?>"
                      height="32" width="32" alt="32x32" data-src="holder.js/32x32"
                      style="width: 50px; height: 50px;"/>
 
                 <b class="caret"></b>
             </a>
-            <ul class="dropdown-menu pull-right">
+            <ul id="dropdown-menu-right-top" class="dropdown-menu pull-right">
                 <?php foreach ($this->context->getItems() as $item): ?>
                     <?php if ($item['label'] == '---'): ?>
                         <li class="divider"></li>

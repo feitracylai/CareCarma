@@ -2773,6 +2773,39 @@ img.bounceIn {
 }
 
 @media (max-width: 991px) {
+
+    .header {
+        height: 51px;
+    }
+    body {
+        padding-top: 100px;
+    }
+
+    #login-logo-container {
+        padding-top: 30px;
+    }
+
+    #topbar-first .topbar-actions {
+        height: 51px;
+    }
+
+    #topbar-first {
+        height: 51px;
+    }
+
+    #topbar-first .topbar-brand a{
+        font-size: 20px;
+        padding: 15px 10px;
+        font-weight: bold;
+    }
+
+    #dropdown-menu-right-top {
+        top: 51px
+    }
+
+    #topbar-second {
+        top: 51px;
+    }
     .controls-header {
         text-align: left !important
     }

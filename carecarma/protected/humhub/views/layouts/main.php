@@ -84,8 +84,8 @@ AppAsset::register($this);
 
     <!-- start: first top navigation bar -->
     <div id="topbar-first" class="topbar">
-        <div class="container">
-            <div class="topbar-brand hidden-xs">
+        <div  class="container">
+            <div class="topbar-brand ">
                 <?php echo \humhub\widgets\SiteLogo::widget(); ?>
             </div>
 
@@ -93,7 +93,7 @@ AppAsset::register($this);
                 <?php echo \humhub\modules\user\widgets\AccountTopMenu::widget(); ?>
             </div>
 
-            <div class="notifications pull-right">
+            <div class="notifications pull-right hidden-xs hidden-sm">
 
                 <?php
                 echo \humhub\widgets\NotificationArea::widget(['widgets' => [
@@ -120,7 +120,7 @@ AppAsset::register($this);
                 <?php echo \humhub\widgets\TopMenu::widget(); ?>
             </ul>
 
-            <ul class="nav pull-right" id="search-menu-nav">
+            <ul class="nav pull-right hidden-xs hidden-sm" id="search-menu-nav" >
                 <?php echo \humhub\widgets\TopMenuRightStack::widget(); ?>
             </ul>
         </div>

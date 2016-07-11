@@ -20,7 +20,7 @@ $this->registerJs($jsLoadWall, View::POS_READY);
 ?>
 
 <?php if ($this->context->showFilters) { ?>
-    <ul class="nav nav-tabs wallFilterPanel" id="filter" style="display: none;">
+    <ul class="nav nav-tabs wallFilterPanel hidden-xs hidden-sm" id="filter" style="display: none;">
         <li class=" dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo Yii::t('ContentModule.widgets_views_stream', 'Filter'); ?> <b
                     class="caret"></b></a>
@@ -93,7 +93,7 @@ $this->registerJs($jsLoadWall, View::POS_READY);
 </div>
 
 <!-- show "Load More" button on mobile devices -->
-<div class="col-md-12 text-center visible-xs visible-sm">
+<!--<div class="col-md-12 text-center visible-xs visible-sm">
     <button id="btn-load-more" class="btn btn-primary btn-lg ">Load more</button>
     <br/><br/>
-</div>
+</div>-->
