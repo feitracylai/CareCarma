@@ -89,7 +89,7 @@ AppAsset::register($this);
                 <?php echo \humhub\widgets\SiteLogo::widget(); ?>
             </div>
 
-            <div class="topbar-actions pull-right">
+            <div  class="topbar-actions pull-right">
                 <?php echo \humhub\modules\user\widgets\AccountTopMenu::widget(); ?>
             </div>
 
