@@ -16,12 +16,14 @@ class Assets extends AssetBundle
     public $css = [
         'fullcalendar/fullcalendar.css',
             //'fullcalendar/fullcalendar.print.css', // print
+        'fullcalendar/scheduler.min.css'
     ];
     public $js = [
         'fullcalendar/lib/moment.min.js',
         'fullcalendar/lib/jquery-ui.custom.min.js',
         'fullcalendar/fullcalendar.min.js',
         'fullcalendar/lang-all.js',
+        'fullcalendar/scheduler.min.js',
         'fullcalendar.js'
     ];
 

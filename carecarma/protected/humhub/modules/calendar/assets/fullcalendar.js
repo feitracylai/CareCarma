@@ -11,8 +11,8 @@ $(document).ready(function() {
     var calendar = $('#calendar').fullCalendar({
         timezone: fullCalendarTimezone,
         lang: fullCalendarLanguage,
-//        defaultView: 'agendaWeek',
-        defaultView: 'month',
+        // defaultView: 'agendaWeek',
+        defaultView: 'timelineDay',
         aspectRatio: 1.5,
         header: {
             left: 'prev,next today',
