@@ -11,8 +11,8 @@ $(document).ready(function() {
     var calendar = $('#calendar').fullCalendar({
         timezone: fullCalendarTimezone,
         lang: fullCalendarLanguage,
-        // defaultView: 'agendaWeek',
-        defaultView: 'timelineDay',
+        defaultView: 'agendaWeek',
+        // defaultView: 'timelineDay',
         aspectRatio: 1.5,
         header: {
             left: 'prev,next today',
@@ -80,7 +80,7 @@ $(document).ready(function() {
         if ($(this).val() == '4') {
             $(":checkbox[value=3][name='filter']").attr("checked", false);
         }
-        
+
         reloadFullCalendar();
     });
 

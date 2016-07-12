@@ -10,12 +10,12 @@ namespace humhub\modules\calendar;
 
 use yii\web\AssetBundle;
 
-class Assets extends AssetBundle
+class Assets2 extends AssetBundle
 {
 
     public $css = [
         'fullcalendar/fullcalendar.css',
-            //'fullcalendar/fullcalendar.print.css', // print
+        //'fullcalendar/fullcalendar.print.css', // print
         'fullcalendar/scheduler.min.css'
     ];
     public $js = [
@@ -24,7 +24,7 @@ class Assets extends AssetBundle
         'fullcalendar/fullcalendar.min.js',
         'fullcalendar/lang-all.js',
         'fullcalendar/scheduler.min.js',
-        'fullcalendar.js'
+        'fullcalendar2.js'
     ];
 
     public function init()

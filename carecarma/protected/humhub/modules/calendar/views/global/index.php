@@ -1,4 +1,4 @@
-<?php
+q<?php
 
 use humhub\modules\content\components\ActiveQueryContent;
 use humhub\modules\calendar\models\CalendarEntry;
@@ -12,7 +12,7 @@ use yii\helpers\Url;
             <div class="panel panel-default">
                 <div class="panel-body">
                     <?php
-                    echo \humhub\modules\calendar\widgets\FullCalendar::widget(array(
+                    echo \humhub\modules\calendar\widgets\FullCalendar2::widget(array(
                         'canWrite' => true,
                         'selectors' => $selectors,
                         'filters' => $filters,
