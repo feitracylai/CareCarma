@@ -320,7 +320,7 @@ class ContactController extends Controller
         $contactUser = User::findOne(['id' => Yii::$app->request->get('connect_id')]);
         $doit = (int) Yii::$app->request->get('doit');
 
-        $userSpaces = Membership::findAll(['user_id' => $user->id]);
+        $userSpaces = Membership::findAll(['user_id' => $user->id, 'status' => 3]);
         $contacts = array();
         $spaces = array();
         foreach ($userSpaces as $space){
@@ -330,7 +330,7 @@ class ContactController extends Controller
                 foreach (Membership::find()->where(['space_id' => $spaceId])->each() as $spaceContact){
                     $userId = $spaceContact->user_id;
                     $existContact = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $userId]);
-                    if ($userId != Yii::$app->user->id && !$existContact){
+                    if ($userId != Yii::$app->user->id && !$existContact && $spaceContact->status == 3){
                         $contacts[] = User::findOne(['id' => $userId]);
                         $spaces[$userId] = $spaceId;
                     }
@@ -456,7 +456,7 @@ class ContactController extends Controller
         if ($contact == null) {
             throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
         }
-        $userSpaces = Membership::findAll(['user_id' => $user->id]);
+        $userSpaces = Membership::findAll(['user_id' => $user->id, 'status' => 3]);
         $users = array();
         $spaces = array();
         foreach ($userSpaces as $space){
@@ -466,7 +466,7 @@ class ContactController extends Controller
                 foreach (Membership::find()->where(['space_id' => $spaceId])->each() as $spaceContact){
                     $userId = $spaceContact->user_id;
                     $existContact = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $userId]);
-                    if ($userId != Yii::$app->user->id && !$existContact){
+                    if ($userId != Yii::$app->user->id && !$existContact && $spaceContact->stutas == 3){
                         $users[] = User::findOne(['id' => $userId]);
                         $spaces[$userId] = $spaceId;
                     }

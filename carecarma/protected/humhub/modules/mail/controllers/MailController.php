@@ -4,6 +4,7 @@ namespace humhub\modules\mail\controllers;
 
 use Yii;
 use yii\helpers\Html;
+use yii\log\Logger;
 use yii\web\HttpException;
 use humhub\libs\GCM;
 use humhub\libs\Push;
@@ -205,7 +206,7 @@ class MailController extends Controller
 
     private function getUserPickerResult($keyword) {
         if (version_compare(Yii::$app->version, '1.1', 'lt')) {
-            return $this->findUserByFilter($keyword, 10);
+            return $this->findUserByFilter($keyword, 100);
         } else if(Yii::$app->getModule('friendship')->getIsEnabled()) {
             return UserPicker::filter([
                 'keyword' => $keyword,
@@ -284,12 +285,16 @@ class MailController extends Controller
 
         $results = [];
         foreach ($query->all() as $user) {
+
             if ($user != null) {
-                $spaces = Membership::findAll(['user_id' => $user->id]);
+//                Yii::getLogger()->log(implode(',', [$user->getUserGroup(), $user->id]), Logger::LEVEL_INFO, 'MyLog');
+//                if ($user->getUserGroup() != User::USERGROUP_USER){
+                $spaces = Membership::findAll(['user_id' => $user->id, 'status' => 3]);
                 foreach ($spaces as $memberSpace) {
                     $spaceId = $memberSpace->space_id;
-                    $spaceUser = Membership::findAll(['space_id' => $spaceId, 'user_id' => Yii::$app->user->id]);
+                    $spaceUser = Membership::findAll(['space_id' => $spaceId, 'user_id' => Yii::$app->user->id, 'status' => 3]);
                     if ($spaceUser != null){
+//                        Yii::getLogger()->log($user->getUserGroup(), Logger::LEVEL_INFO, 'MyLog');
                         $userInfo = array();
                         $userInfo['guid'] = $user->guid;
                         $userInfo['displayName'] = Html::encode($user->displayName);
@@ -324,7 +329,6 @@ class MailController extends Controller
                 $model->recipient = $user->guid;
             }
         }
-        Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 //            Yii::getLogger()->log(print_r($model->recipient,true),yii\log\Logger::LEVEL_INFO,'MyLog');
             // Create new Message
@@ -518,7 +522,6 @@ class MailController extends Controller
     public function actionDevicecreate()
     {
 //        $userGuid = Yii::$app->request->get('userGuid');
-        Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
 //        Yii::getLogger()->log(print_r(Yii::$app->user->id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $model = new CreateMessage();
         $data = Yii::$app->request->post();
@@ -526,7 +529,6 @@ class MailController extends Controller
         $recipient_user_id = $message_data['recipient'];
         $user = User::findOne(['id' => $recipient_user_id]);
         $recipient = $user->guid;
-        Yii::getLogger()->log(print_r($recipient,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $title = $message_data['title'];
         $content = $message_data['message'];
         $model->recipient = $recipient;
