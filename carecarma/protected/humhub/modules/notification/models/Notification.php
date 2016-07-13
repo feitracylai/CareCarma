@@ -3,6 +3,7 @@
 namespace humhub\modules\notification\models;
 
 use Yii;
+use humhub\modules\user\models\Contact;
 
 /**
  * This is the model class for table "notification".
