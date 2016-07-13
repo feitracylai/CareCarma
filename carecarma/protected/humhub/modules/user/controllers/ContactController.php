@@ -252,11 +252,8 @@ class ContactController extends Controller
 //            $form->models['Contact']->status = User::STATUS_ENABLED;
             if ($form->models['Contact']->save()) {
 
-
-//                $user = User::findOne(['id' => $contactModel->user_id]);
                 $contactModel->notifyDevice('add');
-//                $user = User::findOne(['id' => $contactModel->user_id]);
-//                $contactModel->notifyDevice($user, 'add');
+
                 return $this->redirect(Url::to(['index']));
             }
         }
@@ -267,6 +264,35 @@ class ContactController extends Controller
             'pagination' => $pagination
         ));
     }
+
+    public function actionConsole()
+    {
+        $id = Yii::$app->user->id;
+        $searchModel = new ContactSearch();
+        $searchModel->status = 'console';
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
+
+        return $this->render('console', array(
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'user' => User::findOne(['id' => $id]),
+        ));
+    }
+
+    public function actionLinkCancel()
+    {
+//        Yii::getLogger()->log(Yii::$app->request->get('id'), Logger::LEVEL_INFO, 'MyLog');
+        $user = User::findOne(['id' => Yii::$app->user->id]);
+        $contact = Contact::findOne(['contact_id' => Yii::$app->request->get('id')]);
+        if ($contact != null) {
+            $contact->CancelLink($user);
+        }
+
+
+        return $this->redirect(Url::to(['console']));
+    }
+
+
     /**
      * Deletes a user permanently
      */
@@ -287,6 +313,7 @@ class ContactController extends Controller
         }
         return $this->render('delete', array('model' => $contact, 'user' => $user));
     }
+
     public function actionImport()
     {
         $user = User::findOne(['guid' => Yii::$app->user->guid]);
@@ -402,7 +429,8 @@ class ContactController extends Controller
 //        }
 
         if ($doit == 2){
-            $user->sendLink($contactUser);
+            $contact = new Contact();
+            $contact->sendLink($contactUser, $user);
             return $this->redirect($user->createUrl('import'));
         }
 
@@ -481,7 +509,7 @@ class ContactController extends Controller
 //
 //            $contact->notifyDevice('update');
 
-            $user->sendLink($contact_user, $contact);
+            $contact->sendLink($contact_user, $user);
 
             return $this->redirect($user->createUrl('/user/contact/edit', ['id' => $contact->contact_id]));
         }
@@ -504,7 +532,7 @@ class ContactController extends Controller
         $contact = Contact::findOne(['user_id' => $user->id, 'contact_user_id' => $contactUser->id]);
 
         if ($contact != null) {
-            $contactUser->LinkUser($contact);
+            $contact->LinkUser($contactUser, $user);
         }
 
 
@@ -519,7 +547,7 @@ class ContactController extends Controller
         $contact = Contact::findOne(['user_id' => $user->id, 'contact_user_id' => $contactUser->id]);
 
         if ($contact != null) {
-            $contactUser->DeclineLink($contact);
+            $contact->DenyLink($contactUser, $user);
         }
 
         return $this->redirect(Url::home());

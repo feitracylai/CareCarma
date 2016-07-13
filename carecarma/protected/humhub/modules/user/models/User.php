@@ -177,7 +177,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             \humhub\modules\user\behaviors\UserSetting::className(),
             \humhub\modules\user\behaviors\Followable::className(),
             \humhub\modules\user\behaviors\UserModelModules::className(),
-            \humhub\modules\user\behaviors\ContactLink::className(),
+//            \humhub\modules\user\behaviors\ContactLink::className(),
         );
     }
 

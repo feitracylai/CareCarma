@@ -2,36 +2,29 @@
 /**
  * Created by PhpStorm.
  * User: wufei
- * Date: 7/6/2016
- * Time: 4:56 PM
+ * Date: 7/13/2016
+ * Time: 11:39 AM
  */
 
 namespace humhub\modules\user\notifications;
 
 use humhub\modules\notification\components\BaseNotification;
-use yii\log\Logger;
+use yii\helpers\Url;
 
-class Linked extends BaseNotification
+class LinkRemove extends BaseNotification
 {
+    /**
+     * @inheritdoc
+     */
+    public $moduleId = "user";
 
     /**
      * @inheritdoc
      */
-    public $moduleId = 'user';
+    public $viewName = "linkRemove";
 
-    /**
-     * @inheritdoc
-     */
-    public $viewName = "linked";
-
-    /**
-     * @inheritdoc
-     */
     public function getUrl()
     {
-        return $this->originator->getUrl();
+        return Url::to('index.php?r=user%2Fcontact%2Fconsole');
     }
-
 }
-
-?>

@@ -2,34 +2,33 @@
 /**
  * Created by PhpStorm.
  * User: wufei
- * Date: 7/6/2016
- * Time: 4:56 PM
+ * Date: 7/8/2016
+ * Time: 6:21 PM
  */
 
 namespace humhub\modules\user\notifications;
 
-use humhub\modules\notification\components\BaseNotification;
-use yii\log\Logger;
 
-class Linked extends BaseNotification
+
+use humhub\modules\notification\components\BaseNotification;
+use yii\helpers\Url;
+
+class LinkDenied extends BaseNotification
 {
 
     /**
      * @inheritdoc
      */
-    public $moduleId = 'user';
+    public $moduleId = "user";
 
     /**
      * @inheritdoc
      */
-    public $viewName = "linked";
+    public $viewName = "linkDenied";
 
-    /**
-     * @inheritdoc
-     */
     public function getUrl()
     {
-        return $this->originator->getUrl();
+        return Url::to('index.php?r=user%2Fcontact%2Findex');
     }
 
 }

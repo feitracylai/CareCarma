@@ -5,6 +5,7 @@ namespace humhub\modules\user\models;
 use Yii;
 use humhub\libs\GCM;
 use humhub\libs\Push;
+use yii\log\Logger;
 
 /**
  * This is the model class for table "contact".
@@ -74,6 +75,19 @@ class Contact extends \yii\db\ActiveRecord
         $scenarios['editContact'] = ['contact_first', 'contact_last', 'contact_mobile', 'home_phone', 'work_phone', 'contact_email', 'nickname'];
         $scenarios['linkContact'] = ['user_id', 'contact_user_id', 'linked'];
         return $scenarios;
+    }
+
+    public function behaviors()
+    {
+        return array(
+            \humhub\modules\user\behaviors\ContactLink::className()
+        );
+
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(\humhub\modules\user\models\User::className(), ['id' => 'contact_user_id']);
     }
 
     public function beforeSave($insert)
@@ -182,6 +196,7 @@ class Contact extends \yii\db\ActiveRecord
                 }
             }
         }
+
 
 
 //        $user = User::findOne(['id' => $this->user_id]);

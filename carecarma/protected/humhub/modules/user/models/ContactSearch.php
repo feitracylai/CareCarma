@@ -14,9 +14,18 @@ use yii\log\Logger;
  */
 class ContactSearch extends Contact
 {
+
+    public $status = 'index';
     /**
      * @inheritdoc
      */
+
+    public function attributes()
+    {
+        // add related fields to searchable attributes
+        return array_merge(parent::attributes(), ['user.username', 'user.profile.firstname', 'user.profile.lastname']);
+    }
+
     public function rules()
     {
         return [
@@ -43,7 +52,18 @@ class ContactSearch extends Contact
      */
     public function search($params, $id)
     {
-        $query = contact::find()->where(['user_id' => $id])->orderBy('contact_last');
+//        $query = contact::find()->where(['user_id' => $id])->orderBy('contact_last');
+        $query = Contact::find()->where(['user_id' => $id])->orWhere(['contact_user_id' => $id])->orderBy('contact_last');
+
+        if ($this->status == 'index'){
+            $query->andFilterWhere(['user_id' => $id]);
+            $query->andFilterCompare('contact_first','<>NULL');
+        } elseif ($this->status == 'console') {
+            $query->andFilterCompare('contact_user_id','<>NULL');
+            $query->andWhere(['user_id' => $id, 'linked' => 0]);
+            $query->orWhere(['contact_user_id' => $id]);
+        }
+
 
 
         $dataProvider = new ActiveDataProvider([
@@ -53,6 +73,9 @@ class ContactSearch extends Contact
 
         $dataProvider->setSort([
             'attributes' => [
+                'user.profile.firstname',
+                'user.profile.lastname',
+
                 'contact_first',
                 'contact_last',
                 'contact_mobile',
@@ -76,7 +99,7 @@ class ContactSearch extends Contact
             'user_id' => $this->user_id,
         ]);
 
-        $query->andFilterCompare('contact_first','<>NULL');
+
 
         $query->andFilterWhere(['like', 'contact_first', $this->contact_first])
             ->andFilterWhere(['like', 'contact_last', $this->contact_last])

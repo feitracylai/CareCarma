@@ -12,11 +12,12 @@ use yii\helpers\Html;
     <div class="panel-body">
         <?=\humhub\modules\user\widgets\ContactMenu::widget(); ?>
         <p />
-        <?php $form = \yii\widgets\ActiveForm::begin(); ?>
-        <?php echo $hForm->render($form); ?>
-        <?php \yii\widgets\ActiveForm::end(); ?>
+
+
+            <?php $form = \yii\widgets\ActiveForm::begin(); ?>
+            <?php echo $hForm->render($form); ?>
+            <?php \yii\widgets\ActiveForm::end(); ?>
+
     </div>
-
-
 
 </div>
