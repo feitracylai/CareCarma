@@ -3,7 +3,7 @@ $this->pageTitle = Yii::t('UserModule.views_auth_register_success', 'Registratio
 ?>
 <!-- ******HEADER****** -->
 <header class="header">
-    <div class="container">
+    <div id="login-logo-container" class="container">
         <h1 class="logo">
             <a href="../index.html"><span class="logo-icon"></span><span class="text">CareCarma</span></a>
         </h1><!--//logo-->
