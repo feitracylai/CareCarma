@@ -466,7 +466,7 @@ class ContactController extends Controller
                 foreach (Membership::find()->where(['space_id' => $spaceId])->each() as $spaceContact){
                     $userId = $spaceContact->user_id;
                     $existContact = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $userId]);
-                    if ($userId != Yii::$app->user->id && !$existContact && $spaceContact->stutas == 3){
+                    if ($userId != Yii::$app->user->id && !$existContact && $spaceContact->status == 3){
                         $users[] = User::findOne(['id' => $userId]);
                         $spaces[$userId] = $spaceId;
                     }
