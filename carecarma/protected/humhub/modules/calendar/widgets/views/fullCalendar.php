@@ -7,6 +7,7 @@ use yii\helpers\Html;
 $this->registerJsVar('fullCalendarCanWrite', $canWrite ? 'true' : 'false');
 $this->registerJsVar('fullCalendarTimezone', date_default_timezone_get());
 $this->registerJsVar('fullCalendarLanguage', Yii::$app->language);
+//Yii::getLogger()->log(print_r($loadUrl,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 $this->registerJsVar('fullCalendarLoadUrl', $loadUrl);
 $this->registerJsVar('fullCalendarCreateUrl', $createUrl);
 $this->registerJsVar('fullCalendarSelectors', Html::encode(join(",", $selectors)));
