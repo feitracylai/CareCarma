@@ -43,6 +43,13 @@ class ContactMenu extends \humhub\widgets\BaseMenu
             'isActive' => (Yii::$app->controller->action->id == 'import' && Yii::$app->controller->id === 'contact'),
         ));
 
+        $this->addItem(array(
+            'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu','Link console'),
+            'url' => $this->space->createUrl('contact/console',['rguid' => $rguid]),
+            'sortOrder' => 500,
+            'isActive' => (Yii::$app->controller->action->id == 'console' && Yii::$app->controller->id === 'contact'),
+        ));
+
 
         parent::init();
     }

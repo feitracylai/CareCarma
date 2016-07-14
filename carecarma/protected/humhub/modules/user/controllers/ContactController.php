@@ -536,7 +536,7 @@ class ContactController extends Controller
         }
 
 
-        return $this->redirect(Url::home());
+        return $this->redirect(Url::to(['console']));
     }
 
     public function actionLinkDecline ()
@@ -550,7 +550,7 @@ class ContactController extends Controller
             $contact->DenyLink($contactUser, $user);
         }
 
-        return $this->redirect(Url::home());
+        return $this->redirect(Url::to(['console']));
     }
 
     public function actionDisconnect ()

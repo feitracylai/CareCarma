@@ -86,7 +86,8 @@ class ContactLink extends Behavior
         if ($this->owner->contact_first == null && $this->owner->contact_last == null){
             $this->owner->delete();
         } else {
-            $this->owner->linked = 0;
+            $this->owner->linked = 1;
+            $this->owner->contact_user_id = null;
             $this->owner->save();
         }
 
@@ -108,28 +109,37 @@ class ContactLink extends Behavior
 //        \Yii::getLogger()->log(\Yii::$app->user->id, Logger::LEVEL_INFO, 'MyLog');
 
         if ($this->owner->contact_user_id == $user->id) {
-            $this->owner->linked = 0;
-            $this->owner->contact_user_id = null;
-            $this->owner->save();
-            $this->owner->notifyDevice('update');
 
-            //Send notification to Remove
-            $notification = new LinkRemove();
-            $notification->originator = $user;
-            $notification->source = $this->owner;
-            $notification->send(User::findOne(['id' => $this->owner->user_id]));
+            if ($this->owner->linked == 0){
+                $this->DenyLink($user, User::findOne(['id' => $this->owner->user_id]));
+            } else {
+                $this->owner->linked = 0;
+                $this->owner->contact_user_id = null;
+                $this->owner->save();
+                $this->owner->notifyDevice('update');
+
+                //Send notification to Remove
+                $notification = new LinkRemove();
+                $notification->originator = $user;
+                $notification->source = $this->owner;
+                $notification->send(User::findOne(['id' => $this->owner->user_id]));
+            }
+
+
 
         } else {
             if ($this->owner->contact_first == null && $this->owner->contact_last == null){
                 $this->owner->delete();
             } else {
-                $this->owner->linked = 0;
+                $this->owner->linked = 1;
+                $this->owner->contact_user_id = null;
                 $this->owner->save();
             }
             //Delete link notification for this user
             $notificationLink = new Linked();
             $notificationLink->source = $this->owner;
-            $notificationLink->delete(User::findOne(['id' => $this->owner->user_id]));
+            $notificationLink->originator = $user;
+            $notificationLink->delete(User::findOne(['id' => $this->owner->contact_user_id]));
         }
 
 
