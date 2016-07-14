@@ -6,6 +6,7 @@ use humhub\modules\space\models\Space;
 use humhub\modules\user\models\Invite;
 use humhub\modules\user\models\ProfileField;
 use humhub\modules\user\models\Profile;
+use humhub\modules\user\notifications\LinkRemove;
 use Yii;
 use yii\helpers\Url;
 use humhub\compat\HForm;
@@ -561,6 +562,11 @@ class ContactController extends Controller
         if ($contact != null) {
             $contact->contact_user_id = null;
             $contact->save();
+
+            $contact->notifyDevice('update');
+
+
+
         }
         return $this->redirect($user->createUrl('edit', ['id' => $id]));
     }

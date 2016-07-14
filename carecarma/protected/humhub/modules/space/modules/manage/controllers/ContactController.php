@@ -634,7 +634,7 @@ class ContactController extends Controller
         if ($contact != null) {
             $contact->contact_user_id = null;
             $contact->save();
-            $contact->notifyDevice('disconnect');
+            $contact->notifyDevice('update');
         }
 
 
