@@ -6,7 +6,7 @@ use Yii;
 use humhub\components\Widget;
 
 
-class FullCalendar2 extends Widget
+class FullCalendar_global extends Widget
 {
 
     public $canWrite = true;
@@ -17,7 +17,7 @@ class FullCalendar2 extends Widget
 
     public function run()
     {
-        return $this->render('fullCalendar2', [
+        return $this->render('fullCalendar_global', [
             'loadUrl' => $this->loadUrl,
             'canWrite' => $this->canWrite,
             'createUrl' => $this->createUrl,

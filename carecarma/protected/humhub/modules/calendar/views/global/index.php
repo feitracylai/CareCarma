@@ -12,7 +12,7 @@ use yii\helpers\Url;
             <div class="panel panel-default">
                 <div class="panel-body">
                     <?php
-                    echo \humhub\modules\calendar\widgets\FullCalendar2::widget(array(
+                    echo \humhub\modules\calendar\widgets\FullCalendar_global::widget(array(
                         'canWrite' => true,
                         'selectors' => $selectors,
                         'filters' => $filters,

@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 
-\humhub\modules\calendar\Assets2::register($this);
+\humhub\modules\calendar\Assets_global::register($this);
 
 $this->registerJsVar('fullCalendarCanWrite', $canWrite ? 'true' : 'false');
 $this->registerJsVar('fullCalendarTimezone', date_default_timezone_get());
