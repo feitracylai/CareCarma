@@ -33,6 +33,8 @@ $(document).ready(function() {
             var editUrl = fullCalendarCreateUrl;
             editUrl = editUrl.replace('-start-', encodeURIComponent(start.format(jsonDateFormat)));
             editUrl = editUrl.replace('-end-', encodeURIComponent(end.format(jsonDateFormat)));
+            editUrl = editUrl.replace('edit', 'editglobal');
+            console.log(editUrl);
             $('#globalModal').modal({
                 show: 'true',
                 //remote: editUrl

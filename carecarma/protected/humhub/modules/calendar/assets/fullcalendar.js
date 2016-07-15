@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+    // console.log(fullCalendarLoadUrl);
+    console.log(fullCalendarLoadUrl.replace('-selectors-', fullCalendarSelectors));
+
     var jsonDateFormat = "YYYY-MM-DD HH:mm:ss";
 
     if (fullCalendarCanWrite == 'false' || fullCalendarCanWrite == false) {
@@ -17,7 +20,7 @@ $(document).ready(function() {
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,agendaWeek,agendaDay'
+            right: 'month,agendaWeek,timelineDay'
         },
         editable: fullCalendarCanWrite,
         events: {
@@ -26,6 +29,9 @@ $(document).ready(function() {
             error: function() {
                 //alert("loading error!");
             }
+        },
+        resources: {
+            url: fullCalendarLoadUrl.replace('load-ajax', 'resource')
         },
         selectable: fullCalendarCanWrite,
         selectHelper: fullCalendarCanWrite,
@@ -63,6 +69,8 @@ $(document).ready(function() {
             $('#loading').toggle(bool);
         }
     });
+
+    console.log(events);
 
 
 

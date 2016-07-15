@@ -17,7 +17,7 @@ use humhub\modules\calendar\models\CalendarEntry;
                 <?php if (!$calendarEntry->isNewRecord) : ?>
                     <?php echo Yii::t('CalendarModule.views_entry_edit', '<strong>Edit</strong> event'); ?>
                 <?php else: ?>
-                    <?php echo Yii::t('CalendarModule.views_entry_edit', '<strong>Create</strong> family event'); ?>
+                    <?php echo Yii::t('CalendarModule.views_entry_edit', '<strong>Create</strong> personal event'); ?>
                 <?php endif; ?>
             </h4>
         </div>
@@ -76,21 +76,7 @@ use humhub\modules\calendar\models\CalendarEntry;
             </div>
             <hr>
 
-            <div class="form-group">
-                <?php
-                $modes = array(
-                    CalendarEntry::PARTICIPATION_MODE_NONE => Yii::t('CalendarModule.views_entry_edit', 'No participants'),
-//                    CalendarEntry::PARTICIPATION_MODE_INVITE => Yii::t('CalendarModule.base', 'Select participants'),
-                    CalendarEntry::PARTICIPATION_MODE_ALL => Yii::t('CalendarModule.views_entry_edit', 'Everybody can participate')
-                );
-                ?>
-                <?php echo $form->labelEx($calendarEntry, 'participant_mode'); ?>
-                <?php echo $form->dropDownList($calendarEntry, 'participation_mode', $modes, array('id' => 'participation_mode', 'class' => 'form-control', 'placeholder' => Yii::t('CalendarModule.views_entry_edit', 'End Date/Time')), array('pickTime' => true)); ?>
-            </div>
-            <div class="form-group" id="selectedUsersField">
-                <?php echo $form->labelEx($calendarEntry, 'selected_participants'); ?>
-                <?php echo $form->textField($calendarEntry, 'selected_participants', array('class' => 'form-control', 'placeholder' => Yii::t('CalendarModule.views_entry_edit', 'Participants'))); ?>
-            </div>
+
         </div>
 
         <div class="modal-footer">
@@ -103,7 +89,7 @@ use humhub\modules\calendar\models\CalendarEntry;
                             'type' => 'POST',
                             'beforeSend' => new yii\web\JsExpression('function(){ setModalLoader(); }'),
                             'success' => new yii\web\JsExpression('function(html){ $("#globalModal").html(html); }'),
-                            'url' => $contentContainer->createUrl('/calendar/entry/edit', ['id' => $calendarEntry->id]),
+                            'url' => $contentContainer->createUrl('/calendar/entry/editglobal', ['id' => $calendarEntry->id]),
                         ],
                         'htmlOptions' => [
                             'class' => 'btn btn-primary'
