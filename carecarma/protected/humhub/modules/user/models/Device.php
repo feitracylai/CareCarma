@@ -29,6 +29,7 @@ class Device extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['device_id'], 'unique'],
             [['device_id'], 'string', 'max' => 45],
             [['gcmId', 'phone'], 'string', 'max' => 255],
         ];
@@ -45,6 +46,11 @@ class Device extends \yii\db\ActiveRecord
             'phone' => 'Device Phone#',
             'temp_password' => 'Temp Password'
         ];
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(\humhub\modules\user\models\User::className(), ['device_id' => 'device_id']);
     }
 
 

@@ -72,6 +72,17 @@ class AdminMenu extends \humhub\widgets\BaseMenu
             'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'admin' && Yii::$app->controller->id == 'space'),
             'isVisible' => Yii::$app->user->isAdmin(),
         ));
+
+        $this->addItem(array(
+            'label' => \Yii::t('AdminModule.widgets_AdminMenuWidget', 'Devices'),
+            'url' => Url::toRoute(['/admin/device']),
+            'icon' => '<i class="fa fa-headphones"></i>',
+            'group' => 'manage',
+            'sortOrder' => 450,
+            'isActive' => (\Yii::$app->controller->module && \Yii::$app->controller->module->id == 'admin' && Yii::$app->controller->id == 'device'),
+            'isVisible' => \Yii::$app->user->isAdmin(),
+        ));
+
         $this->addItem(array(
             'label' => Yii::t('AdminModule.widgets_AdminMenuWidget', 'Modules'),
             'id' => 'modules',
