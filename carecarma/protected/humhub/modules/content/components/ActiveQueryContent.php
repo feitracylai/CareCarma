@@ -76,7 +76,7 @@ class ActiveQueryContent extends \yii\db\ActiveQuery
         if ($user === null && !Yii::$app->user->isGuest) {
             $user = Yii::$app->user->getIdentity();
         }
-        Yii::getLogger()->log(print_r("AAAAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        Yii::getLogger()->log(print_r("AAAAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $this->joinWith(['content', 'content.space']);
 
         if ($user !== null) {
@@ -95,8 +95,6 @@ class ActiveQueryContent extends \yii\db\ActiveQuery
             $this->andWhere('space.id IS NOT NULL and space.visibility=' . Space::VISIBILITY_ALL. ' AND content.visibility=1');
         }
 
-
-
         return $this;
     }
 
@@ -108,6 +106,23 @@ class ActiveQueryContent extends \yii\db\ActiveQuery
      * @throws \yii\base\Exception
      */
     public function contentContainer($container)
+    {
+        $this->joinWith(['content', 'content.user', 'content.space']);
+
+        if ($container->className() == Space::className()) {
+//            Yii::getLogger()->log(print_r("QAZQAZ",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+            $this->andWhere(['content.space_id' => $container->id]);
+        } elseif ($container->className() == User::className()) {
+            $this->andWhere(['content.user_id' => $container->id]);
+            $this->andWhere('content.space_id IS NULL OR content.space_id = ""');
+        } else {
+            throw new \yii\base\Exception("Invalid container given!");
+        }
+
+        return $this;
+    }
+
+    public function contentContainer2($container)
     {
         $this->joinWith(['content', 'content.user', 'content.space']);
 

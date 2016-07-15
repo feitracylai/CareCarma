@@ -155,9 +155,9 @@ class CalendarEntry extends ContentActiveRecord implements \humhub\modules\searc
 //        $user = User::findOne(['id' => 5]);
 //        Yii::getLogger()->log(print_r($user,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 //        Yii::getLogger()->log(print_r($contentContainer,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $query = self::find()->contentContainer($contentContainer)->readable2();
+        $query = self::find()->contentContainer2($contentContainer)->readable2();
         //Search for all container entries with start and/or end within the given range
-        Yii::getLogger()->log(print_r($query,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        Yii::getLogger()->log(print_r($query,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $query->andFilterWhere(
                     ['or',
                         ['and',

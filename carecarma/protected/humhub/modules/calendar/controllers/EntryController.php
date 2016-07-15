@@ -103,6 +103,47 @@ class EntryController extends ContentContainerController
         ]);
     }
 
+    public function actionEditglobal()
+    {
+        $calendarEntry = $this->getCalendarEntry(Yii::$app->request->get('id'));
+
+        if ($calendarEntry == null) {
+
+            $calendarEntry = new CalendarEntry;
+            $calendarEntry->content->container = $this->contentContainer;
+
+            if (Yii::$app->request->get('fullCalendar') == 1) {
+                \humhub\modules\calendar\widgets\FullCalendar::populate($calendarEntry, Yii::$app->timeZone);
+            }
+        }
+        if ($calendarEntry->all_day) {
+            // Timezone Fix: If all day event, remove time of start/end datetime fields
+            $calendarEntry->start_datetime = preg_replace('/\d{2}:\d{2}:\d{2}$/', '', $calendarEntry->start_datetime);
+            $calendarEntry->end_datetime = preg_replace('/\d{2}:\d{2}:\d{2}$/', '', $calendarEntry->end_datetime);
+            $calendarEntry->start_time = '00:00';
+            $calendarEntry->end_time = '23:59';
+        }
+
+        if ($calendarEntry->load(Yii::$app->request->post()) && $calendarEntry->validate()) {
+            // After closing modal refresh calendar or page
+            $calendarEntry->participation_mode = 0;
+            $calendarEntry->save();
+            $output = "<script>";
+            $output .= 'if(typeof $("#calendar").fullCalendar != "undefined") { $("#calendar").fullCalendar("refetchEvents"); } else { location.reload(); }';
+            $output .= "</script>";
+
+            $output .= $this->renderModalClose();
+
+            return $this->renderAjaxContent($output);
+        }
+
+        return $this->renderAjax('edit_global', [
+            'calendarEntry' => $calendarEntry,
+            'contentContainer' => $this->contentContainer,
+            'createFromGlobalCalendar' => false
+        ]);
+    }
+    
     public function actionUserList()
     {
         $calendarEntry = $this->getCalendarEntry(Yii::$app->request->get('id'));

@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    '<strong>Create</strong> event' => '',
+    '<strong>Create</strong> personal event' => '',
     '<strong>Edit</strong> event' => '',
     '<strong>Note:</strong> This event will be created on your profile. To create a space event open the calendar on the desired space.' => '',
     'Description' => '',
