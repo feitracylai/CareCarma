@@ -94,7 +94,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
     {
         return [
             [['username', 'email'], 'required'],
-            [['device_id'], 'required', 'on' => 'editCare'],
+//            [['device_id'], 'required', 'on' => 'editCare'],
             [['wall_id', 'group_id', 'status', 'super_admin', 'created_by', 'updated_by', 'visibility'], 'integer'],
             [['tags'], 'string'],
             [['last_activity_email', 'created_at', 'updated_at', 'last_login'], 'safe'],

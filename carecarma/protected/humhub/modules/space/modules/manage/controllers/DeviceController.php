@@ -125,7 +125,7 @@ class DeviceController extends ContentContainerController
             $this->forcePostRequest();
             $form->models['User']->status = User::STATUS_ENABLED;
             $device = Device::find()->where(['device_id' => $form->models['User']->device_id])->one();
-            if ($device != null) {
+            if ($device != null || $form->models['User']->device_id == '') {
                 if ($form->models['User']->save()) {
                     // Save User Profile
                     // save the temp_password
