@@ -8,6 +8,7 @@
 
 namespace humhub\modules\admin\controllers;
 
+use humhub\modules\user\models\Device;
 use Yii;
 use yii\helpers\Url;
 use humhub\compat\HForm;
@@ -50,6 +51,7 @@ class UserController extends Controller
         if ($user == null)
             throw new \yii\web\HttpException(404, Yii::t('AdminModule.controllers_UserController', 'User not found!'));
 
+
         $user->scenario = 'editAdmin';
         $user->profile->scenario = 'editAdmin';
         $profile = $user->profile;
@@ -71,6 +73,11 @@ class UserController extends Controller
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 100,
+                ),
+                'device_id' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 45,
                 ),
                 'group_id' => array(
                     'type' => 'dropdownlist',
@@ -102,6 +109,8 @@ class UserController extends Controller
             ),
         );
 
+
+
         // Add Profile Form
         $definition['elements']['Profile'] = array_merge(array('type' => 'form'), $profile->getFormDefinition());
 
@@ -129,9 +138,17 @@ class UserController extends Controller
         $form->models['Profile'] = $profile;
 
         if ($form->submitted('save') && $form->validate()) {
-            if ($form->save()) {
-                return $this->redirect(Url::toRoute('/admin/user'));
+            $device = Device::findOne(['device_id' => $form->models['User']->device_id]);
+            if ($device != null || $form->models['User']->device_id == ''){
+                if ($form->save()) {
+
+
+                    return $this->redirect(Url::toRoute('/admin/user'));
+                }
+            } else {
+                $form->models['User']->addError('device_id', 'Invalid input! Please make sure that you entered the correct device ID.');
             }
+
         }
 
         // This feature is used primary for testing, maybe remove this in future
@@ -190,6 +207,12 @@ class UserController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 100,
                 ),
+                'device_id' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 45,
+                ),
+
                 'group_id' => array(
                     'type' => $groupFieldType,
                     'class' => 'form-control',
@@ -239,18 +262,24 @@ class UserController extends Controller
             $this->forcePostRequest();
 
             $form->models['User']->status = User::STATUS_ENABLED;
-            if ($form->models['User']->save()) {
-                // Save User Profile
-                $form->models['Profile']->user_id = $form->models['User']->id;
-                $form->models['Profile']->save();
+            $device = Device::findOne(['device_id' => $form->models['User']->device_id]);
+            if ($device != null || $form->models['User']->device_id == ''){
+                if ($form->models['User']->save()) {
+                    // Save User Profile
+                    $form->models['Profile']->user_id = $form->models['User']->id;
+                    $form->models['Profile']->save();
 
-                // Save User Password
-                $form->models['UserPassword']->user_id = $form->models['User']->id;
-                $form->models['UserPassword']->setPassword($form->models['UserPassword']->newPassword);
-                $form->models['UserPassword']->save();
+                    // Save User Password
+                    $form->models['UserPassword']->user_id = $form->models['User']->id;
+                    $form->models['UserPassword']->setPassword($form->models['UserPassword']->newPassword);
+                    $form->models['UserPassword']->save();
 
-                return $this->redirect(Url::to(['index']));
+                    return $this->redirect(Url::to(['index']));
+                }
+            } else {
+                $form->models['User']->addError('device_id', 'Invalid input! Please make sure that you entered the correct device ID.');
             }
+
         }
 
         return $this->render('add', array('hForm' => $form));
