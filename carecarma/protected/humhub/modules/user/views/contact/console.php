@@ -77,7 +77,7 @@ use humhub\modules\user\models\User;
                             if ($model->contact_user_id == $user->id && $model->linked == 0)
                             {
                                $contactUser = User::findOne(['id' => $model->user_id]);
-                                return Html::a('<i class="fa fa-check"></i>', Url::toRoute(['/user/contact/link-accept', 'uguid' => $contactUser->guid]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View']);
+                                return Html::a('<i class="fa fa-check"></i>', Url::toRoute(['/user/contact/link-accept', 'uguid' => $contactUser->guid]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Accept']);
                             }
                             return;
                         },

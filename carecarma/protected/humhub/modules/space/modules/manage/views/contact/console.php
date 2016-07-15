@@ -81,7 +81,7 @@ use humhub\modules\user\models\User;
                             {
                                $contactUser = User::findOne(['id' => $model->user_id]);
 //                                return Html::a('<i class="fa fa-check"></i>', Url::toRoute(['/user/contact/link-accept', 'uguid' => $contactUser->guid]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View']);
-                                return Html::a('<i class="fa fa-check"></i>',$space->createUrl('link-accept', ['uguid' => $contactUser->guid, 'rguid' => $user->guid]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View']);
+                                return Html::a('<i class="fa fa-check"></i>',$space->createUrl('link-accept', ['uguid' => $contactUser->guid, 'rguid' => $user->guid]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Accept']);
 
                             }
                             return;
