@@ -17,7 +17,7 @@ use humhub\modules\calendar\models\CalendarEntry;
                 <?php if (!$calendarEntry->isNewRecord) : ?>
                     <?php echo Yii::t('CalendarModule.views_entry_edit', '<strong>Edit</strong> event'); ?>
                 <?php else: ?>
-                    <?php echo Yii::t('CalendarModule.views_entry_edit', '<strong>Create</strong> event'); ?>
+                    <?php echo Yii::t('CalendarModule.views_entry_edit', '<strong>Create</strong> family event'); ?>
                 <?php endif; ?>
             </h4>
         </div>
@@ -80,7 +80,7 @@ use humhub\modules\calendar\models\CalendarEntry;
                 <?php
                 $modes = array(
                     CalendarEntry::PARTICIPATION_MODE_NONE => Yii::t('CalendarModule.views_entry_edit', 'No participants'),
-                    //CalendarEntry::PARTICIPATION_MODE_INVITE => Yii::t('CalendarModule.base', 'Select participants'),
+//                    CalendarEntry::PARTICIPATION_MODE_INVITE => Yii::t('CalendarModule.base', 'Select participants'),
                     CalendarEntry::PARTICIPATION_MODE_ALL => Yii::t('CalendarModule.views_entry_edit', 'Everybody can participate')
                 );
                 ?>

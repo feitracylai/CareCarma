@@ -52,6 +52,8 @@ class ViewController extends ContentContainerController
 //        Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         Yii::$app->response->format = 'json';
         $output = array();
+        $resource = array();
+
         foreach (Membership::findAll(['space_id' => $this->contentContainer->primaryKey]) as $member) {
 //            Yii::getLogger()->log(print_r($member,true),yii\log\Logger::LEVEL_INFO,'MyLog');
             $resource = array();
@@ -61,6 +63,9 @@ class ViewController extends ContentContainerController
             $output[] = $resource;
         }
 //        Yii::getLogger()->log(print_r($output,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $resource['id'] = 0;
+        $resource['title'] = 'Others';
+        $output[] = $resource;
         return $output;
     }
 

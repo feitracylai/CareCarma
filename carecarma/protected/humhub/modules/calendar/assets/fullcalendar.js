@@ -20,7 +20,7 @@ $(document).ready(function() {
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,agendaWeek,agendaDay'
+            right: 'month,agendaWeek,timelineDay'
         },
         editable: fullCalendarCanWrite,
         events: {
@@ -39,7 +39,6 @@ $(document).ready(function() {
             var editUrl = fullCalendarCreateUrl;
             editUrl = editUrl.replace('-start-', encodeURIComponent(start.format(jsonDateFormat)));
             editUrl = editUrl.replace('-end-', encodeURIComponent(end.format(jsonDateFormat)));
-            editUrl = editUrl.replace('edit', 'editglobal');
             $('#globalModal').modal({
                 show: 'true',
                 //remote: editUrl
