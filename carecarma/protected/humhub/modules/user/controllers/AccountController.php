@@ -333,7 +333,7 @@ class AccountController extends Controller
         if (!$isSpaceOwner && $model->load(Yii::$app->request->post()) && $model->validate()) {
 
             $user->delete();
-            Yii::$app->user->logout();
+//            Yii::$app->user->logout();
             $this->redirect(Yii::$app->homeUrl);
         }
 

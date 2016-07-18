@@ -180,13 +180,18 @@ class DeviceController extends ContentContainerController
     public function checkDevice ($device_id) {
         $user = User::findOne(['device_id' => $device_id]);
         $device = Device::findOne(['device_id' => $device_id]);
-        $gcmId = $device->gcmId;
-        if ($user != null and $gcmId != null) {
-            return true;
-        }
-        else {
+        if ($device != null){
+            $gcmId = $device->gcmId;
+            if ($user != null and $gcmId != null) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        } else {
             return false;
         }
+
     }
     public function activation ($device_id) {
         $user = User::findOne(['device_id' => $device_id]);
