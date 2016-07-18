@@ -98,6 +98,38 @@ class ActiveQueryContent extends \yii\db\ActiveQuery
         return $this;
     }
 
+
+
+    public function readable_family($user = null)
+    {
+
+        if ($user === null && !Yii::$app->user->isGuest) {
+            $user = Yii::$app->user->getIdentity();
+        }
+//        Yii::getLogger()->log(print_r($user,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $this->joinWith(['content', 'content.space']);
+
+        if ($user !== null) {
+            $this->leftJoin('space_membership', 'content.space_id=space_membership.space_id AND space_membership.user_id=:userId', [':userId' => $user->id]);
+            // Build Access Check based on Content Container
+            $conditionSpace = 'space.id IS NOT NULL AND (';                                         // space content
+            $conditionSpace .= ' (space_membership.status=3)';                                      // user is space member
+            $conditionSpace .= ' OR (content.visibility=1 AND space.visibility != 0)';               // visibile space and public content
+            $conditionSpace .= ')';
+            $conditionUser = 'space.id IS NULL AND (';                                              // No Space Content -> User
+            $conditionUser .= '   (content.visibility = 1) OR';                                     // public visible content
+            $conditionUser .= '   (content.visibility = 0 AND content.user_id=' . $user->id . ')';  // private content of user
+            $conditionUser .= ')';
+            $this->andWhere("{$conditionSpace} OR {$conditionUser}");
+        } else {
+            $this->andWhere('space.id IS NOT NULL and space.visibility=' . Space::VISIBILITY_ALL. ' AND content.visibility=1');
+        }
+        
+        return $this;
+    }
+
+
+
     /**
      * Limits the returned records to the given ContentContainer.
      * 
@@ -129,6 +161,22 @@ class ActiveQueryContent extends \yii\db\ActiveQuery
         if ($container->className() == Space::className()) {
 //            Yii::getLogger()->log(print_r("QAZQAZ",true),yii\log\Logger::LEVEL_INFO,'MyLog');
 //            $this->andWhere(['content.space_id' => $container->id]);
+        } elseif ($container->className() == User::className()) {
+            $this->andWhere(['content.user_id' => $container->id]);
+            $this->andWhere('content.space_id IS NULL OR content.space_id = ""');
+        } else {
+            throw new \yii\base\Exception("Invalid container given!");
+        }
+
+        return $this;
+    }
+
+    public function contentContainer_family($container)
+    {
+        $this->joinWith(['content', 'content.user', 'content.space']);
+
+        if ($container->className() == Space::className()) {
+            $this->andWhere(['content.space_id' => $container->id]);
         } elseif ($container->className() == User::className()) {
             $this->andWhere(['content.user_id' => $container->id]);
             $this->andWhere('content.space_id IS NULL OR content.space_id = ""');

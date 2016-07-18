@@ -185,6 +185,36 @@ class CalendarEntry extends ContentActiveRecord implements \humhub\modules\searc
         return $entries;
     }
 
+
+
+    public static function getContainerEntriesByOpenRange_family(DateTime $start, DateTime $end, ContentContainerActiveRecord $contentContainer, $limit = 0)
+    {
+        $entries = array();
+        $query = self::find()->contentContainer_family($contentContainer)->readable_family();
+        $query->andFilterWhere(
+            ['or',
+                ['and',
+                    ['>=', 'start_datetime', $start->format('Y-m-d H:i:s')],
+                    ['<=', 'start_datetime', $end->format('Y-m-d H:i:s')]
+                ],
+                ['and',
+                    ['>=', 'end_datetime', $start->format('Y-m-d H:i:s')],
+                    ['<=', 'end_datetime', $end->format('Y-m-d H:i:s')]
+                ]
+            ]
+        );
+
+        $query->orderBy('start_datetime ASC');
+
+        if ($limit != 0) {
+            $query->limit($limit);
+        }
+        foreach ($query->all() as $entry) {
+            $entries[] = $entry;
+        }
+        return $entries;
+    }
+
     public static function getContainerEntriesByRange(DateTime $start, DateTime $end, ContentContainerActiveRecord $contentContainer, $limit = 0)
     {
         $entries = array();
