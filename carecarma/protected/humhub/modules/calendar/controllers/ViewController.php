@@ -45,7 +45,17 @@ class ViewController extends ContentContainerController
             $output[] = $entry->getFullCalendarArray();
         }
 //        Yii::getLogger()->log(print_r($output,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        return $output;
+        $member_list = array();
+        foreach (Membership::findAll(['space_id' => $this->contentContainer->primaryKey]) as $member) {
+            $member_list[] = $member->user_id;
+        }
+        $new_output = array();
+        foreach ($output as $element) {
+            if (in_array($element['resourceId'], $member_list, 'TRUE')) {
+                $new_output[] = $element;
+            }
+        }
+        return $new_output;
     }
 
     public function actionResource() {
@@ -53,6 +63,7 @@ class ViewController extends ContentContainerController
         Yii::$app->response->format = 'json';
         $output = array();
         $resource = array();
+        $color_list = array("read", "green", "orange", "black", "blue", "violet");
 
         foreach (Membership::findAll(['space_id' => $this->contentContainer->primaryKey]) as $member) {
 //            Yii::getLogger()->log(print_r($member,true),yii\log\Logger::LEVEL_INFO,'MyLog');
@@ -60,11 +71,13 @@ class ViewController extends ContentContainerController
             $resource['id'] = $member->user_id;
             $profile = Profile::findOne(['user_id' => $member->user_id]);
             $resource['title'] = $profile->firstname . ' ' . $profile->lastname;
+            $resource['eventColor'] = $color_list[$member->user_id%6];
             $output[] = $resource;
         }
 //        Yii::getLogger()->log(print_r($output,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $resource['id'] = 0;
         $resource['title'] = 'Others';
+        $resource['eventColor'] = $color_list[$member->user_id%6];
         $output[] = $resource;
         return $output;
     }
