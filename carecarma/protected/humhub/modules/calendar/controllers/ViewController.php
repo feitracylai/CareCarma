@@ -63,7 +63,10 @@ class ViewController extends ContentContainerController
             $calendarEntryParticipant = CalendarEntryParticipant::findAll(['calendar_entry_id' => $element['id']]);
 //            Yii::getLogger()->log(print_r($calendarEntryParticipant,true),yii\log\Logger::LEVEL_INFO,'MyLog');
             if (in_array($element['resourceId'], $member_list, 'TRUE')) {
-                $new_output[] = $element;
+                $temp = CalendarEntryParticipant::findOne(['calendar_entry_id' => $element['id'], 'user_id' => $element['resourceId']]);
+                if ($temp->participation_state == 3) {
+                    $new_output[] = $element;
+                }
             }
             foreach ($calendarEntryParticipant as $ele) {
                 if ($ele->user_id != $element['resourceId']) {
@@ -78,7 +81,10 @@ class ViewController extends ContentContainerController
                     $new['start'] = $element['start'];
                     $new['end'] = $element['end'];
                     if (in_array($new['resourceId'], $member_list, 'TRUE')) {
-                        $new_output[] = $new;
+                        $temp = CalendarEntryParticipant::findOne(['calendar_entry_id' => $new['id'], 'user_id' => $new['resourceId']]);
+                        if ($temp->participation_state == 3) {
+                            $new_output[] = $new;
+                        }
                     }
                 }
             }
