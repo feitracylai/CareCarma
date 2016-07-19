@@ -20,7 +20,7 @@ $(document).ready(function() {
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,agendaWeek,timelineDay'
+            right: 'timelineDay,timelineWeek,timelineMonth,timelineYear'
         },
         // editable: fullCalendarCanWrite,
         // selectable: true,
