@@ -16,6 +16,7 @@ use \humhub\libs\GCM;
 use \humhub\libs\Push;
 use \humhub\modules\user\models\User;
 use \humhub\modules\user\models\Device;
+use humhub\modules\user\models\Contact;
 
 /**
  * AccountController provides all standard actions for the current logged in
