@@ -1,6 +1,7 @@
 <?php
 
 use humhub\modules\custom_pages\models\Page;
+use humhub\modules\User\models\User;
 ?>
 
 <?php if ($navigationClass == Page::NAV_CLASS_ACCOUNTNAV): ?>
@@ -32,12 +33,16 @@ use humhub\modules\custom_pages\models\Page;
 
 
 <?php else: ?>
-
+    <?php
+        $id = Yii::$app->user->id;
+        $user = User::findOne(['id' => $id]);
+        $email = $user->email;
+    ?>
     <iframe name="iframework" src="about:blank" id="iframepage" style="width:100%;height:400px"></iframe>
     <script>
         var url = "<?php echo $url; ?>"
         var html = '<form action="<?php echo $url; ?>" method=post target="_self" id="data_form">' +
-                   '<input type="hidden" name="email" value="simonxu14@foxmail.com">' +
+                   '<input type="hidden" name="email" value="<?php echo $email; ?>">' +
                    '<input type="hidden" name="password" value="11235813">' +
                    '</form>';
         document.getElementById('iframepage').contentWindow.document.write(html);
