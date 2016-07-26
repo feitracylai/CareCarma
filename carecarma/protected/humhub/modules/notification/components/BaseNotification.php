@@ -8,6 +8,8 @@
 
 namespace humhub\modules\notification\components;
 
+use humhub\modules\dashboard\models\MobileToken;
+use humhub\modules\dashboard\models\MobileTokenQuery;
 use Yii;
 use yii\base\ViewContextInterface;
 use yii\helpers\Url;
@@ -17,6 +19,7 @@ use humhub\modules\user\models\User;
 use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\content\components\ContentAddonActiveRecord;
 use humhub\modules\content\components\ContentContainerActiveRecord;
+use humhub\libs\Firebase;
 
 /**
  * BaseNotification
@@ -161,6 +164,16 @@ class BaseNotification extends \yii\base\Component implements ViewContextInterfa
         // Skip - do not set notification to the originator
         if ($this->originator !== null && $user->id == $this->originator->id) {
             return;
+        }
+
+        $query = MobileToken::find()->where(['user_id' => $user->id])->one();
+
+        if($query != null)
+        {
+            $mobile_token = $query->device_token;
+            $firebase = new Firebase();
+            $firebase->send($mobile_token, 'Notification Message');
+            //$firebase->send('cM_8bEJHpII:APA91bHyLrPp8hKC2_wCiZHflJxJp5n9dLt5Jy7aWdvV1e-SQToSEI8O8uGNutRouItOcHnbe4QqmlfLUryOGnr5koZ-Q_A_XMcy6-fig80FQYHCsIH3yZbL2eNTaP429Autu-y25CC1', 'App server');
         }
 
         $notification = new Notification;
