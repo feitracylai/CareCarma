@@ -9,6 +9,7 @@
 namespace humhub\modules\comment\notifications;
 
 use humhub\modules\user\models\User;
+use yii\helpers\Html;
 
 /**
  * Notification for new comments
@@ -38,7 +39,9 @@ class NewComment extends \humhub\modules\notification\components\BaseNotificatio
             return;
         }
 
-        return parent::send($user);
+        $commentedObject = $this->source->content->getPolymorphicRelation();
+        $msg =  Html::encode($this->source->user->displayName). ' commented ' . parent::getContentInfo($commentedObject);;
+        return parent::send($user, $msg);
     }
 
 }
