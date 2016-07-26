@@ -8,6 +8,9 @@
 
 namespace humhub\modules\dashboard\controllers;
 
+use humhub\modules\dashboard\models\MobileToken;
+use humhub\modules\dashboard\models\MobileTokenQuery;
+use humhub\modules\tour\widgets\Dashboard;
 use Yii;
 use yii\web\Controller;
 use humhub\models\Setting;
@@ -47,6 +50,19 @@ class DashboardController extends Controller
      */
     public function actionIndex()
     {
+
+        if (isset($_GET['yourKey'])) {
+            $record= MobileToken::find()->where(['device_token'=>$_GET['yourKey']])->exists();
+
+            $userId = Yii::$app->user->getId();
+            if($record == null) {
+                $post = new  \humhub\modules\dashboard\models\MobileToken();
+                $post->device_token = $_GET['yourKey'];
+                $post->user_id = Yii::$app->user->getId();
+                $post->save();
+            }
+        }
+
         if (Yii::$app->user->isGuest) {
             return $this->render('index_guest', array());
         } else {
