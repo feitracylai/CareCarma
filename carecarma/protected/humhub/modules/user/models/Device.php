@@ -41,9 +41,9 @@ class Device extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'device_id' => 'Device ID',
+            'device_id' => 'Cosmos Activation#',
             'gcmId' => 'Gcm ID',
-            'phone' => 'Device Phone#',
+            'phone' => 'Cosmos Phone#',
             'temp_password' => 'Temp Password'
         ];
     }

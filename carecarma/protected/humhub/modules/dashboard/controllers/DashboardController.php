@@ -55,7 +55,7 @@ class DashboardController extends Controller
             $record= MobileToken::find()->where(['device_token'=>$_GET['yourKey']])->exists();
 
             $userId = Yii::$app->user->getId();
-            if($record == null) {
+            if($record == null && $_GET['yourKey'] != null) {
                 $post = new  \humhub\modules\dashboard\models\MobileToken();
                 $post->device_token = $_GET['yourKey'];
                 $post->user_id = Yii::$app->user->getId();

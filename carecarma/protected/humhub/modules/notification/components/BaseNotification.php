@@ -53,7 +53,6 @@ class BaseNotification extends \yii\base\Component implements ViewContextInterfa
      * @var \yii\db\ActiveRecord
      */
     public $source;
-
     /**
      * Space this notification belongs to. (Optional)
      * If source is a Content, ContentAddon or ContentContainer this will be
@@ -154,7 +153,7 @@ class BaseNotification extends \yii\base\Component implements ViewContextInterfa
      *
      * @param User $user
      */
-    public function send(User $user)
+    public function send(User $user, $msg = null)
     {
 
         if ($this->moduleId == "") {
@@ -170,9 +169,11 @@ class BaseNotification extends \yii\base\Component implements ViewContextInterfa
 
         if($query != null)
         {
+            if($msg == null) $msg = 'New Notification';
+
             $mobile_token = $query->device_token;
             $firebase = new Firebase();
-            $firebase->send($mobile_token, 'Notification Message');
+            $firebase->send($mobile_token,$msg );
             //$firebase->send('cM_8bEJHpII:APA91bHyLrPp8hKC2_wCiZHflJxJp5n9dLt5Jy7aWdvV1e-SQToSEI8O8uGNutRouItOcHnbe4QqmlfLUryOGnr5koZ-Q_A_XMcy6-fig80FQYHCsIH3yZbL2eNTaP429Autu-y25CC1', 'App server');
         }
 

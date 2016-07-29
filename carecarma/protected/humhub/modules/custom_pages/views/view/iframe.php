@@ -57,7 +57,7 @@ use humhub\modules\User\models\User;
         #iframepage {
             position: absolute;
             left: 0;
-            top: 98px;
+            top: 150px;
             border: none;
             background: url('<?php echo Yii::getAlias("@web/img/loader.gif"); ?>') center center no-repeat;
         }
