@@ -263,6 +263,118 @@ class SensorController extends Controller
         }
     }
 
+    public function actionCreatenew()
+    {
+
+//        Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $data = Yii::$app->request->post();
+        $pure_data = $data['Sensor'];
+        $list = array();
+//        Yii::getLogger()->log(print_r($pure_data[0],true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $pure_data = substr($pure_data, 1, -1);
+        Yii::getLogger()->log(print_r($pure_data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        while(strlen($pure_data) != 0) {
+
+            if($pure_data[0] == "A"){
+                $temp_data = substr($pure_data, 1);
+//              Yii::getLogger()->log(print_r($temp_data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                $pos_a = strpos($temp_data, "A");
+                $pos_g = strpos($temp_data, "G");
+                if ($pos_a == false and $pos_g == false) $row = $temp_data;
+                else if ($pos_a == false and $pos_g != false) $row = substr($temp_data, 0, $pos_g);
+                else if ($pos_g == false and $pos_a != false) $row = substr($temp_data, 0, $pos_a);
+                else {
+                    if ($pos_a > $pos_g) $pos = $pos_g;
+                    else $pos = $pos_a;
+                    $row = substr($temp_data, 0, $pos);
+                }
+//                Yii::getLogger()->log(print_r($row,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                $pos_x = strpos($row, "X");
+                $pos_y = strpos($row, "Y");
+                $pos_z = strpos($row, "Z");
+                $time = substr($row, 1, $pos_x-1);
+                $ax = substr($row, $pos_x+1, $pos_y-$pos_x-1);
+                $ay = substr($row, $pos_y+1, $pos_z-$pos_y-1);
+                $az = substr($row, $pos_z+1);
+//                Yii::getLogger()->log(print_r($time,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                Yii::getLogger()->log(print_r($ax,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                Yii::getLogger()->log(print_r($ay,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                Yii::getLogger()->log(print_r($az,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                $pure_data = substr($pure_data, strlen($row)+1);
+//                Yii::getLogger()->log(print_r($pure_data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                $sensor = sensor::findOne(['time' => $time]);
+                Yii::getLogger()->log(print_r($sensor,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                if (sizeof($sensor) == 0) {
+                    Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                    $model = new sensor();
+                    $model->user_id = Yii::$app->user->id;
+                    $model->accelX = $ax;
+                    $model->accelY = $ay;
+                    $model->accelZ = $az;
+                    $model->time = $time;
+                    $model->save();
+                }
+                else {
+                    $sensor->accelX = $ax;
+                    $sensor->accelY = $ay;
+                    $sensor->accelZ = $az;
+                    $sensor->save();
+                }
+        }
+            else if($pure_data[0] == "G") {
+                $temp_data = substr($pure_data, 1);
+//              Yii::getLogger()->log(print_r($temp_data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                $pos_a = strpos($temp_data, "A");
+                $pos_g = strpos($temp_data, "G");
+                if ($pos_a == false and $pos_g == false) $row = $temp_data;
+                else if ($pos_a == false and $pos_g != false) $row = substr($temp_data, 0, $pos_g);
+                else if ($pos_g == false and $pos_a != false) $row = substr($temp_data, 0, $pos_a);
+                else {
+                    if ($pos_a > $pos_g) $pos = $pos_g;
+                    else $pos = $pos_a;
+                    $row = substr($temp_data, 0, $pos);
+                }
+                $pos_x = strpos($row, "X");
+                $pos_y = strpos($row, "Y");
+                $pos_z = strpos($row, "Z");
+                $time = substr($row, 1, $pos_x - 1);
+                $gx = substr($row, $pos_x + 1, $pos_y - $pos_x - 1);
+                $gy = substr($row, $pos_y + 1, $pos_z - $pos_y - 1);
+                $gz = substr($row, $pos_z + 1);
+//                Yii::getLogger()->log(print_r($time, true), yii\log\Logger::LEVEL_INFO, 'MyLog');
+//                Yii::getLogger()->log(print_r($gx, true), yii\log\Logger::LEVEL_INFO, 'MyLog');
+//                Yii::getLogger()->log(print_r($gy, true), yii\log\Logger::LEVEL_INFO, 'MyLog');
+//                Yii::getLogger()->log(print_r($gz, true), yii\log\Logger::LEVEL_INFO, 'MyLog');
+                $pure_data = substr($pure_data, strlen($row) + 1);
+//                Yii::getLogger()->log(print_r($pure_data, true), yii\log\Logger::LEVEL_INFO, 'MyLog');
+//                $model = new sensor();
+//                $model->user_id = Yii::$app->user->id;
+//                $model->GyroX = $gx;
+//                $model->GyroY = $gy;
+//                $model->GyroZ = $gz;
+//                $model->time = $time;
+//                $model->save();
+                $sensor = sensor::findOne(['time' => $time]);
+                if (sizeof($sensor) == 0) {
+                    $model = new sensor();
+                    $model->user_id = Yii::$app->user->id;
+                    $model->GyroX = $gx;
+                    $model->GyroY = $gy;
+                    $model->GyroZ = $gz;
+                    $model->time = $time;
+                    $model->save();
+                }
+                else {
+                    $sensor->GyroX = $gx;
+                    $sensor->GyroY = $gy;
+                    $sensor->GyroZ = $gz;
+                    $sensor->save();
+                }
+            }
+        }
+    }
+
+
     /**
      * Updates an existing sensor model.
      * If update is successful, the browser will be redirected to the 'view' page.

@@ -19,6 +19,7 @@ use Yii;
  * @property string $CompX
  * @property string $CompY
  * @property string $CompZ
+ * @property string $time
  */
 class Sensor extends \yii\db\ActiveRecord
 {
@@ -37,7 +38,7 @@ class Sensor extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'required'],
-            [['accelX', 'accelY', 'accelZ', 'GyroX', 'GyroY', 'GyroZ', 'CompX', 'CompY', 'CompZ'], 'string', 'max' => 100],
+            [['accelX', 'accelY', 'accelZ', 'GyroX', 'GyroY', 'GyroZ', 'CompX', 'CompY', 'CompZ', 'time'], 'string', 'max' => 100],
         ];
     }
 
@@ -59,6 +60,7 @@ class Sensor extends \yii\db\ActiveRecord
             'CompX' => 'Comp X',
             'CompY' => 'Comp Y',
             'CompZ' => 'Comp Z',
+            'time' => 'Time',
         ];
     }
 }
