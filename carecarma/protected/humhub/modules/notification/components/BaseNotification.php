@@ -165,15 +165,17 @@ class BaseNotification extends \yii\base\Component implements ViewContextInterfa
             return;
         }
 
-        $query = MobileToken::find()->where(['user_id' => $user->id])->one();
+        $users = MobileToken::find()->where(['user_id' => $user->id])->all();
 
-        if($query != null)
+        if($users != null)
         {
             if($msg == null) $msg = 'New Notification';
 
-            $mobile_token = $query->device_token;
-            $firebase = new Firebase();
-            $firebase->send($mobile_token,$msg );
+            foreach($users as $user) {
+               $mobile_token = $user->device_token;
+               $firebase = new Firebase();
+               $firebase->send($mobile_token,$msg );
+            }
             //$firebase->send('cM_8bEJHpII:APA91bHyLrPp8hKC2_wCiZHflJxJp5n9dLt5Jy7aWdvV1e-SQToSEI8O8uGNutRouItOcHnbe4QqmlfLUryOGnr5koZ-Q_A_XMcy6-fig80FQYHCsIH3yZbL2eNTaP429Autu-y25CC1', 'App server');
         }
 

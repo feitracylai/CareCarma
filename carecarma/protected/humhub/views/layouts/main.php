@@ -120,7 +120,7 @@ AppAsset::register($this);
                 <?php echo \humhub\widgets\TopMenu::widget(); ?>
             </ul>
 
-            <ul class="nav pull-right hidden-xs hidden-sm" id="search-menu-nav" >
+            <ul class="nav pull-right " id="search-menu-nav" >
                 <?php echo \humhub\widgets\TopMenuRightStack::widget(); ?>
             </ul>
         </div>
