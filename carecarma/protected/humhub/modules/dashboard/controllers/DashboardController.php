@@ -61,6 +61,11 @@ class DashboardController extends Controller
                 $post->user_id = Yii::$app->user->getId();
                 $post->save();
             }
+            else if($record != null) {            // if user does sign out & login in with different account
+                $post = MobileToken::find()->where(['device_token'=>$_GET['yourKey']])->one();
+                $post->user_id = Yii::$app->user->getId();
+                $post->save();
+            }
         }
 
         if (Yii::$app->user->isGuest) {
