@@ -8,6 +8,8 @@
 
 namespace humhub\modules\space\notifications;
 
+use humhub\modules\user\models\User;
+use yii\helpers\Html;
 use humhub\modules\notification\components\BaseNotification;
 
 /**
@@ -28,6 +30,14 @@ class ApprovalRequestDeclined extends BaseNotification
      */
     public $viewName = "approvalRequestDeclined";
 
+    /**
+     * @inheritdoc
+     */
+    public function send(User $user)
+    {
+        $msg =  Html::encode($this->originator->displayName). ' declined your membership request for the family ' . Html::encode($this->source->name);
+        return parent::send($user, $msg);
+    }
 }
 
 ?>

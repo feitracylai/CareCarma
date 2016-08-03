@@ -2819,6 +2819,10 @@ img.bounceIn {
     #topbar-second {
         top: 51px;
     }
+
+    #topbar-second .nav > li > a#search-menu {
+        padding-top: 6px
+    }
     .controls-header {
         text-align: left !important
     }

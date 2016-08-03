@@ -8,6 +8,8 @@
 
 namespace humhub\modules\like\notifications;
 
+use humhub\modules\user\models\User;
+use yii\helpers\Html;
 use humhub\modules\notification\components\BaseNotification;
 
 /**
@@ -28,6 +30,14 @@ class NewLike extends BaseNotification
      */
     public $viewName = "newLike";
 
+    /**
+     * @inheritdoc
+     */
+    public function send(User $user)
+   {
+        $msg =  Html::encode($this->originator->displayName). ' likes ' . parent::getContentInfo($this->source->getSource());
+        return parent::send($user, $msg);
+    }
 }
 
 ?>

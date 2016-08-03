@@ -9,7 +9,6 @@ class Firebase
 
     public function send($to, $message)
     {
-
         $msg = array
         (
             'title' => 'CareCarma',
@@ -27,7 +26,7 @@ class Firebase
 
     public function sendPushNotification($fields) {
 
-        $api_key = 'AIzaSyATiyUpNGgY5jr8ZjM4X8h62sxgj-pzKUY';
+        $api_key = 'AIzaSyBCpL8QgHY-sydrQepDLqma6jnsc_KyopQ';
         $url = 'https://fcm.googleapis.com/fcm/send';
 
         $headers = array(
