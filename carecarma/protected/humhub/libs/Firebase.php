@@ -43,7 +43,7 @@ class Firebase
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
 
         $result = curl_exec($ch);
-        echo $result;
+        
         curl_close($ch);
 
         return $result;
