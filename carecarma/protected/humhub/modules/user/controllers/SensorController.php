@@ -265,13 +265,13 @@ class SensorController extends Controller
 
     public function actionCreatenew()
     {
-
+        Yii::getLogger()->log(print_r("Someone use the createnew Action!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
 //        Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $data = Yii::$app->request->post();
         $pure_data = $data['Sensor'];
         $list = array();
 //        Yii::getLogger()->log(print_r($pure_data[0],true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $pure_data = substr($pure_data, 1, -1);
+//        $pure_data = substr($pure_data, 1, -1);
         Yii::getLogger()->log(print_r($pure_data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         while(strlen($pure_data) != 0) {
 
@@ -293,6 +293,13 @@ class SensorController extends Controller
                 $pos_y = strpos($row, "Y");
                 $pos_z = strpos($row, "Z");
                 $time = substr($row, 1, $pos_x-1);
+                $t = time();
+                $yearmonthday = date('Y-m-d',$t);
+                $hoursecond = date('H:i:s', substr($time, 0, 5));
+                $realtime = $yearmonthday . " " . $hoursecond;
+                Yii::getLogger()->log(print_r($realtime,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+
                 $ax = substr($row, $pos_x+1, $pos_y-$pos_x-1);
                 $ay = substr($row, $pos_y+1, $pos_z-$pos_y-1);
                 $az = substr($row, $pos_z+1);
@@ -302,16 +309,20 @@ class SensorController extends Controller
 //                Yii::getLogger()->log(print_r($az,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                 $pure_data = substr($pure_data, strlen($row)+1);
 //                Yii::getLogger()->log(print_r($pure_data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-                $sensor = sensor::findOne(['time' => $time]);
-                Yii::getLogger()->log(print_r($sensor,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                $shorttime = strtotime($realtime) . substr($time, 5,3);
+                $sensor = sensor::findOne(['time' => $shorttime]);
+//                Yii::getLogger()->log(print_r($sensor,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
                 if (sizeof($sensor) == 0) {
                     Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $model = new sensor();
                     $model->user_id = Yii::$app->user->id;
+                    $model->datetime = $realtime;
                     $model->accelX = $ax;
                     $model->accelY = $ay;
                     $model->accelZ = $az;
-                    $model->time = $time;
+                    $model->time = $shorttime ;
+                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $model->save();
                 }
                 else {
@@ -338,6 +349,11 @@ class SensorController extends Controller
                 $pos_y = strpos($row, "Y");
                 $pos_z = strpos($row, "Z");
                 $time = substr($row, 1, $pos_x - 1);
+                $t = time();
+                $yearmonthday = date('Y-m-d',$t);
+                $hoursecond = date('H:i:s', substr($time, 0, 5));
+                $realtime = $yearmonthday . " " . $hoursecond;
+
                 $gx = substr($row, $pos_x + 1, $pos_y - $pos_x - 1);
                 $gy = substr($row, $pos_y + 1, $pos_z - $pos_y - 1);
                 $gz = substr($row, $pos_z + 1);
@@ -354,14 +370,17 @@ class SensorController extends Controller
 //                $model->GyroZ = $gz;
 //                $model->time = $time;
 //                $model->save();
-                $sensor = sensor::findOne(['time' => $time]);
+                $shorttime = strtotime($realtime) . substr($time, 5,3);
+                $sensor = sensor::findOne(['time' => $shorttime]);
                 if (sizeof($sensor) == 0) {
                     $model = new sensor();
                     $model->user_id = Yii::$app->user->id;
+                    $model->datetime = $realtime;
                     $model->GyroX = $gx;
                     $model->GyroY = $gy;
                     $model->GyroZ = $gz;
-                    $model->time = $time;
+                    $model->time = $shorttime;
+                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $model->save();
                 }
                 else {
