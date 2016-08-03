@@ -8,6 +8,8 @@
 
 namespace humhub\modules\space\notifications;
 
+use humhub\modules\user\models\User;
+use yii\helpers\Html;
 use humhub\modules\notification\components\BaseNotification;
 
 /**
@@ -27,7 +29,15 @@ class ApprovalRequestAccepted extends BaseNotification
      * @inheritdoc
      */
     public $viewName = "approvalRequestAccepted";
-
+    
+    /**
+     * @inheritdoc
+     */
+    public function send(User $user)
+    {
+        $msg =  Html::encode($this->originator->displayName). ' approved your membership for the family ' . Html::encode($this->source->name);
+        return parent::send($user, $msg);
+    }
 }
 
 ?>

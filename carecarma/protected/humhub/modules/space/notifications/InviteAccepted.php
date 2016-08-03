@@ -8,6 +8,8 @@
 
 namespace humhub\modules\space\notifications;
 
+use humhub\modules\user\models\User;
+use yii\helpers\Html;
 use humhub\modules\notification\components\BaseNotification;
 
 /**
@@ -30,6 +32,14 @@ class InviteAccepted extends BaseNotification
      */
     public $viewName = "inviteAccepted";
 
+    /**
+     * @inheritdoc
+     */
+    public function send(User $user)
+    {
+        $msg =  Html::encode($this->originator->displayName). ' accepted your invite for the family ' . Html::encode($this->source->name);
+        return parent::send($user, $msg);
+    }
 }
 
 ?>

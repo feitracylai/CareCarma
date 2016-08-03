@@ -40,7 +40,7 @@ class NewComment extends \humhub\modules\notification\components\BaseNotificatio
         }
 
         $commentedObject = $this->source->content->getPolymorphicRelation();
-        $msg =  Html::encode($this->source->user->displayName). ' commented ' . parent::getContentInfo($commentedObject);;
+        $msg =  Html::encode($this->source->user->displayName). ' commented ' . parent::getContentInfo($commentedObject);
         return parent::send($user, $msg);
     }
 
