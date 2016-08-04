@@ -5,7 +5,7 @@ namespace humhub\modules\user\controllers;
 //require '/../vendor/autoload.php';
 
 use Yii;
-use humhub\modules\user\models\sensor;
+use humhub\modules\user\models\Sensor;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -310,12 +310,12 @@ class SensorController extends Controller
                 $pure_data = substr($pure_data, strlen($row)+1);
 //                Yii::getLogger()->log(print_r($pure_data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                 $shorttime = strtotime($realtime) . substr($time, 5,3);
-                $sensor = sensor::findOne(['time' => $shorttime]);
+                $sensor = Sensor::findOne(['time' => $shorttime]);
 //                Yii::getLogger()->log(print_r($sensor,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
                 if (sizeof($sensor) == 0) {
                     Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
-                    $model = new sensor();
+                    $model = new Sensor();
                     $model->user_id = Yii::$app->user->id;
                     $model->datetime = $realtime;
                     $model->accelX = $ax;
@@ -371,9 +371,9 @@ class SensorController extends Controller
 //                $model->time = $time;
 //                $model->save();
                 $shorttime = strtotime($realtime) . substr($time, 5,3);
-                $sensor = sensor::findOne(['time' => $shorttime]);
+                $sensor = Sensor::findOne(['time' => $shorttime]);
                 if (sizeof($sensor) == 0) {
-                    $model = new sensor();
+                    $model = new Sensor();
                     $model->user_id = Yii::$app->user->id;
                     $model->datetime = $realtime;
                     $model->GyroX = $gx;
