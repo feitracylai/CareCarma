@@ -34,9 +34,10 @@ use \humhub\modules\space\models\Space;
             </div>
             <?php echo Html::endForm(); ?>
 
-            <?php if (count($users) == 0): ?>
+            <?php $wholeusers = \humhub\modules\user\models\User::find()->count(); ?>
+            <?php if (count($users) == 0 || count($users) == $wholeusers){ ?>
                 <p><?php echo Yii::t('UserModule.views_contact_connect', 'No users found!'); ?></p>
-            <?php endif; ?>
+            <?php }else{ ?>
         </div>
 
         <hr>
@@ -65,7 +66,7 @@ use \humhub\modules\space\models\Space;
                             <h4 class="media-heading"><?php echo Html::encode($user->displayName); ?>
 
                             </h4>
-                            <?php if ($details[$user->id] != null && $details[$user->id] != 0) { ?>
+                            <?php if ($details != null && $details[$user->id] != null && $details[$user->id] != 0) { ?>
                                 <small>(<?php echo Yii::t('UserModule.views_contact_connect', '{detail}', array('{detail}' => Space::findOne(['id' => $details[$user->id]])->name )); ?>)</small>
                             <?php } ?>
 
@@ -82,6 +83,7 @@ use \humhub\modules\space\models\Space;
             <!-- END: Results -->
         </ul>
 
+        <?php } ?>
         <div class="panel-body">
             <?php echo Html::a(Yii::t('UserModule.views_contact_connect', '<i class="fa fa-backward"></i> Back'), $thisUser->createUrl('/user/contact/edit', ['id' => $contact->contact_id]), array('class' => 'btn btn-primary')); ?>
         </div>

@@ -36,9 +36,10 @@ use \humhub\modules\space\modules\manage\widgets\ContactMenu;
         </div>
         <?php echo Html::endForm(); ?>
 
-        <?php if (count($users) == 0): ?>
+        <?php $wholeusers = \humhub\modules\user\models\User::find()->count(); ?>
+        <?php if (count($users) == 0 || count($users) == $wholeusers){ ?>
             <p><?php echo Yii::t('UserModule.views_contact_import', 'No users found!'); ?></p>
-        <?php endif; ?>
+        <?php }else{ ?>
     </div>
 
     <hr>
@@ -65,7 +66,7 @@ use \humhub\modules\space\modules\manage\widgets\ContactMenu;
                         <h4 class="media-heading">
                             <?php echo Html::encode($user->displayName); ?>
                         </h4>
-                        <?php if ($details[$user->id] != null && $details[$user->id] != 0) { ?>
+                        <?php if ($details != null && $details[$user->id] != null && $details[$user->id] != 0) { ?>
                             <small>(<?php echo Yii::t('UserModule.views_contact_connect', '{detail}', array('{detail}' => Space::findOne(['id' => $details[$user->id]])->name )); ?>)</small>
                         <?php } ?>
 
@@ -81,6 +82,7 @@ use \humhub\modules\space\modules\manage\widgets\ContactMenu;
         <?php endforeach; ?>
         <!-- END: Results -->
     </ul>
+    <?php } ?>
 
 </div>
 <div class="pagination-container">

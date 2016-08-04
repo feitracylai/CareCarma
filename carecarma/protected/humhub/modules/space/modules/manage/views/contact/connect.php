@@ -33,9 +33,10 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
             </div>
             <?php echo Html::endForm(); ?>
 
-            <?php if (count($users) == 0): ?>
+            <?php $wholeusers = \humhub\modules\user\models\User::find()->count(); ?>
+            <?php if (count($users) == 0 || count($users) == $wholeusers){ ?>
                 <p><?php echo Yii::t('UserModule.views_contact_connect', 'No users found!'); ?></p>
-            <?php endif; ?>
+            <?php }else{ ?>
         </div>
 
         <hr>
@@ -65,7 +66,7 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
                             <h4 class="media-heading"><?php echo Html::encode($user->displayName); ?>
 
                             </h4>
-                            <?php if ($details[$user->id] != null && $details[$user->id] != 0) { ?>
+                            <?php if ($details != null && $details[$user->id] != null && $details[$user->id] != 0) { ?>
                                 <small>(<?php echo Yii::t('UserModule.views_contact_connect', '{detail}', array('{detail}' => Space::findOne(['id' => $details[$user->id]])->name )); ?>)</small>
                             <?php } ?>
 
@@ -81,7 +82,7 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
             <?php endforeach; ?>
             <!-- END: Results -->
         </ul>
-
+        <?php } ?>
         <div class="panel-body">
             <?php echo Html::a(Yii::t('UserModule.views_contact_connect', '<i class="fa fa-backward"></i> Back'), $space->createUrl('edit', ['Cid' => $contact->contact_id, 'rguid' => $receiver->guid]), array('class' => 'btn btn-primary')); ?>
         </div>
