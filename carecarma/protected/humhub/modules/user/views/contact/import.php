@@ -32,10 +32,11 @@ use \humhub\modules\space\models\Space;
             <div class="col-md-3"></div>
         </div>
         <?php echo Html::endForm(); ?>
+        <?php $wholeusers = \humhub\modules\user\models\User::find()->count(); ?>
+        <?php if (count($users) == 0 || count($users) == $wholeusers){ ?>
 
-        <?php if (count($users) == 0): ?>
             <p><?php echo Yii::t('UserModule.views_contact_import', 'No users found!'); ?></p>
-        <?php endif; ?>
+        <?php }else{ ?>
     </div>
 
     <hr>
@@ -65,7 +66,7 @@ use \humhub\modules\space\models\Space;
                             <?php echo Html::encode($user->displayName); ?>
 
                         </h4>
-                        <?php if ($details[$user->id] != null && $details[$user->id] != 0) { ?>
+                        <?php if ($details != null && $details[$user->id] != null && $details[$user->id] != 0) { ?>
                             <small>(<?php echo Yii::t('UserModule.views_contact_connect', '{detail}', array('{detail}' => Space::findOne(['id' => $details[$user->id]])->name )); ?>)</small>
                         <?php } ?>
 
@@ -111,7 +112,7 @@ use \humhub\modules\space\models\Space;
         <?php endforeach; ?>
         <!-- END: Results -->
     </ul>
-
+    <?php } ?>
 </div>
 <div class="pagination-container">
     <?php echo \humhub\widgets\LinkPager::widget(['pagination' => $pagination]); ?>
