@@ -2,7 +2,7 @@
 
 namespace humhub\modules\user\controllers;
 
-require '/../vendor/autoload.php';
+//require '/../vendor/autoload.php';
 
 use Yii;
 use humhub\modules\user\models\beacon;
