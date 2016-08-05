@@ -265,6 +265,7 @@ class SensorController extends Controller
 
     public function actionCreatenew()
     {
+        date_default_timezone_set('GMT');
         Yii::getLogger()->log(print_r("Someone use the createnew Action!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
 //        Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $data = Yii::$app->request->post();
