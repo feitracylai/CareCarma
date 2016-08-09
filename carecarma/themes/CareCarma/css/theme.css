@@ -2837,6 +2837,10 @@ img.bounceIn {
         margin-bottom: 10px;
     }
 
+    .layout-content-container {
+        margin-top:-8px;
+    }
+
     .list-group {
         margin-left: 4px
     }
