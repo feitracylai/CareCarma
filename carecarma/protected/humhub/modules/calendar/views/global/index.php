@@ -7,7 +7,7 @@ use yii\helpers\Url;
 <div class="container">
     <!-- Example row of columns -->
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-10 layout-below-top-second">
 
             <div class="panel panel-default">
                 <div class="panel-body">

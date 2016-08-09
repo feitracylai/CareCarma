@@ -2837,12 +2837,8 @@ img.bounceIn {
         margin-bottom: 10px;
     }
 
-    .layout-content-container {
-        margin-top:-8px;
-    }
-
-    .panel-default {
-        margin-top:-8px;
+    .layout-below-top-second {
+        margin-top:-9px;
     }
 
     .list-group {

@@ -9,7 +9,7 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
 ?>
 <div class="container">
     <div class="row">
-        <div class="col-md-12 layout-content-container">
+        <div class="col-md-12 layout-below-top-second">
             <div class="panel">
                 <div class="panel-heading"><strong><?php echo Yii::t('base', 'Search'); ?></strong></div>
                 <div class="panel-body">

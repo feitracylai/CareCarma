@@ -22,6 +22,7 @@
                 <?php $item['htmlOptions']['class'] .= " list-group-item"; ?>
                 <?php echo \yii\helpers\Html::a($item['icon']."<span>".$item['label']."</span>", $item['url'], $item['htmlOptions']); ?>
             <?php endforeach; ?>
+            <?php echo "<hr>"; ?>
         </div>
     <?php endforeach; ?>
 
