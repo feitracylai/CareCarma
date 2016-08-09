@@ -36,6 +36,7 @@ class ProfileMenu extends \humhub\widgets\BaseMenu
             'label' => Yii::t('UserModule.widgets_ProfileMenuWidget', 'Stream'),
             'group' => 'profile',
             'url' => $this->user->createUrl('//user/profile'),
+            'icon' => '<i class="fa fa-bars"></i>',
             'sortOrder' => 200,
             'isActive' => (Yii::$app->controller->id == "profile" && Yii::$app->controller->action->id == "index"),
         ));
@@ -46,6 +47,7 @@ class ProfileMenu extends \humhub\widgets\BaseMenu
             'label' => Yii::t('UserModule.widgets_ProfileMenuWidget', 'About'),
             'group' => 'profile',
             'url' => $this->user->createUrl('//user/profile/about'),
+            'icon' => '<i class="fa fa-user"></i>',
             'sortOrder' => 300,
             'isActive' => (Yii::$app->controller->id == "profile" && Yii::$app->controller->action->id == "about"),
         ));

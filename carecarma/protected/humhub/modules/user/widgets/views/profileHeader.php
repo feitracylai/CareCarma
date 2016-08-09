@@ -184,7 +184,7 @@ if ($isProfileOwner) {
             <!-- start: User statistics -->
             <div class="row">
                 <div class="col-md-12">
-                    <div class="statistics pull-left">
+                    <div class="statistics pull-left hidden-xs hidden-sm">
 
                         <div class="pull-left entry">
                             <span class="count"><?php echo $user->getFollowerCount(); ?></span></a>

@@ -181,7 +181,7 @@ if ($space->isAdmin()) {
             <!-- start: User statistics -->
             <div class="row">
                 <div class="col-md-12">
-                    <div class="statistics pull-left">
+                    <div class="statistics pull-left hidden-xs hidden-sm">
 
                         <div class="pull-left entry">
                             <span class="count"><?php echo $postCount; ?></span></a>
@@ -206,9 +206,7 @@ if ($space->isAdmin()) {
                     </div>
                     <!-- end: User statistics -->
 
-                    <div class="visible-xs">
-                       <br><br>
-                    </div>
+
 
                     <div class="controls controls-header pull-right">
                         <?php

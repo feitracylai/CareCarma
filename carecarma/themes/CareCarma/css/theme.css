@@ -2769,11 +2769,6 @@ img.bounceIn {
         margin-left: -142px !important
     }
 
-    .panel-profile-controls {
-        padding-left: 0 !important;
-        padding-top: 50px
-    }
-
     .panel-profile .panel-profile-header .img-profile-data h1 {
         font-size: 20px !important
     }
@@ -2825,6 +2820,21 @@ img.bounceIn {
     }
     .controls-header {
         text-align: left !important
+    }
+
+    .panel-profile-controls {
+        padding-left: 0 !important;
+        padding-top: 40px
+    }
+
+    .btn {
+
+        font-size: 14px;
+        padding: 4px 8px
+    }
+
+    .panel {
+        margin-bottom: 10px;
     }
 
     .list-group {

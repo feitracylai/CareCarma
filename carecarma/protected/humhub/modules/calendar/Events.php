@@ -37,7 +37,7 @@ class Events extends \yii\base\Object
         $space = $event->sender->space;
         if ($space->isModuleEnabled('calendar')) {
             $event->sender->addItem(array(
-                'label' => Yii::t('CalendarModule.base', 'Time Line'),
+                'label' => Yii::t('CalendarModule.base', 'Calendar'),
                 'group' => 'modules',
                 'url' => $space->createUrl('/calendar/view/index'),
                 'icon' => '<i class="fa fa-calendar"></i>',
@@ -54,6 +54,7 @@ class Events extends \yii\base\Object
                 'label' => Yii::t('CalendarModule.base', 'Calendar'),
                 'group' => 'profile',
                 'url' => $user->createUrl('/calendar/view/index'),
+                'icon' => '<i class="fa fa-calendar"></i>',
                 'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'calendar'),
             ));
         }

@@ -11,7 +11,7 @@ $space = $this->context->contentContainer;
     <div class="row">
         <div class="col-md-2 layout-nav-container">
             <?php echo \humhub\modules\space\widgets\Menu::widget(['space' => $space]); ?>
-            <br>
+
         </div>
 
         <?php if (isset($this->context->hideSidebar) && $this->context->hideSidebar) : ?>

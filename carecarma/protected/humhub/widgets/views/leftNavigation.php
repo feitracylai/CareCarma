@@ -15,7 +15,7 @@
         <?php if (count($items) == 0) continue; ?>
 
         <?php if ($group['label'] != "") : ?>
-            <div class="panel-heading"><?php echo $group['label']; ?></div>
+            <div class="panel-heading hidden-xs hidden-sm"><?php echo $group['label']; ?></div>
         <?php endif; ?>
         <div class="list-group">
             <?php foreach ($items as $item) : ?>
