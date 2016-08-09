@@ -2841,6 +2841,10 @@ img.bounceIn {
         margin-top:-8px;
     }
 
+    .panel-default {
+        margin-top:-8px;
+    }
+
     .list-group {
         margin-left: 4px
     }
