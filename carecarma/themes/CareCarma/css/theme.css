@@ -2773,6 +2773,12 @@ img.bounceIn {
         font-size: 20px !important
     }
 }
+@media (min-width: 992px) {
+
+    .collapse{
+        display:block;
+    }
+}
 
 @media (max-width: 991px) {
 
@@ -2846,7 +2852,7 @@ img.bounceIn {
     }
 
     .list-group-item {
-        display: inline-block !important;
+        display: block !important;
         border-radius: 3px !important;
         margin: 4px 0;
         margin-bottom: 4px !important
@@ -2855,6 +2861,11 @@ img.bounceIn {
     .list-group-item {
         border: none !important
     }
+
+    .collapse {
+        transition: height 0.35s ease;
+    }
+
 
     a.list-group-item:hover, a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus {
         border: none !important;
