@@ -73,7 +73,7 @@ class SensorController extends Controller
     public function actionCreate()
     {
 
-        Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r("JSON:beginning",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $data = Yii::$app->request->post();
         $json_data = $data['Sensor'];
         $sensor_list = json_decode($json_data, TRUE);
@@ -150,6 +150,7 @@ class SensorController extends Controller
             $model->CompZ = $compZ;
             $model->save();
         }
+        Yii::getLogger()->log(print_r("JSON:end",true),yii\log\Logger::LEVEL_INFO,'MyLog');
 //        if ($model->save()) {
 //            return $this->redirect(['view', 'id' => $model->id]);
 //        } else {
@@ -265,13 +266,15 @@ class SensorController extends Controller
 
     public function actionCreatenew()
     {
+        ini_set('max_execution_time', 30000);
         date_default_timezone_set('GMT');
         $data = Yii::$app->request->post();
+        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $pure_data = $data['Sensor'];
         $list = array();
         Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         while(strlen($pure_data) != 0) {
-
+            
             if($pure_data[0] == "A"){
                 $temp_data = substr($pure_data, 1);
                 $pos_a = strpos($temp_data, "A");
@@ -341,13 +344,71 @@ class SensorController extends Controller
                         $model->datetime = $realtime;
                         $model->accelX = $ax;
                         $model->accelY = $ay;
+                        if (!is_numeric(substr($az,strlen($az)-1,1))) {
+                            $az = substr($az, 0, -1);
+                        }
                         $model->accelZ = $az;
                         $model->GyroX = $gx;
                         $model->GyroY = $gy;
+                        if (!is_numeric(substr($gz,strlen($az)-1,1))) {
+                            $gz = substr($gz, 0, -1);
+                        }
                         $model->GyroZ = $gz;
                         $model->time = $shorttime ;
                         $model->save();
 
+                    }
+                    else if((int)$new_time < (int)$time) {
+                        $temp_data = substr($pure_data, 1);
+                        $pos_a = strpos($temp_data, "A");
+                        $pos_g = strpos($temp_data, "G");
+                        if ($pos_a == false and $pos_g == false) $row = $temp_data;
+                        else if ($pos_a == false and $pos_g != false) $row = substr($temp_data, 0, $pos_g);
+                        else if ($pos_g == false and $pos_a != false) $row = substr($temp_data, 0, $pos_a);
+                        else {
+                            if ($pos_a > $pos_g) $pos = $pos_g;
+                            else $pos = $pos_a;
+                            $row = substr($temp_data, 0, $pos);
+                        }
+                        $pos_x = strpos($row, "X");
+                        $pos_y = strpos($row, "Y");
+                        $pos_z = strpos($row, "Z");
+                        $time2 = substr($row, 1, $pos_x-1);
+                        $t2 = time();
+                        $yearmonthday2 = date('Y-m-d',$t2);
+                        $hoursecond2 = date('H:i:s', substr($time2, 0, 5));
+
+                        $realtime2 = $yearmonthday2 . " " . $hoursecond2;
+
+                        $gx = substr($row, $pos_x+1, $pos_y-$pos_x-1);
+                        $gy = substr($row, $pos_y+1, $pos_z-$pos_y-1);
+                        $gz = substr($row, $pos_z+1);
+                        $pure_data = substr($pure_data, strlen($row)+1);
+                        $shorttime2 = strtotime($realtime2) . substr($time2, 5,3);
+
+                        $model = new Sensor();
+                        $model->user_id = Yii::$app->user->id;
+                        $model->datetime = $realtime2;
+                        $model->GyroX = $gx;
+                        $model->GyroY = $gy;
+                        if (!is_numeric(substr($gz,strlen($gz)-1,1))) {
+                            $gz = substr($gz, 0, -1);
+                        }
+                        $model->GyroZ = $gz;
+                        $model->time = $shorttime2 ;
+                        $model->save();
+
+                        $model = new Sensor();
+                        $model->user_id = Yii::$app->user->id;
+                        $model->datetime = $realtime;
+                        $model->accelX = $ax;
+                        $model->accelY = $ay;
+                        if (!is_numeric(substr($az,strlen($az)-1,1))) {
+                            $az = substr($az, 0, -1);
+                        }
+                        $model->accelZ = $az;
+                        $model->time = $shorttime ;
+                        $model->save();
                     }
                     else {
                         $model = new Sensor();
@@ -355,6 +416,9 @@ class SensorController extends Controller
                         $model->datetime = $realtime;
                         $model->accelX = $ax;
                         $model->accelY = $ay;
+                        if (!is_numeric(substr($az,strlen($az)-1,1))) {
+                            $az = substr($az, 0, -1);
+                        }
                         $model->accelZ = $az;
                         $model->time = $shorttime ;
                         $model->save();
@@ -366,6 +430,9 @@ class SensorController extends Controller
                     $model->datetime = $realtime;
                     $model->accelX = $ax;
                     $model->accelY = $ay;
+                    if (!is_numeric(substr($az,strlen($az)-1,1))) {
+                        $az = substr($az, 0, -1);
+                    }
                     $model->accelZ = $az;
                     $model->time = $shorttime ;
                     $model->save();
@@ -449,20 +516,84 @@ class SensorController extends Controller
                         $model->datetime = $realtime;
                         $model->accelX = $ax;
                         $model->accelY = $ay;
+                        if (!is_numeric(substr($az,strlen($az)-1,1))) {
+                            $az = substr($az, 0, -1);
+                        }
                         $model->accelZ = $az;
                         $model->GyroX = $gx;
                         $model->GyroY = $gy;
+                        if (!is_numeric(substr($gz,strlen($gz)-1,1))) {
+                            $gz = substr($gz, 0, -1);
+                        }
                         $model->GyroZ = $gz;
                         $model->time = $shorttime ;
+//                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                         $model->save();
 
                     }
+
+                    else if((int)$new_time < (int)$time) {
+                        $temp_data = substr($pure_data, 1);
+                        $pos_a = strpos($temp_data, "A");
+                        $pos_g = strpos($temp_data, "G");
+                        if ($pos_a == false and $pos_g == false) $row = $temp_data;
+                        else if ($pos_a == false and $pos_g != false) $row = substr($temp_data, 0, $pos_g);
+                        else if ($pos_g == false and $pos_a != false) $row = substr($temp_data, 0, $pos_a);
+                        else {
+                            if ($pos_a > $pos_g) $pos = $pos_g;
+                            else $pos = $pos_a;
+                            $row = substr($temp_data, 0, $pos);
+                        }
+                        $pos_x = strpos($row, "X");
+                        $pos_y = strpos($row, "Y");
+                        $pos_z = strpos($row, "Z");
+                        $time2 = substr($row, 1, $pos_x-1);
+                        $t2 = time();
+                        $yearmonthday2 = date('Y-m-d',$t2);
+                        $hoursecond2 = date('H:i:s', substr($time2, 0, 5));
+
+                        $realtime2 = $yearmonthday2 . " " . $hoursecond2;
+
+                        $ax = substr($row, $pos_x+1, $pos_y-$pos_x-1);
+                        $ay = substr($row, $pos_y+1, $pos_z-$pos_y-1);
+                        $az = substr($row, $pos_z+1);
+                        $pure_data = substr($pure_data, strlen($row)+1);
+                        $shorttime2 = strtotime($realtime2) . substr($time2, 5,3);
+
+                        $model = new Sensor();
+                        $model->user_id = Yii::$app->user->id;
+                        $model->datetime = $realtime2;
+                        $model->accelX = $ax;
+                        $model->accelY = $ay;
+                        if (!is_numeric(substr($az,strlen($az)-1,1))) {
+                            $az = substr($az, 0, -1);
+                        }
+                        $model->accelZ = $az;
+                        $model->time = $shorttime2 ;
+                        $model->save();
+
+                        $model = new Sensor();
+                        $model->user_id = Yii::$app->user->id;
+                        $model->datetime = $realtime;
+                        $model->GyroX = $gx;
+                        $model->GyroY = $gy;
+                        if (!is_numeric(substr($gz,strlen($gz)-1,1))) {
+                            $gz = substr($gz, 0, -1);
+                        }
+                        $model->GyroZ = $gz;
+                        $model->time = $shorttime ;
+                        $model->save();
+                    }
+
                     else {
                         $model = new Sensor();
                         $model->user_id = Yii::$app->user->id;
                         $model->datetime = $realtime;
                         $model->GyroX = $gx;
                         $model->GyroY = $gy;
+                        if (!is_numeric(substr($gz,strlen($gz)-1,1))) {
+                            $gz = substr($gz, 0, -1);
+                        }
                         $model->GyroZ = $gz;
                         $model->time = $shorttime ;
                         $model->save();
@@ -474,10 +605,309 @@ class SensorController extends Controller
                     $model->datetime = $realtime;
                     $model->GyroX = $gx;
                     $model->GyroY = $gy;
+                    if (!is_numeric(substr($gz,strlen($gz)-1,1))) {
+                        $gz = substr($gz, 0, -1);
+                    }
                     $model->GyroZ = $gz;
                     $model->time = $shorttime ;
                     $model->save();
                 }
+
+
+//                $sensor = Sensor::findOne(['time' => $shorttime]);
+////                Yii::getLogger()->log(print_r($sensor,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//
+//                if (sizeof($sensor) == 0) {
+////                    Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                    $model = new Sensor();
+//                    $model->user_id = Yii::$app->user->id;
+//                    $model->datetime = $realtime;
+//                    $model->GyroX = $gx;
+//                    $model->GyroY = $gy;
+//                    $model->GyroZ = $gz;
+//                    $model->time = $shorttime ;
+////                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                    $model->save();
+//                }
+//                else {
+//                    $sensor->GyroX = $gx;
+//                    $sensor->GyroY = $gy;
+//                    $sensor->GyroZ = $gz;
+//                    $sensor->save();
+//                }
+            }
+        }
+        Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+    }
+
+
+
+    public function actionCreateforjoe()
+    {
+        ini_set('max_execution_time', 30000);
+        date_default_timezone_set('GMT');
+        $data = Yii::$app->request->post();
+//        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $pure_data = $data['Sensor'];
+        $user_id = $data['user_id'];
+        $list = array();
+        Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        while(strlen($pure_data) != 0) {
+
+            if($pure_data[0] == "A"){
+                $temp_data = substr($pure_data, 1);
+                $pos_a = strpos($temp_data, "A");
+                $pos_g = strpos($temp_data, "G");
+                if ($pos_a == false and $pos_g == false) $row = $temp_data;
+                else if ($pos_a == false and $pos_g != false) $row = substr($temp_data, 0, $pos_g);
+                else if ($pos_g == false and $pos_a != false) $row = substr($temp_data, 0, $pos_a);
+                else {
+                    if ($pos_a > $pos_g) $pos = $pos_g;
+                    else $pos = $pos_a;
+                    $row = substr($temp_data, 0, $pos);
+                }
+                $pos_x = strpos($row, "X");
+                $pos_y = strpos($row, "Y");
+                $pos_z = strpos($row, "Z");
+                $time = substr($row, 1, $pos_x-1);
+                $t = time();
+                $yearmonthday = date('Y-m-d',$t);
+                $hoursecond = date('H:i:s', substr($time, 0, 5));
+
+                // ***********************************************
+                // realtime is the "datetime" in table 'sensor'
+                $realtime = $yearmonthday . " " . $hoursecond;
+                // ***********************************************
+
+                $ax = substr($row, $pos_x+1, $pos_y-$pos_x-1);
+                $ay = substr($row, $pos_y+1, $pos_z-$pos_y-1);
+                $az = substr($row, $pos_z+1);
+                // remove last row
+                $pure_data = substr($pure_data, strlen($row)+1);
+
+                // ***********************************************
+                // shorttime is the "time" in table 'sensor'
+                $shorttime = strtotime($realtime) . substr($time, 5,3);
+                // ***********************************************
+
+                // ********************************************************************************
+                // see the next "G" row, check if the time is the same as the current "A" row
+                // ********************************************************************************
+                if ($pure_data[0] == "G") {
+                    $pos_x = strpos($pure_data, "X");
+                    // new_time is the time of next "G" row
+                    $new_time = substr($pure_data, 2, $pos_x - 2);
+                    // if the new_time of "G" row = time of "A" row, we need to store it into one row!!!!!!!!!!
+                    if ($new_time == $time) {
+                        $temp_data = substr($pure_data, 1);
+                        $pos_a = strpos($temp_data, "A");
+                        $pos_g = strpos($temp_data, "G");
+                        if ($pos_a == false and $pos_g == false) $row = $temp_data;
+                        else if ($pos_a == false and $pos_g != false) $row = substr($temp_data, 0, $pos_g);
+                        else if ($pos_g == false and $pos_a != false) $row = substr($temp_data, 0, $pos_a);
+                        else {
+                            if ($pos_a > $pos_g) $pos = $pos_g;
+                            else $pos = $pos_a;
+                            $row = substr($temp_data, 0, $pos);
+                        }
+                        $pos_x = strpos($row, "X");
+                        $pos_y = strpos($row, "Y");
+                        $pos_z = strpos($row, "Z");
+
+                        $gx = substr($row, $pos_x + 1, $pos_y - $pos_x - 1);
+                        $gy = substr($row, $pos_y + 1, $pos_z - $pos_y - 1);
+                        $gz = substr($row, $pos_z + 1);
+                        $pure_data = substr($pure_data, strlen($row)+1);
+                        $model = new Sensor();
+                        $model->user_id = $user_id;
+                        $model->datetime = $realtime;
+                        $model->accelX = $ax;
+                        $model->accelY = $ay;
+                        if (!is_numeric(substr($az,strlen($az)-1,1))) {
+                            $az = substr($az, 0, -1);
+                        }
+                        $model->accelZ = $az;
+                        $model->GyroX = $gx;
+                        $model->GyroY = $gy;
+                        if (!is_numeric(substr($gz,strlen($az)-1,1))) {
+                            $gz = substr($gz, 0, -1);
+                        }
+                        $model->GyroZ = $gz;
+                        $model->time = $shorttime ;
+                        $model->save();
+
+                    }
+                    else {
+                        $model = new Sensor();
+                        $model->user_id = $user_id;
+                        $model->datetime = $realtime;
+                        $model->accelX = $ax;
+                        $model->accelY = $ay;
+                        if (!is_numeric(substr($az,strlen($az)-1,1))) {
+                            $az = substr($az, 0, -1);
+                        }
+                        $model->accelZ = $az;
+                        $model->time = $shorttime ;
+                        $model->save();
+                    }
+                }
+                else {
+                    $model = new Sensor();
+                    $model->user_id = $user_id;
+                    $model->datetime = $realtime;
+                    $model->accelX = $ax;
+                    $model->accelY = $ay;
+                    if (!is_numeric(substr($az,strlen($az)-1,1))) {
+                        $az = substr($az, 0, -1);
+                    }
+                    $model->accelZ = $az;
+                    $model->time = $shorttime ;
+                    $model->save();
+                }
+
+
+//                $sensor = Sensor::findOne(['time' => $shorttime]);
+////                Yii::getLogger()->log(print_r($sensor,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//
+//                if (sizeof($sensor) == 0) {
+////                    Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                    $model = new Sensor();
+//                    $model->user_id = Yii::$app->user->id;
+//                    $model->datetime = $realtime;
+//                    $model->accelX = $ax;
+//                    $model->accelY = $ay;
+//                    $model->accelZ = $az;
+//                    $model->time = $shorttime ;
+////                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                    $model->save();
+//                }
+//                else {
+//                    $sensor->accelX = $ax;
+//                    $sensor->accelY = $ay;
+//                    $sensor->accelZ = $az;
+//                    $sensor->save();
+//                }
+            }
+            else if($pure_data[0] == "G") {
+                $temp_data = substr($pure_data, 1);
+                $pos_a = strpos($temp_data, "A");
+                $pos_g = strpos($temp_data, "G");
+                if ($pos_a == false and $pos_g == false) $row = $temp_data;
+                else if ($pos_a == false and $pos_g != false) $row = substr($temp_data, 0, $pos_g);
+                else if ($pos_g == false and $pos_a != false) $row = substr($temp_data, 0, $pos_a);
+                else {
+                    if ($pos_a > $pos_g) $pos = $pos_g;
+                    else $pos = $pos_a;
+                    $row = substr($temp_data, 0, $pos);
+                }
+                $pos_x = strpos($row, "X");
+                $pos_y = strpos($row, "Y");
+                $pos_z = strpos($row, "Z");
+                $time = substr($row, 1, $pos_x - 1);
+                $t = time();
+                $yearmonthday = date('Y-m-d',$t);
+                $hoursecond = date('H:i:s', substr($time, 0, 5));
+                $realtime = $yearmonthday . " " . $hoursecond;
+
+                $gx = substr($row, $pos_x + 1, $pos_y - $pos_x - 1);
+                $gy = substr($row, $pos_y + 1, $pos_z - $pos_y - 1);
+                $gz = substr($row, $pos_z + 1);
+                $pure_data = substr($pure_data, strlen($row) + 1);
+                $shorttime = strtotime($realtime) . substr($time, 5,3);
+
+                if ($pure_data[0] == "A") {
+                    $pos_x = strpos($pure_data, "X");
+                    $new_time = substr($pure_data, 2, $pos_x - 2);
+                    if ($new_time == $time) {
+                        $temp_data = substr($pure_data, 1);
+                        $pos_a = strpos($temp_data, "A");
+                        $pos_g = strpos($temp_data, "G");
+                        if ($pos_a == false and $pos_g == false) $row = $temp_data;
+                        else if ($pos_a == false and $pos_g != false) $row = substr($temp_data, 0, $pos_g);
+                        else if ($pos_g == false and $pos_a != false) $row = substr($temp_data, 0, $pos_a);
+                        else {
+                            if ($pos_a > $pos_g) $pos = $pos_g;
+                            else $pos = $pos_a;
+                            $row = substr($temp_data, 0, $pos);
+                        }
+                        $pos_x = strpos($row, "X");
+                        $pos_y = strpos($row, "Y");
+                        $pos_z = strpos($row, "Z");
+
+                        $ax = substr($row, $pos_x + 1, $pos_y - $pos_x - 1);
+                        $ay = substr($row, $pos_y + 1, $pos_z - $pos_y - 1);
+                        $az = substr($row, $pos_z + 1);
+                        $pure_data = substr($pure_data, strlen($row)+1);
+                        $model = new Sensor();
+                        $model->user_id = $user_id;
+                        $model->datetime = $realtime;
+                        $model->accelX = $ax;
+                        $model->accelY = $ay;
+                        if (!is_numeric(substr($az,strlen($az)-1,1))) {
+                            $az = substr($az, 0, -1);
+                        }
+                        $model->accelZ = $az;
+                        $model->GyroX = $gx;
+                        $model->GyroY = $gy;
+                        if (!is_numeric(substr($gz,strlen($gz)-1,1))) {
+                            $gz = substr($gz, 0, -1);
+                        }
+                        $model->GyroZ = $gz;
+                        $model->time = $shorttime ;
+//                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                        $model->save();
+
+                    }
+                    else {
+                        $model = new Sensor();
+                        $model->user_id = $user_id;
+                        $model->datetime = $realtime;
+                        $model->GyroX = $gx;
+                        $model->GyroY = $gy;
+                        if (!is_numeric(substr($gz,strlen($gz)-1,1))) {
+                            $gz = substr($gz, 0, -1);
+                        }
+                        $model->GyroZ = $gz;
+                        $model->time = $shorttime ;
+                        $model->save();
+                    }
+                }
+                else {
+                    $model = new Sensor();
+                    $model->user_id = $user_id;
+                    $model->datetime = $realtime;
+                    $model->GyroX = $gx;
+                    $model->GyroY = $gy;
+                    if (!is_numeric(substr($gz,strlen($gz)-1,1))) {
+                        $gz = substr($gz, 0, -1);
+                    }
+                    $model->GyroZ = $gz;
+                    $model->time = $shorttime ;
+                    $model->save();
+                }
+
+
+//                $sensor = Sensor::findOne(['time' => $shorttime]);
+////                Yii::getLogger()->log(print_r($sensor,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//
+//                if (sizeof($sensor) == 0) {
+////                    Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                    $model = new Sensor();
+//                    $model->user_id = Yii::$app->user->id;
+//                    $model->datetime = $realtime;
+//                    $model->GyroX = $gx;
+//                    $model->GyroY = $gy;
+//                    $model->GyroZ = $gz;
+//                    $model->time = $shorttime ;
+////                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                    $model->save();
+//                }
+//                else {
+//                    $sensor->GyroX = $gx;
+//                    $sensor->GyroY = $gy;
+//                    $sensor->GyroZ = $gz;
+//                    $sensor->save();
+//                }
             }
         }
         Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
