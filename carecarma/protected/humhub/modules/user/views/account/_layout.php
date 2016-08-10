@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2 layout-below-top-second">
             <?php echo \humhub\modules\user\widgets\AccountMenu::widget(); ?>
         </div>
         <div class="col-md-7">

@@ -8,7 +8,7 @@ if ($messageId != "") {
 ?>
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 layout-below-top-second">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <?php echo Yii::t('MailModule.views_mail_index', 'Conversations') ?>

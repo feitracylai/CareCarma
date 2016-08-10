@@ -3,7 +3,7 @@ $space = $this->context->contentContainer;
 ?>
 <div class="container space-layout-container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 layout-below-top-second">
             <?php echo humhub\modules\space\widgets\Header::widget(['space' => $space]); ?>
 
         </div>
@@ -11,7 +11,7 @@ $space = $this->context->contentContainer;
     <div class="row">
         <div class="col-md-2 layout-nav-container">
             <?php echo \humhub\modules\space\widgets\Menu::widget(['space' => $space]); ?>
-            <br>
+
         </div>
 
         <?php if (isset($this->context->hideSidebar) && $this->context->hideSidebar) : ?>

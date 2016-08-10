@@ -9,7 +9,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
 ?>
 <?= DeviceMenu::widget(['space' => $space]); ?>
 <br/>
-<div class="panel panel-default">
+<div class="panel panel-default ">
     <div class="panel-heading">
         <?php echo Yii::t('SpaceModule.views_admin_receiver', '<strong>Current</strong> Care Receiver'); ?>
     </div>
