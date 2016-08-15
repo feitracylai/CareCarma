@@ -171,7 +171,7 @@ use humhub\modules\calendar\models\CalendarEntry;
     }
 
     // set focus to input for space name
-    
+    //$('#CalendarEntry_title').focus();
 
     // Shake modal after wrong validation
     <?php if ($calendarEntry->hasErrors()) { ?>
