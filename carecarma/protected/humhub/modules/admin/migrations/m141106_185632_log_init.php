@@ -52,34 +52,34 @@ class m141106_185632_log_init extends Migration
 
     public function up()
     {
-
-        $targets = $this->getDbTargets();
-        foreach ($targets as $target) {
-            $this->db = $target->db;
-
-            $tableOptions = null;
-            if ($this->db->driverName === 'mysql') {
-                // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
-                $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
-            }
-
-            try {
-                $this->createTable($target->logTable, [
-                    'id' => Schema::TYPE_BIGPK,
-                    'level' => Schema::TYPE_INTEGER,
-                    'category' => Schema::TYPE_STRING,
-                    'log_time' => Schema::TYPE_DOUBLE,
-                    'prefix' => Schema::TYPE_TEXT,
-                    'message' => Schema::TYPE_TEXT,
-                        ], $tableOptions);
-
-                $this->createIndex('idx_log_level', $target->logTable, 'level');
-                $this->createIndex('idx_log_category', $target->logTable, 'category');
-            } catch (\yii\db\Exception $ex) {
-
-            }
-        }
-        $this->dropTable("logging");
+//
+//        $targets = $this->getDbTargets();
+//        foreach ($targets as $target) {
+//            $this->db = $target->db;
+//
+//            $tableOptions = null;
+//            if ($this->db->driverName === 'mysql') {
+//                // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
+//                $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+//            }
+//
+//            try {
+//                $this->createTable($target->logTable, [
+//                    'id' => Schema::TYPE_BIGPK,
+//                    'level' => Schema::TYPE_INTEGER,
+//                    'category' => Schema::TYPE_STRING,
+//                    'log_time' => Schema::TYPE_DOUBLE,
+//                    'prefix' => Schema::TYPE_TEXT,
+//                    'message' => Schema::TYPE_TEXT,
+//                        ], $tableOptions);
+//
+//                $this->createIndex('idx_log_level', $target->logTable, 'level');
+//                $this->createIndex('idx_log_category', $target->logTable, 'category');
+//            } catch (\yii\db\Exception $ex) {
+//
+//            }
+//        }
+//        $this->dropTable("logging");
     }
 
     public function down()
