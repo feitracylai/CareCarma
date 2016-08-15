@@ -3,6 +3,7 @@
 use humhub\modules\content\components\ActiveQueryContent;
 use humhub\modules\calendar\models\CalendarEntry;
 use yii\helpers\Url;
+use yii\helpers\Html;
 ?>
 <div class="container">
     <!-- Example row of columns -->
@@ -10,6 +11,9 @@ use yii\helpers\Url;
         <div class="col-md-10 layout-below-top-second">
 
             <div class="panel panel-default">
+                <div class="panel-body">
+                    <?php echo Html::a(Yii::t('CalendarModule.create_new_event', 'Add New Event'),$user->createUrl('/calendar/entry/edit', array('start_datetime' => date("Y-m-d"), 'end_datetime' => date("Y-m-d"), 'fullCalendar' => '1')), array('class' => 'btn btn-info pull-right', 'data-target' => '#globalModal')); ?>
+                </div>
                 <div class="panel-body">
                     <?php
                     echo \humhub\modules\calendar\widgets\FullCalendar_global::widget(array(
@@ -46,7 +50,7 @@ use yii\helpers\Url;
                             <?php echo Yii::t('CalendarModule.views_global_index', 'My families'); ?>
                         </label>
                     </div>
-                    <br />
+
 
                     <div class="checkbox">
                         <label>
@@ -74,7 +78,7 @@ use yii\helpers\Url;
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" name="filter" class="filterCheckbox" value="<?php echo CalendarEntry::FILTER_PARTICIPATE; ?>" <?php if (in_array(CalendarEntry::FILTER_PARTICIPATE, $filters)): ?>checked="checked"<?php endif; ?>>
-                            <?php echo Yii::t('CalendarModule.views_global_index', 'I´m attending'); ?>
+                            <?php echo Yii::t('CalendarModule.views_global_index', "I'm attending"); ?>
                         </label>
                     </div>
                     <div class="checkbox">
@@ -83,7 +87,7 @@ use yii\helpers\Url;
                             <?php echo Yii::t('CalendarModule.views_global_index', 'My events'); ?>
                         </label>
                     </div>
-                    <br />
+
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" name="filter" class="filterCheckbox"  value="<?php echo CalendarEntry::FILTER_NOT_RESPONDED; ?>" <?php if (in_array(CalendarEntry::FILTER_NOT_RESPONDED, $filters)): ?>checked="checked"<?php endif; ?>>

@@ -1259,3 +1259,10 @@ be a descendant of the grid when it is being dragged.
 	border-top-color: transparent;
 	border-bottom-color: transparent;
 }
+
+@media (max-width: 991px) {
+	.fc-toolbar .fc-center {
+		margin-top:12px;
+	}
+
+}
