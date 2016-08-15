@@ -347,7 +347,7 @@ class AuthController extends Controller
                 $users->username = $form->models['User']->username;
                 $users->profilename = $form->models['User']->username;
                 $users->email = $form->models['User']->email;
-                $users->password = Hash::
+//                $users->password = Hash::
 //                $users->ipaddress = $input['ipaddress'];
 //                $users->postalcode = $input['zipcode'];
                 $users->usertype = 'user';
