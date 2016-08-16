@@ -186,26 +186,32 @@ if ($isProfileOwner) {
                 <div class="col-md-12">
                     <div class="statistics pull-left hidden-xs hidden-sm">
 
+                        <a href= <?php echo $user->createUrl('/user/followerlist/index',[]);?> >
                         <div class="pull-left entry">
-                            <span class="count"><?php echo $user->getFollowerCount(); ?></span></a>
+                            <span class="count"><?php echo $user->getFollowerCount(); ?></span>
                             <br>
                             <span
                                 class="title"><?php echo Yii::t('UserModule.widgets_views_profileHeader', 'Followers'); ?></span>
                         </div>
+                        </a>
 
+                        <a href= <?php echo $user->createUrl('/user/followinglist/index',[]);?> >
                         <div class="pull-left entry">
                             <span
-                                class="count"><?php echo $user->getFollowingCount(User::className()) + $user->getFollowingCount(Space::className()); ?></span>
+                                class="count"><?php echo $user->getFollowingCount(User::className()) /*+ $user->getFollowingCount(Space::className())*/; ?></span>
                             <br>
                             <span
                                 class="title"><?php echo Yii::t('UserModule.widgets_views_profileHeader', 'Following'); ?></span>
                         </div>
+                        </a>
 
+                        <a href= <?php echo $user->createUrl('/user/familieslist/index',[]);?> >
                         <div class="pull-left entry">
                             <span class="count"><?php echo count($user->spaces); ?></span><br>
                             <span
                                 class="title"><?php echo Yii::t('UserModule.widgets_views_profileHeader', 'Families'); ?></span>
                         </div>
+                        </a>
 
                     </div>
                     <!-- end: User statistics -->

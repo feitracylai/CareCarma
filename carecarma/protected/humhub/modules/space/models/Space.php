@@ -2,6 +2,7 @@
 
 namespace humhub\modules\space\models;
 
+use humhub\modules\user\activities\UserFollow;
 use Yii;
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\permissions\CreatePrivateSpace;
@@ -456,6 +457,15 @@ class Space extends ContentContainerActiveRecord implements \humhub\modules\sear
         $query->addOrderBy(['space_membership.group_id' => SORT_DESC]);
         return $query;
     }
+
+    public function getFollowers()
+    {
+        $query = $this->hasMany(\humhub\modules\user\models\Follow::className(), ['object_id' => 'id']);
+        $query->andWhere(['user_follow.object_model' => 'humhub\modules\space\models\Space']);
+        $query->addOrderBy(['user_follow.user_id' => SORT_DESC]);
+        return $query;
+    }
+
 
     public function getApplicants()
     {

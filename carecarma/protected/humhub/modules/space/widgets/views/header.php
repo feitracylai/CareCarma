@@ -182,26 +182,31 @@ if ($space->isAdmin()) {
             <div class="row">
                 <div class="col-md-12">
                     <div class="statistics pull-left hidden-xs hidden-sm">
-
+                        <a href= <?php echo $space->createUrl();?> >
                         <div class="pull-left entry">
-                            <span class="count"><?php echo $postCount; ?></span></a>
+                            <span class="count"><?php echo $postCount; ?></span>
                             <br>
                             <span
                                 class="title"><?php echo Yii::t('SpaceModule.widgets_views_profileHeader', 'Posts'); ?></span>
                         </div>
+                        </a>
 
+                        <a href= <?php echo $space->createUrl('/space/manage/memberlist');?> >
                         <div class="pull-left entry">
                             <span class="count"><?php echo count($space->memberships); ?></span>
                             <br>
                             <span
                                 class="title"><?php echo Yii::t('SpaceModule.widgets_views_profileHeader', 'Members'); ?></span>
                         </div>
+                        </a>
 
+                        <a href= <?php echo $space->createUrl('/space/manage/followerlist');?> >
                         <div class="pull-left entry">
                             <span class="count"><?php echo $space->getFollowerCount(); ?></span><br>
                             <span
                                 class="title"><?php echo Yii::t('SpaceModule.widgets_views_profileHeader', 'Followers'); ?></span>
                         </div>
+                        </a>
 
                     </div>
                     <!-- end: User statistics -->
