@@ -63,7 +63,6 @@ class AuthController extends Controller
 
         // Show/Allow Anonymous Registration
         $loginModel = new \humhub\modules\user\models\forms\AccountLogin;
-        Yii::getLogger()->log(print_r(Yii::$app->request->post(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         if ($loginModel->load(Yii::$app->request->post()) && $loginModel->login()) {
             if (Yii::$app->request->getIsAjax()) {
                 return $this->htmlRedirect(Yii::$app->user->returnUrl);
@@ -347,6 +346,7 @@ class AuthController extends Controller
                 $users->username = $form->models['User']->username;
                 $users->profilename = $form->models['User']->username;
                 $users->email = $form->models['User']->email;
+                $users->id = $form->models['User']->id;
 //                $users->password = Hash::
 //                $users->ipaddress = $input['ipaddress'];
 //                $users->postalcode = $input['zipcode'];

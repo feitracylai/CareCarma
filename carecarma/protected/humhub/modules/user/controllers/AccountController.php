@@ -8,9 +8,11 @@
 
 namespace humhub\modules\user\controllers;
 
+use humhub\modules\user\models\Users;
 use Yii;
 use \humhub\components\Controller;
 use \yii\helpers\Url;
+use yii\log\Logger;
 use \yii\web\HttpException;
 use \humhub\libs\GCM;
 use \humhub\libs\Push;
@@ -50,6 +52,7 @@ class AccountController extends Controller
     {
 
         $user = Yii::$app->user->getIdentity();
+//        Yii::getLogger()->log($user->profile, Logger::LEVEL_INFO, 'MyLog');
 
         // Get Form Definition
         $definition = $user->profile->getFormDefinition();
@@ -70,6 +73,23 @@ class AccountController extends Controller
 
             //user in the contacts also change
             $user->updateUserContacts();
+
+            //community database refresh
+            $community_users = Users::findOne(['id' => $user->id]);
+            $community_users->firstname = $user->profile->firstname;
+            $community_users->lastname = $user->profile->lastname;
+            $community_users->mobile = $user->profile->mobile;
+            $community_users->address = $user->profile->street;
+            $community_users->unitnumber = $user->profile->address2;
+            $community_users->city = $user->profile->city;
+            $community_users->state = $user->profile->state;
+            $community_users->country = $user->profile->country;
+            $community_users->postalcode = $user->profile->zip;
+            $community_users->dob = $user->profile->birthday;
+            $community_users->gender = $user->profile->gender;
+            $community_users->save();
+
+
 
             Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
             return $this->redirect(Url::to(['edit']));
@@ -417,8 +437,14 @@ class AccountController extends Controller
             throw new HttpException(404, Yii::t('UserModule.controllers_AccountController', 'The entered e-mail address is already in use by another user.'));
         }
 
+
+
         $user->email = $email;
         $user->save();
+
+        $community_user = Users::findOne(['id' => $user->id]);
+        $community_user->email = $email;
+        $community_user->save();
 
         return $this->render('changeEmailValidate', array('newEmail' => $email));
     }
