@@ -11,15 +11,15 @@
 }
 
 .colorPrimary {
-    color: #ec6952 !important
+    color: #4cacc6 !important
 }
 
 .backgroundPrimary {
-    background: #ec6952 !important
+    background: #4cacc6 !important
 }
 
 .borderPrimary {
-    border-color: #ec6952 !important
+    border-color: #4cacc6 !important
 }
 
 .colorInfo {
@@ -181,7 +181,7 @@ input[type=text], input[type=password], input[type=select] {
     text-align: center;
     line-height: 1.4;
     max-width: 155px;
-    background: #ec6952;
+    background: #4cacc6;
     -webkit-border-top-right-radius: 0;
     -webkit-border-bottom-right-radius: 4px;
     -webkit-border-bottom-left-radius: 4px;
@@ -225,7 +225,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .login-container .panel a {
-    color: #ec6952;
+    color: #4cacc6;
     position: relative;
 
 }
@@ -239,7 +239,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .login-container h1, .login-container h2 {
-    color: #ec6952 !important
+    color: #4cacc6 !important
 }
 
 .login-container .panel {
@@ -323,7 +323,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .topbar .dropdown-header .dropdown-header-link a {
-    color: #ec6952 !important;
+    color: #4cacc6 !important;
     font-size: 12px;
     font-weight: 400
 }
@@ -334,7 +334,7 @@ input[type=text], input[type=password], input[type=select] {
 
 #topbar-first {
     /*background-color: #708fa0;*/
-    background-color: #ec6952;
+    background-color: #4cacc6;
     top: 0;
     height: 80px;
     z-index: 1030;
@@ -489,11 +489,11 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 #topbar-first .topbar-actions .dropdown-menu a{
-    color: #ec6952;
+    color: #4cacc6;
 }
 
 #topbar-first .topbar-actions .dropdown-menu a:hover{
-    background-color: #ec6952;
+    background-color: #4cacc6;
     color: #fff;
 }
 
@@ -502,11 +502,12 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 #topbar-first .btn-group > a {
-    background-color: #d9534f
+    /*background-color: #d9534f*/
+    background-color: #6fdbe8;
 }
 
 #topbar-first .btn-enter {
-    background-color: #ec6952;
+    background-color: #4cacc6;
     margin: 21px 0;
 
 }
@@ -550,7 +551,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 #topbar-first .dropdown.account > a, #topbar-first .dropdown.account.open > a, #topbar-first .dropdown.account > a:hover, #topbar-first .dropdown.account.open > a:hover {
-    background-color: #ec6952
+    background-color: #4cacc6
 }
 
 
@@ -615,7 +616,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 #topbar-second .nav > li > a:hover, #topbar-second .nav > li > a:active, #topbar-second .nav > li > a:focus {
-    border-bottom: 3px solid #ec6952;
+    border-bottom: 3px solid #4cacc6;
     background-color: #f7f7f7;
     color: #555;
     text-decoration: none
@@ -636,7 +637,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 #topbar-second .nav > li > ul > li > a:hover, #topbar-second .nav > li > ul > li > a.active {
-    border-left: 3px solid #ec6952;
+    border-left: 3px solid #4cacc6;
     background-color: #f7f7f7;
     color: #555
 }
@@ -655,7 +656,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 #topbar-second .nav > li > a:hover, #topbar-second .nav .open > a, #topbar-second .nav > li.active {
-    border-bottom: 3px solid #ec6952;
+    border-bottom: 3px solid #4cacc6;
     background-color: #f7f7f7;
     color: #555
 }
@@ -725,7 +726,7 @@ input[type=text], input[type=password], input[type=select] {
 
 .media-list li:hover, .media-list li.selected {
     background-color: #f7f7f7;
-    border-left: 3px solid #ec6952
+    border-left: 3px solid #4cacc6
 }
 
 .media-left, .media > .pull-left {
@@ -828,7 +829,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .modal .dropdown-menu li a, .panel .dropdown-menu li a, .nav-tabs .dropdown-menu li a {
-    color: #ec6952;
+    color: #4cacc6;
     font-size: 14px;
     font-weight: 400;
     padding: 4px 15px
@@ -976,8 +977,8 @@ input[type=text], input[type=password], input[type=select] {
 
 .panel-profile .panel-profile-header .btn-info {
     background: #fff;
-    color: #ec6952 !important;
-    border: 1px solid #ec6952;
+    color: #4cacc6 !important;
+    border: 1px solid #4cacc6;
     padding: 4px 7px;
 }
 
@@ -1127,23 +1128,23 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .nav-pills .dropdown-menu, .nav-tabs .dropdown-menu, .account .dropdown-menu {
-    /*background-color: #ec6952;*/
+    /*background-color: #4cacc6;*/
     background-color: #fff;
     border: none;
 }
 
 .nav-pills .dropdown-menu li.divider, .nav-tabs .dropdown-menu li.divider, .account .dropdown-menu li.divider {
-    background-color: #ec6952;
+    background-color: #4cacc6;
     border-bottom: none;
     margin: 9px 1px !important
 }
 
 /*.nav-pills .dropdown-menu li, .nav-tabs .dropdown-menu li, .account .dropdown-menu li {*/
-    /*border-left: 3px solid #ec6952*/
+    /*border-left: 3px solid #4cacc6*/
 /*}*/
 
 .nav-pills .dropdown-menu li a, .nav-tabs .dropdown-menu li a, .account .dropdown-menu li a {
-    color: #ec6952;
+    color: #4cacc6;
     font-weight: 400;
     font-size: 13px;
     padding: 4px 15px
@@ -1167,7 +1168,7 @@ input[type=text], input[type=password], input[type=select] {
 .nav-pills .dropdown-menu li:hover, .nav-tabs .dropdown-menu li:hover, .account .dropdown-menu li:hover, .nav-pills .dropdown-menu li.selected, .nav-tabs .dropdown-menu li.selected, .account .dropdown-menu li.selected {
     border-left: 3px solid #e80000;
     color: #fff !important;
-    background-color: #ec6952 !important
+    background-color: #4cacc6 !important
 }
 
 .nav-pills.preferences .dropdown .dropdown-toggle {
@@ -1210,7 +1211,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-   background-color: #ec6952;
+   background-color: #4cacc6;
 
 }
 
@@ -1300,7 +1301,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .login-container .btn-primary{
-    background: #ec6952;
+    background: #4cacc6;
     color: #fff !important;
 }
 
@@ -1368,13 +1369,13 @@ input[type=text], input[type=password], input[type=select] {
 
 .btn-primary {
     background: #fff;
-    color: #ec6952 !important;
-    border: 1px solid #ec6952;
+    color: #4cacc6 !important;
+    border: 1px solid #4cacc6;
 }
 
 .btn-primary:hover, .btn-primary:focus {
-    border: 1px solid #ec6952;
-    background: #ec6952;
+    border: 1px solid #4cacc6;
+    background: #4cacc6;
     color: #fff !important;
     text-decoration: none
 }
@@ -1714,7 +1715,7 @@ a.list-group-item:hover, a.list-group-item.active, a.list-group-item.active:hove
     z-index: 2;
     color: #555;
     background-color: #f7f7f7;
-    border-left: 3px solid #ec6952 !important
+    border-left: 3px solid #4cacc6 !important
 }
 
 @media screen and (max-width: 768px) {
@@ -1847,13 +1848,13 @@ a.list-group-item:hover, a.list-group-item.active, a.list-group-item.active:hove
 }
 
 .progress-bar-info {
-    background-color: #ec6952;
+    background-color: #4cacc6;
     -webkit-box-shadow: none;
     box-shadow: none
 }
 
 .tooltip-inner {
-    background-color: #ec6952;
+    background-color: #4cacc6;
     max-width: 400px;
     text-align: left;
     font-weight: 300;
@@ -1863,35 +1864,35 @@ a.list-group-item:hover, a.list-group-item.active, a.list-group-item.active:hove
 }
 
 .tooltip.top .tooltip-arrow {
-    border-top-color: #ec6952
+    border-top-color: #4cacc6
 }
 
 .tooltip.top-left .tooltip-arrow {
-    border-top-color: #ec6952
+    border-top-color: #4cacc6
 }
 
 .tooltip.top-right .tooltip-arrow {
-    border-top-color: #ec6952
+    border-top-color: #4cacc6
 }
 
 .tooltip.right .tooltip-arrow {
-    border-right-color: #ec6952
+    border-right-color: #4cacc6
 }
 
 .tooltip.left .tooltip-arrow {
-    border-left-color: #ec6952
+    border-left-color: #4cacc6
 }
 
 .tooltip.bottom .tooltip-arrow {
-    border-bottom-color: #ec6952
+    border-bottom-color: #4cacc6
 }
 
 .tooltip.bottom-left .tooltip-arrow {
-    border-bottom-color: #ec6952
+    border-bottom-color: #4cacc6
 }
 
 .tooltip.bottom-right .tooltip-arrow {
-    border-bottom-color: #ec6952
+    border-bottom-color: #4cacc6
 }
 
 .tooltip.in {
@@ -1914,7 +1915,7 @@ table .time {
 }
 
 table td a:hover {
-    color: #ec6952;
+    color: #4cacc6;
     text-decoration: underline;
 }
 
@@ -1995,16 +1996,16 @@ table td a:hover {
 }
 
 .grid-view .table .btn-primary{
-    border: 1px solid #ec6952;
+    border: 1px solid #4cacc6;
     padding: 1px 4px;
     background: #fff;
-    color: #ec6952 !important;
+    color: #4cacc6 !important;
 }
 
 .grid-view .table .btn-primary:hover, .grid-view .table .btn-primary:focus{
     border: none;
     padding: 1px 5px;
-    background: #ec6952;
+    background: #4cacc6;
     color: #fff !important;
 }
 
@@ -2067,8 +2068,8 @@ ul.tag_input li img {
 .userInput, .spaceInput {
     background-color: #fff;
     font-weight: 600;
-    color: #ec6952;
-    border: 1px solid #ec6952;
+    color: #4cacc6;
+    border: 1px solid #4cacc6;
     border-radius: 3px;
     font-size: 12px !important;
     padding: 2px;
@@ -2871,7 +2872,7 @@ img.bounceIn {
 
     a.list-group-item:hover, a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus {
         border: none !important;
-        background: #ec6952 !important;
+        background: #4cacc6 !important;
         color: #fff !important
     }
 
@@ -2892,13 +2893,13 @@ img.bounceIn {
 }
 
 .regular-checkbox:checked + .regular-checkbox-box {
-    border: 2px solid #ec6952;
+    border: 2px solid #4cacc6;
     background: #fff;
     color: #fff
 }
 
 .regular-radio:checked + .regular-radio-button:after {
-    background: #ec6952
+    background: #4cacc6
 }
 
 .regular-radio:checked + .regular-radio-button {
