@@ -1,5 +1,6 @@
 <?php
 namespace humhub\modules\space\modules\manage\controllers;
+use humhub\modules\user\models\Users;
 use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
@@ -128,6 +129,17 @@ class DeviceController extends ContentContainerController
             if ($device != null || $form->models['User']->device_id == '') {
                 if ($form->models['User']->save()) {
                     // Save User Profile
+
+                    $community_users = new Users();
+                    $community_users->firstname = $form->models['Profile']->firstname;
+                    $community_users->lastname = $form->models['Profile']->lastname;
+                    $community_users->username = $form->models['User']->username;
+                    $community_users->profilename = $form->models['User']->username;
+                    $community_users->email = $form->models['User']->email;
+                    $community_users->email = $form->models['User']->id;
+                    $community_users->usertype = 'user';
+                    $community_users->save();
+
                     // save the temp_password
                     $user_current = User::findOne(['id' => $userModel->id]);
                     $user_current->temp_password = $userPasswordModel->newPassword;
@@ -222,6 +234,11 @@ class DeviceController extends ContentContainerController
         $user =  $this->getCare();
         $emailModel = new \humhub\modules\user\models\forms\AccountChangeEmail;
         if ($emailModel->load(Yii::$app->request->post()) && $emailModel->validate() && $emailModel->sendChangeEmail()) {
+            $user->email = $emailModel->newEmail;
+            $user->save();
+            $community_user = Users::findOne(['id' => $user->id]);
+            $community_user->email = $user->email;
+            $community_user->save();
             Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
 //                    return $this->render('changeEmail_success', array('model' => $emailModel));
         }
@@ -296,8 +313,24 @@ class DeviceController extends ContentContainerController
             // Trigger search refresh
             $user->save();
             $user->updateUserContacts();
+
+            //community database refresh
+            $community_users = Users::findOne(['id' => $user->id]);
+            $community_users->firstname = $user->profile->firstname;
+            $community_users->lastname = $user->profile->lastname;
+            $community_users->mobile = $user->profile->mobile;
+            $community_users->address = $user->profile->street;
+            $community_users->unitnumber = $user->profile->address2;
+            $community_users->city = $user->profile->city;
+            $community_users->state = $user->profile->state;
+            $community_users->country = $user->profile->country;
+            $community_users->postalcode = $user->profile->zip;
+            $community_users->dob = $user->profile->birthday;
+            $community_users->gender = $user->profile->gender;
+            $community_users->save();
+
             Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
-            return $this->redirect(Url::to(['edit']));
+//            return $this->redirect(Url::to(['profile']));
         }
         return $this->render('profile', array(
             'hForm' => $form,
