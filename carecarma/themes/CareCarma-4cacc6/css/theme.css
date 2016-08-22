@@ -23,27 +23,27 @@
 }
 
 .colorInfo {
-    color: #ec9b90 !important
-}
-
-.backgroundInfo {
-    background: #ec9b90 !important
-}
-
-.borderInfo {
-    border-color: #ec9b90 !important
-}
-
-.colorSuccess {
     color: #6fdbe8 !important
 }
 
-.backgroundSuccess {
+.backgroundInfo {
     background: #6fdbe8 !important
 }
 
-.borderSuccess {
+.borderInfo {
     border-color: #6fdbe8 !important
+}
+
+.colorSuccess {
+    color: #97d271 !important
+}
+
+.backgroundSuccess {
+    background: #97d271 !important
+}
+
+.borderSuccess {
+    border-color: #97d271 !important
 }
 
 .colorWarning {
@@ -92,8 +92,8 @@
 
 body {
     padding-top: 130px;
-    background-color: #ededed;
-    /*background:#fff url('../img/bg-screen-4.jpg') no-repeat fixed;*/
+    /*background-color: #ededed;*/
+    background:#fff url('../img/bg-screen-4.jpg') no-repeat fixed;
     background-size: cover;
     color: #777;
     font-family: 'Open Sans', sans-serif
@@ -1166,7 +1166,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .nav-pills .dropdown-menu li:hover, .nav-tabs .dropdown-menu li:hover, .account .dropdown-menu li:hover, .nav-pills .dropdown-menu li.selected, .nav-tabs .dropdown-menu li.selected, .account .dropdown-menu li.selected {
-    border-left: 3px solid #e80000;
+    border-left: 3px solid #4593ae;
     color: #fff !important;
     background-color: #4cacc6 !important
 }
@@ -1382,46 +1382,46 @@ input[type=text], input[type=password], input[type=select] {
 
 .btn-primary:active, .btn-primary.active {
     outline: 0;
-    background: #ec9b90 !important
+    background: #4cacc6 !important
 }
 
 .btn-primary[disabled], .btn-primary.disabled {
-    background: #ec9b90
+    background: #4cacc6
 }
 
 .btn-primary[disabled]:hover, .btn-primary.disabled:hover, .btn-primary[disabled]:focus, .btn-primary.disabled:focus {
-    background: #ec9b90
+    background: #4cacc6
 }
 
 .btn-primary[disabled]:active, .btn-primary.disabled:active, .btn-primary[disabled].active, .btn-primary.disabled.active {
-    background: #ec9b90 !important
+    background: #4cacc6 !important
 }
 
 .btn-info {
-    background: #ff7461;
+    background: #6fdbe8;
     color: #fff !important
 }
 
 .btn-info:hover, .btn-info:focus {
-    background: #ec9b90 !important;
+    background: #4cacc6 !important;
     text-decoration: none
 }
 
 .btn-info:active, .btn-info.active {
     outline: 0;
-    background: #ec9b90
+    background: #4cacc6
 }
 
 .btn-info[disabled], .btn-info.disabled {
-    background: #ec9b90
+    background: #4cacc6
 }
 
 .btn-info[disabled]:hover, .btn-info.disabled:hover, .btn-info[disabled]:focus, .btn-info.disabled:focus {
-    background: #ec9b90
+    background: #4cacc6
 }
 
 .btn-info[disabled]:active, .btn-info.disabled:active, .btn-info[disabled].active, .btn-info.disabled.active {
-    background: #ec9b90 !important
+    background: #4cacc6 !important
 }
 
 .btn-danger {
@@ -1520,7 +1520,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .form-control:focus {
-    border: 2px solid #ff9999;
+    border: 2px solid #6fdbe8;
     outline: 0;
     box-shadow: none
 }
@@ -1635,7 +1635,7 @@ a.label-danger:hover {
 }
 
 .label-success {
-    background-color: #ff9999
+    background-color: #6fdbe8
 }
 
 a.label-success:hover {
@@ -2168,7 +2168,7 @@ ul.tag_input {
 }
 
 ul.tag_input.focus {
-    border: 2px solid #ff9999;
+    border: 2px solid #6fdbe8;
     outline: 0;
     box-shadow: none
 }
@@ -2420,7 +2420,7 @@ ul.tour-list li {
 }
 
 ul.tour-list li a {
-    color: #ff9999
+    color: #6fdbe8
 }
 
 ul.tour-list li a .fa {
@@ -2583,7 +2583,7 @@ input.placeholder, textarea.placeholder {
 .loader .sk-spinner-three-bounce div {
     width: 12px;
     height: 12px;
-    background-color: #ff9999;
+    background-color: #6fdbe8;
     border-radius: 100%;
     display: inline-block;
     -webkit-animation: sk-threeBounceDelay 1.4s infinite ease-in-out;
@@ -2728,7 +2728,7 @@ img.bounceIn {
 }
 
 .md-editor.active {
-    border: 2px solid #ff9999 !important
+    border: 2px solid #6fdbe8 !important
 }
 
 @media (max-width: 767px) {
