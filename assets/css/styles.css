@@ -393,7 +393,7 @@ select {
   width: 100%;
   top: 0;
   left: 0;
-  height: 780px;
+  height: 750px;
   background: #373737;
 }
 .bg-slider-wrapper .flexslider {
@@ -3699,6 +3699,7 @@ select {
   }
   .video-container video.fillWidth {
     width: 100%;
+    height: 100%;
   }
 }
 /* Large devices (large desktops, 1200px and up) */
