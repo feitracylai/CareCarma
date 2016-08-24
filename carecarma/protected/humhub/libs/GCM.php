@@ -60,7 +60,7 @@ class GCM
 //		$api_key = 'AIzaSyDmDMFo7dG37wqR3HFK4bWFjLL0-GIKvkY';
 //=======
 //        $api_key = 'AIzaSyDmDMFo7dG37wqR3HFK4bWFjLL0-GIKvkY';
-		$api_key = 'AIzaSyDN0FocG3IyiS-4cGEKSjyMwhlBBc-zmbY';
+		$api_key = 'AIzaSyCPGoinDEqjkTcTopoaaJIhSqXMPgC9azE';
 //>>>>>>> message
 
         // Set POST variables
