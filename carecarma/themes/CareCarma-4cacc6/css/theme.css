@@ -92,9 +92,9 @@
 
 body {
     padding-top: 130px;
-    /*background-color: #ededed;*/
-    background:#fff url('../img/bg-screen-4.jpg') no-repeat fixed;
-    background-size: cover;
+    background-color: #ededed;
+    /*background:#fff url('../img/bg-screen-4.jpg') no-repeat fixed;*/
+    /*background-size: cover;*/
     color: #777;
     font-family: 'Open Sans', sans-serif
 }
@@ -844,7 +844,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .modal .dropdown-menu li:hover, .panel .dropdown-menu li:hover, .nav-tabs .dropdown-menu li:hover, .modal .dropdown-menu li.selected, .panel .dropdown-menu li.selected, .nav-tabs .dropdown-menu li.selected {
-    border-left: 3px solid #ec6b60;
+    border-left: 3px solid #4593ae;
     background-color: #f7f7f7 !important
 }
 
@@ -1306,7 +1306,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .login-container .btn-primary:hover , .login-container .btn-primary:focus{
-    background: #ec9b90;
+    background: #4593ae;
 }
 
 .login-container .login-button .btn{
@@ -2976,5 +2976,150 @@ img.bounceIn {
 
 #share-panel .share-icon-linkedin {
     color: #0177b5
+}
+
+/* ======= Configure Style (Remove in production) ======= */
+.config-wrapper {
+    position: absolute;
+    top: 200px;
+    right: 0;
+    z-index: 100;
+}
+.config-wrapper-inner {
+    position: relative;
+}
+.config-trigger {
+    display: block;
+    position: absolute;
+    left: -36px;
+    width: 36px;
+    height: 36px;
+    background: #f5f5f5;
+    color: #fff;
+    text-align: center;
+    -webkit-border-top-right-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -webkit-border-bottom-left-radius: 4px;
+    -webkit-border-top-left-radius: 4px;
+    -moz-border-radius-topright: 0;
+    -moz-border-radius-bottomright: 0;
+    -moz-border-radius-bottomleft: 4px;
+    -moz-border-radius-topleft: 4px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+.config-trigger:hover {
+    text-decoration: none;
+}
+.config-trigger:hover .fa {
+    color: #253340;
+}
+.config-trigger .fa {
+    font-size: 22px;
+    padding-top: 8px;
+    display: block;
+    color: #2b2b2b;
+}
+.config-panel {
+    width: 350px;
+    display: none;
+    background: #f5f5f5;
+    padding: 15px;
+    -webkit-border-top-right-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -webkit-border-bottom-left-radius: 4px;
+    -webkit-border-top-left-radius: 0;
+    -moz-border-radius-topright: 0;
+    -moz-border-radius-bottomright: 0;
+    -moz-border-radius-bottomleft: 4px;
+    -moz-border-radius-topleft: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 0;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+.config-panel h5 {
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.config-panel #color-options {
+    margin-bottom: 10px;
+}
+.config-panel #color-options li {
+    padding-right: 0;
+}
+.config-panel #color-options li a {
+    display: block;
+    width: 150px;
+    height: 100px;
+    border: 2px solid transparent;
+}
+.config-panel #color-options li a:hover {
+    -webkit-opacity: 0.9;
+    -moz-opacity: 0.9;
+    opacity: 0.9;
+    border: 2px solid rgba(0, 0, 0, 0.8);
+}
+.config-panel #color-options li.active a {
+    border: 2px solid #000;
+}
+.config-panel #color-options li.theme-1 a {
+    background: #fff url('../img/background/1.jpg') no-repeat;
+    background-size: cover;
+}
+.config-panel #color-options li.theme-2 a {
+    background: #fff url('../img/background/2.jpg') no-repeat ;
+    background-size: cover;
+}
+.config-panel #color-options li.theme-3 a {
+    background: #fff url('../img/background/3.jpg') no-repeat ;
+    background-size: cover;
+}
+.config-panel #color-options li.theme-4 a {
+    background: #fff url('../img/background/4.jpg') no-repeat ;
+    background-size: cover;
+}
+.config-panel #color-options li.theme-5 a {
+    background: #fff url('../img/background/5.jpg') no-repeat ;
+    background-size: cover;
+}
+.config-panel #color-options li.theme-6 a {
+    background: #fff url('../img/background/6.jpg') no-repeat ;
+    background-size: cover;
+}
+.config-panel #color-options li.theme-7 a {
+    background: #fff url('../img/background/7.jpg') no-repeat ;
+    background-size: cover;
+}
+.config-panel #color-options li.theme-8 a {
+    background: #fff url('../img/background/8.jpg') no-repeat ;
+    background-size: cover;
+}
+.config-panel #color-options li.theme-9 a {
+    background: #fff url('../img/background/9.jpg') no-repeat ;
+    background-size: cover;
+}
+.config-panel #color-options li.theme-10 a {
+    background: #fff url('../img/background/10.jpg') no-repeat ;
+    background-size: cover;
+}
+
+.config-panel .close {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: #fff;
+}
+.config-panel .close .fa {
+    color: #253340;
 }
 
