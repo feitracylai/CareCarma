@@ -736,6 +736,7 @@ use humhub\models\Setting;
 
         </table>
         <?php $this->endBody() ?>
+    <p style="color: #ededed">CareCarma</p>
     </body>
 </html>
 <?php $this->endPage() ?>
