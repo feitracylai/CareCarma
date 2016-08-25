@@ -102,6 +102,8 @@ class Invite extends \yii\db\ActiveRecord
         // User requested registration link by its self
         if ($this->source == self::SOURCE_SELF) {
 
+            Yii::$app->language = \humhub\models\Setting::Get('defaultLanguage');
+            
             $mail = Yii::$app->mailer->compose([
                 'html' => '@humhub/modules/user/views/mails/UserInviteSelf',
                 'text' => '@humhub/modules/user/views/mails/plaintext/UserInviteSelf'
