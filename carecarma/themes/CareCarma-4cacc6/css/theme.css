@@ -92,9 +92,9 @@
 
 body {
     padding-top: 130px;
-    background-color: #ededed;
-    /*background:#fff url('../img/bg-screen-4.jpg') no-repeat fixed;*/
-    /*background-size: cover;*/
+    /*background-color: #ededed;*/
+    background:#fff url('../img/bg-screen-4.jpg') no-repeat fixed;
+    background-size: cover;
     color: #777;
     font-family: 'Open Sans', sans-serif
 }
