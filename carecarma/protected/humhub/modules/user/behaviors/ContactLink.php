@@ -48,9 +48,9 @@ class ContactLink extends Behavior
     {
         if ($this->owner->contact_first == null & $this->owner->contact_last == null)
         {
-            $this->owner->notifyDevice('add');
+            $data = 'add';
         } else {
-            $this->owner->notifyDevice('update');
+            $data = 'update';
         }
 
         $this->owner->linked = 1;
@@ -65,6 +65,7 @@ class ContactLink extends Behavior
             $this->owner->device_phone = $contactUser->device->phone;
         }
         $this->owner->save();
+        $this->owner->notifyDevice($data);
 
 
         //Send notification to Accept
