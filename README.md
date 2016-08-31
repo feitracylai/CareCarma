@@ -1,4 +1,4 @@
-1. CareCarma Web Client Setup
+CareCarma Web Client Setup
 ------------------------------------------------------------------------------------------------------------------------
 Steps:
 - 1. Install git & set it as environment variable (https://git-scm.com/downloads) 
