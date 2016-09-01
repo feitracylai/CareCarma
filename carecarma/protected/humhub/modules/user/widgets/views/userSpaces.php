@@ -18,7 +18,7 @@ use yii\helpers\Html;
         <?php echo \humhub\widgets\PanelMenu::widget(['id' => 'user-spaces-panel']); ?>
 
         <div class="panel-heading">
-            <?php echo Yii::t('UserModule.widgets_views_userSpaces', '<strong>Member</strong> in these families'); ?>
+            <?php echo Yii::t('UserModule.widgets_views_userSpaces', '<strong>Member</strong> in these circles'); ?>
         </div>
 
         <div class="panel-body">

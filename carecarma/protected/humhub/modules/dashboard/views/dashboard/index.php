@@ -14,7 +14,7 @@ $this->pageTitle = Yii::t('DashboardModule.views_dashboard_index', 'Home');
             echo \humhub\modules\content\widgets\Stream::widget([
                 'streamAction' => '//dashboard/dashboard/stream',
                 'showFilters' => false,
-                'messageStreamEmpty' => Yii::t('DashboardModule.views_dashboard_index', '<b>Your home is empty!</b><br>Post something on your profile or join some families!'),
+                'messageStreamEmpty' => Yii::t('DashboardModule.views_dashboard_index', '<b>Your home is empty!</b><br>Post something on your profile or join some circles!'),
             ]);
             ?>
         </div>

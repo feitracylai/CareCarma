@@ -5,7 +5,7 @@ use humhub\modules\space\models\Space;
 use humhub\modules\admin\widgets\SpaceGridView;
 ?>
 <div class="panel panel-default">
-    <div class="panel-heading"><?php echo Yii::t('AdminModule.views_space_index', '<strong>Manage</strong> families'); ?></div>
+    <div class="panel-heading"><?php echo Yii::t('AdminModule.views_space_index', '<strong>Manage</strong> circles'); ?></div>
     <div class="panel-body">
         <?= \humhub\modules\admin\widgets\SpaceMenu::widget(); ?>        
         <p />

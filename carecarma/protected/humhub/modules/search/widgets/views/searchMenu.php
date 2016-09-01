@@ -19,7 +19,7 @@ use yii\helpers\Html;
                 <input type="text" id="search-menu-search"
                        class="form-control"
                        autocomplete="off"
-                       placeholder="<?php echo Yii::t('base', 'Search for users and families'); ?>">
+                       placeholder="<?php echo Yii::t('base', 'Search for users and circles'); ?>">
 
                 <div class="search-reset" id="search-search-reset"><i
                         class="fa fa-times-circle"></i></div>

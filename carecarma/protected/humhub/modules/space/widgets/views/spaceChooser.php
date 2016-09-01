@@ -25,7 +25,7 @@ $this->registerJsVar('scSpaceListUrl', Url::to(['/space/list', 'ajax' => 1]));
 
         <?php
         if (!$currentSpace) {
-            echo '<i class="fa fa-dot-circle-o" style="font-size: 14px;"></i><br>' . Yii::t('SpaceModule.widgets_views_spaceChooser', 'My families');
+            echo '<i class="fa fa-dot-circle-o" style="font-size: 14px;"></i><br>' . Yii::t('SpaceModule.widgets_views_spaceChooser', 'My circles');
         }
         ?>
         <!-- end: Show space image and name if chosen -->

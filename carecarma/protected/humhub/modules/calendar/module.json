@@ -1,7 +1,7 @@
 {
     "id": "calendar",
     "name": "Calendar - Beta",
-    "description": "Calendar for families or user profiles.",
+    "description": "Calendar for circles or user profiles.",
     "keywords": ["calendar"],
     "version": "0.3.4",
     "humhub": {

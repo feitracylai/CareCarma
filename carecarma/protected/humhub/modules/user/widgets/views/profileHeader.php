@@ -209,7 +209,7 @@ if ($isProfileOwner) {
                         <div class="pull-left entry">
                             <span class="count"><?php echo count($user->spaces); ?></span><br>
                             <span
-                                class="title"><?php echo Yii::t('UserModule.widgets_views_profileHeader', 'Families'); ?></span>
+                                class="title"><?php echo Yii::t('UserModule.widgets_views_profileHeader', 'circles'); ?></span>
                         </div>
                         </a>
 

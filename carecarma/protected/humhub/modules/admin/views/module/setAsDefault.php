@@ -28,7 +28,7 @@ use humhub\modules\user\models\User;
 
                 <?php if ($module->hasContentContainerType(Space::className())) : ?>
                     <div class="col-md-6">
-                        <label for=""><?php echo Yii::t('AdminModule.views_module_setAsDefault', 'Families'); ?></label>
+                        <label for=""><?php echo Yii::t('AdminModule.views_module_setAsDefault', 'Circles'); ?></label>
 
                         <div class="radio">
                             <label>

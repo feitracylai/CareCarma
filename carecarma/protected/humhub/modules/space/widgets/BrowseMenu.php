@@ -22,7 +22,7 @@ class BrowseMenu extends MenuWidget
 
         $this->addItemGroup(array(
             'id' => 'browse',
-            'label' => Yii::t('SpaceModule.widgets_SpaceBrowseMenuWidget', 'Families'),
+            'label' => Yii::t('SpaceModule.widgets_SpaceBrowseMenuWidget', 'Circles'),
             'sortOrder' => 100,
         ));
 

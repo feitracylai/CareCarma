@@ -47,7 +47,7 @@ use yii\helpers\Html;
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" name="selector" class="selectorCheckbox"  value="<?php echo ActiveQueryContent::USER_RELATED_SCOPE_SPACES; ?>" <?php if (in_array(ActiveQueryContent::USER_RELATED_SCOPE_SPACES, $selectors)): ?>checked="checked"<?php endif; ?>>
-                            <?php echo Yii::t('CalendarModule.views_global_index', 'My families'); ?>
+                            <?php echo Yii::t('CalendarModule.views_global_index', 'My circles'); ?>
                         </label>
                     </div>
 
@@ -55,7 +55,7 @@ use yii\helpers\Html;
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" name="selector" class="selectorCheckbox"  value="<?php echo ActiveQueryContent::USER_RELATED_SCOPE_FOLLOWED_SPACES; ?>" <?php if (in_array(ActiveQueryContent::USER_RELATED_SCOPE_FOLLOWED_SPACES, $selectors)): ?>checked="checked"<?php endif; ?>>
-                            <?php echo Yii::t('CalendarModule.views_global_index', 'Followed families'); ?>
+                            <?php echo Yii::t('CalendarModule.views_global_index', 'Followed circles'); ?>
                         </label>
                     </div>
                     <div class="checkbox">

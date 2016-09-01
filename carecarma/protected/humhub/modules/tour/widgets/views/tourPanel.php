@@ -45,7 +45,7 @@ use humhub\models\Setting;
                     </a></li>
                 <li class="<?php if ($spaces == 1) : ?>completed<?php endif; ?>"><a id="interface-tour-link"
                                                                                     href="<?php echo Url::to(['/tour/tour/start-space-tour']); ?>"><i
-                            class="fa fa-play-circle-o"></i><?php echo Yii::t('TourModule.widgets_views_tourPanel', '<strong>Guide:</strong> Families'); ?>
+                            class="fa fa-play-circle-o"></i><?php echo Yii::t('TourModule.widgets_views_tourPanel', '<strong>Guide:</strong> Circles'); ?>
                     </a></li>
                 <li class="<?php if ($profile == 1) : ?>completed<?php endif; ?>"><a
                         href="<?php echo Yii::$app->user->getIdentity()->createUrl('//user/profile', array('tour' => 'true')); ?>"><i

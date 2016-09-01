@@ -27,7 +27,7 @@ class CreatePrivateSpace extends \humhub\libs\BasePermission
     /**
      * @inheritdoc
      */
-    protected $description = 'Can create hidden (private) families.';
+    protected $description = 'Can create hidden (private) circles.';
 
     /**
      * @inheritdoc
@@ -43,6 +43,6 @@ class CreatePrivateSpace extends \humhub\libs\BasePermission
         parent::__construct($config);
         
         $this->title = \Yii::t('SpaceModule.permissions', 'Create private family');
-        $this->description = \Yii::t('SpaceModule.permissions', 'Can create hidden (private) families.');
+        $this->description = \Yii::t('SpaceModule.permissions', 'Can create hidden (private) circles.');
     }    
 }

@@ -10,7 +10,7 @@ use humhub\modules\content\models\Content;
         <?= \humhub\modules\admin\widgets\SpaceMenu::widget(); ?>        
         <p />
         <p>
-            <?php echo Yii::t('AdminModule.views_space_index', 'Define here default settings for new families.'); ?>
+            <?php echo Yii::t('AdminModule.views_space_index', 'Define here default settings for new circles.'); ?>
         </p>
 
         <br />

@@ -28,7 +28,7 @@ foreach (Membership::GetUserSpaces($user->id) as $space) {
 
 <div class="panel panel-default members" id="profile-follower-panel">
 
-    <div class="panel-heading"><?php echo Yii::t('UserModule.widgets_views_userFollower', '<strong>Member of Families</strong>'); ?></div>
+    <div class="panel-heading"><?php echo Yii::t('UserModule.widgets_views_userFollower', '<strong>Member of Circles</strong>'); ?></div>
     <div class="panel-body">
         <?php foreach ($spaces as $follower) : ?>
             <a href="<?php echo $follower->getUrl(); ?>">

@@ -78,7 +78,7 @@ class Events extends \yii\base\Object
     {
         $integrityController = $event->sender;
 
-        $integrityController->showTestHeadline("Families Module - Families (" . Space::find()->count() . " entries)");
+        $integrityController->showTestHeadline("Circles Module - Families (" . Space::find()->count() . " entries)");
         foreach (Space::find()->all() as $space) {
             foreach ($space->applicants as $applicant) {
                 if ($applicant->user == null) {
