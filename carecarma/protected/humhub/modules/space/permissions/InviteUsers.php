@@ -41,7 +41,7 @@ class InviteUsers extends \humhub\libs\BasePermission
     /**
      * @inheritdoc
      */
-    protected $description = 'Allows the user to invite new members to the family';
+    protected $description = 'Allows the user to invite new members to the circle';
 
     /**
      * @inheritdoc
@@ -52,7 +52,7 @@ class InviteUsers extends \humhub\libs\BasePermission
         parent::__construct($config);
         
         $this->title = \Yii::t('SpaceModule.permissions', 'Invite users');
-        $this->description = \Yii::t('SpaceModule.permissions', 'Allows the user to invite new members to the family');
+        $this->description = \Yii::t('SpaceModule.permissions', 'Allows the user to invite new members to the circle');
     }
 
 }

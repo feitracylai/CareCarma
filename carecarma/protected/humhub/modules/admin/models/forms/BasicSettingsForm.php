@@ -47,7 +47,7 @@ class BasicSettingsForm extends \yii\base\Model
             'baseUrl' => Yii::t('AdminModule.forms_BasicSettingsForm', 'Base URL'),
             'defaultLanguage' => Yii::t('AdminModule.forms_BasicSettingsForm', 'Default language'),
             'timeZone' => Yii::t('AdminModule.forms_BasicSettingsForm', 'Server Timezone'),
-            'defaultSpaceGuid' => Yii::t('AdminModule.forms_BasicSettingsForm', 'Default family'),
+            'defaultSpaceGuid' => Yii::t('AdminModule.forms_BasicSettingsForm', 'Default circle'),
             'tour' => Yii::t('AdminModule.forms_BasicSettingsForm', 'Show introduction tour for new users'),
             'share' => Yii::t('AdminModule.forms_BasicSettingsForm', 'Show sharing panel on dashboard'),
             'dashboardShowProfilePostForm' => Yii::t('AdminModule.forms_BasicSettingsForm', 'Show user profile post form on dashboard')
@@ -69,7 +69,7 @@ class BasicSettingsForm extends \yii\base\Model
                 if ($spaceGuid != "") {
                     $space = \humhub\modules\space\models\Space::findOne(array('guid' => $spaceGuid));
                     if ($space == null) {
-                        $this->addError($attribute, Yii::t('AdminModule.forms_BasicSettingsForm', "Invalid family"));
+                        $this->addError($attribute, Yii::t('AdminModule.forms_BasicSettingsForm', "Invalid circle"));
                     }
                 }
             }

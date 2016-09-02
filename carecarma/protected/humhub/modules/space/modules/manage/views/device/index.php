@@ -19,7 +19,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
             if ($dataProvider->totalCount == 0){
                 echo ('There is no Care Receiver in your space.');
             }else {
-                echo Yii::t('SpaceModule.views_admin_receiver', 'In this overview you can find every registered care receiver in this family. ');
+                echo Yii::t('SpaceModule.views_admin_receiver', 'In this overview you can find every registered care receiver in this circle. ');
             }
             ?>
 

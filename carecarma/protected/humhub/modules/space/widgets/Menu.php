@@ -28,7 +28,7 @@ class Menu extends \humhub\widgets\BaseMenu
 
         $this->addItemGroup(array(
             'id' => 'modules',
-            'label' => Yii::t('SpaceModule.widgets_SpaceMenuWidget', '<strong>Family</strong> menu'),
+            'label' => Yii::t('SpaceModule.widgets_SpaceMenuWidget', '<strong>Circle</strong> menu'),
             'sortOrder' => 100,
         ));
 

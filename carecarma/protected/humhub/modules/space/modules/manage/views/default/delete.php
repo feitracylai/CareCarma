@@ -9,10 +9,10 @@ use humhub\modules\space\modules\manage\widgets\DefaultMenu;
 <br/>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo Yii::t('SpaceModule.views_admin_delete', '<strong>Delete</strong> family'); ?>
+        <?php echo Yii::t('SpaceModule.views_admin_delete', '<strong>Delete</strong> circle'); ?>
     </div>
     <div class="panel-body">
-        <p><?php echo Yii::t('SpaceModule.views_admin_delete', 'Are you sure, that you want to delete this family? All published content will be removed!'); ?></p>
+        <p><?php echo Yii::t('SpaceModule.views_admin_delete', 'Are you sure, that you want to delete this circle? All published content will be removed!'); ?></p>
         <p><?php echo Yii::t('SpaceModule.views_admin_delete', 'Please provide your password to continue!'); ?></p><br>
 
         <?php $form = CActiveForm::begin(); ?>

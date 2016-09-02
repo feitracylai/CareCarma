@@ -40,7 +40,7 @@ class Invite extends BaseNotification
      */
     public function send(User $user)
     {
-        $msg =  Html::encode($this->originator->displayName). ' invited you to the family ' . Html::encode($this->source->name);
+        $msg =  Html::encode($this->originator->displayName). ' invited you to the circle ' . Html::encode($this->source->name);
         return parent::send($user, $msg);
     }
 

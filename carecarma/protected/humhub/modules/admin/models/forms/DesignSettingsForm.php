@@ -55,7 +55,7 @@ class DesignSettingsForm extends \yii\base\Model
             'theme' => Yii::t('AdminModule.forms_DesignSettingsForm', 'Theme'),
             'paginationSize' => Yii::t('AdminModule.forms_DesignSettingsForm', 'Default pagination size (Entries per page)'),
             'displayName' => Yii::t('AdminModule.forms_DesignSettingsForm', 'Display Name (Format)'),
-            'spaceOrder' => Yii::t('AdminModule.forms_DesignSettingsForm', 'Dropdown family order'),
+            'spaceOrder' => Yii::t('AdminModule.forms_DesignSettingsForm', 'Dropdown circle order'),
             'logo' => Yii::t('AdminModule.forms_BasicSettingsForm', 'Logo upload'),
             'dateInputDisplayFormat' => Yii::t('AdminModule.forms_BasicSettingsForm', 'Date input format'),
         );

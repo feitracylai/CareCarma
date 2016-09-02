@@ -42,7 +42,7 @@ class CreatePrivateSpace extends \humhub\libs\BasePermission
     public function __construct($config = array()) {
         parent::__construct($config);
         
-        $this->title = \Yii::t('SpaceModule.permissions', 'Create private family');
+        $this->title = \Yii::t('SpaceModule.permissions', 'Create private circle');
         $this->description = \Yii::t('SpaceModule.permissions', 'Can create hidden (private) circles.');
     }    
 }

@@ -5,8 +5,8 @@ echo \humhub\modules\content\widgets\Stream::widget(array(
     'contentContainer' => $space,
     'streamAction' => '/space/space/stream',
     'messageStreamEmpty' => ($space->canWrite()) ?
-            Yii::t('SpaceModule.views_space_index', '<b>This family is still empty!</b><br>Start by posting something here...') :
-            Yii::t('SpaceModule.views_space_index', '<b>You are not member of this family and there is no public content, yet!</b>'),
+            Yii::t('SpaceModule.views_space_index', '<b>This circle is still empty!</b><br>Start by posting something here...') :
+            Yii::t('SpaceModule.views_space_index', '<b>You are not member of this circle and there is no public content, yet!</b>'),
     'messageStreamEmptyCss' => ($space->canWrite()) ?
             'placeholder-empty-stream' :
             '',

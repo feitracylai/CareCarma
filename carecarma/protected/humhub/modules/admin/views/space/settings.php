@@ -5,7 +5,7 @@ use humhub\compat\CHtml;
 use humhub\modules\content\models\Content;
 ?>
 <div class="panel panel-default">
-    <div class="panel-heading"><?php echo Yii::t('AdminModule.views_space_settings', '<strong>Family</strong> Settings'); ?></div>
+    <div class="panel-heading"><?php echo Yii::t('AdminModule.views_space_settings', '<strong>Circle</strong> Settings'); ?></div>
     <div class="panel-body">
         <?= \humhub\modules\admin\widgets\SpaceMenu::widget(); ?>        
         <p />

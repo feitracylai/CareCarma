@@ -3,10 +3,10 @@
     <div class="panel panel_lightbox">
         <div class="content content_innershadow">
 
-            <h2><?php echo Yii::t('SpaceModule.widgets_views_requestMembership', 'Request family membership'); ?></h2>
+            <h2><?php echo Yii::t('SpaceModule.widgets_views_requestMembership', 'Request circle membership'); ?></h2>
 
             <p>
-                <?php echo Yii::t('SpaceModule.widgets_views_requestMembership', 'Please shortly introduce yourself, to become a approved member of this family.'); ?><br/>
+                <?php echo Yii::t('SpaceModule.widgets_views_requestMembership', 'Please shortly introduce yourself, to become a approved member of this circle.'); ?><br/>
             </p><br>
 
             <div class="form">

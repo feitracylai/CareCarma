@@ -51,7 +51,7 @@ class Controller extends \humhub\modules\content\components\ContentContainerCont
     public function adminOnly()
     {
         if (!$this->getSpace()->isAdmin())
-            throw new HttpException(403, 'Access denied - Family Administrator only!');
+            throw new HttpException(403, 'Access denied - Circle Administrator only!');
     }
 
     /**
@@ -62,7 +62,7 @@ class Controller extends \humhub\modules\content\components\ContentContainerCont
         $workspace = $this->getSpace();
 
         if (!$workspace->isSpaceOwner() && !Yii::$app->user->isAdmin())
-            throw new HttpException(403, 'Access denied - Family Owner only!');
+            throw new HttpException(403, 'Access denied - Circle Owner only!');
     }
 
 }

@@ -34,7 +34,7 @@ use yii\widgets\ActiveForm;
         ]);
         ?>
 
-        <p class="help-block"><?php echo Yii::t('AdminModule.views_setting_index', 'New users will automatically added to these family(s).'); ?></p>
+        <p class="help-block"><?php echo Yii::t('AdminModule.views_setting_index', 'New users will automatically added to these circle(s).'); ?></p>
 
 
         <strong><?php echo Yii::t('AdminModule.views_setting_index', 'Dashboard'); ?></strong>

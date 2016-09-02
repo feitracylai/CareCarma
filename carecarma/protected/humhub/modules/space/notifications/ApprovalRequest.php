@@ -40,7 +40,7 @@ class ApprovalRequest extends BaseNotification
      */
     public function send(User $user)
     {
-        $msg =  Html::encode($this->originator->displayName). ' requests membership for the family ' . Html::encode($this->source->name);
+        $msg =  Html::encode($this->originator->displayName). ' requests membership for the circle ' . Html::encode($this->source->name);
         return parent::send($user, $msg);
     }
 }

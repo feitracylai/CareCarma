@@ -35,7 +35,7 @@ class ApprovalRequestDeclined extends BaseNotification
      */
     public function send(User $user)
     {
-        $msg =  Html::encode($this->originator->displayName). ' declined your membership request for the family ' . Html::encode($this->source->name);
+        $msg =  Html::encode($this->originator->displayName). ' declined your membership request for the circle ' . Html::encode($this->source->name);
         return parent::send($user, $msg);
     }
 }

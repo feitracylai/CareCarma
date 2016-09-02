@@ -61,7 +61,7 @@ class SpaceController extends Behavior
         // Try Load the space
         $this->space = Space::findOne(['guid' => $guid]);
         if ($this->space == null)
-            throw new HttpException(404, Yii::t('SpaceModule.behaviors_SpaceControllerBehavior', 'Family not found!'));
+            throw new HttpException(404, Yii::t('SpaceModule.behaviors_SpaceControllerBehavior', 'circle not found!'));
 
         $this->checkAccess();
         return $this->space;
@@ -71,7 +71,7 @@ class SpaceController extends Behavior
     {
 
         if (\humhub\models\Setting::Get('allowGuestAccess', 'authentication_internal') && Yii::$app->user->isGuest && $this->space->visibility != Space::VISIBILITY_ALL) {
-            throw new HttpException(401, Yii::t('SpaceModule.behaviors_SpaceControllerBehavior', 'You need to login to view contents of this family!'));
+            throw new HttpException(401, Yii::t('SpaceModule.behaviors_SpaceControllerBehavior', 'You need to login to view contents of this circle!'));
         }
 
         // Save users last action on this space
@@ -85,7 +85,7 @@ class SpaceController extends Behavior
                 // Space invisible?
                 if ($this->space->visibility == Space::VISIBILITY_NONE) {
                     // Not Space Member
-                    throw new HttpException(404, Yii::t('SpaceModule.behaviors_SpaceControllerBehavior', 'Family is invisible!'));
+                    throw new HttpException(404, Yii::t('SpaceModule.behaviors_SpaceControllerBehavior', 'Circle is invisible!'));
                 }
             }
         }

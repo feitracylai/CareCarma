@@ -10,7 +10,7 @@ use \humhub\compat\CHtml;
 <div class="panel-body">
     <?php if ($isSpaceOwner) { ?>
 
-        <?php echo Yii::t('UserModule.views_account_delete', 'Sorry, as an owner of a family you are not able to delete your account!<br />Please assign another owner or delete them.'); ?>
+        <?php echo Yii::t('UserModule.views_account_delete', 'Sorry, as an owner of a circle you are not able to delete your account!<br />Please assign another owner or delete them.'); ?>
 
     <?php } else { ?>
 

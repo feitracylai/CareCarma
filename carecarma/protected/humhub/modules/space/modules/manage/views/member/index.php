@@ -13,7 +13,7 @@ use humhub\modules\space\modules\manage\widgets\MemberMenu;
         <?php echo Yii::t('SpaceModule.views_admin_members', '<strong>Manage</strong> members'); ?>
     </div>
     <div class="panel-body">
-        <?php echo Yii::t('SpaceModule.views_admin_members', 'If you set someone in "Care Receiver" Group, his/her account can be managed by the administers in this family. And All of the member in this family can see the health report of his/her device.'); ?>
+        <?php echo Yii::t('SpaceModule.views_admin_members', 'If you set someone in "Care Receiver" Group, his/her account can be managed by the administers in this circle. And All of the member in this circle can see the health report of his/her device.'); ?>
         <div class="table-responsive">
             <?php
             $groups = $space->getUserGroups();

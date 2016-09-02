@@ -47,7 +47,7 @@ class ChangeOwnerForm extends Model
     public function attributeLabels()
     {
         return array(
-            'ownerId' => Yii::t('SpaceModule.manage', 'Family owner'),
+            'ownerId' => Yii::t('SpaceModule.manage', 'Circle owner'),
         );
     }
 

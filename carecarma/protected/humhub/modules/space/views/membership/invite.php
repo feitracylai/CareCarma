@@ -33,7 +33,7 @@ use humhub\models\Setting;
                 <div class="tab-pane active" id="internal">
 
 
-                    <?php echo Yii::t('SpaceModule.views_space_invite', 'To invite users to this family, please type their names below to find and pick them.'); ?>
+                    <?php echo Yii::t('SpaceModule.views_space_invite', 'To invite users to this circle, please type their names below to find and pick them.'); ?>
 
                     <br/><br/>
 

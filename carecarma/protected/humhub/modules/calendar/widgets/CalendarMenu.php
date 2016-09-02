@@ -22,7 +22,7 @@ class CalendarMenu extends \humhub\widgets\BaseMenu
     {
 
         $this->addItem(array(
-            'label' => Yii::t('AdminModule.views_user_index', 'Add new family event'),
+            'label' => Yii::t('AdminModule.views_user_index', 'Add new circle event'),
             'url' => Url::toRoute(['/calendar/entry/edit']),
             'sortOrder' => 100,
             'isActive' => 'TRUE',

@@ -17,7 +17,7 @@ use humhub\modules\calendar\models\CalendarEntry;
                 <?php if (!$calendarEntry->isNewRecord) : ?>
                     <?php echo Yii::t('CalendarModule.views_entry_edit', '<strong>Edit</strong> event'); ?>
                 <?php else: ?>
-                    <?php echo Yii::t('CalendarModule.views_entry_edit', '<strong>Create</strong> family event'); ?>
+                    <?php echo Yii::t('CalendarModule.views_entry_edit', '<strong>Create</strong> circle event'); ?>
                 <?php endif; ?>
             </h4>
         </div>

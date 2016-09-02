@@ -10,7 +10,7 @@ use humhub\modules\admin\widgets\SpaceGridView;
         <?= \humhub\modules\admin\widgets\SpaceMenu::widget(); ?>        
         <p />
         <p>
-            <?php echo Yii::t('AdminModule.views_space_index', 'In this overview you can find every family and manage it.'); ?>
+            <?php echo Yii::t('AdminModule.views_space_index', 'In this overview you can find every circle and manage it.'); ?>
         </p>
 
         <div class="table-responsive">

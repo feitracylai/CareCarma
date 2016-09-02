@@ -42,7 +42,7 @@ class CreatePublicSpace extends \humhub\libs\BasePermission
     public function __construct($config = array()) {
         parent::__construct($config);
         
-        $this->title = \Yii::t('SpaceModule.permissions', 'Create public family');
+        $this->title = \Yii::t('SpaceModule.permissions', 'Create public circle');
         $this->description = \Yii::t('SpaceModule.permissions', 'Can create public visible circles. (Listed in directory)');
     }
 

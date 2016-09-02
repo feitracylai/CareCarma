@@ -46,7 +46,7 @@ class Events extends \yii\base\Object
         // Check if the user owns some spaces
         foreach (Membership::GetUserSpaces($user->id) as $space) {
             if ($space->isSpaceOwner($user->id)) {
-                throw new HttpException(500, Yii::t('SpaceModule.base', 'Could not delete user who is a family owner! Name of Family: {spaceName}', array('spaceName' => $space->name)));
+                throw new HttpException(500, Yii::t('SpaceModule.base', 'Could not delete user who is a circle owner! Name of Circle: {spaceName}', array('spaceName' => $space->name)));
             }
         }
 
@@ -92,7 +92,7 @@ class Events extends \yii\base\Object
         $integrityController->showTestHeadline("Space Module - Module (" . models\Module::find()->count() . " entries)");
         foreach (models\Module::find()->joinWith('space')->all() as $module) {
             if ($module->space == null) {
-                if ($integrityController->showFix("Deleting family module" . $module->id . " without existing family!")) {
+                if ($integrityController->showFix("Deleting circle module" . $module->id . " without existing circle!")) {
                     $module->delete();
                 }
             }
@@ -101,12 +101,12 @@ class Events extends \yii\base\Object
         $integrityController->showTestHeadline("Space Module - Memberships (" . models\Membership::find()->count() . " entries)");
         foreach (models\Membership::find()->joinWith('space')->all() as $membership) {
             if ($membership->space == null) {
-                if ($integrityController->showFix("Deleting family membership" . $membership->space_id . " without existing family!")) {
+                if ($integrityController->showFix("Deleting circle membership" . $membership->space_id . " without existing circle!")) {
                     $membership->delete();
                 }
             }
             if ($membership->user == null) {
-                if ($integrityController->showFix("Deleting family membership" . $membership->user_id . " without existing user!")) {
+                if ($integrityController->showFix("Deleting circle membership" . $membership->user_id . " without existing user!")) {
                     $membership->delete();
                 }
             }

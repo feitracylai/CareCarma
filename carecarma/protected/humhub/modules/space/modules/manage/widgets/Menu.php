@@ -109,7 +109,7 @@ class Menu extends \humhub\widgets\BaseMenu
                             'class' => 'tt',
                             'data-toggle' => 'tooltip',
                             'data-placement' => 'left',
-                            'title' => Yii::t('SpaceModule.widgets_SpaceAdminMenuWidget', 'This option will hide new content from this family at your dashboard')
+                            'title' => Yii::t('SpaceModule.widgets_SpaceAdminMenuWidget', 'This option will hide new content from this circle at your dashboard')
                         ]
                     ));
 
@@ -126,7 +126,7 @@ class Menu extends \humhub\widgets\BaseMenu
                             'class' => 'tt',
                             'data-toggle' => 'tooltip',
                             'data-placement' => 'left',
-                            'title' => Yii::t('SpaceModule.widgets_SpaceAdminMenuWidget', 'This option will show new content from this family at your dashboard')
+                            'title' => Yii::t('SpaceModule.widgets_SpaceAdminMenuWidget', 'This option will show new content from this circle at your dashboard')
                         ]
                     ));
 

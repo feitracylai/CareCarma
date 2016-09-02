@@ -24,19 +24,19 @@ $this->context->loadResources($this);
             {
                 orphan: true,
                 backdrop: true,
-                title: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', '<strong>Family</strong>')); ?>,
-                content: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', "Once you have joined or created a new family you can work on projects, discuss topics or just share information with other users.<br><br>There are various tools to personalize a family, thereby making the work process more productive.")); ?>
+                title: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', '<strong>Circle</strong>')); ?>,
+                content: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', "Once you have joined or created a new circle you can work on projects, discuss topics or just share information with other users.<br><br>There are various tools to personalize a family, thereby making the work process more productive.")); ?>
             },
             {
                 element: ".layout-nav-container .panel",
-                title: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', '<strong>Family</strong> navigation menu')); ?>,
-                content: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', 'This is where you can navigate the family – where you find which modules are active or available for the particular family you are currently in. These could be polls, tasks or notes for example.<br><br>Only the family admin can manage the family\'s modules.')); ?>,
+                title: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', '<strong>Circle</strong> navigation menu')); ?>,
+                content: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', 'This is where you can navigate the circle – where you find which modules are active or available for the particular family you are currently in. These could be polls, tasks or notes for example.<br><br>Only the family admin can manage the family\'s modules.')); ?>,
                 placement: "right"
             },
             {
                 element: ".dropdown-navigation",
-                title: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', '<strong>Family</strong> preferences')); ?>,
-                content: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', 'This menu is only visible for family admins. Here you can manage your family settings, add/block members and activate/deactivate tools for this family.')); ?>,
+                title: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', '<strong>Circle</strong> preferences')); ?>,
+                content: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', 'This menu is only visible for circle admins. Here you can manage your family settings, add/block members and activate/deactivate tools for this family.')); ?>,
                 placement: "bottom"
             },
             {
@@ -54,20 +54,20 @@ $this->context->loadResources($this);
             {
                 element: ".panel-activities",
                 title: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', '<strong>Most recent</strong> activities')); ?>,
-                content: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', 'To keep you up to date, other users\' most recent activities in this family will be displayed here.')); ?>,
+                content: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', 'To keep you up to date, other users\' most recent activities in this circle will be displayed here.')); ?>,
                 placement: "left"
             },
             {
                 element: "#space-members-panel",
-                title: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', '<strong>Family</strong> members')); ?>,
-                content: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', 'All users who are a member of this family will be displayed here.<br /><br />New members can be added by anyone who has been given access rights by the admin.')); ?>,
+                title: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', '<strong>Circle</strong> members')); ?>,
+                content: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', 'All users who are a member of this circle will be displayed here.<br /><br />New members can be added by anyone who has been given access rights by the admin.')); ?>,
                 placement: "left"
             },
             {
                 orphan: true,
                 backdrop: true,
                 title: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', '<strong>Yay! You\'re done.</strong>')); ?>,
-                content: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', "That's it for the family guide.<br><br>To carry on with the user profile guide, click here: ")); ?> + "<a href='javascript:gotoProfile = true; tourCompleted();'><?php echo Yii::t("TourModule.widgets_views_guide_spaces", "<strong>Profile Guide</strong>"); ?></a><br><br>"
+                content: <?php echo json_encode(Yii::t('TourModule.widgets_views_guide_spaces', "That's it for the circle guide.<br><br>To carry on with the user profile guide, click here: ")); ?> + "<a href='javascript:gotoProfile = true; tourCompleted();'><?php echo Yii::t("TourModule.widgets_views_guide_spaces", "<strong>Profile Guide</strong>"); ?></a><br><br>"
             }
         ]);
 

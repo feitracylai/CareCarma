@@ -448,8 +448,8 @@ class ConfigController extends Controller
 
             // Create Welcome Space
             $space = new Space();
-            $space->name = Yii::t("InstallerModule.controllers_ConfigController", "Welcome Family");
-            $space->description = Yii::t("InstallerModule.controllers_ConfigController", "Your first family to discover the platform.");
+            $space->name = Yii::t("InstallerModule.controllers_ConfigController", "Welcome Circle");
+            $space->description = Yii::t("InstallerModule.controllers_ConfigController", "Your first circle to discover the platform.");
             $space->join_policy = Space::JOIN_POLICY_FREE;
             $space->visibility = Space::VISIBILITY_ALL;
             $space->created_by = $userId;

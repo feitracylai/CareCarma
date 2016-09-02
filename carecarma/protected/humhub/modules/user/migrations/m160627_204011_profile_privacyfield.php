@@ -30,7 +30,7 @@ class m160627_204011_profile_privacyfield extends Migration
             $this->insert('profile_field', [
                 'profile_field_category_id' => $categoryId,
                 'field_type_class' => 'humhub\modules\user\models\fieldtype\Select',
-                'field_type_config' => '{"options":"Only Me\r\nFamily Members\r\nPublic"}',
+                'field_type_config' => '{"options":"Only Me\r\nCircle Members\r\nPublic"}',
                 'internal_name' => 'privacy',
                 'title' => 'Profile Privacy',
                 'sort_order' => '100',

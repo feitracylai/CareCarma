@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
     <div class="panel-body">
 
         <p>
-            <?php echo Yii::t('SpaceModule.manage', 'As owner of this family you can transfer this role to another administrator in family.'); ?>
+            <?php echo Yii::t('SpaceModule.manage', 'As owner of this circle you can transfer this role to another administrator in circle.'); ?>
         </p>
 
         <?php

@@ -68,7 +68,7 @@ class Events extends \yii\base\Object
 
             // Check if Space still exists
             if ($notification->space_id != "" && $notification->space == null) {
-                if ($integrityChecker->showFix("Deleting notification id " . $notification->id . " family seems to no longer exist!")) {
+                if ($integrityChecker->showFix("Deleting notification id " . $notification->id . " circle seems to no longer exist!")) {
                     $notification->delete();
                 }
             }

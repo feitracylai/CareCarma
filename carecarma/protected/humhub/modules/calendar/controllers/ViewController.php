@@ -101,7 +101,7 @@ class ViewController extends ContentContainerController
         $color_list = array("green", "orange", "black", "blue", "violet");
 
         $resource['id'] = 0;
-        $resource['title'] = 'Family Events';
+        $resource['title'] = 'Circle Events';
         $resource['eventColor'] = "red";
         $output[] = $resource;
 

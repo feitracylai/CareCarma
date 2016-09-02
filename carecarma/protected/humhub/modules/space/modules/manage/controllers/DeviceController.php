@@ -52,7 +52,7 @@ class DeviceController extends ContentContainerController
 
         $space = $this->getSpace();
         if (!$space->isAdmin())
-            throw new HttpException(403, 'Access denied - Family Administrator only!');
+            throw new HttpException(403, 'Access denied - Circle Administrator only!');
 
         $userModel = new User();
         $userModel->scenario = 'editCare';
@@ -229,7 +229,7 @@ class DeviceController extends ContentContainerController
     public function actionEdit() {
         $space = $this->getSpace();
         if (!$space->isAdmin())
-            throw new HttpException(403, 'Access denied - Family Administrator only!');
+            throw new HttpException(403, 'Access denied - Circle Administrator only!');
 
         $user =  $this->getCare();
         $emailModel = new \humhub\modules\user\models\forms\AccountChangeEmail;
@@ -251,7 +251,7 @@ class DeviceController extends ContentContainerController
     public function actionDevice(){
         $space = $this->getSpace();
         if (!$space->isAdmin())
-            throw new HttpException(403, 'Access denied - Family Administrator only!');
+            throw new HttpException(403, 'Access denied - Circle Administrator only!');
 
         $user =  $this->getCare();
         $deviceOld = Device::findOne(['device_id' => $user->device_id]);
@@ -294,7 +294,7 @@ class DeviceController extends ContentContainerController
     public function actionProfile() {
         $space = $this->getSpace();
         if (!$space->isAdmin())
-            throw new HttpException(403, 'Access denied - Family Administrator only!');
+            throw new HttpException(403, 'Access denied - Circle Administrator only!');
 
         $user = $this->getCare();
         // Get Form Definition
@@ -341,7 +341,7 @@ class DeviceController extends ContentContainerController
     public function actionSettings() {
         $space = $this->getSpace();
         if (!$space->isAdmin())
-            throw new HttpException(403, 'Access denied - Family Administrator only!');
+            throw new HttpException(403, 'Access denied - Circle Administrator only!');
 
         $user = $this->getCare();
         $model = new \humhub\modules\user\models\forms\AccountSettings();
@@ -378,7 +378,7 @@ class DeviceController extends ContentContainerController
         $isSpaceOwner = false;
         $space = $this->getSpace();
         if (!$space->isAdmin())
-            throw new HttpException(403, 'Access denied - Family Administrator only!');
+            throw new HttpException(403, 'Access denied - Circle Administrator only!');
 
         $user = $this->getCare();
         if ($user->auth_mode != User::AUTH_MODE_LOCAL) {
@@ -414,7 +414,7 @@ class DeviceController extends ContentContainerController
 //        $this->forcePostRequest();
         $space = $this->getSpace();
         if (!$space->isAdmin())
-            throw new HttpException(403, 'Access denied - Family Administrator only!');
+            throw new HttpException(403, 'Access denied - Circle Administrator only!');
 
         $userGuid = Yii::$app->request->get('userGuid');
         $user = User::findOne(array('guid' => $userGuid));
