@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use humhub\assets\AppAsset;
+use humhub\widgets\BackgroundConfig;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -79,7 +80,9 @@ AppAsset::register($this);
 
     </head>
 
-    <body>
+    <?php $user = \humhub\modules\user\models\User::findOne(['id' => Yii::$app->user->id]) ?>
+
+    <body id="test">
     <?php $this->beginBody() ?>
 
     <!-- start: first top navigation bar -->
@@ -132,6 +135,7 @@ AppAsset::register($this);
     <br>
 
     <!-- start: show content (and check, if exists a sublayout -->
+
     <?php if (isset($this->context->subLayout) && $this->context->subLayout != "") : ?>
         <?php echo $this->render($this->context->subLayout, array('content' => $content)); ?>
     <?php else: ?>
@@ -151,8 +155,20 @@ AppAsset::register($this);
     </div>
     <!-- end: Modal -->
 
+    <!-- *****CONFIGURE STYLE****** -->
+
+    <?php echo BackgroundConfig::widget(); ?>
+
+
+
+
+
     <?php echo \humhub\models\Setting::GetText('trackingHtmlCode'); ?>
     <?php $this->endBody() ?>
     </body>
+
+
+
+
     </html>
 <?php $this->endPage() ?>

@@ -622,6 +622,22 @@ class AccountController extends Controller
         return Yii::$app->user->getIdentity();
     }
 
+    public function actionUpload(){
+        $user = User::findOne(['id' => Yii::$app->user->id]);
+
+        $imageName = Yii::$app->request->get('background');
+        $background = './uploads/background/'.$imageName;
+
+        if ($user->background == $background){
+            $user->background = null;
+        } else {
+            $user->background = $background;
+        }
+        $user->save();
+
+        return $this->redirect(Url::previous());
+    }
+
 }
 
 ?>
