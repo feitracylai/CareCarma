@@ -18,7 +18,7 @@ Url::remember(Url::current());
         <div class="config-wrapper-inner">
             <a id="config-trigger" class="config-trigger" href="#"><i class="fa fa-cog"></i></a>
             <div id="config-panel" class="config-panel">
-                <h5>Select your background image</h5>
+                <h5><strong>Select your background image</strong></h5>
                 <!--<input value="<?php echo Yii::$app->user->id; ?>">
                 <a href="#" onclick="javascript:$('#profilefileupload input').click();" class="btn btn-info btn-sm"><i
                         class="fa fa-cloud-upload"></i></a>-->
