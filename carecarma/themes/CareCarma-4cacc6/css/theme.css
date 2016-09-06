@@ -92,9 +92,9 @@
 
 body {
     padding-top: 130px;
-    /*background-color: #ededed;*/
-    background:#fff url('../img/bg-screen-4.jpg') no-repeat fixed;
-    background-size: cover;
+    background-color: #ededed;
+    /*background:#fff url('../img/bg-screen-4.jpg') no-repeat fixed;*/
+    /*background-size: cover;*/
     color: #777;
     font-family: 'Open Sans', sans-serif
 }
@@ -976,11 +976,16 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .panel-profile .panel-profile-header .btn-info {
-    background: #fff;
-    color: #4cacc6 !important;
+    background: #fff ;
+    color: #4cacc6 ;
     border: 1px solid #4cacc6;
     padding: 4px 7px;
 }
+
+/*.panel-profile .panel-profile-header .btn-info:hover, .panel-profile .panel-profile-header .btn-info:focus{*/
+    /*background: #4cacc6;*/
+    /*color: #fff;*/
+/*}*/
 
 .panel-profile .panel-profile-header .img-profile-data h1 {
     font-size: 30px;
@@ -1390,20 +1395,23 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 .btn-primary[disabled]:hover, .btn-primary.disabled:hover, .btn-primary[disabled]:focus, .btn-primary.disabled:focus {
-    background: #4cacc6
+    background: #4cacc6;
+    color: #fff;
 }
 
 .btn-primary[disabled]:active, .btn-primary.disabled:active, .btn-primary[disabled].active, .btn-primary.disabled.active {
-    background: #4cacc6 !important
+    background: #4cacc6 !important;
+    color: #fff
 }
 
 .btn-info {
     background: #6fdbe8;
-    color: #fff !important
+    color: #fff
 }
 
 .btn-info:hover, .btn-info:focus {
     background: #4cacc6 !important;
+    color: #fff !important;
     text-decoration: none
 }
 
@@ -3071,46 +3079,6 @@ img.bounceIn {
 }
 .config-panel #color-options li.active a {
     border: 2px solid #000;
-}
-.config-panel #color-options li.theme-1 a {
-    background: #fff url('../img/background/1.jpg') no-repeat;
-    background-size: cover;
-}
-.config-panel #color-options li.theme-2 a {
-    background: #fff url('../img/background/2.jpg') no-repeat ;
-    background-size: cover;
-}
-.config-panel #color-options li.theme-3 a {
-    background: #fff url('../img/background/3.jpg') no-repeat ;
-    background-size: cover;
-}
-.config-panel #color-options li.theme-4 a {
-    background: #fff url('../img/background/4.jpg') no-repeat ;
-    background-size: cover;
-}
-.config-panel #color-options li.theme-5 a {
-    background: #fff url('../img/background/5.jpg') no-repeat ;
-    background-size: cover;
-}
-.config-panel #color-options li.theme-6 a {
-    background: #fff url('../img/background/6.jpg') no-repeat ;
-    background-size: cover;
-}
-.config-panel #color-options li.theme-7 a {
-    background: #fff url('../img/background/7.jpg') no-repeat ;
-    background-size: cover;
-}
-.config-panel #color-options li.theme-8 a {
-    background: #fff url('../img/background/8.jpg') no-repeat ;
-    background-size: cover;
-}
-.config-panel #color-options li.theme-9 a {
-    background: #fff url('../img/background/9.jpg') no-repeat ;
-    background-size: cover;
-}
-.config-panel #color-options li.theme-10 a {
-    background: #fff url('../img/background/10.jpg') no-repeat ;
-    background-size: cover;
 }
 
 .config-panel .close {
