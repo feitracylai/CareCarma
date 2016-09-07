@@ -23,19 +23,16 @@ Url::remember(Url::current());
                 <a href="#" onclick="javascript:$('#profilefileupload input').click();" class="btn btn-info btn-sm"><i
                         class="fa fa-cloud-upload"></i></a>-->
                 <ul id="color-options" class="list-unstyled list-inline">
-                    <li class="theme-1 <?php if($user->background == './uploads/background/1.jpg') echo 'active' ?>" >
+<!--                    <li class="theme-1 --><?php //if($user->background == './uploads/background/1.jpg') echo 'active' ?><!--" >-->
 <!--                        <a data-style="./uploads/background/1.jpg"></a>-->
-                        <?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => '1.jpg'])) ?>
-                    </li>
-                    <li class="theme-2 <?php if($user->background == './uploads/background/2.jpg') echo 'active' ?>"><?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => '2.jpg'])) ?></li>
-                    <li class="theme-3 <?php if($user->background == './uploads/background/3.jpg') echo 'active' ?>"><?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => '3.jpg'])) ?></li>
-                    <li class="theme-4 <?php if($user->background == './uploads/background/4.jpg') echo 'active' ?>"><?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => '4.jpg'])) ?></li>
-                    <li class="theme-5 <?php if($user->background == './uploads/background/5.jpg') echo 'active' ?>"><?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => '5.jpg'])) ?></li>
-                    <li class="theme-6 <?php if($user->background == './uploads/background/6.jpg') echo 'active' ?>"><?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => '6.jpg'])) ?></li>
-                    <li class="theme-7 <?php if($user->background == './uploads/background/7.jpg') echo 'active' ?>"><?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => '7.jpg'])) ?></li>
-                    <li class="theme-8 <?php if($user->background == './uploads/background/8.jpg') echo 'active' ?>"><?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => '8.jpg'])) ?></li>
-                    <li class="theme-9 <?php if($user->background == './uploads/background/9.jpg') echo 'active' ?>"><?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => '9.jpg'])) ?></li>
-                    <li class="theme-10 <?php if($user->background == './uploads/background/10.jpg') echo 'active' ?>"><?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => '10.jpg'])) ?></li>
+<!--                        --><?php //echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => '1.jpg'])) ?>
+<!--                    </li>-->
+
+                    <?php for ($count = 1; $count <= 66; $count++) {?>
+                        <li class="theme-<?php echo $count; ?> <?php if($user->background == './uploads/background/'.$count.'.jpg') echo 'active' ?>">
+                            <?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => $count.'.jpg']), ['style' => 'background:#fff url(\'./uploads/background/'.$count.'.jpg\') no-repeat; background-size:cover']) ?>
+                        </li>
+                    <?php } ?>
                 </ul><!--//color-options-->
                 <a id="config-close" class="close" href="#"><i class="fa fa-times-circle"></i></a>
             </div><!--//configure-panel-->
@@ -101,7 +98,9 @@ Url::remember(Url::current());
 //    });
 </script>
 
+<!--
 <style>
+
     .config-panel #color-options li.theme-1 a {
         background: #fff url('./uploads/background/1.jpg') no-repeat;
         background-size: cover;
@@ -144,3 +143,4 @@ Url::remember(Url::current());
     }
 
 </style>
+-->
