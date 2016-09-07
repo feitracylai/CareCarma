@@ -6,7 +6,7 @@ class m160818_212714_profile_privacy extends Migration
 {
     public function up()
     {
-        if (\humhub\models\Setting::isInstalled()) {
+        
 
             $this->insert('profile_field_category', [
                 'title' => 'Privacy',
@@ -44,7 +44,7 @@ class m160818_212714_profile_privacy extends Migration
 
             // Create column for profile field
             $this->addColumn('profile', 'privacy', 'varchar(255) DEFAULT 1');
-        }
+        
     }
 
     public function down()
