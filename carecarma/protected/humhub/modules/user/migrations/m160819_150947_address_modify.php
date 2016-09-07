@@ -23,7 +23,7 @@ class m160819_150947_address_modify extends Migration
             }
 
             $this->insert('profile_field', [
-                'profile_field_category_id' => 1,
+                'profile_field_category_id' => $categoryId,
                 'field_type_class' => 'humhub\modules\user\models\fieldtype\Text',
                 'field_type_config' => '{"minLength":null,"maxLength":150,"validator":null,"default":null,"regexp":null,"regexpErrorMessage":null,"fieldTypes":[]}',
                 'internal_name' => 'address2',
