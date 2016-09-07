@@ -80,7 +80,7 @@ $config = [
                 'class' => '\humhub\components\View',
                 'theme' => [
                     'class' => '\humhub\components\Theme',
-                    'name' => 'HumHub'
+                    'name' => 'CareCarma-4cacc6'
                 ],
             ],
         ],
@@ -91,7 +91,7 @@ $config = [
             'class' => '\humhub\components\View',
             'theme' => [
                 'class' => '\humhub\components\Theme',
-                'name' => 'HumHub',
+                'name' => 'CareCarma-4cacc6',
             ],
         ],
         'db' => [

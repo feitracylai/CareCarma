@@ -65,7 +65,7 @@ class InitialData
         Setting::Set('installationId', md5(uniqid("", true)), 'admin');
 
         // Design
-        Setting::Set('theme', "HumHub");
+        Setting::Set('theme', "CareCarma");
         Setting::Set('spaceOrder', 0, 'space');
 
         // read and save colors from current theme
@@ -105,6 +105,15 @@ class InitialData
         $cSocial->is_system = 1;
         $cSocial->description = '';
         $cSocial->save();
+
+        $cPrivacy = new ProfileFieldCategory;
+        $cPrivacy->title = "Privacy";
+        $cPrivacy->sort_order = 900;
+        $cPrivacy->visibility = 1;
+        $cPrivacy->is_system = 1;
+        $cPrivacy->description = '';
+        $cPrivacy->save();
+
 
         // Add Fields
         $field = new ProfileField();
@@ -177,20 +186,34 @@ class InitialData
         }
 
         $field = new ProfileField();
-        $field->internal_name = "zip";
-        $field->title = 'Zip';
-        $field->sort_order = 500;
+        $field->internal_name = "street2";
+        $field->title = 'Apt/Unit (optional)';
+        $field->sort_order = 450;
         $field->profile_field_category_id = $cGeneral->id;
-        $field->is_system = 1;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
+        $field->is_system = 1;
         if ($field->save()) {
-            $field->fieldType->maxLength = 10;
+            $field->fieldType->maxLength = 150;
             $field->fieldType->save();
         }
+
 
         $field = new ProfileField();
         $field->internal_name = "city";
         $field->title = 'City';
+        $field->sort_order = 500;
+        $field->profile_field_category_id = $cGeneral->id;
+        $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
+        $field->is_system = 1;
+        if ($field->save()) {
+            $field->fieldType->maxLength = 100;
+            $field->fieldType->save();
+        }
+
+
+        $field = new ProfileField();
+        $field->internal_name = "state";
+        $field->title = 'State';
         $field->sort_order = 600;
         $field->profile_field_category_id = $cGeneral->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
@@ -214,16 +237,17 @@ class InitialData
 
 
         $field = new ProfileField();
-        $field->internal_name = "state";
-        $field->title = 'State';
+        $field->internal_name = "zip";
+        $field->title = 'Zip';
         $field->sort_order = 800;
         $field->profile_field_category_id = $cGeneral->id;
-        $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         if ($field->save()) {
-            $field->fieldType->maxLength = 100;
+            $field->fieldType->maxLength = 10;
             $field->fieldType->save();
         }
+
 
         $field = new ProfileField();
         $field->internal_name = "birthday";
@@ -451,6 +475,18 @@ class InitialData
         $field->is_system = 1;
         if ($field->save()) {
             $field->fieldType->validator = 'url';
+            $field->fieldType->save();
+        }
+
+        $field = new ProfileField();
+        $field->internal_name = "privacy";
+        $field->title = 'Profile Privacy';
+        $field->sort_order = 100;
+        $field->profile_field_category_id = $cPrivacy->id;
+        $field->field_type_class = \humhub\modules\user\models\fieldtype\Select::className();
+        $field->is_system = 1;
+        if ($field->save()) {
+            $field->fieldType->options = "Only Me\r\nFamily Members\r\nPublic";
             $field->fieldType->save();
         }
 
