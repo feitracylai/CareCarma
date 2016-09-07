@@ -28,7 +28,7 @@ Url::remember(Url::current());
 <!--                        --><?php //echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => '1.jpg'])) ?>
 <!--                    </li>-->
 
-                    <?php for ($count = 1; $count <= 66; $count++) {?>
+                    <?php for ($count = 1; $count <= 60; $count++) {?>
                         <li class="theme-<?php echo $count; ?> <?php if($user->background == './uploads/background/'.$count.'.jpg') echo 'active' ?>">
                             <?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => $count.'.jpg']), ['style' => 'background:#fff url(\'./uploads/background/'.$count.'.jpg\') no-repeat; background-size:cover']) ?>
                         </li>
