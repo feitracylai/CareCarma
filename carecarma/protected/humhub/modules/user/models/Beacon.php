@@ -12,6 +12,7 @@ use Yii;
  * @property integer $beacon_id
  * @property string $distance
  * @property string $datetime
+ * @property string $time
  */
 class Beacon extends \yii\db\ActiveRecord
 {
@@ -33,6 +34,7 @@ class Beacon extends \yii\db\ActiveRecord
             [['user_id'], 'integer'],
             [['datetime'], 'safe'],
             [['distance'], 'string', 'max' => 100],
+            [['time'], 'string', 'max' => 100],
         ];
     }
 
@@ -47,6 +49,7 @@ class Beacon extends \yii\db\ActiveRecord
             'beacon_id' => 'Beacon ID',
             'distance' => 'Distance',
             'datetime' => 'Datetime',
+            'time' => 'Time'
         ];
     }
 }
