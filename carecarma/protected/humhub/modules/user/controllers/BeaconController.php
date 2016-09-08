@@ -299,4 +299,54 @@ class BeaconController extends Controller
         }
         Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
     }
+
+    public function actionCreatenewforjoenew()
+    {
+        ini_set('max_execution_time', 30000);
+        date_default_timezone_set('GMT');
+        $data = Yii::$app->request->post();
+        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $pure_data = $data['Beacon'];
+        $user_id = $data['user_id'];
+        $list = array();
+        Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        while(strlen($pure_data) != 0) {
+            $temp_data = $pure_data;
+            $pos_next_t = strpos($temp_data, ";");
+            Yii::getLogger()->log(print_r($pos_next_t,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+            if ($pos_next_t == false) $row = $temp_data;
+            else $row = substr($temp_data, 0, $pos_next_t);
+
+            Yii::getLogger()->log(print_r($row,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+            $len = strlen($row);
+
+            $pos_d = strpos($row, ",");
+            $time = substr($row, 0, $pos_d);
+            $row = substr($row, $pos_d+1);
+//            Yii::getLogger()->log(print_r($row,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+            $pos_x = strpos($row, ",");
+            $distance = substr($row, 0, $pos_x);
+//            Yii::getLogger()->log(print_r($distance,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+            $row = substr($row, $pos_x+1);
+            $beacon_id = $row;
+//            Yii::getLogger()->log(print_r($beacon_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+            $realtime = date('Y-m-d H:i:s', substr($time, 0, 10));
+            Yii::getLogger()->log(print_r($realtime,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+            $pure_data = substr($pure_data, $len + 1);
+            $shorttime = $time;
+            Yii::getLogger()->log(print_r($shorttime,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+            $model = new Beacon();
+            $model->user_id = $user_id;
+            $model->datetime = $realtime;
+            $model->distance = $distance;
+            $model->beacon_id = $beacon_id;
+            $model->time = $shorttime;
+            $model->save();
+        }
+        Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+    }
 }
