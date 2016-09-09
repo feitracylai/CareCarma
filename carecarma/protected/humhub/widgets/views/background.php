@@ -109,7 +109,7 @@ $this->registerJs("var backgroundImageUploaderUrl='" . Url::to(['/user/account/b
                 <h6 style="padding-top: 10px"><strong>Select</strong></h6>
                 <ul id="color-options" class="list-unstyled list-inline">
 
-                    <?php for ($count = 1; $count <= 66; $count++) {?>
+                    <?php for ($count = 1; $count <= 60; $count++) {?>
                         <li class="theme-<?php echo $count; ?> <?php if($user->background == './uploads/background/'.$count.'.jpg') echo 'active' ?>">
                             <?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => $count.'.jpg']), ['style' => 'background:#fff url(\'./uploads/background/'.$count.'.jpg\') no-repeat; background-size:cover']) ?>
                         </li>
