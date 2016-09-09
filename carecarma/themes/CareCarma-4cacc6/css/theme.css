@@ -3004,7 +3004,7 @@ img.bounceIn {
     height: 36px;
     background: #f5f5f5;
     color: #fff;
-    text-align: center;
+
     -webkit-border-top-right-radius: 0;
     -webkit-border-bottom-right-radius: 0;
     -webkit-border-bottom-left-radius: 4px;
@@ -3030,6 +3030,7 @@ img.bounceIn {
 .config-trigger .fa {
     font-size: 22px;
     padding-top: 8px;
+    text-align: center;
     display: block;
     color: #2b2b2b;
 }
@@ -3060,6 +3061,11 @@ img.bounceIn {
     margin-bottom: 15px;
     font-size: 18px;
     color: #555;
+}
+
+.config-panel h6 {
+    font-size: 15px;
+    text-align: left;
 }
 
 .config-panel #color-options {
@@ -3094,5 +3100,19 @@ img.bounceIn {
 }
 .config-panel .close .fa {
     color: #253340;
+}
+
+#background-image-upload-buttons{
+    position: absolute;
+    right: 0;
+
+}
+
+#uploadcontent
+{
+    width: 300px;
+    height: 200px;
+    align-self: center;
+    padding-left: 10px
 }
 

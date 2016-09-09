@@ -591,6 +591,8 @@ class AccountController extends Controller
             $image = new \humhub\libs\ProfileImage($this->getUser()->guid);
         } elseif ($type == 'banner') {
             $image = new \humhub\libs\ProfileBannerImage($this->getUser()->guid);
+        } elseif ($type == 'background'){
+            $image = new \humhub\libs\BackgroundImage($this->getUser()->guid);
         }
 
         if ($image) {
@@ -600,6 +602,9 @@ class AccountController extends Controller
 
         return $json;
     }
+
+
+
 
     /**
      * Returns the current user of this account
@@ -631,12 +636,56 @@ class AccountController extends Controller
         if ($user->background == $background){
             $user->background = null;
         } else {
+            $image = new \humhub\libs\BackgroundImage($this->getUser()->guid);
+            if ($image) {
+                $image->delete();
+            }
+
             $user->background = $background;
+
         }
         $user->save();
 
         return $this->redirect(Url::previous());
     }
+
+    public function actionBackgroundImageUpload()
+    {
+        \Yii::$app->response->format = 'json';
+
+        $model = new \humhub\models\forms\UploadProfileImage();
+
+        $json = array();
+
+        $files = \yii\web\UploadedFile::getInstancesByName('backgroundfiles');
+        $file = $files[0];
+        $model->image = $file;
+
+        if ($model->validate()) {
+
+            $json['error'] = false;
+
+            $backgroundImage = new \humhub\libs\BackgroundImage($this->getUser()->guid);
+            $backgroundImage->setNew($model->image);
+
+            $json['name'] = "";
+            $json['url'] = $backgroundImage->getUrl();
+            $json['size'] = $model->image->size;
+            $json['deleteUrl'] = "";
+            $json['deleteType'] = "";
+
+            $user = User::findOne(['id' => Yii::$app->user->id]);
+            $user->background = null;
+            $user->save();
+        } else {
+            $json['error'] = true;
+            $json['errors'] = $model->getErrors();
+        }
+
+        return array('files' => $json);
+    }
+
+
 
 }
 
