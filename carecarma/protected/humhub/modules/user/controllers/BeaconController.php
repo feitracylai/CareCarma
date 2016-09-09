@@ -5,7 +5,7 @@ namespace humhub\modules\user\controllers;
 //require '/../vendor/autoload.php';
 
 use Yii;
-use humhub\modules\user\models\beacon;
+use humhub\modules\user\models\Beacon;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
