@@ -3070,7 +3070,7 @@ img.bounceIn {
 
 .config-panel #color-options {
     margin-bottom: 10px;
-    height: 520px;
+    height: 300px;
     overflow-y: scroll;
 }
 .config-panel #color-options li {
