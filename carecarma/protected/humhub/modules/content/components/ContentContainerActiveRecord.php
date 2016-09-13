@@ -58,6 +58,11 @@ class ContentContainerActiveRecord extends ActiveRecord
         return new \humhub\libs\ProfileBannerImage($this->guid);
     }
 
+    public function getUserBackgroundImage()
+    {
+        return new \humhub\libs\BackgroundImage($this->guid);
+    }
+
     /**
      * Should be overwritten by implementation
      */

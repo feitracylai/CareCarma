@@ -88,8 +88,50 @@ $(function() {
                 $('#user-banner-image').removeClass('animated bounceIn');
             })
 
-        }
+        }  else if ($(this).attr('id') == "userbackgroundupload") {
 
+            /**
+             * Handle Banner Image Upload
+             */
+            $(this).fileupload({
+                dropZone: $(this),
+                url: backgroundImageUploaderUrl,
+                dataType: 'json',
+                singleFileUploads: true,
+                //formData: {'CSRF_TOKEN': csrfValue},
+                limitMultiFileUploads: 1,
+                progressall: function(e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#background-image-upload-bar .progress-bar').css('width', progress + '%');
+                },
+                done: function(e, data) {
+
+                    if (data.result.files.error == true) {
+                        handleUploadError(data.result);
+                    } else {
+                        $('#user-background-image').attr('src', data.result.files.url + '&c=' + Math.random());
+                        $('#user-background-image').addClass('animated bounceIn');
+
+                        $('#test').css("background", "#ebebeb url("+data.result.files.url+") no-repeat fixed");
+                        $('#test').css("background-size", "cover");
+
+                        $('#color-options li').removeClass('active');
+                    }
+
+                    $('#background-image-upload-loader').hide();
+                    $('#background-image-upload-bar .progress-bar').css('width', '0%');
+                    $('#background-image-upload-edit-button').show();
+                    $('#deleteLinkPost_modal_backgroundimagedelete').show();
+
+
+                }
+            }).bind('fileuploadstart', function(e) {
+                $('#background-image-upload-loader').show();
+            }).bind('fileuploadstart', function(e) {
+                $('#user-background-image').removeClass('animated bounceIn');
+            })
+
+        }
 
     });
 
@@ -113,11 +155,16 @@ function resetProfileImage(json) {
     if (json.type == 'profile') {
         $('#user-profile-image img').attr('src', json.defaultUrl);
         $('#user-profile-image').attr('src', json.defaultUrl);
+        $('.image-upload-buttons').hide();
     } else if (json.type == "banner") {
         $('#user-banner-image').attr('src', json.defaultUrl);
+        $('.image-upload-buttons').hide();
+    } else if (json.type == "background") {
+        $('#user-background-image').attr('src', json.defaultUrl);
+        $('#test').removeAttr('style');
     }
 
-    $('.image-upload-buttons').hide();
+
 }
 
 
@@ -158,6 +205,17 @@ $(document).ready(function() {
     // hide buttons at image mouse leave
     $('#bannerfileupload, .img-profile-data').mouseleave(function() {
         $('#banner-image-upload-buttons').hide();
+    })
+
+    // show buttons at image rollover
+    $('#uploadcontent').mouseover(function() {
+        $('#background-image-upload-buttons').show();
+    })
+
+
+    // hide buttons at image mouse leave
+    $('#uploadcontent').mouseleave(function() {
+        $('#background-image-upload-buttons').hide();
     })
 
 });

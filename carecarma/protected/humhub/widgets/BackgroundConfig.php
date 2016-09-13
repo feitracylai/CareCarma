@@ -21,6 +21,8 @@ class BackgroundConfig extends \yii\base\Widget
     {
         $user = User::findOne(['id' => Yii::$app->user->id]);
 
+
+
         return $this->render('background', array(
             'user' => $user,
         ));
