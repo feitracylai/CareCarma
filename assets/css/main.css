@@ -197,6 +197,10 @@ Main components
     background-color: #4CACC6;
     color: #3d3536;
 }
+.cd-scrolling-bg.cd-color-simon {
+    background-color: #f5f5f5;
+    color: #383838;
+}
 @media only screen and (min-width: 768px) {
     .cd-scrolling-bg {
         padding: 8em 0;
@@ -210,7 +214,7 @@ Main components
 .cd-container {
     /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
     width: 90%;
-    max-width: 768px;
+    max-width: 1100px;
     margin: 0 auto;
 }
 .cd-container::after {
@@ -219,4 +223,33 @@ Main components
     content: '';
     display: table;
     clear: both;
+}
+
+img.img_simon {
+    width: 280px;
+}
+
+li.li_simon {
+    margin: auto;
+    width: 280px;
+    float: left;
+    list-style-type:none;
+    margin-top: 50px;
+}
+
+li#lichange2 {
+    margin-left: 20px;
+}
+
+li#lichange3 {
+    margin-left: 20px;
+}
+
+
+div#div2_2 {
+    padding-top: 400px;
+    color: #f5f5f5;
+    font-size: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
 }
