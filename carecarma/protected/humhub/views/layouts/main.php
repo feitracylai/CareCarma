@@ -127,6 +127,11 @@ AppAsset::register($this);
                 <?php echo \humhub\widgets\TopMenuRightStack::widget(); ?>
             </ul>
         </div>
+
+        <!-- *****CONFIGURE STYLE****** -->
+        <div class="hidden-xs">
+            <?php echo BackgroundConfig::widget(); ?>
+        </div>
     </div>
 
     <!-- end: second top navigation bar -->
@@ -155,9 +160,8 @@ AppAsset::register($this);
     </div>
     <!-- end: Modal -->
 
-    <!-- *****CONFIGURE STYLE****** -->
 
-    <?php echo BackgroundConfig::widget(); ?>
+
 
 
 
