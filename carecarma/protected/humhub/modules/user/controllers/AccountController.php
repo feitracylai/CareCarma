@@ -685,6 +685,29 @@ class AccountController extends Controller
         return array('files' => $json);
     }
 
+    public function actionThemeSave(){
+        Yii::$app->response->format = 'json';
+        $theme = $_POST['data'];
+
+
+        $user = User::findOne(['id' => Yii::$app->user->id]);
+        if ($user!= null){
+            if ($user->theme != null && $user->theme != $theme){
+                $old = $user->theme;
+            } else {
+                $old = null;
+            }
+            $user->theme = $theme;
+        }
+
+        $user->save();
+
+        return [
+            'success' => true,
+            'old' => $old,
+        ];
+    }
+
 
 
 }

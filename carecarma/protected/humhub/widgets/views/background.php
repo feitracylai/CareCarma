@@ -9,11 +9,12 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-//Yii::getLogger()->log(Url::current(), \yii\log\Logger::LEVEL_INFO, 'MyLog');
 Url::remember(Url::current());
 
 $this->registerJsFile('@web/resources/user/profileHeaderImageUpload.js');
 $this->registerJs("var backgroundImageUploaderUrl='" . Url::to(['/user/account/background-image-upload', 'userGuid' => $user->guid]) . "';", \yii\web\View::POS_BEGIN);
+
+$theme = \humhub\models\Setting::Get('theme');
 
 
 ?>
@@ -21,42 +22,57 @@ $this->registerJs("var backgroundImageUploaderUrl='" . Url::to(['/user/account/b
 <div class="config-wrapper">
         <div class="config-wrapper-inner">
             <a id="config-trigger" class="config-trigger" href="#"><i class="fa fa-cog"></i></a>
+
             <div id="config-panel" class="config-panel">
-                <h5 style="text-align: center"><strong>Change Background Image</strong></h5><hr>
+                <h5 style="text-align: center"><strong>Template Settings</strong></h5><hr>
                 <!--<input value="<?php echo Yii::$app->user->id; ?>">
                 <a href="#" onclick="javascript:$('#profilefileupload input').click();" class="btn btn-info btn-sm"><i
                         class="fa fa-cloud-upload"></i></a>-->
-                <h6><strong>Update</strong></h6>
-                <div class="image-upload-container profile-user-photo-container" id="uploadcontent">
+                <div id="config-content">
+                    <h6><strong>Themes Color</strong></h6>
+                    <ul id="theme-options" class="list-unstyled list-inline">
+                        <li id="theme-1" data-style="theme-1.css" class="<?php if($user->theme == 'theme-1.css' || $user->theme == null) echo 'active' ?>"><a style="background-color: #4CACC6;"></a></li>
+                        <li id="theme-2" data-style="theme-2.css" class="<?php if($user->theme == 'theme-2.css') echo 'active' ?>"><a style="background-color: #ec6952;"></a></li>
+                        <li id="theme-3" data-style="theme-3.css" class="<?php if($user->theme == 'theme-3.css') echo 'active' ?>"><a style="background-color: #f89d29;"></a></li>
+                        <li id="theme-4" data-style="theme-4.css" class="<?php if($user->theme == 'theme-4.css') echo 'active' ?>"><a style="background-color: #519f4b;"></a></li>
+                        <li id="theme-5" data-style="theme-5.css" class="<?php if($user->theme == 'theme-5.css') echo 'active' ?>"><a style="background-color: #926ecd;"></a></li>
+                        <li id="theme-6" data-style="theme-6.css" class="<?php if($user->theme == 'theme-6.css') echo 'active' ?>"><a style="background-color: #0381d1;"></a></li>
+                        <li id="theme-7" data-style="theme-7.css" class="<?php if($user->theme == 'theme-7.css') echo 'active' ?>"><a style="background-color: #e89bbc;"></a></li>
+                        <li id="theme-8" data-style="theme-8.css" class="<?php if($user->theme == 'theme-8.css') echo 'active' ?>"><a style="background-color: #25303f;"></a></li>
+                        <!--<li id="theme-9" data-style="theme-9.css" class="<?php if($user->theme == 'theme-9.css') echo 'active' ?>"><a style="background-color: #4CACC6;"></a></li>-->
+                    </ul>
 
-                    <?php
+                    <h6><strong>Customize</strong></h6>
+                    <div class="image-upload-container profile-user-photo-container" id="uploadcontent">
 
-                    $profileImageExt = pathinfo($user->getUserBackgroundImage()->getUrl(), PATHINFO_EXTENSION);
+                        <?php
 
-                    $profileImageOrig = preg_replace('/.[^.]*$/', '', $user->getUserBackgroundImage()->getUrl());
-                    $defaultImage = (basename($user->getUserBackgroundImage()->getUrl()) == 'default_background.jpg' || basename($user->getUserBackgroundImage()->getUrl()) == 'default_background.jpg?cacheId=0') ? true : false;
-                    $profileImageOrig = $profileImageOrig . '_org.' . $profileImageExt;
+                        $profileImageExt = pathinfo($user->getUserBackgroundImage()->getUrl(), PATHINFO_EXTENSION);
 
-                    if (!$defaultImage) {
-                        ?>
+                        $profileImageOrig = preg_replace('/.[^.]*$/', '', $user->getUserBackgroundImage()->getUrl());
+                        $defaultImage = (basename($user->getUserBackgroundImage()->getUrl()) == 'default_background.jpg' || basename($user->getUserBackgroundImage()->getUrl()) == 'default_background.jpg?cacheId=0') ? true : false;
+                        $profileImageOrig = $profileImageOrig . '_org.' . $profileImageExt;
 
-                        <!-- background image output-->
-                        <a data-toggle="lightbox" data-gallery="" href="<?php echo $profileImageOrig; ?>#.jpeg"
-                           data-footer='<button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo Yii::t('FileModule.widgets_views_showFiles', 'Close'); ?></button>'>
+                        if (!$defaultImage) {
+                            ?>
+
+                            <!-- background image output-->
+                            <a data-toggle="lightbox" data-gallery="" href="<?php echo $profileImageOrig; ?>#.jpeg"
+                               data-footer='<button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo Yii::t('FileModule.widgets_views_showFiles', 'Close'); ?></button>'>
+                                <img class="img-rounded profile-user-photo" id="user-background-image"
+                                     src="<?php echo $user->getUserBackgroundImage()->getUrl(); ?>"
+                                     data-src="holder.js/300x200" alt="300x200" style="width: 300px; height: 200px;"/>
+                            </a>
+
+                        <?php } else { ?>
+
                             <img class="img-rounded profile-user-photo" id="user-background-image"
                                  src="<?php echo $user->getUserBackgroundImage()->getUrl(); ?>"
                                  data-src="holder.js/300x200" alt="300x200" style="width: 300px; height: 200px;"/>
-                        </a>
 
-                    <?php } else { ?>
+                        <?php } ?>
 
-                        <img class="img-rounded profile-user-photo" id="user-background-image"
-                             src="<?php echo $user->getUserBackgroundImage()->getUrl(); ?>"
-                             data-src="holder.js/300x200" alt="300x200" style="width: 300px; height: 200px;"/>
-
-                    <?php } ?>
-
-                    <!-- check if the current user is the profile owner and can change the images -->
+                        <!-- check if the current user is the profile owner and can change the images -->
 
                         <form class="fileupload" id="userbackgroundupload" action="" method="POST" enctype="multipart/form-data"
                               style="position: absolute; top: 0; left: 10px; opacity: 0; height: 200px; width: 300px;">
@@ -77,10 +93,10 @@ $this->registerJs("var backgroundImageUploaderUrl='" . Url::to(['/user/account/b
                                     class="fa fa-cloud-upload"></i></a>
                             <!--<a id="profile-image-upload-edit-button"
                                style="<?php
-                               if (!$user->getUserBackgroundImage()->hasImage()) {
-                                   echo 'display: none;';
-                               }
-                               ?>"
+                            if (!$user->getUserBackgroundImage()->hasImage()) {
+                                echo 'display: none;';
+                            }
+                            ?>"
                                href="<?php echo Url::to(['/user/account/crop-profile-image', 'userGuid' => $user->guid]); ?>"
                                class="btn btn-info btn-sm" data-target="#globalModal"><i
                                     class="fa fa-edit"></i></a>-->
@@ -101,20 +117,23 @@ $this->registerJs("var backgroundImageUploaderUrl='" . Url::to(['/user/account/b
                             ?>
                         </div>
 
+                    </div>
+                    <h6 style="padding-top: 10px"><strong>Template</strong></h6>
+                    <ul id="background-options" class="list-unstyled list-inline">
+                        
+
+                        <?php for ($count = 1; $count <= 66; $count++) {?>
+                            <li class="background-<?php echo $count; ?> <?php if($user->background == './uploads/background/'.$count.'.jpg') echo 'active' ?>">
+                                <?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => $count.'.jpg']), ['style' => 'background:#fff url(\'./uploads/background/'.$count.'.jpg\') no-repeat; background-size:cover']) ?>
+                            </li>
+                        <?php } ?>
+                    </ul><!--//background-options-->
 
                 </div>
 
 
 
-                <h6 style="padding-top: 10px"><strong>Select</strong></h6>
-                <ul id="color-options" class="list-unstyled list-inline">
 
-                    <?php for ($count = 1; $count <= 60; $count++) {?>
-                        <li class="theme-<?php echo $count; ?> <?php if($user->background == './uploads/background/'.$count.'.jpg') echo 'active' ?>">
-                            <?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => $count.'.jpg']), ['style' => 'background:#fff url(\'./uploads/background/'.$count.'.jpg\') no-repeat; background-size:cover']) ?>
-                        </li>
-                    <?php } ?>
-                </ul><!--//color-options-->
                 <a id="config-close" class="close" href="#"><i class="fa fa-times-circle"></i></a>
             </div><!--//configure-panel-->
         </div><!--//config-wrapper-inner-->
@@ -123,13 +142,19 @@ $this->registerJs("var backgroundImageUploaderUrl='" . Url::to(['/user/account/b
 
 <script>
 
-    var userbackground = '<?= $user->getUserBackgroundImage()->getUrl(); ?>';
-    var defaultImage = '<?= $defaultImage; ?>';
-    var style = '<?= $user->background; ?>';
-
-
     $(document).ready(function() {
-//        var styleSheet = $('#color-options .active a').attr('data-style');
+//        var styleSheet = $('#background-options .active a').attr('data-style');
+        var userbackground = '<?= $user->getUserBackgroundImage()->getUrl(); ?>';
+        var defaultImage = '<?= $defaultImage; ?>';
+        var style = '<?= $user->background; ?>';
+
+        var $link = '<?php echo Yii::getAlias("@web"); ?>/themes/<?php echo $theme; ?>/css/';
+        <?php if ($user->theme != null){ ?>
+        var $colorSheet = '<?= $user->theme; ?>';
+        $('head').append('<link class="theme-choose" href='+$link+$colorSheet+' rel="stylesheet" />');
+
+        <?php } ?>
+
         if (userbackground != '' && !defaultImage){
             $('#test').css("background", "#ebebeb url("+userbackground+") no-repeat fixed");
             $('#test').css("background-size", "cover");
@@ -138,7 +163,8 @@ $this->registerJs("var backgroundImageUploaderUrl='" . Url::to(['/user/account/b
             $('#test').css("background-size", "cover");
 
         }
-
+        var height = $(window).height()-214;
+        $('#config-content').css('height', height+'px');
 
 
     })
@@ -160,51 +186,29 @@ $this->registerJs("var backgroundImageUploaderUrl='" . Url::to(['/user/account/b
     });
 
 
+
+    $('#theme-options a').on('click', function(e){
+        var $liItem = $(this).closest('li');
+        var $colorSheet = $liItem.attr('data-style');
+        var $link = '<?php echo Yii::getAlias("@web"); ?>/themes/<?php echo $theme; ?>/css/';
+
+
+        $.post('<?php echo Url::to(['/user/account/theme-save', 'userGuid' => $user->guid]); ?>', {'data': $colorSheet}, function(data){
+
+            $('.theme-choose').attr('href', ''+$link+$colorSheet+'');
+
+//
+//            $('head').append('<link class="theme-choose" href='+$link+$colorSheet+' rel="stylesheet" />');
+            $liItem.addClass('active');
+            $liItem.siblings().removeClass('active');
+        });
+
+
+
+        e.preventDefault();
+    })
+
+
+
 </script>
 
-
-<style>
-
-    .config-panel #color-options li.theme-1 a {
-        background: #fff url('./uploads/background/1.jpg') no-repeat;
-        background-size: cover;
-    }
-    .config-panel #color-options li.theme-2 a {
-        background: #fff url('./uploads/background/2.jpg') no-repeat ;
-        background-size: cover;
-    }
-    .config-panel #color-options li.theme-3 a {
-        background: #fff url('./uploads/background/3.jpg') no-repeat ;
-        background-size: cover;
-    }
-    .config-panel #color-options li.theme-4 a {
-        background: #fff url('./uploads/background/4.jpg') no-repeat ;
-        background-size: cover;
-    }
-    .config-panel #color-options li.theme-5 a {
-        background: #fff url('./uploads/background/5.jpg') no-repeat ;
-        background-size: cover;
-    }
-    .config-panel #color-options li.theme-6 a {
-        background: #fff url('./uploads/background/6.jpg') no-repeat ;
-        background-size: cover;
-    }
-    .config-panel #color-options li.theme-7 a {
-        background: #fff url('./uploads/background/7.jpg') no-repeat ;
-        background-size: cover;
-    }
-    .config-panel #color-options li.theme-8 a {
-        background: #fff url('./uploads/background/8.jpg') no-repeat ;
-        background-size: cover;
-    }
-    .config-panel #color-options li.theme-9 a {
-        background: #fff url('./uploads/background/9.jpg') no-repeat ;
-        background-size: cover;
-    }
-    .config-panel #color-options li.theme-10 a {
-        background: #fff url('./uploads/background/10.jpg') no-repeat ;
-        background-size: cover;
-    }
-
-</style>
--->
