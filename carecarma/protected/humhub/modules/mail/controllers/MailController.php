@@ -287,24 +287,29 @@ class MailController extends Controller
         foreach ($query->all() as $user) {
 
             if ($user != null) {
-//                Yii::getLogger()->log(implode(',', [$user->getUserGroup(), $user->id]), Logger::LEVEL_INFO, 'MyLog');
-//                if ($user->getUserGroup() != User::USERGROUP_USER){
-                $spaces = Membership::findAll(['user_id' => $user->id, 'status' => 3]);
-                foreach ($spaces as $memberSpace) {
-                    $spaceId = $memberSpace->space_id;
-                    $spaceUser = Membership::findAll(['space_id' => $spaceId, 'user_id' => Yii::$app->user->id, 'status' => 3]);
-                    if ($spaceUser != null){
-//                        Yii::getLogger()->log($user->getUserGroup(), Logger::LEVEL_INFO, 'MyLog');
-                        $userInfo = array();
-                        $userInfo['guid'] = $user->guid;
-                        $userInfo['displayName'] = Html::encode($user->displayName);
-                        $userInfo['image'] = $user->getProfileImage()->getUrl();
-                        $userInfo['link'] = $user->getUrl();
-                        $results[] = $userInfo;
-                        break;
-                    }
-                }
 
+
+//                $spaces = Membership::findAll(['user_id' => $user->id, 'status' => 3]);
+//                foreach ($spaces as $memberSpace) {
+//                    $spaceId = $memberSpace->space_id;
+//                    $spaceUser = Membership::findAll(['space_id' => $spaceId, 'user_id' => Yii::$app->user->id, 'status' => 3]);
+//                    if ($spaceUser != null){
+////                        Yii::getLogger()->log($user->getUserGroup(), Logger::LEVEL_INFO, 'MyLog');
+//                        $userInfo = array();
+//                        $userInfo['guid'] = $user->guid;
+//                        $userInfo['displayName'] = Html::encode($user->displayName);
+//                        $userInfo['image'] = $user->getProfileImage()->getUrl();
+//                        $userInfo['link'] = $user->getUrl();
+//                        $results[] = $userInfo;
+//                        break;
+//                    }
+//                }
+                $userInfo = array();
+                $userInfo['guid'] = $user->guid;
+                $userInfo['displayName'] = Html::encode($user->displayName);
+                $userInfo['image'] = $user->getProfileImage()->getUrl();
+                $userInfo['link'] = $user->getUrl();
+                $results[] = $userInfo;
 
             }
         }
