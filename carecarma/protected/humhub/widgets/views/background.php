@@ -9,7 +9,6 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-Url::remember(Url::current());
 
 $this->registerJsFile('@web/resources/user/profileHeaderImageUpload.js');
 $this->registerJs("var backgroundImageUploaderUrl='" . Url::to(['/user/account/background-image-upload', 'userGuid' => $user->guid]) . "';", \yii\web\View::POS_BEGIN);
@@ -124,7 +123,7 @@ $theme = \humhub\models\Setting::Get('theme');
 
                         <?php for ($count = 1; $count <= 66; $count++) {?>
                             <li class="background-<?php echo $count; ?> <?php if($user->background == './uploads/background/'.$count.'.jpg') echo 'active' ?>">
-                                <?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => $count.'.jpg']), ['style' => 'background:#fff url(\'./uploads/background/'.$count.'.jpg\') no-repeat; background-size:cover']) ?>
+                                <a data-style="<?php echo $count; ?>.jpg" style="background:#fff url('./uploads/background/<?php echo $count; ?>.jpg') no-repeat; background-size:cover"></a>
                             </li>
                         <?php } ?>
                     </ul><!--//background-options-->
@@ -206,7 +205,22 @@ $theme = \humhub\models\Setting::Get('theme');
 
 
         e.preventDefault();
-    })
+    });
+	
+	$('#background-options a').on('click', function(e){
+        var $list  = $(this).closest('li');
+        var $backgroundImage = $(this).attr('data-style');
+
+        $.post('<?php echo Url::to(['/user/account/background']);  ?>', {'image': $backgroundImage}, function(data){
+            $('#test').css("background", "#ebebeb url(./uploads/background/"+$backgroundImage+") no-repeat fixed");
+            $('#test').css("background-size", "cover");
+
+            $list.addClass('active');
+            $list.siblings().removeClass('active');
+        });
+
+        e.preventDefault();
+    });
 
 
 

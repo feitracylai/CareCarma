@@ -627,10 +627,10 @@ class AccountController extends Controller
         return Yii::$app->user->getIdentity();
     }
 
-    public function actionUpload(){
+    public function actionBackground(){
         $user = User::findOne(['id' => Yii::$app->user->id]);
 
-        $imageName = Yii::$app->request->get('background');
+        $imageName = $_POST['image'];
         $background = './uploads/background/'.$imageName;
 
         if ($user->background == $background){
@@ -646,7 +646,7 @@ class AccountController extends Controller
         }
         $user->save();
 
-        return $this->redirect(Url::previous());
+        return;
     }
 
     public function actionBackgroundImageUpload()
