@@ -30,19 +30,21 @@ class CareEditMenu extends \humhub\widgets\BaseMenu
         ));
 
         $this->addItem(array(
-            'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu', 'Edit Account'),
-            'url' => $this->space->createUrl('/space/manage/device/edit',['rguid' => $rguid]),
+            'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu', 'Profile'),
+            'url' => $this->space->createUrl('/space/manage/device/profile',['rguid' => $rguid]),
             'sortOrder' => 200,
-            'isActive' => (Yii::$app->controller->action->id == 'edit' && Yii::$app->controller->id === 'device'),
+            'isActive' => (Yii::$app->controller->action->id == 'profile' && Yii::$app->controller->id === 'device'),
         ));
 
 
         $this->addItem(array(
-            'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu', 'Profile'),
-            'url' => $this->space->createUrl('/space/manage/device/profile',['rguid' => $rguid]),
+            'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu', 'Email'),
+            'url' => $this->space->createUrl('/space/manage/device/edit',['rguid' => $rguid]),
             'sortOrder' => 300,
-            'isActive' => (Yii::$app->controller->action->id == 'profile' && Yii::$app->controller->id === 'device'),
+            'isActive' => (Yii::$app->controller->action->id == 'edit' && Yii::$app->controller->id === 'device'),
         ));
+
+
 
         $this->addItem(array(
             'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu', 'Cosmos Setting'),
