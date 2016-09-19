@@ -16,18 +16,22 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
 <br/>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo Yii::t('SpaceModule.views_admin_receiver_edit', '<strong>{first} {last}</strong> account', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
+        <?php echo Yii::t('SpaceModule.views_admin_receiver_edit', '<strong>Change</strong> E-mail'); ?>
     </div>
     <div class="panel-body">
+        <p>
+            <?php echo Yii::t('UserModule.views_account_editDevice', '{first} {last} can use this e-mail to login, and receive the missed messages. Please make sure this email address is valid.', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
+        </p>
         <?php $form = ActiveForm::begin(); ?>
 
 <!--        <div class="form-group">-->
-            <?php echo Yii::t('SpaceModule.views_admin_receiver_edit', '<strong>Username:</strong>'); ?>
-            <?php echo CHtml::encode($user->username) ?>
-            <hr>
-            <?php echo Yii::t('SpaceModule.views_admin_receiver_edit', '<strong>Current E-mail:</strong>'); ?>
+<!--            --><?php //echo Yii::t('SpaceModule.views_admin_receiver_edit', '<strong>Username:</strong>'); ?>
+<!--            --><?php //echo CHtml::encode($user->username) ?>
+<!--            <hr>-->
+            <?php echo Yii::t('SpaceModule.views_admin_receiver_edit', '<strong>Current E-mail address</strong>'); ?><br/>
             <?php echo CHtml::encode($user->email) ?>
-            <br/><br/>
+            <br/>
+        <hr/>
         <?php echo $form->field($emailModel, 'newEmail')->textInput(['maxlength' => 45]); ?>
         <?php echo CHtml::submitButton(Yii::t('SpaceModule.views_admin_receiver_edit', 'Save'), array('class' => 'btn btn-primary')); ?>
 

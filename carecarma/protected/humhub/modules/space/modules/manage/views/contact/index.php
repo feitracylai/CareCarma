@@ -13,14 +13,14 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
 <?= CareEditMenu::widget(['space' => $space]); ?>
 <br/>
 <div class="panel panel-default">
-    <div class="panel-heading"><?php echo Yii::t('SpaceModule.views_admin_receiver_contact', '<strong>{first} {last}</strong> Contacts', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?></div>
+    <div class="panel-heading"><?php echo Yii::t('SpaceModule.views_admin_receiver_contact', '<strong>Contacts</strong>'); ?></div>
 
     <div class="panel-body">
         <?=ContactMenu::widget(['space' => $space]); ?>
         <br/>
         <p>
-            <?php echo Yii::t('SpaceModule.views_admin_receiver_contact', 'In this overview you can find and manage
-             all contacts of this care receiver.'); ?>
+            <?php echo Yii::t('SpaceModule.views_admin_receiver_contact', "In this overview you can find and manage
+              {first} {last}'s contacts.", array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
         </p>
 
         <?php

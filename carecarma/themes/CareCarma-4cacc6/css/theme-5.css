@@ -3143,3 +3143,23 @@ img.bounceIn {
     padding-left: 10px
 }
 
+.tabmenu-back
+{
+    border: none;
+    margin-right: 2px;
+    padding: 8px 13px;
+    color: #926ecd;
+    background-color: #fff;
+}
+
+.nav >li >.tabmenu-back:hover
+{
+    background-color: #fff;
+    color: #926ecd;
+}
+
+.nav >li >.tabmenu:hover
+{
+    background-color: #926ecd;
+    color: #ffffff;
+}

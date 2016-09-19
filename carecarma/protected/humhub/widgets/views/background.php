@@ -9,9 +9,11 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+if (!Yii::$app->user->isGuest){
+    $this->registerJsFile('@web/resources/user/profileHeaderImageUpload.js');
+    $this->registerJs("var backgroundImageUploaderUrl='" . Url::to(['/user/account/background-image-upload', 'userGuid' => $user->guid]) . "';", \yii\web\View::POS_BEGIN);
+}
 
-$this->registerJsFile('@web/resources/user/profileHeaderImageUpload.js');
-$this->registerJs("var backgroundImageUploaderUrl='" . Url::to(['/user/account/background-image-upload', 'userGuid' => $user->guid]) . "';", \yii\web\View::POS_BEGIN);
 
 $theme = \humhub\models\Setting::Get('theme');
 
@@ -24,9 +26,7 @@ $theme = \humhub\models\Setting::Get('theme');
 
             <div id="config-panel" class="config-panel">
                 <h5 style="text-align: center"><strong>Template Settings</strong></h5><hr>
-                <!--<input value="<?php echo Yii::$app->user->id; ?>">
-                <a href="#" onclick="javascript:$('#profilefileupload input').click();" class="btn btn-info btn-sm"><i
-                        class="fa fa-cloud-upload"></i></a>-->
+
                 <div id="config-content">
                     <h6><strong>Themes Color</strong></h6>
                     <ul id="theme-options" class="list-unstyled list-inline">
@@ -38,7 +38,7 @@ $theme = \humhub\models\Setting::Get('theme');
                         <li id="theme-6" data-style="theme-6.css" class="<?php if($user->theme == 'theme-6.css') echo 'active' ?>"><a style="background-color: #0381d1;"></a></li>
                         <li id="theme-7" data-style="theme-7.css" class="<?php if($user->theme == 'theme-7.css') echo 'active' ?>"><a style="background-color: #e89bbc;"></a></li>
                         <li id="theme-8" data-style="theme-8.css" class="<?php if($user->theme == 'theme-8.css') echo 'active' ?>"><a style="background-color: #25303f;"></a></li>
-                        <!--<li id="theme-9" data-style="theme-9.css" class="<?php if($user->theme == 'theme-9.css') echo 'active' ?>"><a style="background-color: #4CACC6;"></a></li>-->
+                      
                     </ul>
 
                     <h6><strong>Customize</strong></h6>
@@ -196,8 +196,7 @@ $theme = \humhub\models\Setting::Get('theme');
 
             $('.theme-choose').attr('href', ''+$link+$colorSheet+'');
 
-//
-//            $('head').append('<link class="theme-choose" href='+$link+$colorSheet+' rel="stylesheet" />');
+
             $liItem.addClass('active');
             $liItem.siblings().removeClass('active');
         });
@@ -206,8 +205,8 @@ $theme = \humhub\models\Setting::Get('theme');
 
         e.preventDefault();
     });
-	
-	$('#background-options a').on('click', function(e){
+
+    $('#background-options a').on('click', function(e){
         var $list  = $(this).closest('li');
         var $backgroundImage = $(this).attr('data-style');
 
@@ -221,6 +220,7 @@ $theme = \humhub\models\Setting::Get('theme');
 
         e.preventDefault();
     });
+
 
 
 

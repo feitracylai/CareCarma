@@ -129,9 +129,11 @@ AppAsset::register($this);
         </div>
 
         <!-- *****CONFIGURE STYLE****** -->
+        <?php if (!Yii::$app->user->isGuest): ?>
         <div class="hidden-xs">
             <?php echo BackgroundConfig::widget(); ?>
         </div>
+        <?php endif; ?>
     </div>
 
     <!-- end: second top navigation bar -->
