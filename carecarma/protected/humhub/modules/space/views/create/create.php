@@ -119,7 +119,7 @@ $this->registerCssFile('@web/resources/space/colorpicker/css/bootstrap-colorpick
 
         $('.space-color-chooser').colorpicker({
             format: 'hex',
-            color: '#ec6952',
+            color: '#4cacc6',
             horizontal: false,
             component: '.input-group-addon',
             input: '#space-color-picker',

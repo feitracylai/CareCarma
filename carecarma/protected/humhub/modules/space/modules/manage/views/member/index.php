@@ -5,6 +5,9 @@ use yii\helpers\Html;
 use humhub\modules\space\models\Space;
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\modules\manage\widgets\MemberMenu;
+use yii\helpers\Url;
+
+
 ?>
 <?= MemberMenu::widget(['space' => $space]); ?>
 <br/>
@@ -20,6 +23,8 @@ use humhub\modules\space\modules\manage\widgets\MemberMenu;
             unset($groups[Space::USERGROUP_OWNER]);
             unset($groups[Space::USERGROUP_GUEST]);
             unset($groups[Space::USERGROUP_USER]);
+            $chooseGroups = $groups;
+            unset($chooseGroups[Space::USERGROUP_MODERATOR]);
 
             echo GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -35,7 +40,7 @@ use humhub\modules\space\modules\manage\widgets\MemberMenu;
                         'attribute' => 'group_id',
                         'submitAttributes' => ['user_id'],
                         'readonly' => function ($data) use ($space) {
-                    if ($space->isSpaceOwner($data->user->id)) {
+                    if ($space->isSpaceOwner($data->user->id) || $space->isOtherCareReceiver($data->user->id)) {
                         return true;
                     }
                             if ($data->group_id == $space::USERGROUP_MODERATOR){
@@ -44,11 +49,8 @@ use humhub\modules\space\modules\manage\widgets\MemberMenu;
                     return false;
                 },
                         'filter' => $groups,
-                        'dropDownOptions' => $groups,
-                        'value' =>
-                        function ($data) use (&$groups, $space) {
-                    return $groups[$data->group_id];
-                }
+                        'dropDownOptions' => $chooseGroups,
+
                     ],
                     [
                         'attribute' => 'last_visit',
@@ -86,3 +88,5 @@ use humhub\modules\space\modules\manage\widgets\MemberMenu;
         </div>
     </div>
 </div>
+
+

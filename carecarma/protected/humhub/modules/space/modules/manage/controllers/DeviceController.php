@@ -145,6 +145,7 @@ class DeviceController extends ContentContainerController
                     $user_current->temp_password = $userPasswordModel->newPassword;
                     $user_current->save();
                     $form->models['Profile']->user_id = $form->models['User']->id;
+                    $form->models['Profile']->privacy = '0';
                     $form->models['Profile']->save();
                     // Save User Password
                     $form->models['UserPassword']->user_id = $form->models['User']->id;
@@ -226,71 +227,7 @@ class DeviceController extends ContentContainerController
             'password' => $user->temp_password,
         ];
     }
-    public function actionEdit() {
-        $space = $this->getSpace();
-        if (!$space->isAdmin())
-            throw new HttpException(403, 'Access denied - Circle Administrator only!');
 
-        $user =  $this->getCare();
-        $emailModel = new \humhub\modules\user\models\forms\AccountChangeEmail;
-        if ($emailModel->load(Yii::$app->request->post()) && $emailModel->validate() && $emailModel->sendChangeEmail()) {
-            $user->email = $emailModel->newEmail;
-            $user->save();
-            $community_user = Users::findOne(['id' => $user->id]);
-            $community_user->email = $user->email;
-            $community_user->save();
-            Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
-//                    return $this->render('changeEmail_success', array('model' => $emailModel));
-        }
-        return $this->render('edit', array(
-            'emailModel' => $emailModel,
-            'user' => $user,
-            'space' => $space,
-        ));
-    }
-    public function actionDevice(){
-        $space = $this->getSpace();
-        if (!$space->isAdmin())
-            throw new HttpException(403, 'Access denied - Circle Administrator only!');
-
-        $user =  $this->getCare();
-        $deviceOld = Device::findOne(['device_id' => $user->device_id]);
-        $deviceModel = new \humhub\modules\user\models\forms\AccountDevice();
-        if ($deviceModel->load(Yii::$app->request->post())&& $deviceModel->validate()) {
-            $device = Device::find()->where(['device_id' => $deviceModel->deviceId])->one();
-            if ($device!=null) {
-                if ($device != $deviceOld) {
-                    $user->device_id = $deviceModel->deviceId;
-                    if ($device->gcmId != null ) {
-                        $gcm = new GCM();
-                        $push = new Push();
-                        $push->setTitle('user id');
-                        $push->setData($user->getId());
-                        $gcm_registration_id = $device->gcmId;
-                        $gcm->send($gcm_registration_id, $push->getPush());
-                    }
-                    if($deviceOld != null) {
-                        $gcmOld = new GCM();
-                        $pushOld = new Push();
-                        $pushOld->setTitle('user');
-                        $pushOld->setData('delete device');
-                        $gcmOld->send($deviceOld->gcmId, $pushOld->getPush());
-                    }
-                    $user->save();
-                    $user->updateUserContacts();
-                }
-                Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
-            }
-            else {
-                $deviceModel->addError('deviceId', 'Invalid input! Please make sure that you entered the correct device ID.');
-            }
-        }
-        return $this->render('device', array(
-            'model' => $deviceModel,
-            'user' => $user,
-            'space' => $space,
-        ));
-    }
     public function actionProfile() {
         $space = $this->getSpace();
         if (!$space->isAdmin())
@@ -338,6 +275,73 @@ class DeviceController extends ContentContainerController
             'user' => $user,
         ));
     }
+
+    public function actionEdit() {
+        $space = $this->getSpace();
+        if (!$space->isAdmin())
+            throw new HttpException(403, 'Access denied - Circle Administrator only!');
+
+        $user =  $this->getCare();
+        $emailModel = new \humhub\modules\user\models\forms\AccountChangeEmail;
+        if ($emailModel->load(Yii::$app->request->post()) && $emailModel->validate() && $emailModel->sendChangeEmail()) {
+            $user->email = $emailModel->newEmail;
+            $user->save();
+            $community_user = Users::findOne(['id' => $user->id]);
+            $community_user->email = $user->email;
+            $community_user->save();
+            Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
+//                    return $this->render('changeEmail_success', array('model' => $emailModel));
+        }
+        return $this->render('edit', array(
+            'emailModel' => $emailModel,
+            'user' => $user,
+            'space' => $space,
+        ));
+    }
+
+    public function actionDevice(){
+        $space = $this->getSpace();
+        if (!$space->isAdmin())
+            throw new HttpException(403, 'Access denied - Circle Administrator only!');
+
+        $user =  $this->getCare();
+        $deviceOld = Device::findOne(['device_id' => $user->device_id]);
+        $deviceModel = new \humhub\modules\user\models\forms\AccountDevice();
+        if ($deviceModel->load(Yii::$app->request->post())&& $deviceModel->validate()) {
+            $device = Device::find()->where(['device_id' => $deviceModel->deviceId])->one();
+            if ($device!=null) {
+                if ($device != $deviceOld) {
+                    $user->device_id = $deviceModel->deviceId;
+                    $user->save();
+
+                    // check if device fulfill all the rule of activation, if yes, activation
+                    if ($this->checkDevice($deviceModel->deviceId)) {
+                        $this->activation($deviceModel->deviceId);
+                    }
+                    if($deviceOld != null) {
+                        $gcmOld = new GCM();
+                        $pushOld = new Push();
+                        $pushOld->setTitle('user');
+                        $pushOld->setData('delete device');
+                        $gcmOld->send($deviceOld->gcmId, $pushOld->getPush());
+                    }
+
+                    $user->updateUserContacts();
+                }
+                Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
+            }
+            else {
+                $deviceModel->addError('deviceId', 'Invalid input! Please make sure that you entered the correct device ID.');
+            }
+        }
+        return $this->render('device', array(
+            'model' => $deviceModel,
+            'user' => $user,
+            'space' => $space,
+        ));
+    }
+
+
     public function actionSettings() {
         $space = $this->getSpace();
         if (!$space->isAdmin())
@@ -419,6 +423,8 @@ class DeviceController extends ContentContainerController
         $userGuid = Yii::$app->request->get('userGuid');
         $user = User::findOne(array('guid' => $userGuid));
         $space->setMember($user->id);
+
+
         // Redirect  back to Administration page
         return $this->htmlRedirect($space->createUrl('/space/manage/device', ['sguid' => $space->guid]));
     }
