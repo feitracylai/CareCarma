@@ -8,6 +8,7 @@
 
 namespace humhub\modules\space\behaviors;
 
+use humhub\modules\user\models\Profile;
 use Yii;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
@@ -15,6 +16,7 @@ use humhub\modules\user\models\User;
 use humhub\modules\space\models\Space;
 use humhub\modules\space\models\Membership;
 use humhub\modules\user\models\Invite;
+use yii\log\Logger;
 
 /**
  * SpaceModelMemberBehavior bundles all membership related methods of the Space model.
@@ -158,6 +160,8 @@ class SpaceModelMembership extends Behavior
         if ($membership != null) {
             $membership->group_id = Space::USERGROUP_MODERATOR;
             $membership->save();
+
+
             return true;
         }
         return false;
@@ -173,8 +177,26 @@ class SpaceModelMembership extends Behavior
         if ($membership != null) {
             $membership->group_id = Space::USERGROUP_MEMBER;
             $membership->save();
+
             return true;
         }
+        return false;
+    }
+
+    /*check if this is careReceiver in other circle*/
+    public function isOtherCareReceiver($userId = '')
+    {
+        if ($userId == 0)
+            $userId = Yii::$app->user->id;
+
+        $careReceiver = Membership::findOne(['user_id' => $userId, 'group_id' => 'device']);
+        if ($careReceiver != null){
+            if ($careReceiver->space_id != $this->owner->id){
+                return true;
+            }
+        }
+
+
         return false;
     }
 

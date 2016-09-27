@@ -66,7 +66,6 @@ class EntryController extends ContentContainerController
 
     public function actionEdit()
     {
-        Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $calendarEntry = $this->getCalendarEntry(Yii::$app->request->get('id'));
 
         if ($calendarEntry == null) {

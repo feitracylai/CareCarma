@@ -332,6 +332,7 @@ class AuthController extends Controller
 
                 // Save User Profile
                 $form->models['Profile']->user_id = $form->models['User']->id;
+                $form->models['Profile']->privacy = '0';
                 $form->models['Profile']->save();
 
                 // Save User Password

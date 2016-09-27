@@ -127,6 +127,13 @@ AppAsset::register($this);
                 <?php echo \humhub\widgets\TopMenuRightStack::widget(); ?>
             </ul>
         </div>
+
+        <!-- *****CONFIGURE STYLE****** -->
+        <?php if (!Yii::$app->user->isGuest): ?>
+        <div class="hidden-xs">
+            <?php echo BackgroundConfig::widget(); ?>
+        </div>
+        <?php endif; ?>
     </div>
 
     <!-- end: second top navigation bar -->
@@ -155,9 +162,8 @@ AppAsset::register($this);
     </div>
     <!-- end: Modal -->
 
-    <!-- *****CONFIGURE STYLE****** -->
 
-    <?php echo BackgroundConfig::widget(); ?>
+
 
 
 

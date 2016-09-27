@@ -142,7 +142,6 @@ class MembershipController extends \humhub\modules\content\components\ContentCon
      */
     public function actionRevokeMembership()
     {
-        Yii::getLogger()->log(print_r(Yii::$app->request->method,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $this->forcePostRequest();
         $space = $this->getSpace();
 
@@ -152,7 +151,10 @@ class MembershipController extends \humhub\modules\content\components\ContentCon
 
         $space->removeMember();
 
-        return $this->redirect(Url::home());
+        //if user deny the invite, change to follow
+        $space->follow();
+
+        return $this->redirect($space->getUrl());
     }
 
     /**

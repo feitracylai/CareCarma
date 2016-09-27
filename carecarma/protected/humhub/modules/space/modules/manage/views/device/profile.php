@@ -15,7 +15,7 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
 <br/>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo Yii::t('UserModule.views_account_edit', '<strong>{first} {last}</strong> details', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
+        <?php echo Yii::t('UserModule.views_account_edit', "<strong>{first} {last}</strong> Details", array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
 
         <!-- show flash message after saving -->
         <?php echo \humhub\widgets\DataSaved::widget(); ?>

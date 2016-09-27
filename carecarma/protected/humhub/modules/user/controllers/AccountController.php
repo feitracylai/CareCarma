@@ -713,10 +713,10 @@ class AccountController extends Controller
         return Yii::$app->user->getIdentity();
     }
 
-    public function actionUpload(){
+    public function actionBackground(){
         $user = User::findOne(['id' => Yii::$app->user->id]);
 
-        $imageName = Yii::$app->request->get('background');
+        $imageName = $_POST['image'];
         $background = './uploads/background/'.$imageName;
 
         if ($user->background == $background){
@@ -732,7 +732,7 @@ class AccountController extends Controller
         }
         $user->save();
 
-        return $this->redirect(Url::previous());
+        return;
     }
 
     public function actionBackgroundImageUpload()
@@ -769,6 +769,29 @@ class AccountController extends Controller
         }
 
         return array('files' => $json);
+    }
+
+    public function actionThemeSave(){
+        Yii::$app->response->format = 'json';
+        $theme = $_POST['data'];
+
+
+        $user = User::findOne(['id' => Yii::$app->user->id]);
+        if ($user!= null){
+            if ($user->theme != null && $user->theme != $theme){
+                $old = $user->theme;
+            } else {
+                $old = null;
+            }
+            $user->theme = $theme;
+        }
+
+        $user->save();
+
+        return [
+            'success' => true,
+            'old' => $old,
+        ];
     }
 
 

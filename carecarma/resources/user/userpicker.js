@@ -150,7 +150,7 @@ $.fn.userpicker = function (options) {
     $('#' + uniqueID + '_tag_input_field').keyup(function (event) {
 
         // start search after a specific count of characters
-        if ($('#' + uniqueID + '_tag_input_field').val().length >= 3) {
+        if ($('#' + uniqueID + '_tag_input_field').val().length >= 1) {
 
             // set userpicker position in bottom of the user input
             $('#' + uniqueID + '_userpicker').css({

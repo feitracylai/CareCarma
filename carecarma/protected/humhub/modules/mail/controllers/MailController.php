@@ -206,7 +206,7 @@ class MailController extends Controller
 
     private function getUserPickerResult($keyword) {
         if (version_compare(Yii::$app->version, '1.1', 'lt')) {
-            return $this->findUserByFilter($keyword, 100);
+            return $this->findUserByFilter($keyword, 10);
         } else if(Yii::$app->getModule('friendship')->getIsEnabled()) {
             return UserPicker::filter([
                 'keyword' => $keyword,
@@ -287,13 +287,13 @@ class MailController extends Controller
         foreach ($query->all() as $user) {
 
             if ($user != null) {
-//                Yii::getLogger()->log(implode(',', [$user->getUserGroup(), $user->id]), Logger::LEVEL_INFO, 'MyLog');
-//                if ($user->getUserGroup() != User::USERGROUP_USER){
+
+
                 $spaces = Membership::findAll(['user_id' => $user->id, 'status' => 3]);
                 foreach ($spaces as $memberSpace) {
                     $spaceId = $memberSpace->space_id;
                     $spaceUser = Membership::findAll(['space_id' => $spaceId, 'user_id' => Yii::$app->user->id, 'status' => 3]);
-                    if ($spaceUser != null){
+                    if ($spaceUser != null && $user->id != Yii::$app->user->id ){
 //                        Yii::getLogger()->log($user->getUserGroup(), Logger::LEVEL_INFO, 'MyLog');
                         $userInfo = array();
                         $userInfo['guid'] = $user->guid;
@@ -304,7 +304,12 @@ class MailController extends Controller
                         break;
                     }
                 }
-
+//                $userInfo = array();
+//                $userInfo['guid'] = $user->guid;
+//                $userInfo['displayName'] = Html::encode($user->displayName);
+//                $userInfo['image'] = $user->getProfileImage()->getUrl();
+//                $userInfo['link'] = $user->getUrl();
+//                $results[] = $userInfo;
 
             }
         }

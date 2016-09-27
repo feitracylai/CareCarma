@@ -11,6 +11,7 @@ namespace humhub\libs;
 use Yii;
 use yii\grid\DataColumn;
 use yii\helpers\Html;
+use yii\log\Logger;
 
 /**
  * DropDown Grid Column
@@ -103,6 +104,9 @@ class DropDownGridColumn extends DataColumn
         if ($readonly) {
             if (isset($options[$model[$this->attribute]])) {
                 return $options[$model[$this->attribute]];
+            }
+            if ($model[$this->attribute] == 'device'){
+                return 'Care Reciever';
             }
             return $model[$this->attribute];
         }

@@ -76,7 +76,7 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                                 },
                                 'update' => function($url,$model) use ($space){
                                     if ($space->isAdmin()){
-                                        return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['edit', 'sguid' => $space->guid, 'rguid' => $model->user->guid
+                                        return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['profile', 'sguid' => $space->guid, 'rguid' => $model->user->guid
                                         ]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Edit his/her account']);
                                     }
                                     else
