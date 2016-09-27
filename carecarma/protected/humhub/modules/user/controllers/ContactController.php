@@ -144,6 +144,16 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 100,
                 ),
+                'watch_primary_number' => array(
+                    'type' => 'checkbox',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
+                'phone_primary_number' => array(
+                    'type' => 'checkbox',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
             ),
         );
         // Get Form Definition
@@ -165,7 +175,7 @@ class ContactController extends Controller
             if ($form->save()) {
                // $user = User::findOne(['id' => $contact->user_id]);
 
-                $contact->notifyDevice('update');
+//                $contact->notifyDevice('update');
                 return $this->redirect(Url::toRoute('/user/contact'));
             }
         }
@@ -236,6 +246,16 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 100,
                 ),
+                'watch_primary_number' => array(
+                    'type' => 'checkbox',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
+                'phone_primary_number' => array(
+                    'type' => 'checkbox',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
             ),
         );
         // Get Form Definition
@@ -247,7 +267,9 @@ class ContactController extends Controller
             ),
         );
         $form = new HForm($definition);
+//        $contactModel->relation = " ";
         $form->models['Contact'] = $contactModel;
+        Yii::getLogger()->log(print_r($contactModel->relation,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         if ($form->submitted('save') && $form->validate()) {
 //            $this->forcePostRequest();
 //            $form->models['Contact']->status = User::STATUS_ENABLED;
@@ -595,14 +617,15 @@ class ContactController extends Controller
 //            Yii::getLogger()->log(print_r(json_encode($contact->getAttributes(array('user_id', 'contact_user_id', 'nickname'))),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         }
         $contact_list['data'] = $contact_data;
+
 //        ContactInfo::notify($contact_list);
 
         $gcm = new GCM();
         $user = User::findOne(['id' => $contact_list['data'][0]->user_id]);
         $device = Device::findOne(['device_id' => $user->device_id]);
-        $gcm_id = $device->gcmId;
 
-//        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $gcm_id = $device->gcmId;
+        Yii::getLogger()->log(print_r($contact_list,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm->send($gcm_id, $contact_list);
 
 //        $contact = Contact::find()->where(['user_id' => $user_id])->all();
@@ -611,6 +634,78 @@ class ContactController extends Controller
 //            $contact_user;
 //        }
     }
+
+
+    public function actionWatchallcontact ()
+    {
+        $user_id = Yii::$app->user->id;
+        $contact_list = array();
+        $contact_list['type'] = 'watch,all';
+        $contact_data = array();
+        foreach (Contact::find()->where(['user_id' => $user_id])->each() as $contact) {
+            if ($contact->watch_primary_number == 1) {
+                $contactInfo = new ContactInfo();
+                $contactInfo->contact_id = $contact->contact_id;
+                $contactInfo->user_id = $user_id;
+                $contactInfo->contact_user_id = $contact->contact_user_id;
+                $contactInfo->contact_first = $contact->contact_first;
+                $contactInfo->contact_last = $contact->contact_last;
+                $contactInfo->nickname = $contact->nickname;
+                $contactInfo->relation = $contact->relation;
+                $contactInfo->contact_mobile = $contact->contact_mobile;
+                $contactInfo->contact_email = $contact->contact_email;
+                $contactInfo->home_phone = $contact->home_phone;
+                $contactInfo->work_phone = $contact->work_phone;
+                array_push($contact_data, $contactInfo);
+            }
+        }
+        $contact_list['data'] = $contact_data;
+
+        $gcm = new GCM();
+        $user = User::findOne(['id' => $contact_list['data'][0]->user_id]);
+        $device = Device::findOne(['device_id' => $user->device_id]);
+
+        $gcm_id = $device->gcmId;
+        Yii::getLogger()->log(print_r($contact_list,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $gcm->send($gcm_id, $contact_list);
+    }
+
+    public function actionPhoneallcontact ()
+    {
+        $user_id = Yii::$app->user->id;
+        $contact_list = array();
+        $contact_list['type'] = 'phone,all';
+        $contact_data = array();
+        foreach (Contact::find()->where(['user_id' => $user_id])->each() as $contact) {
+            if ($contact->phone_primary_number == 1) {
+                $contactInfo = new ContactInfo();
+                $contactInfo->contact_id = $contact->contact_id;
+                $contactInfo->user_id = $user_id;
+                $contactInfo->contact_user_id = $contact->contact_user_id;
+                $contactInfo->contact_first = $contact->contact_first;
+                $contactInfo->contact_last = $contact->contact_last;
+                $contactInfo->nickname = $contact->nickname;
+                $contactInfo->relation = $contact->relation;
+                $contactInfo->contact_mobile = $contact->contact_mobile;
+                $contactInfo->contact_email = $contact->contact_email;
+                $contactInfo->home_phone = $contact->home_phone;
+                $contactInfo->work_phone = $contact->work_phone;
+                array_push($contact_data, $contactInfo);
+            }
+        }
+        $contact_list['data'] = $contact_data;
+
+        $gcm = new GCM();
+        $user = User::findOne(['id' => $contact_list['data'][0]->user_id]);
+        $device = Device::findOne(['device_id' => $user->device_id]);
+
+        $gcm_id = $device->gcmId;
+        Yii::getLogger()->log(print_r($contact_list,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $gcm->send($gcm_id, $contact_list);
+
+    }
+
+
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
     public function actionDevice ()
     {
@@ -640,31 +735,78 @@ class ContactController extends Controller
         }
     }
     
-    public function activation ($device_id) {
-        $user = User::findOne(['device_id' => $device_id]);
-        $device = Device::findOne(['device_id' => $device_id]);
-        foreach (Contact::find()->where(['contact_user_id' => $user->id])->each() as $contact) {
-            $contact->device_phone = $device->phone;
-            $contact->save();
-        }
-        $gcm = new GCM();
-        $gcm_id = $device->gcmId;
-//        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//    public function activation ($device_id) {
+//        $user = User::findOne(['device_id' => $device_id]);
+//        $device = Device::findOne(['device_id' => $device_id]);
+//        foreach (Contact::find()->where(['contact_user_id' => $user->id])->each() as $contact) {
+//            $contact->device_phone = $device->phone;
+//            $contact->save();
+//        }
+//        $gcm = new GCM();
+//        $gcm_id = $device->gcmId;
+////        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//
+////        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//
+//        $profileImage = new \humhub\libs\ProfileImage($this->getUser()->guid);
+//        $data = array();
+//        $data['username'] = $user->username;
+//        $data['pawssword'] = $this->getUsernamePassword($user);
+//        $data['image'] = $profileImage->getUrl();
+//        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//
+//        $gcm->send($gcm_id, $data);
+//        $user_new = User::findOne(['device_id' => $device_id]);
+//        $user_new->temp_password = null;
+//        $user_new->save();
+//    }
 
-//        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $gcm->send($gcm_id, $this->getUsernamePassword($user));
-        $user_new = User::findOne(['device_id' => $device_id]);
-        $user_new->temp_password = null;
-        $user_new->save();
-    }
+//    public function randString($length, $specialChars = false) {
+//        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+//        if ($specialChars) {
+//            $chars .= '!@#$%^&*()';
+//        }
+//
+//        $result = '';
+//        $max = strlen($chars) - 1;
+//        for ($i = 0; $i < $length; $i++) {
+//            $result .= $chars[rand(0, $max)];
+//        }
+//        return $result;
+//    }
 
-    public function getUsernamePassword($user) {
-        return [
-            'type' => 'active,login',
-            'username' => $user->username,
-            'password' => $user->temp_password,
-        ];
-    }
+//    public function actionActivation() {
+//        $data = Yii::$app->request->post();
+//        $gcm_id = $data['gcm_id'];
+//        $phone = $data['phone'];
+//
+//        $device = new Device();
+//        $device_id = "";
+//
+//        while ($device != null) {
+//            $device_id = ContactController::randString(4);
+//            $device = Device::findOne(['device_id' => $device_id]);
+//        }
+//        $new_device = new Device();
+//        $new_device->device_id = $device_id;
+//        $new_device->gcmId = $gcm_id;
+//        $new_device->phone = $phone;
+//        $new_device->save();
+//
+//        $gcm = new GCM();
+//        $gcm->send($gcm_id, $device_id);
+//    }
+
+//    public function getUsernamePassword($user) {
+//        return [
+//            'type' => 'active,login',
+//            'username' => $user->username,
+//            'password' => $user->temp_password,
+//        ];
+//    }
+
+
+
 
 
 }

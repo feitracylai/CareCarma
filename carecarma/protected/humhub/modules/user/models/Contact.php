@@ -23,6 +23,8 @@ use yii\log\Logger;
  * @property string $device_phone
  * @property string $home_phone
  * @property string $work_phone
+ * @property integer watch_primary_number
+ * @property integer phone_primary_number
  */
 class Contact extends \yii\db\ActiveRecord
 {
@@ -66,13 +68,15 @@ class Contact extends \yii\db\ActiveRecord
             'user_id' => Yii::t('UserModule.models_Contact', 'User ID'),
             'relation' => Yii::t('UserModule.models_Contact', 'Relation'),
             'contact_user_id' => Yii::t('UserModule.models_Contact', 'contact ID'),
+            'watch_primary_number' => Yii::t('UserModule.models_Contact', 'Primary Number(Watych)'),
+            'phone_primary_number' => Yii::t('UserModule.models_Contact', 'Primary Number(Phone)'),
         ];
     }
 
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios['editContact'] = ['contact_first', 'contact_last', 'contact_mobile', 'home_phone', 'work_phone', 'contact_email', 'nickname'];
+        $scenarios['editContact'] = ['contact_first', 'contact_last', 'contact_mobile', 'home_phone', 'work_phone', 'contact_email', 'nickname', 'relation', 'watch_primary_number', 'phone_primary_number'];
         $scenarios['linkContact'] = ['user_id', 'contact_user_id', 'linked'];
         return $scenarios;
     }
@@ -124,7 +128,9 @@ class Contact extends \yii\db\ActiveRecord
             'contact_user_id' => $this->contact_user_id,
             'relation' => $this->relation,
             'home_phone' => $this->home_phone,
-            'work_phone' => $this->work_phone
+            'work_phone' => $this->work_phone,
+            'watch_primary_number' => $this->watch_primary_number,
+            'phone_primary_number' => $this->phone_primary_number
         ];
     }
 
@@ -150,7 +156,9 @@ class Contact extends \yii\db\ActiveRecord
             'contact_user_id' => $this->contact_user_id,
             'relation' => $this->relation,
             'home_phone' => $this->home_phone,
-            'work_phone' => $this->work_phone
+            'work_phone' => $this->work_phone,
+            'watch_primary_number' => $this->watch_primary_number,
+            'phone_primary_number' => $this->phone_primary_number
         ];
     }
 

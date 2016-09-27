@@ -30,6 +30,10 @@ use humhub\modules\user\models\Contact;
  */
 class AccountController extends Controller
 {
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
 
     public $subLayout = "@humhub/modules/user/views/account/_layout";
 
@@ -206,6 +210,63 @@ class AccountController extends Controller
 
 
 
+//    public function activation ($device_id) {
+//        $user = User::findOne(['device_id' => $device_id]);
+//        $device = Device::findOne(['device_id' => $device_id]);
+//
+//        foreach (Contact::find()->where(['contact_user_id' => $user->id])->each() as $contact) {
+//            $contact->device_phone = $device->phone;
+//            $contact->save();
+//        }
+//
+//        $gcm = new GCM();
+//        $gcm_id = $device->gcmId;
+////        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//
+////        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        $gcm->send($gcm_id, $this->getUsernamePassword($user));
+//        $user_new = User::findOne(['device_id' => $device_id]);
+//        $user_new->temp_password = null;
+//        $user_new->save();
+//
+//    }
+
+    public function getUsernamePassword($user) {
+        $profileImage = new \humhub\libs\ProfileImage($this->getUser()->guid);
+        $pos = strpos($profileImage->getUrl(), "?m=");
+        $image = substr($profileImage->getUrl(), 0, $pos);
+        return [
+            'type' => 'active,login',
+            'username' => $user->username,
+            'password' => $user->temp_password,
+            'image' => $image,
+        ];
+    }
+
+    public function actionActivation() {
+        $data = Yii::$app->request->post();
+        $gcm_id = $data['gcm_id'];
+        $phone = $data['phone'];
+
+        $device = new Device();
+        $device_id = "";
+
+        while ($device != null) {
+            $device_id = AccountController::randString(4);
+            $device = Device::findOne(['device_id' => $device_id]);
+        }
+        $new_device = new Device();
+        $new_device->device_id = $device_id;
+        $new_device->gcmId = $gcm_id;
+        $new_device->phone = $phone;
+        $new_device->save();
+
+        $gcm = new GCM();
+        $gcm->send($gcm_id, $device_id);
+    }
+
+
+
     public function activation ($device_id) {
         $user = User::findOne(['device_id' => $device_id]);
         $device = Device::findOne(['device_id' => $device_id]);
@@ -213,29 +274,33 @@ class AccountController extends Controller
             $contact->device_phone = $device->phone;
             $contact->save();
         }
-
         $gcm = new GCM();
         $gcm_id = $device->gcmId;
 //        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
 //        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+        Yii::getLogger()->log(print_r($this->getUsernamePassword($user),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
         $gcm->send($gcm_id, $this->getUsernamePassword($user));
         $user_new = User::findOne(['device_id' => $device_id]);
         $user_new->temp_password = null;
         $user_new->save();
-
     }
 
-    public function getUsernamePassword($user) {
-        return [
-            'type' => 'active,login',
-            'username' => $user->username,
-            'password' => $user->temp_password,
-        ];
+    public static function randString($length, $specialChars = false) {
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        if ($specialChars) {
+            $chars .= '!@#$%^&*()';
+        }
+
+        $result = '';
+        $max = strlen($chars) - 1;
+        for ($i = 0; $i < $length; $i++) {
+            $result .= $chars[rand(0, $max)];
+        }
+        return $result;
     }
-
-
-
 
 
 
@@ -546,14 +611,35 @@ class AccountController extends Controller
 
             $json['name'] = "";
             $json['url'] = $profileImage->getUrl();
+//            Yii::getLogger()->log(print_r($profileImage->getUrl(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
             $json['size'] = $model->image->size;
             $json['deleteUrl'] = "";
             $json['deleteType'] = "";
+
+            $gcm = new GCM();
+            $user_id = Yii::$app->user->id;
+            $user = User::findOne(['id' => $user_id]);
+//            Yii::getLogger()->log(print_r($user,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+            $device_id = $user->device_id;
+//            Yii::getLogger()->log(print_r($device_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+            $device = Device::findOne(['device_id' => $device_id]);
+//            Yii::getLogger()->log(print_r($device,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+            $pos = strpos($profileImage->getUrl(), "?m=");
+            $image = substr($profileImage->getUrl(), 0, $pos);
+
+
+            $data = array();
+            $data['type'] = "image, update";
+            $data['image'] = $image;
+
+            Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+            $gcm->send($device->gcmId, $data);
         } else {
             $json['error'] = true;
             $json['errors'] = $model->getErrors();
         }
-
         return array('files' => $json);
     }
 
