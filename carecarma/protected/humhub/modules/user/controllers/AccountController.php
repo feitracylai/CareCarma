@@ -262,7 +262,10 @@ class AccountController extends Controller
         $new_device->save();
 
         $gcm = new GCM();
-        $gcm->send($gcm_id, $device_id);
+        $data = array();
+        $data['type'] = "active,device_id";
+        $data['device_id'] = $device_id;
+        $gcm->send($gcm_id, $data);
     }
 
 
