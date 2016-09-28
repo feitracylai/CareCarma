@@ -486,7 +486,7 @@ class InitialData
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Select::className();
         $field->is_system = 1;
         if ($field->save()) {
-            $field->fieldType->options = "Only Me\r\nFamily Members\r\nPublic";
+            $field->fieldType->options = "Only Me\r\nCircle Members\r\nPublic";
             $field->fieldType->save();
         }
 
