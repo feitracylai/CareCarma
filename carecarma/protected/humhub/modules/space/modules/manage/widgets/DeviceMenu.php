@@ -18,7 +18,7 @@ class DeviceMenu extends \humhub\widgets\BaseMenu
     public function init()
     {
         $this->addItem(array(
-            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'List Care Receiver'),
+            'label' => Yii::t('SpaceModule.widgets_DeviceMenu', 'Overview'),
             'url' => $this->space->createUrl('/space/manage/device/index'),
             'sortOrder' => 100,
             'isActive' => (Yii::$app->controller->action->id == 'index' && Yii::$app->controller->id === 'device'),
@@ -26,10 +26,10 @@ class DeviceMenu extends \humhub\widgets\BaseMenu
 
         if ($this->space->isAdmin()){
             $this->addItem(array(
-                'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Add Account'),
+                'label' => Yii::t('SpaceModule.widgets_DeviceMenu', 'Add Care'),
                 'url' => $this->space->createUrl('/space/manage/device/add'),
                 'sortOrder' => 200,
-                'isActive' => (Yii::$app->controller->action->id == 'add' && Yii::$app->controller->id === 'device'),
+                'isActive' => (Yii::$app->controller->action->id == 'add' || Yii::$app->controller->action->id == 'add-care' && Yii::$app->controller->id === 'device'),
             ));
         }
 

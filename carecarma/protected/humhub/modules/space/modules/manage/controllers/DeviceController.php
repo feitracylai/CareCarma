@@ -1,5 +1,7 @@
 <?php
 namespace humhub\modules\space\modules\manage\controllers;
+use humhub\modules\admin\models\Log;
+use humhub\modules\space\modules\manage\models\MembershipSearch;
 use humhub\modules\user\models\Users;
 use Yii;
 use yii\helpers\Url;
@@ -53,6 +55,7 @@ class DeviceController extends ContentContainerController
         $space = $this->getSpace();
         if (!$space->isAdmin())
             throw new HttpException(403, 'Access denied - Circle Administrator only!');
+
 
         $userModel = new User();
         $userModel->scenario = 'editCare';
@@ -187,9 +190,130 @@ class DeviceController extends ContentContainerController
         }
         return $this->render('add', array(
             'hForm' => $form,
-            'space' => $space
+            'space' => $space,
+
         ));
     }
+
+    public function actionAddCare()
+    {
+        $space = $this->getSpace();
+        $doit = Yii::$app->request->get('doit');
+
+        $searchModel = new MembershipSearch();
+        $searchModel->space_id = $space->id;
+        $searchModel->status = Membership::STATUS_MEMBER;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $users = array();
+        $members = Membership::findAll(['space_id' => $space->id]);
+        foreach ($members as $member)
+        {
+            if ($member->group_id != $space::USERGROUP_MODERATOR && !$space->isSpaceOwner($member->user_id) && $member->status == 3)
+            {
+                $user = User::findOne(['id' => $member->user_id]);
+                $users[] = $user;
+            }
+        }
+
+//        Yii::getLogger()->log($space->created_by, Logger::LEVEL_INFO, 'MyLog');
+        if ($doit == 2)
+        {
+            $userId = Yii::$app->request->get('linkId');
+            $membership = Membership::findOne(['space_id' => $space->id, 'user_id' => $userId]);
+            $sender = User::findOne(['id' => Yii::$app->user->id]);
+
+            $space->addCare($sender, $userId);
+
+            return $this->redirect($space->createUrl('device/add-care'));
+        }
+
+
+        return $this->render('add-care', array(
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'space' => $space,
+            'users' => $users
+        ));
+    }
+
+    public function actionCareRemind()
+    {
+        $space = $this->getSpace();
+        $userId = Yii::$app->request->get('linkId');
+        $memberships = Membership::findAll(['user_id' => $userId]);
+
+        $isSpaceOwner = false;
+        $isSpaceAdmin = false;
+        foreach ($memberships as $membership) {
+            $otherSpace = Space::findOne(['id' => $membership->space_id]);
+            if ($otherSpace->isSpaceOwner($userId)) {
+                $isSpaceOwner = true;
+            } elseif ($otherSpace->isAdmin($userId)) {
+                $isSpaceAdmin = true;
+            }
+        }
+
+
+        if ($space->isOtherCareReceiver($userId)){
+            return $this->renderAjax('care-remind', ['status' => 'care']);
+        } elseif ($isSpaceOwner){
+            return $this->renderAjax('care-remind', ['status' => 'owner']);
+        } elseif ($isSpaceAdmin) {
+            return $this->renderAjax('care-remind', ['status' => 'admin', 'space' => $space, 'userId' => $userId]);
+        } else {
+            return $this->redirect($space->createUrl('device/add-care'));
+        }
+
+
+
+//        return $this->renderAjax('care-remind');
+    }
+
+    public function actionCareAccepted()
+    {
+        $space = $this->getSpace();
+
+        $careUser = User::findOne(['id' => Yii::$app->user->id]);
+
+        $space->acceptCare($careUser);
+
+        //change this care receiver in other circles to regular memeber
+        $adminSpaces = Membership::findAll(['user_id' => $careUser->id, 'group_id' => 'admin']);
+        if ($adminSpaces != null)
+        {
+            foreach ($adminSpaces as $adminMembership)
+            {
+                if($adminMembership->space_id != $space->id)
+                {
+                    $adminMembership->group_id = 'member';
+                    $adminMembership->save();
+                }
+            }
+        }
+
+        return $this->redirect($space->createUrl('/space/space'));
+    }
+
+    public function actionCareDenied()
+    {
+        $space = $this->getSpace();
+
+        $careUser = User::findOne(['id' => Yii::$app->user->id]);
+        $space->denyCare($careUser);
+
+        return $this->redirect(Url::home());
+    }
+
+    public function actionAddCareCancel()
+    {
+        $space = $this->getSpace();
+        $careUser = User::findOne(['id' => Yii::$app->request->get('linkId')]);
+        $space->cancelAdd($careUser);
+
+        return $this->redirect($space->createUrl('device/add-care'));
+    }
+
     public function checkDevice ($device_id) {
         $user = User::findOne(['device_id' => $device_id]);
         $device = Device::findOne(['device_id' => $device_id]);
@@ -206,6 +330,7 @@ class DeviceController extends ContentContainerController
         }
 
     }
+
     public function activation ($device_id) {
         $user = User::findOne(['device_id' => $device_id]);
         $device = Device::findOne(['device_id' => $device_id]);
@@ -220,6 +345,7 @@ class DeviceController extends ContentContainerController
         $user_new->temp_password = null;
         $user_new->save();
     }
+
     public function getUsernamePassword($user) {
         return [
             'type' => 'active,login',
@@ -341,6 +467,59 @@ class DeviceController extends ContentContainerController
         ));
     }
 
+//    public function actionAccountSettings()
+//    {
+//        $space = $this->getSpace();
+//        if (!$space->isAdmin())
+//            throw new HttpException(403, 'Access denied - Circle Administrator only!');
+//
+//        $user =  $this->getCare();
+//        $emailModel = new \humhub\modules\user\models\forms\AccountChangeEmail;
+//        if ($emailModel->load(Yii::$app->request->post()) && $emailModel->validate() && $emailModel->sendChangeEmail()) {
+//            $user->email = $emailModel->newEmail;
+//            $user->save();
+//            $community_user = Users::findOne(['id' => $user->id]);
+//            $community_user->email = $user->email;
+//            $community_user->save();
+//            Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
+//        }
+//
+//        $deviceOld = Device::findOne(['device_id' => $user->device_id]);
+//        $deviceModel = new \humhub\modules\user\models\forms\AccountDevice();
+//        if ($deviceModel->load(Yii::$app->request->post())&& $deviceModel->validate()) {
+//            $device = Device::find()->where(['device_id' => $deviceModel->deviceId])->one();
+//            if ($device!=null) {
+//                if ($device != $deviceOld) {
+//                    $user->device_id = $deviceModel->deviceId;
+//                    $user->save();
+//
+//                    // check if device fulfill all the rule of activation, if yes, activation
+//                    if ($this->checkDevice($deviceModel->deviceId)) {
+//                        $this->activation($deviceModel->deviceId);
+//                    }
+//                    if($deviceOld != null) {
+//                        $gcmOld = new GCM();
+//                        $pushOld = new Push();
+//                        $pushOld->setTitle('user');
+//                        $pushOld->setData('delete device');
+//                        $gcmOld->send($deviceOld->gcmId, $pushOld->getPush());
+//                    }
+//
+//                    $user->updateUserContacts();
+//                }
+//                Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
+//            }
+//            else {
+//                $deviceModel->addError('deviceId', 'Invalid input! Please make sure that you entered the correct device ID.');
+//            }
+//        }
+//        return $this->render('account-settings', array(
+//            'model' => $deviceModel,
+//            'emailModel' => $emailModel,
+//            'user' => $user,
+//            'space' => $space,
+//        ));
+//    }
 
     public function actionSettings() {
         $space = $this->getSpace();

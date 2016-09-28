@@ -13,3 +13,4 @@ class MemberlistController extends \humhub\modules\content\components\ContentCon
         return $this->render('index', ['space' => $this->space, 'members' => $memberQuery->all()]);
     }
 }
+?>

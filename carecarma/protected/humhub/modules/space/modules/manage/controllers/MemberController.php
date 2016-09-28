@@ -11,6 +11,7 @@ namespace humhub\modules\space\modules\manage\controllers;
 use Yii;
 use yii\helpers\Url;
 use yii\data\ArrayDataProvider;
+use yii\log\Logger;
 use yii\web\HttpException;
 use humhub\modules\space\models\Space;
 use humhub\modules\space\modules\manage\components\Controller;
@@ -37,7 +38,7 @@ class MemberController extends Controller
         $searchModel->space_id = $space->id;
         $searchModel->status = Membership::STATUS_MEMBER;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+//        $owner = false;
         // User Group Change
         if (Yii::$app->request->post('dropDownColumnSubmit')) {
             Yii::$app->response->format = 'json';
@@ -46,7 +47,10 @@ class MemberController extends Controller
                 throw new \yii\web\HttpException(404, 'Could not find membership!');
             }
 
+
+
             if ($membership->load(Yii::$app->request->post()) && $membership->validate() && $membership->save()) {
+
                 return Yii::$app->request->post();
             }
             return $membership->getErrors();
@@ -55,9 +59,13 @@ class MemberController extends Controller
         return $this->render('index', array(
                     'dataProvider' => $dataProvider,
                     'searchModel' => $searchModel,
-                    'space' => $space
+                    'space' => $space,
+
         ));
     }
+
+
+
 
     /**
      * Members Administration Action

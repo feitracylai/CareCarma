@@ -11,6 +11,7 @@ use humhub\modules\content\models\Wall;
 use humhub\modules\content\models\Content;
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\user\models\User;
+use yii\log\Logger;
 
 /**
  * This is the model class for table "space".
@@ -130,6 +131,7 @@ class Space extends ContentContainerActiveRecord implements \humhub\modules\sear
             \humhub\modules\space\behaviors\SpaceModelModules::className(),
             \humhub\modules\space\behaviors\SpaceModelMembership::className(),
             \humhub\modules\user\behaviors\Followable::className(),
+            \humhub\modules\space\behaviors\CareLink::className(),
         );
     }
 
@@ -481,6 +483,7 @@ class Space extends ContentContainerActiveRecord implements \humhub\modules\sear
      */
     public function getUserGroups()
     {
+
         $groups = [
             self::USERGROUP_OWNER => 'Owner',
             self::USERGROUP_ADMIN => 'Administrators',
