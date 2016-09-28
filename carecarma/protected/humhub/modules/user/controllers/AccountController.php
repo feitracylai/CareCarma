@@ -244,6 +244,7 @@ class AccountController extends Controller
     }
 
     public function actionActivation() {
+        Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $data = Yii::$app->request->post();
         Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm_id = $data['gcm_id'];
