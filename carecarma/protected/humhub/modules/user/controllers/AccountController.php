@@ -245,8 +245,11 @@ class AccountController extends Controller
 
     public function actionActivation() {
         $data = Yii::$app->request->post();
+        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm_id = $data['gcm_id'];
         $phone = $data['phone'];
+        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r($phone,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
         $device = new Device();
         $device_id = "";
@@ -262,10 +265,11 @@ class AccountController extends Controller
         $new_device->save();
 
         $gcm = new GCM();
-        $data = array();
-        $data['type'] = "active,device_id";
-        $data['device_id'] = $device_id;
-        $gcm->send($gcm_id, $data);
+        $data2 = array();
+        $data2['type'] = "active,device_id";
+        $data2['device_id'] = $device_id;
+        Yii::getLogger()->log(print_r($data2,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $gcm->send($gcm_id, $data2);
     }
 
 
