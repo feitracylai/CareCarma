@@ -172,10 +172,10 @@ class AccountController extends Controller
             if ($device->gcmId != null) {
 
                 $gcm = new GCM();
-                $push = new Push();
-                $push->setTitle('binding delete');
+                $data = array();
+                $data['type'] = "deactivate";
                 $gcm_registration_id = $device->gcmId;
-                $gcm->send($gcm_registration_id, $push->getPush());
+                $gcm->send($gcm_registration_id, $data);
             }
 
 
@@ -250,6 +250,7 @@ class AccountController extends Controller
         $phone = $data['phone'];
         Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         Yii::getLogger()->log(print_r($phone,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
 
         $device = new Device();
         $device_id = "";
