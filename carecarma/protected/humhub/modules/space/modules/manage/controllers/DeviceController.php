@@ -209,7 +209,7 @@ class DeviceController extends ContentContainerController
         $members = Membership::findAll(['space_id' => $space->id]);
         foreach ($members as $member)
         {
-            if ($member->group_id != $space::USERGROUP_MODERATOR && !$space->isSpaceOwner($member->user_id))
+            if ($member->group_id != $space::USERGROUP_MODERATOR && !$space->isSpaceOwner($member->user_id) && $member->status == 3)
             {
                 $user = User::findOne(['id' => $member->user_id]);
                 $users[] = $user;
