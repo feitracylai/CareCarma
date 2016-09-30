@@ -121,7 +121,7 @@ $theme = \humhub\models\Setting::Get('theme');
                     <ul id="background-options" class="list-unstyled list-inline">
                         
 
-                        <?php for ($count = 1; $count <= 66; $count++) {?>
+                        <?php for ($count = 1; $count <= 60; $count++) {?>
                             <li class="background-<?php echo $count; ?> <?php if($user->background == './uploads/background/'.$count.'.jpg') echo 'active' ?>">
                                 <a data-style="<?php echo $count; ?>.jpg" style="background:#fff url('./uploads/background/<?php echo $count; ?>.jpg') no-repeat; background-size:cover"></a>
                             </li>
