@@ -22,7 +22,7 @@ $theme = \humhub\models\Setting::Get('theme');
 
 <div class="config-wrapper">
         <div class="config-wrapper-inner">
-            <a id="config-trigger" class="config-trigger" href="#"><i class="fa fa-cog"></i></a>
+            <a id="config-trigger" class="config-trigger" href="#" title="template settings"><i class="fa fa-photo"></i></a>
 
             <div id="config-panel" class="config-panel">
                 <h5 style="text-align: center"><strong>Template Settings</strong></h5><hr>
@@ -38,7 +38,7 @@ $theme = \humhub\models\Setting::Get('theme');
                         <li id="theme-6" data-style="theme-6.css" class="<?php if($user->theme == 'theme-6.css') echo 'active' ?>"><a style="background-color: #0381d1;"></a></li>
                         <li id="theme-7" data-style="theme-7.css" class="<?php if($user->theme == 'theme-7.css') echo 'active' ?>"><a style="background-color: #e89bbc;"></a></li>
                         <li id="theme-8" data-style="theme-8.css" class="<?php if($user->theme == 'theme-8.css') echo 'active' ?>"><a style="background-color: #25303f;"></a></li>
-                      
+
                     </ul>
 
                     <h6><strong>Customize</strong></h6>
@@ -123,6 +123,7 @@ $theme = \humhub\models\Setting::Get('theme');
 
                         <?php for ($count = 1; $count <= 60; $count++) {?>
                             <li class="background-<?php echo $count; ?> <?php if($user->background == './uploads/background/'.$count.'.jpg') echo 'active' ?>">
+                                <!--<?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => $count.'.jpg']), ['style' => 'background:#fff url(\'./uploads/background/'.$count.'.jpg\') no-repeat; background-size:cover']) ?>-->
                                 <a data-style="<?php echo $count; ?>.jpg" style="background:#fff url('./uploads/background/<?php echo $count; ?>.jpg') no-repeat; background-size:cover"></a>
                             </li>
                         <?php } ?>
@@ -147,12 +148,6 @@ $theme = \humhub\models\Setting::Get('theme');
         var defaultImage = '<?= $defaultImage; ?>';
         var style = '<?= $user->background; ?>';
 
-        var $link = '<?php echo Yii::getAlias("@web"); ?>/themes/<?php echo $theme; ?>/css/';
-        <?php if ($user->theme != null){ ?>
-        var $colorSheet = '<?= $user->theme; ?>';
-        $('head').append('<link class="theme-choose" href='+$link+$colorSheet+' rel="stylesheet" />');
-
-        <?php } ?>
 
         if (userbackground != '' && !defaultImage){
             $('#test').css("background", "#ebebeb url("+userbackground+") no-repeat fixed");
@@ -194,7 +189,8 @@ $theme = \humhub\models\Setting::Get('theme');
 
         $.post('<?php echo Url::to(['/user/account/theme-save', 'userGuid' => $user->guid]); ?>', {'data': $colorSheet}, function(data){
 
-            $('.theme-choose').attr('href', ''+$link+$colorSheet+'');
+
+            $('head').append('<link class="theme-choose" href='+$link+$colorSheet+' rel="stylesheet" />');
 
 
             $liItem.addClass('active');
@@ -220,7 +216,6 @@ $theme = \humhub\models\Setting::Get('theme');
 
         e.preventDefault();
     });
-
 
 
 
