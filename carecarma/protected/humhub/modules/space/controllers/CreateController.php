@@ -62,10 +62,10 @@ class CreateController extends Controller
 
         $visibilityOptions = [];
         if (Setting::Get('allowGuestAccess', 'authentication_internal') && Yii::$app->user->permissionmanager->can(new CreatePublicSpace)) {
-            $visibilityOptions[Space::VISIBILITY_ALL] = Yii::t('SpaceModule.base', 'Public (Members & Guests)');
+            $visibilityOptions[Space::VISIBILITY_ALL] = Yii::t('SpaceModule.base', 'Public (Users & Guests)');
         }
         if (Yii::$app->user->permissionmanager->can(new CreatePublicSpace)) {
-            $visibilityOptions[Space::VISIBILITY_REGISTERED_ONLY] = Yii::t('SpaceModule.base', 'Public (Members only)');
+            $visibilityOptions[Space::VISIBILITY_REGISTERED_ONLY] = Yii::t('SpaceModule.base', 'Public (Visible)');
         }
         if (Yii::$app->user->permissionmanager->can(new CreatePrivateSpace())) {
             $visibilityOptions[Space::VISIBILITY_NONE] = Yii::t('SpaceModule.base', 'Private (Invisible)');
@@ -87,15 +87,15 @@ class CreateController extends Controller
     {
         $space = Space::find()->where(['id' => $space_id])->one();
 
-        if (count($space->getAvailableModules()) == 0) {
+//        if (count($space->getAvailableModules()) == 0) {
 
             $model = new \humhub\modules\space\models\forms\InviteForm();
             $model->space = $space;
 
             return $this->renderAjax('invite', ['spaceId' => $space->id, 'model' => $model, 'space' => $space]);
-        } else {
-            return $this->renderAjax('modules', ['space' => $space, 'availableModules' => $space->getAvailableModules()]);
-        }
+//        } else {
+//            return $this->renderAjax('modules', ['space' => $space, 'availableModules' => $space->getAvailableModules()]);
+//        }
     }
 
     /**

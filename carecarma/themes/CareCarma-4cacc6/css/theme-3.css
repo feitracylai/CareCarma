@@ -729,7 +729,7 @@ input[type=text], input[type=password], input[type=select] {
     background-color: #f3fcfd
 }
 
-.media-list li:hover, .media-list li.selected {
+.media-list li:hover, .media-list li.selected, .media-list li.active {
     background-color: #f7f7f7;
     border-left: 3px solid #f89d29
 }
@@ -1011,7 +1011,8 @@ input[type=text], input[type=password], input[type=select] {
 
 .panel-profile .panel-profile-header .img-profile-data h1.space {
     font-size: 30px;
-    font-weight: 700
+    font-weight: 700;
+    padding: 3px;
 }
 
 .panel-profile .panel-profile-header .img-profile-data h2.space {

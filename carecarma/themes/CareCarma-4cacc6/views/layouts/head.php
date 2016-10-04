@@ -1,8 +1,15 @@
 <?php
 
+use yii\base\Exception;
 
-$userId = Yii::$app->user->id;
-$user = \humhub\modules\user\models\User::findOne(['id' => $userId]);
+
+$user = null;
+
+//comment 2 lines below when install the app
+    $userId = Yii::$app->user->id;
+    $user = \humhub\modules\user\models\User::findOne(['id' => $userId]);
+
+
 
 ?>
 

@@ -8,6 +8,7 @@ use humhub\libs\Helpers;
 
 $this->registerJsFile("@web/resources/space/spacechooser.js");
 $this->registerJsVar('scSpaceListUrl', Url::to(['/space/list', 'ajax' => 1]));
+
 ?>
 
 <li class="dropdown">
@@ -47,8 +48,15 @@ $this->registerJsVar('scSpaceListUrl', Url::to(['/space/list', 'ajax' => 1]));
         <li>
             <ul class="media-list notLoaded" id="space-menu-spaces">
                 <?php foreach ($memberships as $membership): ?>
-                    <?php $newItems = $membership->countNewItems(); ?>
-                    <li>
+                    <?php $newItems = $membership->countNewItems();?>
+                    <li class=<?php
+                    if ($currentSpace != null) {
+                        if ($membership->space_id == $currentSpace->id)
+                            echo "active";
+                    }
+
+
+                    ?>>
                         <a href="<?php echo $membership->space->getUrl(); ?>">
                             <div class="media">
                                 <!-- Show space image -->
