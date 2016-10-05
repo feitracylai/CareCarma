@@ -26,7 +26,6 @@ $theme = \humhub\models\Setting::Get('theme');
 
             <div id="config-panel" class="config-panel">
                 <h5 style="text-align: center"><strong>Template Settings</strong></h5><hr>
-
                 <div id="config-content">
                     <h6><strong>Themes Color</strong></h6>
                     <ul id="theme-options" class="list-unstyled list-inline">
@@ -38,7 +37,6 @@ $theme = \humhub\models\Setting::Get('theme');
                         <li id="theme-6" data-style="theme-6.css" class="<?php if($user->theme == 'theme-6.css') echo 'active' ?>"><a style="background-color: #0381d1;"></a></li>
                         <li id="theme-7" data-style="theme-7.css" class="<?php if($user->theme == 'theme-7.css') echo 'active' ?>"><a style="background-color: #e89bbc;"></a></li>
                         <li id="theme-8" data-style="theme-8.css" class="<?php if($user->theme == 'theme-8.css') echo 'active' ?>"><a style="background-color: #25303f;"></a></li>
-
                     </ul>
 
                     <h6><strong>Customize</strong></h6>
@@ -58,7 +56,7 @@ $theme = \humhub\models\Setting::Get('theme');
                             <!-- background image output-->
                             <a data-toggle="lightbox" data-gallery="" href="<?php echo $profileImageOrig; ?>#.jpeg"
                                data-footer='<button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo Yii::t('FileModule.widgets_views_showFiles', 'Close'); ?></button>'>
-                                <img class="img-rounded profile-user-photo" id="user-background-image"
+                                <img class="img-rounded profile-user-photo upload-image-active" id="user-background-image"
                                      src="<?php echo $user->getUserBackgroundImage()->getUrl(); ?>"
                                      data-src="holder.js/300x200" alt="300x200" style="width: 300px; height: 200px;"/>
                             </a>
@@ -90,15 +88,6 @@ $theme = \humhub\models\Setting::Get('theme');
                         <div class="image-upload-buttons" id="background-image-upload-buttons">
                             <a href="#" onclick="javascript:$('#userbackgroundupload input').click();" class="btn btn-info btn-sm"><i
                                     class="fa fa-cloud-upload"></i></a>
-                            <!--<a id="profile-image-upload-edit-button"
-                               style="<?php
-                            if (!$user->getUserBackgroundImage()->hasImage()) {
-                                echo 'display: none;';
-                            }
-                            ?>"
-                               href="<?php echo Url::to(['/user/account/crop-profile-image', 'userGuid' => $user->guid]); ?>"
-                               class="btn btn-info btn-sm" data-target="#globalModal"><i
-                                    class="fa fa-edit"></i></a>-->
                             <?php
                             echo \humhub\widgets\ModalConfirm::widget(array(
                                 'uniqueID' => 'modal_backgroundimagedelete',
@@ -119,11 +108,9 @@ $theme = \humhub\models\Setting::Get('theme');
                     </div>
                     <h6 style="padding-top: 10px"><strong>Template</strong></h6>
                     <ul id="background-options" class="list-unstyled list-inline">
-                        
 
                         <?php for ($count = 1; $count <= 60; $count++) {?>
                             <li class="background-<?php echo $count; ?> <?php if($user->background == './uploads/background/'.$count.'.jpg') echo 'active' ?>">
-                                <!--<?php echo Html::a('', Url::toRoute(['/user/account/upload', 'background' => $count.'.jpg']), ['style' => 'background:#fff url(\'./uploads/background/'.$count.'.jpg\') no-repeat; background-size:cover']) ?>-->
                                 <a data-style="<?php echo $count; ?>.jpg" style="background:#fff url('./uploads/background/<?php echo $count; ?>.jpg') no-repeat; background-size:cover"></a>
                             </li>
                         <?php } ?>
@@ -143,7 +130,6 @@ $theme = \humhub\models\Setting::Get('theme');
 <script>
 
     $(document).ready(function() {
-//        var styleSheet = $('#background-options .active a').attr('data-style');
         var userbackground = '<?= $user->getUserBackgroundImage()->getUrl(); ?>';
         var defaultImage = '<?= $defaultImage; ?>';
         var style = '<?= $user->background; ?>';
@@ -188,8 +174,6 @@ $theme = \humhub\models\Setting::Get('theme');
 
 
         $.post('<?php echo Url::to(['/user/account/theme-save', 'userGuid' => $user->guid]); ?>', {'data': $colorSheet}, function(data){
-
-
             $('head').append('<link class="theme-choose" href='+$link+$colorSheet+' rel="stylesheet" />');
 
 
@@ -212,10 +196,14 @@ $theme = \humhub\models\Setting::Get('theme');
 
             $list.addClass('active');
             $list.siblings().removeClass('active');
+
+            $('#user-background-image').attr('src', '<?php echo $user->getUserBackgroundImage()->getUrl(); ?>');
+            $('#user-background-image').removeClass('upload-image-active');
         });
 
         e.preventDefault();
     });
+
 
 
 

@@ -409,7 +409,7 @@ input[type=text], input[type=password], input[type=select] {
 
 #topbar-first .notifications .btn-group > .label {
     position: absolute;
-    top: 4px;
+    top: 7px;
     right: -2px
 }
 
@@ -3128,6 +3128,11 @@ img.bounceIn {
 }
 .config-panel .close .fa {
     color: #253340;
+}
+
+.upload-image-active
+{
+    border: 2px solid black;
 }
 
 #background-image-upload-buttons{
