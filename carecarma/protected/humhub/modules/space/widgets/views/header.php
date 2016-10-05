@@ -67,7 +67,7 @@ if ($space->isAdmin()) {
                        data-original-title="<?php echo Yii::t('SpaceModule.widgets_views_uploadBanner', 'Upload image'); ?>">
                         <i class="fa fa-cloud-upload"></i>
                     </a>
-                    <span id="banner-image-upload-edit-button"
+                    <a id="banner-image-upload-edit-button"
                        style="<?php
                        if (!$space->getProfileBannerImage()->hasImage()) {
                            echo 'display: none;';
@@ -76,7 +76,7 @@ if ($space->isAdmin()) {
                        href="<?php echo $space->createUrl('/space/manage/image/crop-banner'); ?>"
                        class="btn btn-info btn-sm tt" data-target="#globalModal" data-toggle="tooltip" data-placement="top" title=""
                        data-original-title="<?php echo Yii::t('SpaceModule.widgets_views_editBanner', 'Edit image'); ?>"><i
-                            class="fa fa-edit"></i></span>
+                            class="fa fa-edit"></i></a>
                     <?php
                     echo humhub\widgets\ModalConfirm::widget(array(
                         'uniqueID' => 'modal_bannerimagedelete',
@@ -148,7 +148,7 @@ if ($space->isAdmin()) {
                     <a href="#" onclick="javascript:$('#profilefileupload input').click();" class="btn btn-info btn-sm"><i
                             class="fa fa-cloud-upload tt" data-toggle="tooltip" data-placement="bottom" title=""
                             data-original-title="<?php echo Yii::t('SpaceModule.widgets_views_uploadImage', 'Upload image'); ?>"></i></a>
-                    <span id="profile-image-upload-edit-button"
+                    <a id="profile-image-upload-edit-button"
                        style="<?php
                        if (!$space->getProfileImage()->hasImage()) {
                            echo 'display: none;';
@@ -157,7 +157,7 @@ if ($space->isAdmin()) {
                        href="<?php echo $space->createUrl('/space/manage/image/crop'); ?>"
                        class="btn btn-info btn-sm tt" data-target="#globalModal" data-toggle="tooltip" data-placement="bottom" title=""
                        data-original-title="<?php echo Yii::t('SpaceModule.widgets_views_editImage', 'Edit image'); ?>"><i
-                            class="fa fa-edit"></i></span>
+                            class="fa fa-edit"></i></a>
                     <?php
                     echo humhub\widgets\ModalConfirm::widget(array(
                         'uniqueID' => 'modal_profileimagedelete',
