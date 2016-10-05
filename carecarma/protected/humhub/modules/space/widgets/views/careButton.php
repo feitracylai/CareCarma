@@ -12,8 +12,7 @@ use yii\helpers\Html;
 ?>
 
     <div class="btn-group">
-        <?php echo Html::a(Yii::t('SpaceModule.widgets_views_careButton', 'Accept be Cared'), $space->createUrl('/space/manage/device/care-accepted'), array('class' => 'btn btn-info', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? Your account will can be managed by the administrators in this circle.
-        And in your circles, you will become a regular member.')); ?>
+        <?php echo Html::a(Yii::t('SpaceModule.widgets_views_careButton', 'Accept be Cared'), $space->createUrl('/space/manage/device/care-remind'), array('class' => 'btn btn-info', 'data-target' => '#globalModal')); ?>
         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>

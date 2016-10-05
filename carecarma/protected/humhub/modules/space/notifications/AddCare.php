@@ -25,10 +25,6 @@ class AddCare extends BaseNotification
      */
     public $viewName = "addCare";
 
-    /**
-     * @inheritdoc
-     */
-    public $markAsSeenOnClick = false;
 
     /**
      * @inheritdoc

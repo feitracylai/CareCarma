@@ -8,7 +8,7 @@
 
 use yii\helpers\Html;
 
-echo Yii::t('SpaceModule.views_notifications_addCare', '{userName} add you as an Care Receiver in circle {spaceName}. If you accept it, all the administrators in {spaceName} can manage your account.', array(
+echo Yii::t('SpaceModule.views_notifications_addCare', '{userName} add you as an Care Receiver in circle {spaceName}.', array(
     '{userName}' => '<strong>' . Html::encode($originator->displayName) . '</strong>',
     '{spaceName}' => '<strong>' . Html::encode($source->name) . '</strong>'
 ));
