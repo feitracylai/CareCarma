@@ -302,19 +302,6 @@ class DeviceController extends ContentContainerController
 
         $space->acceptCare($careUser);
 
-        //change this care receiver in other circles to regular memeber
-        $adminSpaces = Membership::findAll(['user_id' => $careUser->id, 'group_id' => 'admin']);
-        if ($adminSpaces != null)
-        {
-            foreach ($adminSpaces as $adminMembership)
-            {
-                if($adminMembership->space_id != $space->id)
-                {
-                    $adminMembership->group_id = 'member';
-                    $adminMembership->save();
-                }
-            }
-        }
 
         return $this->redirect($space->createUrl('/space/space'));
     }
