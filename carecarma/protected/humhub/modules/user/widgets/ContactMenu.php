@@ -28,19 +28,22 @@ class ContactMenu extends BaseMenu
             'sortOrder' => 100,
             'isActive' => (Yii::$app->controller->action->id == 'index'),
         ));
+
         $this->addItem(array(
-            'label' => Yii::t('UserModule.views_account_editContact', 'Add new contact'),
+            'label' => Yii::t('UserModule.views_account_editContact', 'Add contact'),
             'url' => Url::toRoute(['/user/contact/add']),
             'sortOrder' => 200,
             'isActive' => (Yii::$app->controller->action->id == 'add'),
         ));
 
         $this->addItem(array(
-            'label' => Yii::t('UserModule.views_account_editContact', 'Import new contact'),
-            'url' => Url::toRoute(['/user/contact/import']),
+            'label' => Yii::t('UserModule.views_account_editContact', 'Create new contact'),
+            'url' => Url::toRoute(['/user/contact/create']),
             'sortOrder' => 300,
-            'isActive' => (Yii::$app->controller->action->id == 'import'),
+            'isActive' => (Yii::$app->controller->action->id == 'create'),
         ));
+
+
 
         $this->addItem(array(
             'label' => Yii::t('UserModule.views_account_editContact','Link console'),

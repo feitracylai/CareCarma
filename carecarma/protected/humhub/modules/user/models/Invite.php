@@ -35,6 +35,7 @@ class Invite extends \yii\db\ActiveRecord
 
     const SOURCE_SELF = "self";
     const SOURCE_INVITE = "invite";
+    const SOURCE_CONTACT = "contact";
 
     /**
      * @inheritdoc
@@ -110,7 +111,30 @@ class Invite extends \yii\db\ActiveRecord
             $mail->setTo($this->email);
             $mail->setSubject(Yii::t('UserModule.views_mails_UserInviteSelf', 'Registration Link'));
             $mail->send();
-        } elseif ($this->source == self::SOURCE_INVITE && $this->space_invite_id !== null) {
+        } elseif ($this->source == self::SOURCE_CONTACT && $this->user_originator_id !== null){
+            // Switch to systems default language
+            Yii::$app->language = \humhub\models\Setting::Get('defaultLanguage');
+
+            $mail = Yii::$app->mailer->compose([
+                'html' => '@humhub/modules/user/views/mails/UserInviteContact',
+                'text' => '@humhub/modules/user/views/mails/plaintext/UserInviteContact'
+            ], [
+                'token' => $this->token,
+                'originator' => $this->originator,
+                'originatorName' => $this->originator->displayName,
+                'token' => $this->token,
+//                'space' => $this->space
+            ]);
+            $mail->setFrom([\humhub\models\Setting::Get('systemEmailAddress', 'mailing') => \humhub\models\Setting::Get('systemEmailName', 'mailing')]);
+            $mail->setTo($this->email);
+            $mail->setSubject(Yii::t('UserModule.views_mails_UserInviteSpace', 'Contact Invite'));
+            $mail->send();
+
+            // Switch back to users language
+            if (Yii::$app->user->language !== "") {
+                Yii::$app->language = Yii::$app->user->language;
+            }
+        }elseif ($this->source == self::SOURCE_INVITE && $this->space_invite_id !== null) {
 
             // Switch to systems default language
             Yii::$app->language = \humhub\models\Setting::Get('defaultLanguage');

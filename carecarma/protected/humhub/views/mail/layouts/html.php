@@ -560,9 +560,21 @@ use humhub\models\Setting;
                                                                         <tr>
                                                                             <td style="font-size: 12px; line-height: 27px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; color:#ffffff; font-weight:300; text-align:center;">
                                                                                 <span
-                                                                                    style="text-decoration: none; color: #ffffff;"><a
-                                                                                        href="http://carecarma.tk/"
-                                                                                        style="font-size: 25px; line-height: 25px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; color:#ffffff; font-weight:600; text-align:left;"><?php echo Html::encode(Yii::$app->name); ?></a></span>
+                                                                                    style="text-decoration: none; color: #ffffff;">
+
+                                                                                    <?php $logo = new \humhub\libs\LogoImage() ?>
+                                                                                    <?php if ($logo->hasImage()) : ?>
+                                                                                        <a class="navbar-brand hidden-xs" style="height: 50px; padding:0; "
+                                                                                           href="http://www.carecarma.tk/">
+                                                                                            <img class="img-rounded" src="<?php echo $logo->getUrl(); ?>"
+                                                                                                 id="img-logo" />
+                                                                                        </a>
+                                                                                    <?php endif; ?>
+                                                                                    <a href="http://www.carecarma.tk/"
+                                                                                       style="font-size: 25px; line-height: 25px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; color:#ffffff; font-weight:600; text-align:left;<?php if ($logo->hasImage()) : ?>display:none;<?php endif; ?>">
+                                                                                        <?php echo Html::encode(Yii::$app->name); ?>
+                                                                                    </a>
+                                                                                </span>
 
                                                                             </td>
                                                                         </tr>
@@ -736,7 +748,6 @@ use humhub\models\Setting;
 
         </table>
         <?php $this->endBody() ?>
-
     </body>
 </html>
 <?php $this->endPage() ?>
