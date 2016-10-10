@@ -8,7 +8,7 @@
 
 use yii\helpers\Html;
 
-echo strip_tags(Yii::t('UserModule.views_notifications_linkDenied', '{userName} denied link to your contacts', array(
+echo strip_tags(Yii::t('UserModule.views_notifications_linkDenied', '{userName} denied your invite for your network contacts', array(
     '{userName}' => Html::encode($originator->displayName)
 )));
 ?>
