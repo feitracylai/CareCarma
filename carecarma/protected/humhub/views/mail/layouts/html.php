@@ -566,7 +566,7 @@ use humhub\models\Setting;
                                                                                     <?php if ($logo->hasImage()) : ?>
                                                                                         <a class="navbar-brand hidden-xs" style="height: 50px; padding:0; "
                                                                                            href="http://www.carecarma.tk/">
-                                                                                            <img class="img-rounded" src="<?php echo $logo->getUrl(); ?>"
+                                                                                            <img class="img-rounded" src="<?php echo $logo->getImage("", true); ?>"
                                                                                                  id="img-logo" />
                                                                                         </a>
                                                                                     <?php endif; ?>

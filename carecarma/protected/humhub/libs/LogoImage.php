@@ -48,6 +48,17 @@ class LogoImage
         return $path;
     }
 
+
+    public function getImage($prefix = "", $scheme = false)
+    {
+        $cacheId = 0;
+        $path = "@web/";
+        $path .= 'uploads/' . $this->folder_images . '/logo.png';
+
+        $path .= '?cacheId=' . $cacheId;
+
+        return Url::to(Yii::getAlias($path), $scheme);
+    }
     /**
      * Indicates there is a logo image
      *
