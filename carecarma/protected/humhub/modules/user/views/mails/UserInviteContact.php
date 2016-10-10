@@ -197,7 +197,7 @@ use humhub\models\Setting;
                                                     <td  style="font-size: 14px; line-height: 22px; padding-left: 50px; padding-right: 50px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:#777777; font-weight:300; text-align:center; ">
 
                                                         <!-- START: CONTENT -->
-                                                        <?php echo Yii::t('UserModule.views_mails_UserInviteSpace', 'invited you in contacts of {name}.', ['name' => '<strong>' . Html::encode(Yii::$app->name) . '</strong>']); ?><br />
+                                                        <?php echo Yii::t('UserModule.views_mails_UserInviteSpace', "invited you for network contacts in {name}.", ['name' => '<strong>' . Html::encode(Yii::$app->name) . '</strong>']); ?><br />
                                                         <?php echo Yii::t('UserModule.views_mails_UserInviteSpace', '{name} is a social network to help you stay with your families.Register now to join.', ['name' => Yii::$app->name]); ?><br/>
                                                         &nbsp;
                                                         <!-- END: CONTENT -->
