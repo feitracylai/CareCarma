@@ -12,7 +12,8 @@ Steps:
 - 7.Enable "INTL_ICU_VERSION'
 	- Open C:\xampp\php\php.ini to edit.
 	- Remove semicolon from line ";extension=php_intl.dll"
-	- Restart Apache server in XAMPP
+	- Restart Apache server in XAMPP<br>
+	still not work? try: https://github.com/humhub/humhub/commit/3e0a507ceaeeaa04045c8f87e1f9ebcf21ebb996
 - 8. Start Apache Server
 - 9. Delete codes below in \carecarma\themes\CareCarma-4cacc6\views\layouts\head.php (line 9)<br>
 	$userId = Yii::$app->user->id;<br>
