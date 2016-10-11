@@ -26,3 +26,9 @@ Steps:
 - 12. Add codes below in \carecarma\themes\CareCarma-4cacc6\views\layouts\head.php (line 9)<br>
 	$userId = Yii::$app->user->id;<br>
     	$user = \humhub\modules\user\models\User::findOne(['id' => $userId]);
+	
+If you have some errors, please search in https://github.com/humhub/humhub/issues first.<br><br>
+
+- Refernce of code:
+	- http://www.yiiframework.com/doc-2.0/guide-README.html
+	- https://www.humhub.org/docs/guide-README.html
