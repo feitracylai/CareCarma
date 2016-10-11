@@ -196,102 +196,6 @@ class ContactController extends Controller
     }
 
 
-    public function actionAdd()
-    {
-        $space = $this->getSpace();
-        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
-        $contactModel = new Contact();
-
-        $contactModel->user_id = $user->id;
-
-
-        // Build Form Definition
-        $definition = array();
-        $definition['elements'] = array();
-
-
-
-        // Add User Form
-        $definition['elements']['Contact'] = array(
-            'type' => 'form',
-            'title' => Yii::t('SpaceModule.controllers_ContactController', 'New Contact'),
-            'elements' => array(
-                'contact_first' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'contact_last' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'nickname' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'relation' => array(
-                    'type' => 'dropdownlist',
-                    'class' => 'form-control',
-                    'items' => Yii::$app->params['availableRelationship'],
-                ),
-                'contact_mobile' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'home_phone' =>array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'work_phone' =>array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'contact_email' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 100,
-                ),
-            ),
-        );
-
-
-
-        // Get Form Definition
-        $definition['buttons'] = array(
-            'save' => array(
-                'type' => 'submit',
-                'class' => 'btn btn-primary',
-                'label' => Yii::t('SpaceModule.controllers_ContactController', 'Add'),
-            ),
-        );
-
-        $form = new HForm($definition);
-        $form->models['Contact'] = $contactModel;
-
-
-        if ($form->submitted('save') && $form->validate()) {
-
-
-            if ($form->models['Contact']->save()) {
-
-
-                $contactModel->notifyDevice('add');
-
-                return $this->redirect($space->createUrl('index', ['rguid' => $user->guid]));
-            }
-        }
-
-        return $this->render('add', array(
-            'hForm' => $form,
-            'space' => $space,
-        ));
-    }
-
     public function actionConsole()
     {
         $space = $this->getSpace();
@@ -370,7 +274,7 @@ class ContactController extends Controller
             ));
     }
 
-    public function actionImport()
+    public function actionAdd()
     {
         $thisSpace = $this->getSpace();
         $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
@@ -516,10 +420,10 @@ class ContactController extends Controller
                 $contact->sendLink($contactUser, $user);
             }
 
-            return $this->redirect($thisSpace->createUrl('import', ['rguid' => $user->guid]));
+            return $this->redirect($thisSpace->createUrl('add', ['rguid' => $user->guid]));
         }
 
-        return $this->render('import', array(
+        return $this->render('add', array(
             'space' => $thisSpace,
             'keyword' => $keyword,
 //            'hForm' => $form,

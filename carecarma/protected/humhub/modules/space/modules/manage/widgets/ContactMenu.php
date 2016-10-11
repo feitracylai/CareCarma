@@ -30,18 +30,12 @@ class ContactMenu extends \humhub\widgets\BaseMenu
             'isActive' => (Yii::$app->controller->action->id == 'index'&& Yii::$app->controller->id === 'contact'),
         ));
         $this->addItem(array(
-            'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu', 'Add new contact'),
+            'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu', 'Add contacts'),
             'url' => $this->space->createUrl('contact/add',['rguid' => $rguid]),
             'sortOrder' => 200,
             'isActive' => (Yii::$app->controller->action->id == 'add' && Yii::$app->controller->id === 'contact'),
         ));
 
-        $this->addItem(array(
-            'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu', 'Import new contact'),
-            'url' => $this->space->createUrl('contact/import',['rguid' => $rguid]),
-            'sortOrder' => 300,
-            'isActive' => (Yii::$app->controller->action->id == 'import' && Yii::$app->controller->id === 'contact'),
-        ));
 
         $this->addItem(array(
             'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu','Link console'),
