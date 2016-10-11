@@ -14,9 +14,15 @@ Steps:
 	- Remove semicolon from line ";extension=php_intl.dll"
 	- Restart Apache server in XAMPP
 - 8. Start Apache Server
-- 9. localhost/carecarma -> Login will show set up page  (including Database Configuration) for CareCarma
+- 9. Delete codes below in \carecarma\themes\CareCarma-4cacc6\views\layouts\head.php (line 9)
+	$userId = Yii::$app->user->id;
+    	$user = \humhub\modules\user\models\User::findOne(['id' => $userId]);
+- 10. localhost/carecarma -> Login will show set up page  (including Database Configuration) for CareCarma
 	- Hostname : 127.0.0.1
 	- Username : root
 	- Password : <blank>
 	- DatabaseName: carecarma  (create a new database in localhost/phpmyadmin)
-- 10. change theme to carecarma in system administration menu
+- 11. change theme to carecarma in system administration menu
+- 12. Add codes below in \carecarma\themes\CareCarma-4cacc6\views\layouts\head.php (line 9)
+	$userId = Yii::$app->user->id;
+    	$user = \humhub\modules\user\models\User::findOne(['id' => $userId]);
