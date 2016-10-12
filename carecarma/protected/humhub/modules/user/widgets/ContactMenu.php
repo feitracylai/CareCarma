@@ -36,20 +36,27 @@ class ContactMenu extends BaseMenu
             'isActive' => (Yii::$app->controller->action->id == 'add'),
         ));
 
-        $this->addItem(array(
-            'label' => Yii::t('UserModule.views_account_editContact', 'Create new contact'),
-            'url' => Url::toRoute(['/user/contact/create']),
-            'sortOrder' => 300,
-            'isActive' => (Yii::$app->controller->action->id == 'create'),
-        ));
+//        $this->addItem(array(
+//            'label' => Yii::t('UserModule.views_account_editContact', 'Create new contact'),
+//            'url' => Url::toRoute(['/user/contact/create']),
+//            'sortOrder' => 300,
+//            'isActive' => (Yii::$app->controller->action->id == 'create'),
+//        ));
 
 
 
         $this->addItem(array(
             'label' => Yii::t('UserModule.views_account_editContact','Link console'),
             'url' => Url::toRoute(['/user/contact/console']),
-            'sortOrder' => 500,
+            'sortOrder' => 400,
             'isActive' => (Yii::$app->controller->action->id == 'console'),
+        ));
+
+        $this->addItem(array(
+            'label' => Yii::t('UserModule.views_account_editContact','Privacy settings'),
+            'url' => Url::toRoute(['/user/contact/setting']),
+            'sortOrder' => 500,
+            'isActive' => (Yii::$app->controller->action->id == 'setting'),
         ));
 
         parent::init();

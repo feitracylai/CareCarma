@@ -1,12 +1,15 @@
 <?php
 namespace humhub\modules\user\controllers;
+
 use humhub\modules\directory\controllers\DirectoryController;
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\models\Space;
 use humhub\modules\user\models\Invite;
 use humhub\modules\user\models\ProfileField;
 use humhub\modules\user\models\Profile;
+use humhub\modules\user\models\forms\SecuritySetting;
 use humhub\modules\user\notifications\LinkRemove;
+use humhub\modules\user\notifications\AddContact;
 use Yii;
 use yii\helpers\Url;
 use humhub\compat\HForm;
@@ -220,8 +223,75 @@ class ContactController extends Controller
 
 
         if ($doit == 2){
-            $contact = new Contact();
-            $contact->sendLink($contactUser, $user);
+            $needNotify = true;
+            $privacy = $contactUser->getSetting("contact_notify_setting", 'contact', \humhub\models\Setting::Get('contact_notify_setting', 'send'));
+            if ($privacy == User::CONTACT_NOTIFY_NOONE) {
+                $needNotify = false;
+            } elseif ($privacy == User::CONTACT_NOTIFY_NOCIRCLE){
+                $membershipSpaces = Membership::findAll(['user_id' => $contactUser->id]);
+                if ($membershipSpaces != null){
+                    foreach ($membershipSpaces as $membershipSpace){
+                        $userMemeber = Membership::findOne(['space_id' => $membershipSpace->space_id, 'user_id' => $user->id]);
+                        if($userMemeber != null){
+                            $needNotify = false;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if ($needNotify == true){
+                $contact = new Contact();
+                $contact->sendLink($contactUser, $user);
+            } else {
+                //User add contact
+                $userContact = Contact::findOne(['user_id' => $user->id, 'contact_user_id' => $contactUser->id]);
+                if ($userContact == null){
+                    $userContact = new Contact();
+                    $userContact->user_id = $user->id;
+                    $userContact->contact_user_id = $contactUser->id;
+                }
+                $userContact->contact_first = $contactUser->profile->firstname;
+                $userContact->contact_last = $contactUser->profile->lastname;
+                $userContact->contact_email = $contactUser->email;
+                $userContact->linked = 1;
+                $userContact->home_phone = $contactUser->profile->phone_private;
+                $userContact->work_phone = $contactUser->profile->phone_work;
+                if ($contactUser->device_id != null)
+                {
+                    $userContact->device_phone = $contactUser->device->phone;
+                }
+                $userContact->save();
+                $userContact->notifyDevice('add');
+
+                $notification = new AddContact();
+                $notification->source = $userContact;
+                $notification->originator = $user;
+                $notification->send($contactUser);
+
+                //contact user add contact
+                $newContact = Contact::findOne(['user_id' => $contactUser->id, 'contact_user_id' => $user->id]);
+                if ($newContact == null){
+                    $newContact = new Contact();
+                    $newContact->user_id = $contactUser->id;
+                    $newContact->contact_user_id = $user->id;
+                }
+                $newContact->contact_first = $user->profile->firstname;
+                $newContact->contact_last = $user->profile->lastname;
+                $newContact->contact_mobile = $user->profile->mobile;
+                $newContact->contact_email = $user->email;
+                $newContact->linked = 1;
+                $newContact->home_phone = $user->profile->phone_private;
+                $newContact->work_phone = $user->profile->phone_work;
+                if ($user->device_id != null)
+                {
+                    $newContact->device_phone = $user->device->phone;
+                }
+                $newContact->save();
+                $newContact->notifyDevice('add');
+            }
+
+
             return $this->redirect($user->createUrl('add'));
         }
 
@@ -687,75 +757,23 @@ class ContactController extends Controller
         }
     }
     
-//    public function activation ($device_id) {
-//        $user = User::findOne(['device_id' => $device_id]);
-//        $device = Device::findOne(['device_id' => $device_id]);
-//        foreach (Contact::find()->where(['contact_user_id' => $user->id])->each() as $contact) {
-//            $contact->device_phone = $device->phone;
-//            $contact->save();
-//        }
-//        $gcm = new GCM();
-//        $gcm_id = $device->gcmId;
-////        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-//
-////        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
-//
-//        $profileImage = new \humhub\libs\ProfileImage($this->getUser()->guid);
-//        $data = array();
-//        $data['username'] = $user->username;
-//        $data['pawssword'] = $this->getUsernamePassword($user);
-//        $data['image'] = $profileImage->getUrl();
-//        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-//
-//        $gcm->send($gcm_id, $data);
-//        $user_new = User::findOne(['device_id' => $device_id]);
-//        $user_new->temp_password = null;
-//        $user_new->save();
-//    }
+    public function actionSetting()
+    {
+        $user = Yii::$app->user->getIdentity();
+        $model = new SecuritySetting();
 
-//    public function randString($length, $specialChars = false) {
-//        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-//        if ($specialChars) {
-//            $chars .= '!@#$%^&*()';
-//        }
-//
-//        $result = '';
-//        $max = strlen($chars) - 1;
-//        for ($i = 0; $i < $length; $i++) {
-//            $result .= $chars[rand(0, $max)];
-//        }
-//        return $result;
-//    }
+        $model->contact_notify_setting = $user->getSetting("contact_notify_setting", 'contact', \humhub\models\Setting::Get('contact_notify_setting', 'send'));
 
-//    public function actionActivation() {
-//        $data = Yii::$app->request->post();
-//        $gcm_id = $data['gcm_id'];
-//        $phone = $data['phone'];
-//
-//        $device = new Device();
-//        $device_id = "";
-//
-//        while ($device != null) {
-//            $device_id = ContactController::randString(4);
-//            $device = Device::findOne(['device_id' => $device_id]);
-//        }
-//        $new_device = new Device();
-//        $new_device->device_id = $device_id;
-//        $new_device->gcmId = $gcm_id;
-//        $new_device->phone = $phone;
-//        $new_device->save();
-//
-//        $gcm = new GCM();
-//        $gcm->send($gcm_id, $device_id);
-//    }
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $user->setSetting("contact_notify_setting", $model->contact_notify_setting, 'contact');
 
-//    public function getUsernamePassword($user) {
-//        return [
-//            'type' => 'active,login',
-//            'username' => $user->username,
-//            'password' => $user->temp_password,
-//        ];
-//    }
+            Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_ContactController', 'Saved'));
+        }
+
+        return $this->render('setting', array(
+            'model' => $model
+        ));
+    }
 
 
 

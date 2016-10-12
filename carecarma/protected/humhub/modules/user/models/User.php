@@ -74,6 +74,11 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
     const VISIBILITY_REGISTERED_ONLY = 1; // Only for registered members
     const VISIBILITY_ALL = 2; // Visible for all (also guests)
 
+    /**Contact LINK Setting**/
+    const CONTACT_NOTIFY_EVERYONE = 0;
+    const CONTACT_NOTIFY_NOCIRCLE = 1;
+    const CONTACT_NOTIFY_NOONE = 2;
+
     /****User Group****/
     const USERGROUP_SELF = 'u_self';
     const USERGROUP_FRIEND = 'u_friend';
