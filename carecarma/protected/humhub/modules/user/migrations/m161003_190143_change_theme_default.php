@@ -2,16 +2,16 @@
 
 use yii\db\Migration;
 
-class m160921_184457_update_privacy_default extends Migration
+class m161003_190143_change_theme_default extends Migration
 {
     public function up()
     {
-        $this->alterColumn('profile', 'privacy', 'INT(4) DEFAULT 0');
+        $this->alterColumn('user', 'theme', 'varchar(255) DEFAULT "theme-1.css"');
     }
 
     public function down()
     {
-        echo "m160921_184457_update_privacy_default cannot be reverted.\n";
+        echo "m161003_190143_change_theme_default cannot be reverted.\n";
 
         return false;
     }

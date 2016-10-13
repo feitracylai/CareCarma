@@ -45,7 +45,7 @@ use humhub\widgets\GridView;
                                     <?php echo Html::a('<i class="fa fa-times"></i> ', $space->createUrl('device/add-care-cancel', ['linkId' => $user->id]), array('class' => 'btn btn-danger btn-xs tt', 'data-method' => 'POST', 'data-original-title' => 'cancel', 'data-confirm' => 'Are you sure? ')); ?>
                                 </div>
                             <?php else: ?>
-                            <?php echo Html::a('<i class="fa fa-plus"></i> '.Yii::t('UserModule.views_contact_connect', 'Care'), $space->createUrl('device/care-remind',['linkId' => $user->id]), array('class' => 'btn btn-primary','data-target' => '#globalModal' )); ?>
+                            <?php echo Html::a('<i class="fa fa-plus"></i> '.Yii::t('UserModule.views_contact_connect', 'Care'), $space->createUrl('device/add-remind',['linkId' => $user->id]), array('class' => 'btn btn-primary','data-target' => '#globalModal' )); ?>
 <!--                                --><?php //echo Html::a('<i class="fa fa-plus"></i> '.Yii::t('UserModule.views_contact_connect', 'Care'), $space->createUrl('device/add-care', ['doit' => 2, 'linkId' => $user->id]), array('class' => 'btn btn-primary', 'data-method' => 'POST')); ?>
                             <?php endif; ?>
                         </div>

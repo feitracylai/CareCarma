@@ -110,12 +110,13 @@ $(function() {
                         handleUploadError(data.result);
                     } else {
                         $('#user-background-image').attr('src', data.result.files.url + '&c=' + Math.random());
-                        $('#user-background-image').addClass('animated bounceIn');
+                        $('#user-background-image').addClass('animated bounceIn upload-image-active');
+
 
                         $('#test').css("background", "#ebebeb url("+data.result.files.url+") no-repeat fixed");
                         $('#test').css("background-size", "cover");
 
-                        $('#color-options li').removeClass('active');
+                        $('#background-options li').removeClass('active');
                     }
 
                     $('#background-image-upload-loader').hide();
@@ -161,6 +162,7 @@ function resetProfileImage(json) {
         $('.image-upload-buttons').hide();
     } else if (json.type == "background") {
         $('#user-background-image').attr('src', json.defaultUrl);
+        $('#user-background-image').removeClass('upload-image-active');
         $('#test').removeAttr('style');
     }
 
@@ -175,6 +177,8 @@ $(document).ready(function() {
     $(document).bind('drop dragover', function(e) {
         e.preventDefault();
     });
+
+
 
     // show buttons at image rollover
     $('#profilefileupload').mouseover(function() {
@@ -211,7 +215,6 @@ $(document).ready(function() {
     $('#uploadcontent').mouseover(function() {
         $('#background-image-upload-buttons').show();
     })
-
 
     // hide buttons at image mouse leave
     $('#uploadcontent').mouseleave(function() {

@@ -8,7 +8,7 @@
 
 use yii\helpers\Html;
 
-echo Yii::t('UserModule.views_notifications_linkDenied', '{userName} denied link to your contacts', array(
+echo Yii::t('UserModule.views_notifications_linkDenied', '{userName} denied your invite for your network contacts', array(
     '{userName}' => '<strong>' . Html::encode($originator->displayName) . '</strong>'
 ));
 ?>

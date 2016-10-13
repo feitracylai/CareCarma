@@ -51,7 +51,6 @@ class DeviceController extends ContentContainerController
     public function actionAdd()
     {
 
-
         $space = $this->getSpace();
         if (!$space->isAdmin())
             throw new HttpException(403, 'Access denied - Circle Administrator only!');
@@ -237,30 +236,40 @@ class DeviceController extends ContentContainerController
         ));
     }
 
-    public function actionCareRemind()
+    public function actionAddRemind()
     {
         $space = $this->getSpace();
         $userId = Yii::$app->request->get('linkId');
-        $memberships = Membership::findAll(['user_id' => $userId]);
+//        $memberships = Membership::findAll(['user_id' => $userId]);
 
-        $isSpaceOwner = false;
-        $isSpaceAdmin = false;
-        foreach ($memberships as $membership) {
-            $otherSpace = Space::findOne(['id' => $membership->space_id]);
-            if ($otherSpace->isSpaceOwner($userId)) {
-                $isSpaceOwner = true;
-            } elseif ($otherSpace->isAdmin($userId)) {
-                $isSpaceAdmin = true;
-            }
-        }
+//        $isSpaceOwner = false;
+//        $isSpaceAdmin = false;
+//        foreach ($memberships as $membership) {
+//            $otherSpace = Space::findOne(['id' => $membership->space_id]);
+//            if ($otherSpace->isSpaceOwner($userId)) {
+//                $isSpaceOwner = true;
+//            } elseif ($otherSpace->isAdmin($userId)) {
+//                $isSpaceAdmin = true;
+//            }
+//        }
+
+
+//        if ($space->isOtherCareReceiver($userId)){
+//            return $this->renderAjax('care-remind', ['status' => 'care']);
+//        } elseif ($isSpaceOwner){
+//            return $this->renderAjax('care-remind', ['status' => 'owner']);
+//        } elseif ($isSpaceAdmin) {
+//            return $this->renderAjax('care-remind', ['status' => 'admin', 'space' => $space, 'userId' => $userId]);
+//        } else {
+//            return $this->redirect($space->createUrl('device/add-care'));
+//        }
+
 
 
         if ($space->isOtherCareReceiver($userId)){
-            return $this->renderAjax('care-remind', ['status' => 'care']);
-        } elseif ($isSpaceOwner){
-            return $this->renderAjax('care-remind', ['status' => 'owner']);
-        } elseif ($isSpaceAdmin) {
-            return $this->renderAjax('care-remind', ['status' => 'admin', 'space' => $space, 'userId' => $userId]);
+            return $this->renderAjax('add-remind', ['status' => 'care']);
+        } elseif ($space->isAdmin($userId)) {
+            return $this->renderAjax('add-remind', ['status' => 'admin', 'space' => $space, 'userId' => $userId]);
         } else {
             return $this->redirect($space->createUrl('device/add-care'));
         }
@@ -268,6 +277,21 @@ class DeviceController extends ContentContainerController
 
 
 //        return $this->renderAjax('care-remind');
+    }
+
+
+    public function actionCareRemind()
+    {
+        $space = $this->getSpace();
+        $userId = Yii::$app->user->id;
+
+
+        if ($space->isAdmin($userId))
+        {
+            return $this->renderAjax('care-remind', ['status' => 'thisAdmin', 'space' => $space]);
+        } else {
+            return $this->renderAjax('care-remind', ['status' => 'others', 'space' => $space]);
+        }
     }
 
     public function actionCareAccepted()
@@ -278,19 +302,6 @@ class DeviceController extends ContentContainerController
 
         $space->acceptCare($careUser);
 
-        //change this care receiver in other circles to regular memeber
-        $adminSpaces = Membership::findAll(['user_id' => $careUser->id, 'group_id' => 'admin']);
-        if ($adminSpaces != null)
-        {
-            foreach ($adminSpaces as $adminMembership)
-            {
-                if($adminMembership->space_id != $space->id)
-                {
-                    $adminMembership->group_id = 'member';
-                    $adminMembership->save();
-                }
-            }
-        }
 
         return $this->redirect($space->createUrl('/space/space'));
     }

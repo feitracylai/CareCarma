@@ -625,26 +625,26 @@ class AccountController extends Controller
             $json['deleteUrl'] = "";
             $json['deleteType'] = "";
 
-            $gcm = new GCM();
-            $user_id = Yii::$app->user->id;
-            $user = User::findOne(['id' => $user_id]);
-//            Yii::getLogger()->log(print_r($user,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-            $device_id = $user->device_id;
-//            Yii::getLogger()->log(print_r($device_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-            $device = Device::findOne(['device_id' => $device_id]);
-//            Yii::getLogger()->log(print_r($device,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-
-            $pos = strpos($profileImage->getUrl(), "?m=");
-            $image = substr($profileImage->getUrl(), 0, $pos);
-
-
-            $data = array();
-            $data['type'] = "image, update";
-            $data['image'] = $image;
-
-            Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-
-            $gcm->send($device->gcmId, $data);
+//            $gcm = new GCM();
+//            $user_id = Yii::$app->user->id;
+//            $user = User::findOne(['id' => $user_id]);
+////            Yii::getLogger()->log(print_r($user,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//            $device_id = $user->device_id;
+////            Yii::getLogger()->log(print_r($device_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//            $device = Device::findOne(['device_id' => $device_id]);
+////            Yii::getLogger()->log(print_r($device,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//
+//            $pos = strpos($profileImage->getUrl(), "?m=");
+//            $image = substr($profileImage->getUrl(), 0, $pos);
+//
+//
+//            $data = array();
+//            $data['type'] = "image, update";
+//            $data['image'] = $image;
+//
+//            Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//
+//            $gcm->send($device->gcmId, $data);
         } else {
             $json['error'] = true;
             $json['errors'] = $model->getErrors();

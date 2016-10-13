@@ -21,11 +21,11 @@ class CareButton extends Widget
     {
         $membership = $this->space->getMembership();
 
-
-        if (Yii::$app->user->isGuest)
+        if (Yii::$app->user->isGuest || $membership == null)
         {
             return;
         }
+
 
         if ($membership->add_care != '0')
         {

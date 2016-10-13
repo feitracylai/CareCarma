@@ -409,7 +409,7 @@ input[type=text], input[type=password], input[type=select] {
 
 #topbar-first .notifications .btn-group > .label {
     position: absolute;
-    top: 4px;
+    top: 7px;
     right: -2px
 }
 
@@ -729,7 +729,7 @@ input[type=text], input[type=password], input[type=select] {
     background-color: #f3fcfd
 }
 
-.media-list li:hover, .media-list li.selected {
+.media-list li:hover, .media-list li.selected, .media-list li.active {
     background-color: #f7f7f7;
     border-left: 3px solid #f89d29
 }
@@ -1011,7 +1011,8 @@ input[type=text], input[type=password], input[type=select] {
 
 .panel-profile .panel-profile-header .img-profile-data h1.space {
     font-size: 30px;
-    font-weight: 700
+    font-weight: 700;
+    padding: 3px;
 }
 
 .panel-profile .panel-profile-header .img-profile-data h2.space {
@@ -1648,7 +1649,7 @@ a.label-danger:hover {
 }
 
 .label-success {
-    background-color: #6febe8
+    background-color: #f8c041
 }
 
 a.label-success:hover {
@@ -3127,6 +3128,11 @@ img.bounceIn {
 }
 .config-panel .close .fa {
     color: #253340;
+}
+
+.upload-image-active
+{
+    border: 2px solid black;
 }
 
 #background-image-upload-buttons{

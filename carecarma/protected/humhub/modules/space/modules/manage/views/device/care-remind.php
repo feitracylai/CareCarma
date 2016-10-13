@@ -13,7 +13,7 @@ use yii\helpers\Html;
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title"
-                id="myModalLabel"><?php echo Yii::t('SpaceModule.views_care_remind', '<strong>Remind</strong>'); ?></h4>
+                id="myModalLabel"><?php echo Yii::t('SpaceModule.views_care_remind', '<strong>Accept </strong>Remind'); ?></h4>
         </div>
 
         <div class="modal-body">
@@ -22,29 +22,23 @@ use yii\helpers\Html;
                 <div class="tab-content">
                     <div class="tab-pane active" id="internal" style="font-size: 15px; text-align: center">
 
-
-                        <?php if ($status == 'care'): ?>
-                            <?php echo Yii::t('SpaceModule.views_care_remind', 'Sorry, as an Care Receiver of other circle he/she is not able to be cared in this circle. Please check.'); ?>
-                        <?php elseif ($status == 'owner'): ?>
-                            <?php echo Yii::t('SpaceModule.views_care_remind', 'Sorry, as an owner of other circle he/she are not able to be cared in this circle. Please assign another owner or delete them.'); ?>
-                        <?php else: ?>
-                            <?php echo Yii::t('SpaceModule.views_care_remind', 'He/She is an <u>administrator</u> of circles. If he accept to be cared (as a Care Receiver) in this circle,
-                            his status is other circle will be changed to <u>Memeber</u> (who can not manage the circles).'); ?><br/><br/>
-                            <?php echo Yii::t('SpaceModule.views_care_remind', '<strong>Are you sure?</strong>'); ?>
+                        <?php echo Yii::t('SpaceModule.views_care_remind', 'If you accepted, the admins in this circle can edit your account information.'); ?>
+                        <?php if ($status == 'thisAdmin'): ?>
+                            <?php echo Yii::t('SpaceModule.views_care_remind', 'You will not have the permission to manage this circle.'); ?>
                         <?php endif; ?>
-
+                        <?php echo Yii::t('SpaceModule.views_care_remind', '<strong>Are you sure?</strong>'); ?>
                     </div>
                 </div>
         </div>
 
         <div class="modal-footer">
-            <?php if ($status == 'admin'): ?>
+<!--            --><?php //if ($status == 'thisAdmin'): ?>
                 <button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo Yii::t('SpaceModule.views_space_statusInvite', 'Later'); ?></button>
-                <?php echo Html::a(Yii::t('UserModule.views_contact_connect', 'Sure !'), $space->createUrl('device/add-care', ['doit' => 2, 'linkId' => $userId]), array('class' => 'btn btn-info', 'data-method' => 'POST')); ?>
-
-            <?php else: ?>
-            <button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo Yii::t('SpaceModule.views_space_statusInvite', 'Ok'); ?></button>
-            <?php endif; ?>
+                <?php echo Html::a(Yii::t('UserModule.views_contact_connect', 'Sure !'), $space->createUrl('device/care-accepted'), array('class' => 'btn btn-info', 'data-method' => 'POST')); ?>
+<!---->
+<!--            --><?php //else: ?>
+<!--            <button type="button" class="btn btn-primary" data-dismiss="modal">--><?php //echo Yii::t('SpaceModule.views_space_statusInvite', 'Ok'); ?><!--</button>-->
+<!--            --><?php //endif; ?>
 
         </div>
     </div>

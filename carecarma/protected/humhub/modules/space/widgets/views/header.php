@@ -63,8 +63,10 @@ if ($space->isAdmin()) {
             <?php if ($space->isAdmin()) { ?>
                 <div class="image-upload-buttons" id="banner-image-upload-buttons">
                     <a href="#" onclick="javascript:$('#bannerfileupload input').click();"
-                       class="btn btn-info btn-sm"><i
-                            class="fa fa-cloud-upload"></i></a>
+                       class="btn btn-info btn-sm tt"  data-toggle="tooltip" data-placement="top" title=""
+                       data-original-title="<?php echo Yii::t('SpaceModule.widgets_views_uploadBanner', 'Upload image'); ?>">
+                        <i class="fa fa-cloud-upload"></i>
+                    </a>
                     <a id="banner-image-upload-edit-button"
                        style="<?php
                        if (!$space->getProfileBannerImage()->hasImage()) {
@@ -72,7 +74,8 @@ if ($space->isAdmin()) {
                        }
                        ?>"
                        href="<?php echo $space->createUrl('/space/manage/image/crop-banner'); ?>"
-                       class="btn btn-info btn-sm" data-target="#globalModal"><i
+                       class="btn btn-info btn-sm tt" data-target="#globalModal" data-toggle="tooltip" data-placement="top" title=""
+                       data-original-title="<?php echo Yii::t('SpaceModule.widgets_views_editBanner', 'Edit image'); ?>"><i
                             class="fa fa-edit"></i></a>
                     <?php
                     echo humhub\widgets\ModalConfirm::widget(array(
@@ -83,8 +86,9 @@ if ($space->isAdmin()) {
                         'buttonTrue' => Yii::t('SpaceModule.widgets_views_deleteBanner', 'Delete'),
                         'buttonFalse' => Yii::t('SpaceModule.widgets_views_deleteBanner', 'Cancel'),
                         'linkContent' => '<i class="fa fa-times"></i>',
-                        'cssClass' => 'btn btn-danger btn-sm',
-                        'style' => $space->getProfileBannerImage()->hasImage() ? '' : 'display: none;',
+                        'cssClass' => 'btn btn-danger btn-sm tt',
+                        'style' => $space->getProfileBannerImage()->hasImage() ? 'data-toggle="tooltip" data-placement="top" title=""
+                       data-original-title="Delete image"' : 'display: none;',
                         'linkHref' => $space->createUrl("/space/manage/image/delete", ['type' => 'banner']),
                         'confirmJS' => 'function(jsonResp) { resetProfileImage(jsonResp); }'
                     ));
@@ -142,7 +146,8 @@ if ($space->isAdmin()) {
 
                 <div class="image-upload-buttons" id="profile-image-upload-buttons">
                     <a href="#" onclick="javascript:$('#profilefileupload input').click();" class="btn btn-info btn-sm"><i
-                            class="fa fa-cloud-upload"></i></a>
+                            class="fa fa-cloud-upload tt" data-toggle="tooltip" data-placement="bottom" title=""
+                            data-original-title="<?php echo Yii::t('SpaceModule.widgets_views_uploadImage', 'Upload image'); ?>"></i></a>
                     <a id="profile-image-upload-edit-button"
                        style="<?php
                        if (!$space->getProfileImage()->hasImage()) {
@@ -150,7 +155,8 @@ if ($space->isAdmin()) {
                        }
                        ?>"
                        href="<?php echo $space->createUrl('/space/manage/image/crop'); ?>"
-                       class="btn btn-info btn-sm" data-target="#globalModal"><i
+                       class="btn btn-info btn-sm tt" data-target="#globalModal" data-toggle="tooltip" data-placement="bottom" title=""
+                       data-original-title="<?php echo Yii::t('SpaceModule.widgets_views_editImage', 'Edit image'); ?>"><i
                             class="fa fa-edit"></i></a>
                     <?php
                     echo humhub\widgets\ModalConfirm::widget(array(
@@ -161,8 +167,9 @@ if ($space->isAdmin()) {
                         'buttonTrue' => Yii::t('SpaceModule.widgets_views_deleteImage', 'Delete'),
                         'buttonFalse' => Yii::t('SpaceModule.widgets_views_deleteImage', 'Cancel'),
                         'linkContent' => '<i class="fa fa-times"></i>',
-                        'cssClass' => 'btn btn-danger btn-sm',
-                        'style' => $space->getProfileImage()->hasImage() ? '' : 'display: none;',
+                        'cssClass' => 'btn btn-danger btn-sm tt',
+                        'style' => $space->getProfileImage()->hasImage() ? 'data-toggle="tooltip" data-placement="bottom" title=""
+                       data-original-title="Delete image"' : 'display: none;',
                         'linkHref' => $space->createUrl("/space/manage/image/delete", array('type' => 'profile')),
                         'confirmJS' => 'function(jsonResp) { resetProfileImage(jsonResp); }'
                     ));

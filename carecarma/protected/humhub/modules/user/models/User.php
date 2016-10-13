@@ -9,12 +9,14 @@
 namespace humhub\modules\user\models;
 
 use humhub\modules\space\models\Membership;
+use humhub\modules\user\notifications\LinkAccepted;
 use Yii;
 use yii\base\Exception;
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\user\models\GroupAdmin;
 use humhub\modules\user\components\ActiveQueryUser;
 use yii\helpers\Url;
+use yii\log\Logger;
 
 /**
  * This is the model class for table "user".
@@ -71,6 +73,11 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
      */
     const VISIBILITY_REGISTERED_ONLY = 1; // Only for registered members
     const VISIBILITY_ALL = 2; // Visible for all (also guests)
+
+    /**Contact LINK Setting**/
+    const CONTACT_NOTIFY_EVERYONE = 0;
+    const CONTACT_NOTIFY_NOCIRCLE = 1;
+    const CONTACT_NOTIFY_NOONE = 2;
 
     /****User Group****/
     const USERGROUP_SELF = 'u_self';
@@ -177,7 +184,6 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             \humhub\modules\user\behaviors\UserSetting::className(),
             \humhub\modules\user\behaviors\Followable::className(),
             \humhub\modules\user\behaviors\UserModelModules::className(),
-//            \humhub\modules\user\behaviors\ContactLink::className(),
         );
     }
 
@@ -401,6 +407,44 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
                 if ($space != null) {
                     $space->addMember($this->id);
                 }
+            } elseif ($userInvite->source == Invite::SOURCE_CONTACT) {
+                $senderUser = User::findOne(['id' => $userInvite->user_originator_id]);
+                if ($senderUser != null){
+                    //senderUser add contact
+                    $contact = new Contact();
+                    $contact->contact_first = $this->profile->firstname;
+                    $contact->contact_last = $this->profile->lastname;
+                    $contact->contact_email = $this->email;
+                    $contact->user_id = $senderUser->id;
+                    $contact->contact_user_id = $this->id;
+                    $contact->linked = 1;
+                    $contact->save();
+                    $contact->notifyDevice('add');
+
+                    $notification = new LinkAccepted();
+                    $notification->source = $contact;
+                    $notification->originator = $this;
+                    $notification->send($senderUser);
+
+                    //new user add contact
+                    $newContact = new Contact();
+                    $newContact->contact_first = $senderUser->profile->firstname;
+                    $newContact->contact_last = $senderUser->profile->lastname;
+                    $newContact->contact_mobile = $senderUser->profile->mobile;
+                    $newContact->contact_email = $senderUser->email;
+                    $newContact->user_id = $this->id;
+                    $newContact->contact_user_id = $senderUser->id;
+                    $newContact->linked = 1;
+                    $newContact->home_phone = $senderUser->profile->phone_private;
+                    $newContact->work_phone = $senderUser->profile->phone_work;
+                    if ($senderUser->device_id != null)
+                    {
+                        $newContact->device_phone = $senderUser->device->phone;
+                    }
+                    $newContact->save();
+
+
+                }
             }
 
             // Delete/Cleanup Invite Entry
@@ -421,6 +465,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             $space->addMember($this->id);
         }
     }
+
 
     /**
      * Returns users display name
@@ -608,5 +653,6 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
 
         return self::USERGROUP_USER;
     }
+
 
 }
