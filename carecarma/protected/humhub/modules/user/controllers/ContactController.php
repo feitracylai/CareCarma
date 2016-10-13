@@ -613,7 +613,6 @@ class ContactController extends Controller
             $contactInfo->contact_email = $contact->contact_email;
             $contactInfo->home_phone = $contact->home_phone;
             $contactInfo->work_phone = $contact->work_phone;
-            array_push($contact_data, $contactInfo);
 //            Yii::getLogger()->log(print_r(json_encode($contact->getAttributes(array('user_id', 'contact_user_id', 'nickname'))),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         }
         $contact_list['data'] = $contact_data;
