@@ -12,7 +12,7 @@ use yii\grid\GridView;
     <div class="panel-heading"><?php echo Yii::t('UserModule.views_contact_edit', '<strong>Edit</strong> contact'); ?></div>
     <div class="panel-body">
 
-        <?php if ($contact->contact_user_id != null && $contact->linked == 1){ ?>
+<!--        --><?php //if ($contact->contact_user_id != null && $contact->linked == 1){ ?>
             <?php $contactUser = User::findOne(['id' => $contact->contact_user_id]) ?>
             <div class="media">
 
@@ -30,15 +30,15 @@ use yii\grid\GridView;
                     </h4>
                 </div>
 
-                <?php echo Html::a(Yii::t('UserModule.views_contact_edit', 'Disconnect'), $user->createUrl('disconnect', ['id' => $contact->contact_id]), array('class' => 'btn btn-danger btn-xs pull-right', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? Click "OK" if you want to disconnect this user account with your contact.')); ?>
+<!--                --><?php //echo Html::a(Yii::t('UserModule.views_contact_edit', 'Disconnect'), $user->createUrl('disconnect', ['id' => $contact->contact_id]), array('class' => 'btn btn-danger btn-xs pull-right', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? Click "OK" if you want to disconnect this user account with your contact.')); ?>
             </div>
 
-        <?php }else{ ?>
-        <div class="">
-            <?php echo Html::a('<i class="fa fa-user"></i> '.Yii::t('UserModule.views_contact_edit', 'Link to User'), $user->createUrl('connect', ['id' => $contact->contact_id]), array('class' => 'btn btn-primary')); ?>
-        </div>
+<!--        --><?php //}else{ ?>
+<!--        <div class="">-->
+<!--            --><?php //echo Html::a('<i class="fa fa-user"></i> '.Yii::t('UserModule.views_contact_edit', 'Link to User'), $user->createUrl('connect', ['id' => $contact->contact_id]), array('class' => 'btn btn-primary')); ?>
+<!--        </div>-->
 <!--        <br><br>-->
-        <?php } ?>
+<!--        --><?php //} ?>
         <hr>
         <?php $form = \yii\widgets\ActiveForm::begin(); ?>
         <?php echo $hForm->render($form); ?>

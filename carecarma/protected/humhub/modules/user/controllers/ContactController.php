@@ -4,12 +4,12 @@ namespace humhub\modules\user\controllers;
 use humhub\modules\directory\controllers\DirectoryController;
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\models\Space;
+use humhub\modules\user\models\forms\SecuritySetting;
 use humhub\modules\user\models\Invite;
 use humhub\modules\user\models\ProfileField;
 use humhub\modules\user\models\Profile;
-use humhub\modules\user\models\forms\SecuritySetting;
-use humhub\modules\user\notifications\LinkRemove;
 use humhub\modules\user\notifications\AddContact;
+use humhub\modules\user\notifications\LinkRemove;
 use Yii;
 use yii\helpers\Url;
 use humhub\compat\HForm;
@@ -291,6 +291,7 @@ class ContactController extends Controller
                 $newContact->notifyDevice('add');
             }
 
+//            Yii::getLogger()->log([$privacy, User::CONTACT_NOTIFY_EVERYONE], Logger::LEVEL_INFO, 'MyLog');
 
             return $this->redirect($user->createUrl('add'));
         }
@@ -310,6 +311,8 @@ class ContactController extends Controller
         $searchModel = new ContactSearch();
         $searchModel->status = 'console';
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
+
+
 
         return $this->render('console', array(
             'searchModel' => $searchModel,
@@ -447,6 +450,14 @@ class ContactController extends Controller
             throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
         }
         if ($doit == 2) {
+            if ($contact->contact_user_id != null){
+                //delete the opposite contact
+                $oppContact = Contact::findOne(['user_id' => $contact->contact_user_id, 'contact_user_id' => $user->id]);
+                if ($oppContact != null){
+                    $oppContact->delete();
+                }
+            }
+
             $contact->delete();
            // $user = User::findOne(['id' => $contact->user_id]);
             $contact->notifyDevice('delete');
@@ -576,6 +587,7 @@ class ContactController extends Controller
         $user = User::findOne(['guid' => Yii::$app->request->get('uguid')]);
         $contact = Contact::findOne(['user_id' => $user->id, 'contact_user_id' => $contactUser->id]);
 
+
         if ($contact != null) {
             $contact->LinkUser($contactUser, $user);
         }
@@ -646,7 +658,6 @@ class ContactController extends Controller
         $device = Device::findOne(['device_id' => $user->device_id]);
 
         $gcm_id = $device->gcmId;
-        Yii::getLogger()->log(print_r($contact_list,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm->send($gcm_id, $contact_list);
 
 //        $contact = Contact::find()->where(['user_id' => $user_id])->all();
@@ -756,6 +767,7 @@ class ContactController extends Controller
         }
     }
     
+
     public function actionSetting()
     {
         $user = Yii::$app->user->getIdentity();
