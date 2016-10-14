@@ -863,7 +863,7 @@ class ContactController extends Controller
 
             }
         }
-//        print_r($output_array);
+        print_r($output_array);
 
         foreach ($result as $title) {
             $arr[] = $title->attributes()->address;
@@ -888,8 +888,8 @@ class ContactController extends Controller
         }
         $user = User::findOne(['guid' => Yii::$app->user->guid]);
 
-        return $this->render('importgoogle', [
-        ]);
+//        return $this->render('importgoogle', [
+//        ]);
 
     }
 
