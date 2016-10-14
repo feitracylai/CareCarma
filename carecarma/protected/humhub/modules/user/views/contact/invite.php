@@ -51,7 +51,7 @@ use humhub\models\Setting;
                         <br/><br/>
                         <div>
                             <button type="button" class="btn btn-primary">
-                                <a href="https://accounts.google.com/o/oauth2/auth?client_id=584594431619-c8gb5m52css0vs8biotp7jcie27h0iff.apps.googleusercontent.com&redirect_uri=http://127.0.0.1:8888/CareCarma/callback.php&scope=https://www.google.com/m8/feeds/&response_type=code"><img src="images/sign1.png" alt="" id="signimg"/></a>
+                                <a href="https://accounts.google.com/o/oauth2/auth?client_id=584594431619-c8gb5m52css0vs8biotp7jcie27h0iff.apps.googleusercontent.com&redirect_uri=http://127.0.0.1:8888/CareCarma/carecarma/index.php?r=user%2Fcontact%2Fimportgoogle&scope=https://www.google.com/m8/feeds/&response_type=code"><img src="images/sign1.png" alt="" id="signimg"/></a>
                             </button>
                         </div>
                     </div>
