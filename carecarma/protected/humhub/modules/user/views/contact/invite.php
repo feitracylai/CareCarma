@@ -47,10 +47,13 @@ use humhub\models\Setting;
                         </div>
                     </div>
                     <div class="tab-pane" id="import">
-
-
-
-
+                        <?php echo Yii::t('SpaceModule.views_space_invite', 'You can invite external users from you google account, .'); ?>
+                        <br/><br/>
+                        <div>
+                            <button type="button" class="btn btn-primary">
+                                <a href="https://accounts.google.com/o/oauth2/auth?client_id=584594431619-c8gb5m52css0vs8biotp7jcie27h0iff.apps.googleusercontent.com&redirect_uri=http://127.0.0.1:8888/CareCarma/callback.php&scope=https://www.google.com/m8/feeds/&response_type=code"><img src="images/sign1.png" alt="" id="signimg"/></a>
+                            </button>
+                        </div>
                     </div>
 
                 <?php endif; ?>
