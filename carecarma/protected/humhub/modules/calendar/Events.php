@@ -23,9 +23,9 @@ class Events extends \yii\base\Object
         $user = Yii::$app->user->getIdentity();
         if ($user->isModuleEnabled('calendar')) {
             $event->sender->addItem(array(
-                'label' => Yii::t('CalendarModule.base', 'Main Calendar'),
+                'label' => Yii::t('CalendarModule.base', 'Calendar'),
                 'url' => Url::to(['/calendar/global/index']),
-                'icon' => '<i class="fa fa-calendar-plus-o"></i>',
+                'icon' => '<i class="fa fa-calendar"></i>',
                 'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'calendar' && Yii::$app->controller->id == 'global'),
                 'sortOrder' => 300,
             ));
@@ -37,10 +37,10 @@ class Events extends \yii\base\Object
         $space = $event->sender->space;
         if ($space->isModuleEnabled('calendar')) {
             $event->sender->addItem(array(
-                'label' => Yii::t('CalendarModule.base', 'Calendar'),
+                'label' => Yii::t('CalendarModule.base', 'Time Line'),
                 'group' => 'modules',
                 'url' => $space->createUrl('/calendar/view/index'),
-                'icon' => '<i class="fa fa-calendar"></i>',
+                'icon' => '<i class="fa fa-calendar-check-o"></i>',
                 'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'calendar'),
             ));
         }
