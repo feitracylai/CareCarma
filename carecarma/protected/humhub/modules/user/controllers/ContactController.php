@@ -678,6 +678,7 @@ class ContactController extends Controller
                 $image = substr($profileImage->getUrl(), 0, $pos);
                 $contactInfo->photo = $image;
             }
+            array_push($contact_data, $contactInfo);
 //            Yii::getLogger()->log(print_r(json_encode($contact->getAttributes(array('user_id', 'contact_user_id', 'nickname'))),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         }
         $contact_list['data'] = $contact_data;
