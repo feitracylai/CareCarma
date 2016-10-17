@@ -668,11 +668,20 @@ class ContactController extends Controller
             $contactInfo->contact_email = $contact->contact_email;
             $contactInfo->home_phone = $contact->home_phone;
             $contactInfo->work_phone = $contact->work_phone;
+
+            $contact_user = User::findOne(['id' => $contact->contact_user_id]);
+            if ($contact_user) {
+                $profileImage = new \humhub\libs\ProfileImage($contact_user->guid);
+                $pos = strpos($profileImage->getUrl(), "?m=");
+                $image = substr($profileImage->getUrl(), 0, $pos);
+                $contactInfo->photo = $image;
+            }
 //            Yii::getLogger()->log(print_r(json_encode($contact->getAttributes(array('user_id', 'contact_user_id', 'nickname'))),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         }
         $contact_list['data'] = $contact_data;
 
-//        ContactInfo::notify($contact_list);
+        Yii::getLogger()->log(print_r($contact_list, true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
 
         $gcm = new GCM();
         $user = User::findOne(['id' => $contact_list['data'][0]->user_id]);
@@ -695,6 +704,7 @@ class ContactController extends Controller
         $contact_list = array();
         $contact_list['type'] = 'watch,all';
         $contact_data = array();
+
         foreach (Contact::find()->where(['user_id' => $user_id])->each() as $contact) {
             if ($contact->watch_primary_number == 1) {
                 $contactInfo = new ContactInfo();
@@ -709,6 +719,15 @@ class ContactController extends Controller
                 $contactInfo->contact_email = $contact->contact_email;
                 $contactInfo->home_phone = $contact->home_phone;
                 $contactInfo->work_phone = $contact->work_phone;
+
+                $contact_user = User::findOne(['id' => $contact->contact_user_id]);
+                if ($contact_user) {
+                    $profileImage = new \humhub\libs\ProfileImage($contact_user->guid);
+                    $pos = strpos($profileImage->getUrl(), "?m=");
+                    $image = substr($profileImage->getUrl(), 0, $pos);
+                    $contactInfo->photo = $image;
+                }
+
                 array_push($contact_data, $contactInfo);
             }
         }
@@ -743,6 +762,15 @@ class ContactController extends Controller
                 $contactInfo->contact_email = $contact->contact_email;
                 $contactInfo->home_phone = $contact->home_phone;
                 $contactInfo->work_phone = $contact->work_phone;
+
+                $contact_user = User::findOne(['id' => $contact->contact_user_id]);
+                if ($contact_user) {
+                    $profileImage = new \humhub\libs\ProfileImage($contact_user->guid);
+                    $pos = strpos($profileImage->getUrl(), "?m=");
+                    $image = substr($profileImage->getUrl(), 0, $pos);
+                    $contactInfo->photo = $image;
+                }
+
                 array_push($contact_data, $contactInfo);
             }
         }

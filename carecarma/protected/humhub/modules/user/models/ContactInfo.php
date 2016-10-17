@@ -26,6 +26,7 @@ class ContactInfo
     public $relation;
     public $home_phone;
     public $work_phone;
+    public $photo;
 
 //    public function getData()
 //    {
