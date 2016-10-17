@@ -29,13 +29,13 @@ use humhub\modules\user\models\User;
 
                     <div class="pull-right">
 <!--                        --><?php //Yii::getLogger()->log(print_r($thisUser->createUrl('invite')."&googleemail=". $user[2],true),yii\log\Logger::LEVEL_INFO,'MyLog'); ?>
-                        <?php echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Invite Contact'), $thisUser->createUrl('invite')."&googleemail=". $user[2], array('class' => 'btn btn-info', 'data-target' => '#globalModal')); ?>
+                        <?php echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Invite Contact'), $thisUser->createUrl('invite')."&googleemail=". $user[2], array('class' => 'btn btn-primary', 'data-target' => '#globalModal')); ?>
                     </div>
 
 
                     <div class="media-body">
                         <h4 class="media-heading">
-                            <?php echo Html::encode($user[0]); ?>
+                            <b><?php echo Html::encode($user[0]); ?></b>
 
                         </h4>
                         <?php echo Html::encode($user[2]); ?>

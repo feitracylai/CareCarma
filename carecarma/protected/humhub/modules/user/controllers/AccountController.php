@@ -124,7 +124,7 @@ class AccountController extends Controller
 
 
                 if ($this->checkDevice($user->device_id)) {
-                    $this->activation($user->device_id);
+                    $this->activationA($user->device_id);
                 }
 
 //                if ($device->gcmId != null ) {
@@ -276,7 +276,7 @@ class AccountController extends Controller
 
 
 
-    public function activation ($device_id) {
+    public function activationA ($device_id) {
         $user = User::findOne(['device_id' => $device_id]);
         $device = Device::findOne(['device_id' => $device_id]);
         foreach (Contact::find()->where(['contact_user_id' => $user->id])->each() as $contact) {

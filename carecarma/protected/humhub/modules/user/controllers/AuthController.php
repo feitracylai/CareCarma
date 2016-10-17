@@ -19,6 +19,8 @@ use humhub\modules\user\models\Password;
 use humhub\modules\user\models\forms\AccountRecoverPassword;
 use humhub\modules\user\models\Users;
 use Illuminate\Support\Facades\Hash;
+use \humhub\libs\GCM;
+use \humhub\modules\user\models\Device;
 
 /**
  * AuthController handles all authentication tasks.
@@ -446,6 +448,40 @@ class AuthController extends Controller
         }
         return $output;
     }
+
+
+    public function actionActivation() {
+//        Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $data = Yii::$app->request->post();
+//        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $gcm_id = $data['gcm_id'];
+        $phone = $data['phone'];
+//        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        Yii::getLogger()->log(print_r($phone,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+
+        $device = new Device();
+        $device_id = "";
+
+        while ($device != null) {
+            $device_id = AccountController::randString(4);
+            $device = Device::findOne(['device_id' => $device_id]);
+        }
+        $new_device = new Device();
+        $new_device->device_id = $device_id;
+        $new_device->gcmId = $gcm_id;
+        $new_device->phone = $phone;
+        $new_device->save();
+
+        $gcm = new GCM();
+        $data2 = array();
+        $data2['type'] = "active,device_id";
+        $data2['device_id'] = $device_id;
+//        Yii::getLogger()->log(print_r($data2,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $gcm->send($gcm_id, $data2);
+    }
+
+
 
 }
 
