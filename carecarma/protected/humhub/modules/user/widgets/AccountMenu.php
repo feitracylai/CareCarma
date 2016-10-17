@@ -74,16 +74,16 @@ class AccountMenu extends BaseMenu
 
 
         // Only show this page when really user specific modules available
-        if (count(Yii::$app->user->getIdentity()->getAvailableModules()) != 0) {
-            $this->addItem(array(
-                'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Modules'),
-                'icon' => '<i class="fa fa-rocket"></i>',
-                'group' => 'account',
-                'url' => Url::toRoute('//user/account/edit-modules'),
-                'sortOrder' => 150,
-                'isActive' => (Yii::$app->controller->action->id == "editModules" && Yii::$app->controller->id == 'account'),
-            ));
-        }
+//        if (count(Yii::$app->user->getIdentity()->getAvailableModules()) != 0) {
+//            $this->addItem(array(
+//                'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Modules'),
+//                'icon' => '<i class="fa fa-rocket"></i>',
+//                'group' => 'account',
+//                'url' => Url::toRoute('//user/account/edit-modules'),
+//                'sortOrder' => 150,
+//                'isActive' => (Yii::$app->controller->action->id == "editModules" && Yii::$app->controller->id == 'account'),
+//            ));
+//        }
 
         $this->addItem(array(
             'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Notifications'),

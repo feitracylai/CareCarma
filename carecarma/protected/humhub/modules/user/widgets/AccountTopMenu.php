@@ -36,12 +36,13 @@ class AccountTopMenu extends BaseMenu
             'url' => $user->createUrl('/user/profile'),
             'sortOrder' => 100,
         ));
-        $this->addItem(array(
-            'label' => Yii::t('base', 'Account settings'),
-            'icon' => '<i class="fa fa-edit"></i>',
-            'url' => Url::toRoute('/user/account/edit'),
-            'sortOrder' => 200,
-        ));
+
+//        $this->addItem(array(
+//            'label' => Yii::t('base', 'Account settings'),
+//            'icon' => '<i class="fa fa-edit"></i>',
+//            'url' => Url::toRoute('/user/account/edit'),
+//            'sortOrder' => 200,
+//        ));
 
         if (Yii::$app->user->isAdmin()) {
             $this->addItem(array(
