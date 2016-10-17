@@ -977,8 +977,9 @@ class ContactController extends Controller
     {
         $data = 1;
         $user = Yii::$app->user->getIdentity();
-
+        $user_id = Yii::$app->user->id;
         print_r($user);
+        Yii::getLogger()->log(print_r($user_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 //        return $this->render('test', array(
 //            'model' => $data
 //        ));
