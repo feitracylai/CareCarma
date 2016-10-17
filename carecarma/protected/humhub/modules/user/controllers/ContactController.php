@@ -651,6 +651,8 @@ class ContactController extends Controller
     public function actionDeviceallcontact ()
     {
         $user_id = Yii::$app->user->id;
+        $data = Yii::$app->request->post();
+        $device_id = $data['device_id'];
 //        $contact = Contact::find()->where(['user_id' => $user_id])->all();
         $contact_list = array();
         $contact_list['type'] = 'contact,all';
@@ -684,8 +686,7 @@ class ContactController extends Controller
 
 
         $gcm = new GCM();
-        $user = User::findOne(['id' => $contact_list['data'][0]->user_id]);
-        $device = Device::findOne(['device_id' => $user->device_id]);
+        $device = Device::findOne(['device_id' => $device_id]);
 
         $gcm_id = $device->gcmId;
         $gcm->send($gcm_id, $contact_list);
@@ -701,6 +702,9 @@ class ContactController extends Controller
     public function actionWatchallcontact ()
     {
         $user_id = Yii::$app->user->id;
+        $data = Yii::$app->request->post();
+        $device_id = $data['device_id'];
+
         $contact_list = array();
         $contact_list['type'] = 'watch,all';
         $contact_data = array();
@@ -734,8 +738,7 @@ class ContactController extends Controller
         $contact_list['data'] = $contact_data;
 
         $gcm = new GCM();
-        $user = User::findOne(['id' => $contact_list['data'][0]->user_id]);
-        $device = Device::findOne(['device_id' => $user->device_id]);
+        $device = Device::findOne(['device_id' => $device_id]);
 
         $gcm_id = $device->gcmId;
         Yii::getLogger()->log(print_r($contact_list,true),yii\log\Logger::LEVEL_INFO,'MyLog');
@@ -745,6 +748,9 @@ class ContactController extends Controller
     public function actionPhoneallcontact ()
     {
         $user_id = Yii::$app->user->id;
+        $data = Yii::$app->request->post();
+        $device_id = $data['device_id'];
+
         $contact_list = array();
         $contact_list['type'] = 'phone,all';
         $contact_data = array();
@@ -777,8 +783,7 @@ class ContactController extends Controller
         $contact_list['data'] = $contact_data;
 
         $gcm = new GCM();
-        $user = User::findOne(['id' => $contact_list['data'][0]->user_id]);
-        $device = Device::findOne(['device_id' => $user->device_id]);
+        $device = Device::findOne(['device_id' => $device_id]);
 
         $gcm_id = $device->gcmId;
         Yii::getLogger()->log(print_r($contact_list,true),yii\log\Logger::LEVEL_INFO,'MyLog');
