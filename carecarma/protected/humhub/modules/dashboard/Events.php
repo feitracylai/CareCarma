@@ -34,7 +34,8 @@ class Events
         $event->sender->addItem(array(
             'label' => Yii::t('DashboardModule.base', '&nbsp&nbsp&nbsp&nbspHome&nbsp&nbsp&nbsp&nbsp'),
             'id' => 'dashboard',
-            'icon' => '<i class="fa fa-tachometer"></i>',
+            'icon' => '<i class="fa fa-home"></i>',
+//            'img' => '<img src="'.Yii::getAlias("@web").'/img/home icon.png" style="width:20px; height:20px"><br>',
             'url' => Url::toRoute('/dashboard/dashboard'),
             'sortOrder' => 100,
             'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'dashboard'),
