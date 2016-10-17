@@ -711,6 +711,7 @@ class ContactController extends Controller
         $contact_data = array();
 
         foreach (Contact::find()->where(['user_id' => $user_id])->each() as $contact) {
+            Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
             if ($contact->watch_primary_number == 1) {
                 $contactInfo = new ContactInfo();
                 $contactInfo->contact_id = $contact->contact_id;
