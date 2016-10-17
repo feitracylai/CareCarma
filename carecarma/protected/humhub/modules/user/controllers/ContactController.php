@@ -975,4 +975,33 @@ class ContactController extends Controller
 //        ));
     }
 
+
+    public function actionImportlocal () {
+        $user = Yii::$app->user;
+
+        $data = Yii::$app->request->post();
+        $contact_list = json_decode($data['contact_list'], TRUE);
+
+
+        $output_array = array();
+        foreach ($contact_list as $contact) {
+            $output_array[] = array(
+                (string)$contact['name'],
+                (string)$contact['phone_number'],
+                (string)$contact['email']);
+        }
+
+        $id = Yii::$app->user->id;
+        $searchModel = new ContactSearch();
+        $searchModel->status = 'importlocal';
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
+
+        return $this->render('importlocal', array(
+            'dataProvider' => $dataProvider,
+            'data' => $output_array,
+            'thisUser' => $user
+        ));
+
+    }
+
 }
