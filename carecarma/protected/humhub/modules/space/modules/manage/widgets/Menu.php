@@ -66,14 +66,14 @@ class Menu extends \humhub\widgets\BaseMenu
 //            }
 
 
-            $this->addItem(array(
-                'label' => Yii::t('SpaceModule.widgets_SpaceAdminMenuWidget', 'Modules'),
-                'group' => 'admin',
-                'url' => $this->space->createUrl('/space/manage/module'),
-                'icon' => '<i class="fa fa-rocket"></i>',
-                'sortOrder' => 300,
-                'isActive' => (Yii::$app->controller->id == "module"),
-            ));
+//            $this->addItem(array(
+//                'label' => Yii::t('SpaceModule.widgets_SpaceAdminMenuWidget', 'Modules'),
+//                'group' => 'admin',
+//                'url' => $this->space->createUrl('/space/manage/module'),
+//                'icon' => '<i class="fa fa-rocket"></i>',
+//                'sortOrder' => 300,
+//                'isActive' => (Yii::$app->controller->id == "module"),
+//            ));
         }
 
         if (!$this->space->isSpaceOwner() && $this->space->isMember()) {

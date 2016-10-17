@@ -2,6 +2,8 @@
 
 namespace humhub\modules\user;
 
+use Yii;
+use yii\helpers\Url;
 use humhub\modules\user\models\User;
 use humhub\modules\user\models\GroupAdmin;
 use humhub\modules\user\models\Password;
@@ -18,6 +20,19 @@ use humhub\models\Setting;
  */
 class Events extends \yii\base\Object
 {
+
+    public static function onTopMenuInit($event)
+    {
+        $event->sender->addItem(array(
+            'label' => Yii::t('DashboardModule.base', '&nbsp&nbsp&nbsp&nbspSettings&nbsp&nbsp&nbsp&nbsp'),
+            'id' => 'settings',
+            'icon' => '<i class="fa fa-wrench "></i>',
+//            'img' => '<img src="'.Yii::getAlias("@web").'/img/home icon.png" style="width:20px; height:20px"><br>',
+            'url' => Url::toRoute('/user/account/edit'),
+            'sortOrder' => 1000,
+            'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'user'),
+        ));
+    }
 
     /**
      * On rebuild of the search index, rebuild all user records
