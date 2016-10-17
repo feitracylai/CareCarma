@@ -471,7 +471,28 @@ class ContactController extends Controller
 
         $model = new \humhub\modules\user\models\forms\Invite;
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+//        Yii::getLogger()->log(print_r(Yii::$app->request->get(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $data = Yii::$app->request->get();
+//        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        if (array_key_exists('googleemail',$data)) {
+            $email = $data['googleemail'];
+            $userInvite = Invite::findOne(['email' => $email]);
+            if($userInvite === null){
+                $userInvite = new Invite();
+                $userInvite->email = $email;
+            }
+
+            $userInvite->source = Invite::SOURCE_CONTACT;
+            $userInvite->user_originator_id = Yii::$app->user->id;
+            $userInvite->space_invite_id = null;
+            $userInvite->save();
+            $userInvite->sendInviteMail();
+            return $this->renderAjax('invite-success');
+
+        }
+
+
+        else if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             foreach ($model->getEmails() as $email) {
                 $userInvite = Invite::findOne(['email' => $email]);
                 if($userInvite === null){
@@ -493,14 +514,14 @@ class ContactController extends Controller
         return $this->renderAjax('invite', array('model' => $model));
     }
 
-    public function actionImport()
-    {
-
-
-        return $this->render('import', array(
-
-        ));
-    }
+//    public function actionImport()
+//    {
+//
+//
+//        return $this->render('import', array(
+//
+//        ));
+//    }
 
 
     public function actionConnect()
@@ -863,34 +884,36 @@ class ContactController extends Controller
 
             }
         }
-        print_r($output_array);
 
         foreach ($result as $title) {
             $arr[] = $title->attributes()->address;
-//                                print_r($title->attributes()->title);
+//          print_r($title->attributes()->title);
             echo $title->attributes()->displayName;
         }
-//                            print_r($arr);
+//      print_r($arr);
         foreach ($arr as $key) {
-//                                echo $key."<br>";
+//          echo $key."<br>";
         }
 
         $response_array = json_decode(json_encode($arr), true);
-
-        // echo "<pre>";
-        // print_r($response_array);
-        //echo "</pre>";
-
         $email_list = '';
         foreach ($response_array as $value2) {
 
             $email_list = ($value2[0] . ",") . $email_list;
         }
+        $id = Yii::$app->user->id;
+//        print_r($id);
+        $searchModel = new ContactSearch();
+        $searchModel->status = 'importgoogle';
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
+
         $user = User::findOne(['guid' => Yii::$app->user->guid]);
 
-//        return $this->render('importgoogle', [
-//        ]);
-
+        return $this->render('importgoogle', array(
+            'dataProvider' => $dataProvider,
+            'data' => $output_array,
+            'thisUser' => $user
+        ));
     }
 
     function curl_file_get_contents($url) {
@@ -911,6 +934,17 @@ class ContactController extends Controller
         $contents = curl_exec($curl);
         curl_close($curl);
         return $contents;
+    }
+
+    public function actionTest()
+    {
+        $data = 1;
+        $user = Yii::$app->user->getIdentity();
+
+        print_r($user);
+//        return $this->render('test', array(
+//            'model' => $data
+//        ));
     }
 
 }

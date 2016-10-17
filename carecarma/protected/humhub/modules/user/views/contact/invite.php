@@ -28,9 +28,6 @@ use humhub\models\Setting;
                         <li class="active tab-external"><a href="#external"
                                                     data-toggle="tab"><?php echo Yii::t('UserModule.views_contact_invite', 'Invite by email'); ?></a>
                         </li>
-                        <li class="tab-import"><a href="#import"
-                                                           data-toggle="tab"><?php echo Yii::t('UserModule.views_contact_invite', 'Import personal contact'); ?></a>
-                        </li>
                     </ul>
                 </div>
                 <br/>
@@ -44,15 +41,6 @@ use humhub\models\Setting;
                         <br/><br/>
                         <div class="form-group">
                             <?php echo $form->field($model, 'emails')->textArea(['rows' => '3', 'placeholder' => Yii::t('SpaceModule.views_space_invite', 'Email addresses'), 'id' => 'email_invite'])->label(false); ?>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="import">
-                        <?php echo Yii::t('SpaceModule.views_space_invite', 'You can invite external users from you google account, .'); ?>
-                        <br/><br/>
-                        <div>
-                            <button type="button" class="btn btn-primary">
-                                <a href="https://accounts.google.com/o/oauth2/auth?client_id=584594431619-c8gb5m52css0vs8biotp7jcie27h0iff.apps.googleusercontent.com&redirect_uri=http://127.0.0.1:8888/CareCarma/carecarma/index.php?r=user%2Fcontact%2Fimportgoogle&scope=https://www.google.com/m8/feeds/&response_type=code"><img src="images/sign1.png" alt="" id="signimg"/></a>
-                            </button>
                         </div>
                     </div>
 
