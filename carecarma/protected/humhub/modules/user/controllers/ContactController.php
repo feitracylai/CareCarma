@@ -843,7 +843,7 @@ class ContactController extends Controller
         $accesstoken = '';
         $client_id = '584594431619-c8gb5m52css0vs8biotp7jcie27h0iff.apps.googleusercontent.com';
         $client_secret = 'gCqIX4YrqNH-8mYO91O_WBOJ';
-        $redirect_uri = 'http://127.0.0.1:8888/CareCarma/carecarma/index.php?r=user/contact/importgoogle';
+        $redirect_uri = 'http://www.carecarma.tk/carecarma/index.php?r=user/contact/importgoogle';
         $simple_api_key = 'AIzaSyCdNyA6NGy8ie9ZcsSEh3adbdTXxn3LKUY';
         $max_results = 500;
         $auth_code = $_GET["code"];
