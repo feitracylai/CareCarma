@@ -636,6 +636,15 @@ input[type=text], input[type=password], input[type=select] {
     color: #555
 }
 
+
+/*My Addition: begin*/
+@media only screen and (max-width: 404px){
+  #topbar-second .nav > li > a{
+     padding:6px 8px 0;
+  }
+}
+/*End*/
+
 #topbar-second .nav > li > ul > li > a:hover, #topbar-second .nav > li > ul > li > a.active {
     border-left: 3px solid #4cacc6;
     background-color: #f7f7f7;
