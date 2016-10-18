@@ -19,7 +19,6 @@ use humhub\widgets\GridView;
         </p>
 
         <?php
-        Yii::getLogger()->log($spaceName, \yii\log\Logger::LEVEL_INFO, 'MyLog');
 
 
         echo GridView::widget([
