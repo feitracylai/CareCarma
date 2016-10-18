@@ -52,7 +52,6 @@ class ContactLink extends Behavior
         } else {
             $data = 'update';
         }
-
         $this->owner->linked = 1;
         $this->owner->contact_first = $contactUser->profile->firstname;
         $this->owner->contact_last = $contactUser->profile->lastname;
@@ -66,6 +65,27 @@ class ContactLink extends Behavior
         }
         $this->owner->save();
         $this->owner->notifyDevice($data);
+
+        //add contact 2
+        $contact = Contact::findOne(['user_id' => $contactUser->id, 'contact_user_id' => $user->id]);
+        if ($contact == null){
+            $contact = new Contact();
+            $contact->user_id = $contactUser->id;
+            $contact->contact_user_id = $user->id;
+        }
+        $contact->linked = 1;
+        $contact->contact_first = $user->profile->firstname;
+        $contact->contact_last = $user->profile->lastname;
+        $contact->contact_mobile = $user->profile->mobile;
+        $contact->home_phone = $user->profile->phone_private;
+        $contact->work_phone = $user->profile->phone_work;
+        $contact->contact_email = $user->email;
+        if ($user->device_id != null)
+        {
+            $contact->device_phone = $user->device->phone;
+        }
+        $contact->save();
+        $contact->notifyDevice('add');
 
 
         //Send notification to Accept

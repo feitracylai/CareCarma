@@ -13,12 +13,12 @@ use \humhub\modules\space\models\Space;
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo Yii::t('UserModule.views_contact_add', '<strong>Add</strong> contact'); ?>
+        <?php echo Yii::t('UserModule.views_contact_add', '<strong>Add</strong> people'); ?>
     </div>
 
     <div class="panel-body">
-        <?=\humhub\modules\user\widgets\ContactMenu::widget(); ?>
-        <p/>
+<!--        --><?//=\humhub\modules\user\widgets\ContactMenu::widget(); ?>
+<!--        <p/>-->
         <div class="center-block">
             <?php echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Invite Contact'), $thisUser->createUrl('invite'), array('class' => 'btn btn-primary', 'data-target' => '#globalModal')); ?>
 <!--        </div>-->

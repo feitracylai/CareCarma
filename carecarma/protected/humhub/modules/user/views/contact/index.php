@@ -9,17 +9,17 @@ use humhub\widgets\GridView;
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo Yii::t('UserModule.views_contact_index', '<strong>Contact</strong> information'); ?>
+        <?php echo Yii::t('UserModule.views_contact_index', '<strong>Your</strong> people'); ?>
     </div>
     <div class="panel-body">
-        <?= \humhub\modules\user\widgets\ContactMenu::widget(); ?>
-        <p />
+<!--        --><?//= \humhub\modules\user\widgets\ContactMenu::widget(); ?>
+<!--        <p />-->
         <p>
-            <?php echo Yii::t('UserModule.views_contact_index', 'In this overview you can find all of your contacts and manage them.'); ?>
+            <?php echo Yii::t('UserModule.views_contact_index', 'In this overview you can find all of your people and their information.'); ?>
         </p>
 
         <?php
-        $relationship = Yii::$app->params['availableRelationship'];
+        Yii::getLogger()->log($spaceName, \yii\log\Logger::LEVEL_INFO, 'MyLog');
 
 
         echo GridView::widget([
@@ -38,22 +38,35 @@ use humhub\widgets\GridView;
 
                 ],
 
-                'nickname',
+//                'nickname',
+//                [
+//                    'label' => Yii::t('UserModule.views_contact_index', 'Relationship'),
+//                    'class' => 'humhub\libs\DropDownGridColumn',
+//                    'attribute' => 'relation',
+//                    'options' => ['style' => 'width:160px; min-width:80px;'],
+//                    'submitAttributes' => ['contact_id'],
+//                    'dropDownOptions' =>  $relationship,
+//                    'value' =>
+//                    function ($data) use ($relationship) {
+//
+//                         return $relationship[$data->relation];
+//                    },
+//
+//
+//                ],
+
                 [
-                    'label' => Yii::t('UserModule.views_contact_index', 'Relationship'),
+                    'label' => Yii::t('UserModule.views_contact_index', 'Circles'),
                     'class' => 'humhub\libs\DropDownGridColumn',
                     'attribute' => 'relation',
                     'options' => ['style' => 'width:160px; min-width:80px;'],
                     'submitAttributes' => ['contact_id'],
-                    'dropDownOptions' =>  $relationship,
-                    'value' =>
-                    function ($data) use ($relationship) {
+                    'dropDownOptions' =>  $spaceName,
 
-                         return $relationship[$data->relation];
-                    },
 
 
                 ],
+
                 [
                     'header' => 'Actions',
                     'class' => 'yii\grid\ActionColumn',

@@ -24,13 +24,22 @@ class Events extends \yii\base\Object
     public static function onTopMenuInit($event)
     {
         $event->sender->addItem(array(
+            'label' => Yii::t('DashboardModule.base', '&nbsp&nbsp&nbsp&nbspPeople&nbsp&nbsp&nbsp&nbsp'),
+            'id' => 'people',
+            'icon' => '<i class="fa fa-users "></i>',
+            'url' => Url::toRoute('/user/contact'),
+            'sortOrder' => 400,
+            'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'user' && Yii::$app->controller->id == 'contact'),
+        ));
+
+        $event->sender->addItem(array(
             'label' => Yii::t('DashboardModule.base', '&nbsp&nbsp&nbsp&nbspSettings&nbsp&nbsp&nbsp&nbsp'),
             'id' => 'settings',
             'icon' => '<i class="fa fa-wrench "></i>',
 //            'img' => '<img src="'.Yii::getAlias("@web").'/img/home icon.png" style="width:20px; height:20px"><br>',
             'url' => Url::toRoute('/user/account/edit'),
             'sortOrder' => 1000,
-            'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'user'),
+            'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'user' && Yii::$app->controller->id == 'account'),
         ));
     }
 
