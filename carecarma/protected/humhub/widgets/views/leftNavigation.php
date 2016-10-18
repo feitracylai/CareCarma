@@ -16,7 +16,7 @@
         <?php if (count($items) == 0) continue; ?>
 
         <?php if ($group['label'] != "") : ?>
-            <div class="panel-heading collapse-toggle hidden-md hidden-lg" type="button" data-toggle="collapse" data-parent="custom-collapse" data-target="#side_menu_<?php echo $count?>"><?php echo $group['label']; ?>  <i class="fa fa-angle-down"></i></div>
+            <div class="panel-heading collapse-toggle hidden-md hidden-lg" type="button" data-toggle="collapse" data-parent="custom-collapse" data-target="#side_menu_<?php echo $count?>"  style="cursor: pointer;" ><?php echo $group['label']; ?>  <i class="fa fa-angle-down"></i></div>
             <div class="panel-heading hidden-xs hidden-sm"><?php echo $group['label']; ?></div>
 
         <?php endif; ?>
