@@ -650,10 +650,12 @@ class ContactController extends Controller
 
     public function actionDeviceallcontact ()
     {
-        $user_id = Yii::$app->user->id;
-        Yii::getLogger()->log(print_r($user_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        $user_id = Yii::$app->user->id;
+//        Yii::getLogger()->log(print_r($user_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $data = Yii::$app->request->post();
         $device_id = $data['device_id'];
+        $user = User::findOne(['username' => $data['username']]);
+        $user_id = $user->username;
 //        $contact = Contact::find()->where(['user_id' => $user_id])->all();
         $contact_list = array();
         $contact_list['type'] = 'contact,all';
@@ -703,10 +705,11 @@ class ContactController extends Controller
 
     public function actionWatchallcontact ()
     {
-        $user_id = Yii::$app->user->id;
-        Yii::getLogger()->log(print_r($user_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
         $data = Yii::$app->request->post();
         $device_id = $data['device_id'];
+        $user = User::findOne(['username' => $data['username']]);
+        $user_id = $user->username;
 
         $contact_list = array();
         $contact_list['type'] = 'watch,all';
@@ -751,9 +754,11 @@ class ContactController extends Controller
 
     public function actionPhoneallcontact ()
     {
-        $user_id = Yii::$app->user->id;
         $data = Yii::$app->request->post();
         $device_id = $data['device_id'];
+
+        $user = User::findOne(['username' => $data['username']]);
+        $user_id = $user->username;
 
         $contact_list = array();
         $contact_list['type'] = 'phone,all';
