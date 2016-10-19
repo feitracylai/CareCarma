@@ -37,7 +37,7 @@ class ContactController extends Controller
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
     }
-    public $subLayout = "@humhub/modules/user/views/account/_layout";
+    public $subLayout = "@humhub/modules/user/views/contact/_layout";
     /**
      * Lists all contact models.
      * @return mixed
@@ -49,27 +49,38 @@ class ContactController extends Controller
         $user = User::findOne(['id' => $id]);
         $searchModel = new ContactSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
+
+        $spaceName = array();
+        $spaceName[] = "--Select--";
+        $members = Membership::findAll(['user_id' => $user->id]);
+        if ($members != null){
+            foreach ($members as $member){
+                $space = Space::findOne(['id' => $member->space_id]);
+                $spaceName[] = $space->name;
+            }
+        }
 		
 		// Relationship Change
-        if (Yii::$app->request->post('dropDownColumnSubmit')) {
-            Yii::$app->response->format = 'json';
-            $contact = Contact::findOne(['contact_id' => Yii::$app->request->post('contact_id')]);
-            if ($contact === null) {
-                throw new \yii\web\HttpException(404, 'Could not find contacts!');
-            }
-
-
-            if ($contact->load(Yii::$app->request->post()) && $contact->validate() && $contact->save()) {
-
-                return Yii::$app->request->post();
-            }
-            return $contact->getErrors();
-        }
+//        if (Yii::$app->request->post('dropDownColumnSubmit')) {
+//            Yii::$app->response->format = 'json';
+//            $contact = Contact::findOne(['contact_id' => Yii::$app->request->post('contact_id')]);
+//            if ($contact === null) {
+//                throw new \yii\web\HttpException(404, 'Could not find contacts!');
+//            }
+//
+//
+//            if ($contact->load(Yii::$app->request->post()) && $contact->validate() && $contact->save()) {
+//
+//                return Yii::$app->request->post();
+//            }
+//            return $contact->getErrors();
+//        }
 		
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'user' => $user,
+            'spaceName' => $spaceName,
         ]);
     }
     public function actionView()
@@ -614,7 +625,7 @@ class ContactController extends Controller
         }
 
 
-        return $this->redirect(Url::to(['console']));
+        return $this->redirect(Url::to(['index']));
     }
 
     public function actionLinkDecline ()

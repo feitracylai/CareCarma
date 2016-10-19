@@ -647,6 +647,13 @@ input[type=text], input[type=password], input[type=select] {
     color: #555
 }
 
+/*My Addition: begin*/
+@media only screen and (max-width: 404px){
+  #topbar-second .nav > li > a{
+     padding:6px 2.5px 0;
+  }
+}
+/*End*/
 #topbar-second .nav > li.active > a {
     min-height: 46px
 }
