@@ -628,7 +628,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 #topbar-second .nav > li > a i {
-    font-size: 14px
+    font-size: 20px
 }
 
 #topbar-second .nav > li > a .caret {
@@ -642,16 +642,30 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 #topbar-second .nav > li > ul > li > a:hover, #topbar-second .nav > li > ul > li > a.active {
-    border-left: 3px solid #926ecd;
+    border-left: 3px solid #4cacc6;
     background-color: #f7f7f7;
     color: #555
 }
 
+#topbar-second .label-notification {
+    position: absolute;
+    top: 0;
+    right: 17px
+}
+
 /*My Addition: begin*/
 @media only screen and (max-width: 404px){
-  #topbar-second .nav > li > a{
-     padding:6px 2.5px 0;
-  }
+    #topbar-second .nav > li > a{
+        padding:6px 2.5px 0;
+    }
+}
+
+@media only screen and (max-width: 404px){
+    #topbar-second .label-notification{
+        position: absolute;
+        top: 3px;
+        right: 2px;
+    }
 }
 /*End*/
 

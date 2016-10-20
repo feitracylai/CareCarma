@@ -59,11 +59,12 @@
     
 
     <!--BACKGROUND HOMEPAGE SECTION WITH VIDEO- http://coverr.co/-->
-    <div class="homepage-hero-module  ">
+    <div class="homepage-hero-module ">
         <div class="video-container ">
-            <video autoplay loop class="fillWidth ">
+            <video autoplay loop class="fillWidth  ">
                 <source src="assets/video/carecarma_cover_v2.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
             </video>
+
             <section class="promo">
                 <div class="container text-center">
                     <img src="assets/images/carecarma_blue_logo.png" style="width: 800px;">
@@ -79,7 +80,32 @@
             </section><!--//promo-->
 
         </div>
+
     </div>
+
+
+    <!--<div class="visible-xs visible-sm">-->
+        <!--<div class="bg-slider-wrapper">-->
+            <!--<div class="flexslider bg-slider">-->
+                <!--<ul class="slides">-->
+                    <!--<li class="slide slide-1"></li>-->
+                    <!--<li class="slide slide-2"></li>-->
+                    <!--<li class="slide slide-3"></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>&lt;!&ndash;//bg-slider-wrapper&ndash;&gt;-->
+
+        <!--<section class="promo section section-on-bg">-->
+            <!--<div class="container text-center">-->
+                <!--<h2 class="title">CareCarma</h2>-->
+                <!--<p class="intro">It Starts With Family</p>-->
+                <!--<p><a class="btn btn-cta btn-cta-primary" href="carecarma/index.php?r=user%2Fauth%2Fsignup">Try It Now</a></p>-->
+                <!--<button type="button" class="play-trigger btn-link " data-toggle="modal" data-target="#modal-video" ><i class="fa fa-youtube-play"></i> Watch the video</button>-->
+            <!--</div>&lt;!&ndash;//container&ndash;&gt;-->
+        <!--</section>&lt;!&ndash;//promo&ndash;&gt;-->
+    <!--</div>-->
+
+
     <!--
 
     <div cclass="sections-wrapper">
@@ -292,8 +318,8 @@
     <script type="text/javascript" >
         $( document ).ready(function() {
 
-            if($(window).width() <= 780) {
-                window.location = "/carecarma/";
+            if($(window).width() <= 992) {
+                window.location = "./carecarma/";
             }
 
             scaleVideoContainer();
@@ -330,13 +356,14 @@
                     videoWidth,
                     videoHeight;
 
-            console.log(windowHeight);
+//            console.log(windowHeight);
+//            console.log(windowWidth);
         $(element).each(function(){
                 var videoAspectRatio = $(this).data('height')/$(this).data('width');
 
                 $(this).width(windowWidth);
 
-                if(windowWidth < 1000){
+                if(windowHeight < 979){
                     videoHeight = windowHeight;
                     videoWidth = videoHeight / videoAspectRatio;
                     $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
