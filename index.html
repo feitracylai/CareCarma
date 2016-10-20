@@ -28,7 +28,7 @@
     <![endif]-->
 </head> 
 
-<body class="home-page hidden-xs">
+<body class="home-page hidden-xs hidden-sm">
     <!-- ******HEADER****** --> 
     <header id="header" class="header navbar-fixed-top">  
         <div class="container">       
@@ -318,7 +318,7 @@
     <script type="text/javascript" >
         $( document ).ready(function() {
 
-            if($(window).width() <= 768) {
+            if($(window).width() <= 992) {
                 window.location = "./carecarma/";
             }
 
@@ -357,13 +357,13 @@
                     videoHeight;
 
 //            console.log(windowHeight);
-            console.log(windowWidth);
+//            console.log(windowWidth);
         $(element).each(function(){
                 var videoAspectRatio = $(this).data('height')/$(this).data('width');
 
                 $(this).width(windowWidth);
 
-                if(windowWidth < 1000){
+                if(windowHeight < 979){
                     videoHeight = windowHeight;
                     videoWidth = videoHeight / videoAspectRatio;
                     $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
