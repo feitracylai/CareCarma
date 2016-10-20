@@ -666,7 +666,7 @@ class ContactController extends Controller
         $data = Yii::$app->request->post();
         $device_id = $data['device_id'];
         $user = User::findOne(['username' => $data['username']]);
-        $user_id = $user->username;
+        $user_id = $user->id;
 //        $contact = Contact::find()->where(['user_id' => $user_id])->all();
         $contact_list = array();
         $contact_list['type'] = 'contact,all';
@@ -720,7 +720,7 @@ class ContactController extends Controller
         $data = Yii::$app->request->post();
         $device_id = $data['device_id'];
         $user = User::findOne(['username' => $data['username']]);
-        $user_id = $user->username;
+        $user_id = $user->id;
 
         $contact_list = array();
         $contact_list['type'] = 'watch,all';
@@ -769,7 +769,7 @@ class ContactController extends Controller
         $device_id = $data['device_id'];
 
         $user = User::findOne(['username' => $data['username']]);
-        $user_id = $user->username;
+        $user_id = $user->id;
 
         $contact_list = array();
         $contact_list['type'] = 'phone,all';
