@@ -1003,10 +1003,10 @@ class ContactController extends Controller
 
 
     public function actionImportlocal () {
-        $user = Yii::$app->user;
 
         $data = Yii::$app->request->post();
         $contact_list = json_decode($data['contact_list'], TRUE);
+        $user = User::findOne(['username' => $data['username']]);
 
 
         $output_array = array();
@@ -1017,7 +1017,7 @@ class ContactController extends Controller
                 (string)$contact['email']);
         }
 
-        $id = Yii::$app->user->id;
+        $id = $user->id;
         $searchModel = new ContactSearch();
         $searchModel->status = 'importlocal';
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
