@@ -186,7 +186,7 @@ class InitialData
         }
 
         $field = new ProfileField();
-        $field->internal_name = "street2";
+        $field->internal_name = "unit";
         $field->title = 'Apt/Unit (optional)';
         $field->sort_order = 450;
         $field->profile_field_category_id = $cGeneral->id;

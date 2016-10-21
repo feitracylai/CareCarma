@@ -8,8 +8,10 @@
 
 namespace humhub\modules\space\controllers;
 
+use humhub\modules\user\models\Contact;
 use Yii;
 use yii\helpers\Url;
+use yii\log\Logger;
 use yii\web\HttpException;
 use humhub\modules\user\models\User;
 use humhub\modules\space\models\Space;
@@ -163,6 +165,7 @@ class MembershipController extends \humhub\modules\content\components\ContentCon
     public function actionInvite()
     {
         $space = $this->getSpace();
+        $doit = (int)Yii::$app->request->get('doit');
 
         // Check Permissions to Invite
         if (!$space->canInvite()) {
@@ -172,28 +175,41 @@ class MembershipController extends \humhub\modules\content\components\ContentCon
         $model = new \humhub\modules\space\models\forms\InviteForm();
         $model->space = $space;
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
-            $statusInvite = false;
-
-            // Invite existing members
-            foreach ($model->getInvites() as $user) {
-                $space->inviteMember($user->id, Yii::$app->user->id);
-                $statusInvite = $space->getMembership($user->id)->status;
+        $contacts = Contact::findAll(['user_id' => Yii::$app->user->id]);
+        $users = array();
+//        $allUsers = User::findAll(['group_id' => 1]);
+//        foreach ($allUsers as $user){
+//            $contactUserId = $user->id;
+//            if (!$space->isMember($contactUserId)){
+//                $users[] = User::findOne(['id' => $contactUserId]);
+//            }
+//        }
+        foreach ($contacts as $contact){
+            $contactUserId = $contact->contact_user_id;
+            if (!$space->isMember($contactUserId)){
+                $users[] = User::findOne(['id' => $contactUserId]);
             }
-
-            // Invite non existing members
-            if (Setting::Get('internalUsersCanInvite', 'authentication_internal')) {
-                foreach ($model->getInvitesExternal() as $email) {
-                    $statusInvite = ($space->inviteMemberByEMail($email, Yii::$app->user->id)) ? Membership::STATUS_INVITED : false;
-                }
-            }
-
-            return $this->renderAjax('statusInvite', array('status' => $statusInvite));
         }
 
-        return $this->renderAjax('invite', array('model' => $model, 'space' => $space));
+        if ($doit == 2) {
+
+            $statusInvite = false;
+//            $guid = $_POST['data'];
+            $user = User::findOne(['id' => Yii::$app->request->get('user_id')]);
+
+            // Invite existing members
+
+            $space->inviteMember($user->id, Yii::$app->user->id);
+            $statusInvite = $space->getMembership($user->id)->status;
+
+
+//            return $this->renderAjax('statusInvite', array('status' => $statusInvite, 'space' => $space));
+        }
+
+        return $this->renderAjax('invite', array('space' => $space, 'users' => $users));
     }
+
+
 
     /**
      * When a user clicks on the Accept Invite Link, this action is called.
