@@ -602,6 +602,7 @@ class MailController extends Controller
     }
 
     public function actionDevicereply() {
+		Yii::getLogger()->log(print_r('deviceReply',true),Logger::LEVEL_INFO,'MyLog');
         $data = Yii::$app->request->post();
         $message_data = $data['ReplyMessage'];
         $message_id = $message_data['message_id'];
