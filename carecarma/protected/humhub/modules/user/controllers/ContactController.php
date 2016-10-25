@@ -239,11 +239,11 @@ class ContactController extends Controller
         ];
         $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
         $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
-        if ($keyword == ''){
-            $users = $contacts;
-        } else {
+       // if ($keyword == ''){
+       //     $users = $contacts;
+       // } else {
             $users = $searchResultSet->getResultInstances();
-        }
+       // }
 
 
         if ($doit == 2){
