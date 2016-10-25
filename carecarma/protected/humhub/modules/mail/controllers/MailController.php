@@ -2,6 +2,7 @@
 
 namespace humhub\modules\mail\controllers;
 
+use humhub\modules\user\models\Contact;
 use Yii;
 use yii\helpers\Html;
 use yii\log\Logger;
@@ -287,8 +288,19 @@ class MailController extends Controller
         foreach ($query->all() as $user) {
 
             if ($user != null) {
+                //check contact user
+                $contactUser = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $user->id]);
+                if ($contactUser != null){
+                    $userInfo = array();
+                    $userInfo['guid'] = $user->guid;
+                    $userInfo['displayName'] = Html::encode($user->displayName);
+                    $userInfo['image'] = $user->getProfileImage()->getUrl();
+                    $userInfo['link'] = $user->getUrl();
+                    $results[] = $userInfo;
+                    break;
+                }
 
-
+                //check circle members
                 $spaces = Membership::findAll(['user_id' => $user->id, 'status' => 3]);
                 foreach ($spaces as $memberSpace) {
                     $spaceId = $memberSpace->space_id;
@@ -602,7 +614,7 @@ class MailController extends Controller
     }
 
     public function actionDevicereply() {
-		Yii::getLogger()->log(print_r('deviceReply',true),Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r('deviceReply',true),Logger::LEVEL_INFO,'MyLog');
         $data = Yii::$app->request->post();
         $message_data = $data['ReplyMessage'];
         $message_id = $message_data['message_id'];
