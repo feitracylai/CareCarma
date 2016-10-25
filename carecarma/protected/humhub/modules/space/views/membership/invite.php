@@ -17,7 +17,7 @@ use yii\helpers\Html;
 
             <?php if (count($users) == 0){ ?>
 
-                <p><?php echo Yii::t('SpaceModule.views_space_invite', 'No users found!'); ?></p>
+                <p><?php echo Yii::t('SpaceModule.views_space_invite', 'No users in your people! Or they already in this circle.'); ?></p>
             <?php }else{ ?>
         </div>
 
@@ -31,10 +31,10 @@ use yii\helpers\Html;
                         <div class="pull-right" >
                             <?php if($membership == null){
                                 echo Html::a('<i class="fa fa-plus"></i> '.Yii::t('SpaceModule.views_space_invite', 'Invite'), $space->createUrl('/space/membership/invite', ['doit' => 2, 'user_id' => $user->id]), array('class' => 'btn btn-primary  pull-right space-invite','data-target' => '#globalModal'));
-                            } else {
-                                echo Html::a('<i class="fa fa-plus"></i> '.Yii::t('SpaceModule.views_space_invite', 'Request Sent'),'',array('class' => 'btn btn-default  pull-right'));
-                            }
-                            ?>
+                            } else { ?>
+<!--                                echo Html::a('<i class="fa fa-plus"></i> '.Yii::t('SpaceModule.views_space_invite', 'Request Sent'),'',array('class' => 'btn btn-default  pull-right'));-->
+                                <a class="btn btn-default pull-right" disabled><i class="fa fa-plus"></i> Request Sent</a>
+                            <?php } ?>
                         </div>
 
 

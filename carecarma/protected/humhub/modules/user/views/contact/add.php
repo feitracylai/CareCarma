@@ -43,6 +43,7 @@ use \humhub\modules\space\models\Space;
 
 
         <?php $wholeusers = \humhub\modules\user\models\User::find()->count(); ?>
+<!--        --><?php //Yii::getLogger()->log([count($users), $wholeusers], \yii\log\Logger::LEVEL_INFO, 'MyLog'); ?>
         <?php if (count($users) == 0 || count($users) == $wholeusers){ ?>
 
             <p><?php echo Yii::t('UserModule.views_contact_add', 'No users found!'); ?></p>
@@ -58,7 +59,14 @@ use \humhub\modules\space\models\Space;
                 <div class="media" id="media-<?php echo $user->guid; ?>">
 
                     <div class="pull-right" >
-                        <?php echo Html::a('<i class="fa fa-plus"></i> '.Yii::t('UserModule.views_contact_add', 'Add'), $thisUser->createUrl('/user/contact/add', ['doit' => 2, 'connect_id' => $user->id]), array('class' => 'btn btn-primary  pull-right', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? Click "OK" if you want to add this user in your contact.')); ?>
+                        <?php $contact = \humhub\modules\user\models\Contact::findOne(['user_id' => $thisUser->id, 'contact_user_id' => $user->id]);
+                        if ($contact == null){
+                            echo Html::a('<i class="fa fa-plus"></i> '.Yii::t('UserModule.views_contact_add', 'Add'), $thisUser->createUrl('/user/contact/add', ['doit' => 2, 'connect_id' => $user->id]), array('class' => 'btn btn-primary  pull-right', 'data-method' => 'POST'));
+                        } elseif ($contact != null && $contact->contact_first == null ) { ?>
+
+                        <a class="btn btn-default" disabled><i class="fa fa-plus"></i> Request Sent </a>&nbsp;
+                        <?php echo Html::a(Yii::t('UserModule.views_contact_add', 'Cancel Request'),  Url::toRoute(['/user/contact/link-cancel', 'id' => $contact->contact_id]), array('class' => 'btn btn-danger pull-right'));
+                        } ?>
                     </div>
 
 

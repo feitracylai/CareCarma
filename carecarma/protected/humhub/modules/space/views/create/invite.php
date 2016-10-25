@@ -3,6 +3,7 @@
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use humhub\models\Setting;
+use yii\helpers\Html;
 ?>
 
 <div class="modal-dialog modal-dialog-small animated fadeIn">
@@ -15,74 +16,68 @@ use humhub\models\Setting;
         </div>
         <div class="modal-body">
 
-            <br><br>
+            <?php if (count($users) == 0){ ?>
 
-            <?php if (Setting::Get('internalUsersCanInvite', 'authentication_internal')) : ?>
-                <div class="text-center">
-                    <ul id="tabs" class="nav nav-tabs tabs-center" data-tabs="tabs">
-                        <li class="active tab-internal"><a href="#internal"
-                                                           data-toggle="tab"><?php echo Yii::t('SpaceModule.views_space_invite', 'Pick users'); ?></a>
-                        </li>
-                        <li class="tab-external"><a href="#external"
-                                                    data-toggle="tab"><?php echo Yii::t('SpaceModule.views_space_invite', 'Invite by email'); ?></a>
-                        </li>
-                    </ul>
-                </div>
-                <br/>
-            <?php endif; ?>
+                <p><?php echo Yii::t('SpaceModule.views_space_invite', 'No users in your people! Or they already in this circle.'); ?></p>
+            <?php }else{ ?>
+        </div>
+
+    <hr>
+        <ul class="media-list">
+            <!-- BEGIN: Results -->
+            <?php foreach ($users as $user) : ?>
+                <li>
+                    <div class="media" id="media-<?php echo $user->guid; ?>">
+                        <?php $membership = \humhub\modules\space\models\Membership::findOne(['space_id' => $space_id, 'user_id' => $user->id, 'status' => \humhub\modules\space\models\Membership::STATUS_INVITED]) ?>
+                        <div class="pull-right" >
+                            <?php if($membership == null){
+                                echo Html::a('<i class="fa fa-plus"></i> '.Yii::t('SpaceModule.views_space_invite', 'Invite'),
+                                    $space->createUrl('/space/membership/invite',
+                                        ['doit' => 2,
+                                        'user_id' => $user->id,
+                                        'spaceId' => $space_id]),
+                                    array('class' => 'btn btn-primary  pull-right space-invite','data-target' => '#globalModal'));
+                            } else { ?>
+                                <a class="btn btn-default pull-right" disabled><i class="fa fa-plus"></i> Request Sent</a>
+                            <?php
+//                            echo Html::a(Yii::t('SpaceModule.views_space_invite', 'Cancel Request'),'',array('class' => 'btn btn-danger  pull-right'));
+
+                            }?>
+                        </div>
 
 
-            <div class="tab-content">
-                <div class="tab-pane active" id="internal">
+                        <a href="#" class="pull-left contact"">
+                        <img class="media-object img-rounded"
+                             src="<?php echo $user->getProfileImage()->getUrl(); ?>" width="50"
+                             height="50" alt="50x50" data-src="holder.js/50x50"
+                             style="width: 50px; height: 50px;">
+                        </a>
 
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                <?php echo Html::encode($user->displayName); ?>
 
-                    <?php echo Yii::t('SpaceModule.views_space_invite', 'To invite users to this circle, please type their names below to find and pick them.'); ?>
+                            </h4>
+                        </div>
 
-                    <br/><br/>
-                    <?php echo $form->field($model, 'invite')->textInput(['id' => 'invite']); ?>
-
-                    <?php
-                    // attach mention widget to it
-                    echo humhub\modules\user\widgets\UserPicker::widget(array(
-                        'inputId' => 'invite',
-                        'model' => $model, // CForm Instanz
-                        'attribute' => 'invite',
-                        'placeholderText' => Yii::t('SpaceModule.views_space_invite', 'Add an user'),
-                        'focus' => true,
-                    ));
-                    ?>
-
-                </div>
-                <?php if (Setting::Get('internalUsersCanInvite', 'authentication_internal')) : ?>
-                    <div class="tab-pane" id="external">
-                        <?php echo Yii::t('SpaceModule.views_space_invite', 'You can also invite external users, which are not registered now. Just add their e-mail addresses separated by comma.'); ?>
-                        <br><br>
-                        <?php echo $form->field($model, 'inviteExternal')->textarea(['rows' => '3', 'placeholder' => Yii::t('SpaceModule.views_space_invite', 'Email addresses')]); ?>
 
                     </div>
-                <?php endif; ?>
-            </div>
 
 
-        </div>
+
+                </li>
+
+            <?php endforeach; ?>
+            <!-- END: Results -->
+        </ul>
+    <?php } ?>
         <div class="modal-footer">
             <hr>
             <br>
 
-            <?php
-            echo \humhub\widgets\AjaxButton::widget([
-                'label' => Yii::t('SpaceModule.views_space_invite', 'Done'),
-                'ajaxOptions' => [
-                    'type' => 'POST',
-                    'beforeSend' => new yii\web\JsExpression('function(){ setModalLoader(); }'),
-                    'success' => new yii\web\JsExpression('function(html){ $("#globalModal").html(html); }'),
-                    'url' => Url::to(['/space/create/invite', 'spaceId' => $space->id]),
-                ],
-                'htmlOptions' => [
-                    'class' => 'btn btn-primary'
-                ]
-            ]);
-            ?>
+
+            <button type="button" class="btn btn-primary"
+                    data-dismiss="modal"><?php echo Yii::t('SpaceModule.views_space_invite', 'Done'); ?></button>
 
             <?php echo \humhub\widgets\LoaderWidget::widget(['id' => 'invite-loader', 'cssClass' => 'loader-modal hidden']); ?>
         </div>
@@ -93,28 +88,12 @@ use humhub\models\Setting;
 </div>
 
 
-<script type="text/javascript">
+<script>
 
-    // Shake modal after wrong validation
-<?php if ($model->hasErrors()) : ?>
-        $('.modal-dialog').removeClass('fadeIn');
-        $('.modal-dialog').addClass('shake');
+    $('.space-invite').on('click', function(e){
+        location.reload();
 
-        // check if there is an error at the second tab
-
-    <?php if (Setting::Get('internalUsersCanInvite', 'authentication_internal') && $model->hasError('inviteExternal')) : ?>
-            // show tab
-            $('#tabs a:last').tab('show');
-    <?php endif; ?>
-<?php endif; ?>
-
-    $('.tab-internal a').on('shown.bs.tab', function (e) {
-        $('#invite_tag_input_field').focus();
-    })
-
-    $('.tab-external a').on('shown.bs.tab', function (e) {
-        $('#email_invite').focus();
-    })
+    });)
 
 
 </script>

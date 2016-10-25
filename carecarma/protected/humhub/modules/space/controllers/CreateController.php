@@ -8,6 +8,8 @@
 
 namespace humhub\modules\space\controllers;
 
+use humhub\modules\user\models\Contact;
+use humhub\modules\user\models\User;
 use Yii;
 use yii\helpers\Url;
 use yii\web\HttpException;
@@ -57,7 +59,7 @@ class CreateController extends Controller
         $model = $this->createSpaceModel();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
-            return $this->actionModules($model->id);
+            return $this->actionInvite($model->id);
         }
 
         $visibilityOptions = [];
@@ -87,45 +89,47 @@ class CreateController extends Controller
     {
         $space = Space::find()->where(['id' => $space_id])->one();
 
-//        if (count($space->getAvailableModules()) == 0) {
+        if (count($space->getAvailableModules()) == 0) {
 
             $model = new \humhub\modules\space\models\forms\InviteForm();
             $model->space = $space;
 
+
+
             return $this->renderAjax('invite', ['spaceId' => $space->id, 'model' => $model, 'space' => $space]);
-//        } else {
-//            return $this->renderAjax('modules', ['space' => $space, 'availableModules' => $space->getAvailableModules()]);
-//        }
+        } else {
+            return $this->renderAjax('modules', ['space' => $space, 'availableModules' => $space->getAvailableModules()]);
+        }
     }
 
     /**
      * Invite user
      */
-    public function actionInvite()
+    public function actionInvite($space_id)
     {
+        $space = Space::find()->where(['id' => $space_id])->one();
 
-        $space = Space::find()->where(['id' => Yii::$app->request->get('spaceId', "")])->one();
+        $contacts = Contact::findAll(['user_id' => Yii::$app->user->id]);
+        $users = array();
 
-        $model = new \humhub\modules\space\models\forms\InviteForm();
-        $model->space = $space;
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
-            // Invite existing members
-            foreach ($model->getInvites() as $user) {
-                $space->inviteMember($user->id, Yii::$app->user->id);
-            }
-            // Invite non existing members
-            if (Setting::Get('internalUsersCanInvite', 'authentication_internal')) {
-                foreach ($model->getInvitesExternal() as $email) {
-                    $space->inviteMemberByEMail($email, Yii::$app->user->id);
-                }
-            }
-
-            return $this->htmlRedirect($space->getUrl());
+        foreach ($contacts as $contact){
+            $contactUserId = $contact->contact_user_id;
+            $users[] = User::findOne(['id' => $contactUserId]);
         }
 
-        return $this->renderAjax('invite', array('model' => $model, 'space' => $space));
+
+        return $this->renderAjax('invite', array('users' => $users, 'space' => $space, 'space_id' => $space_id));
+    }
+
+    public function actionInviteMember(){
+        $space_id = Yii::$app->request->get('space_id');
+        $space = Space::find()->where(['id' => $space_id])->one();
+
+        $user = User::findOne(['id' => Yii::$app->request->get('user_id')]);
+        $space->inviteMember($user->id, Yii::$app->user->id);
+
+
+        return $this->actionInvite($space_id);
     }
 
     /**

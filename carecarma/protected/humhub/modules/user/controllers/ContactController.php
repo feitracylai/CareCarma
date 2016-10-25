@@ -214,14 +214,22 @@ class ContactController extends Controller
                 $spaceId = $space->space_id;
                 foreach (Membership::find()->where(['space_id' => $spaceId])->each() as $spaceContact){
                     $userId = $spaceContact->user_id;
+                    //check if this person is in contact
                     $existContact = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $userId]);
-                    if ($userId != Yii::$app->user->id && !$existContact && $spaceContact->status == 3){
-                        $contacts[] = User::findOne(['id' => $userId]);
-                        $spaces[$userId] = $spaceId;
+                    if ($userId != $user->id && $spaceContact->status == 3){
+                        if (!$existContact){
+                            $contacts[] = User::findOne(['id' => $userId]);
+                            $spaces[$userId] = $spaceId;
+                        } elseif ($existContact->contact_first == null){
+                            $contacts[] = User::findOne(['id' => $userId]);
+                            $spaces[$userId] = $spaceId;
+                        }
+
                     }
                 }
             }
         }
+//        Yii::getLogger()->log($contacts, Logger::LEVEL_INFO, 'MyLog');
         $keyword = Yii::$app->request->get('keyword', "");
         $page = (int) Yii::$app->request->get('page', 1);
         $searchOptions = [
@@ -231,6 +239,11 @@ class ContactController extends Controller
         ];
         $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
         $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
+        if ($keyword == ''){
+            $users = $contacts;
+        } else {
+            $users = $searchResultSet->getResultInstances();
+        }
 
 
         if ($doit == 2){
@@ -252,7 +265,10 @@ class ContactController extends Controller
             }
 
             if ($needNotify == true){
-                $contact = new Contact();
+                $contact = Contact::findOne(['user_id' => $user->id, 'contact_user_id' => $contactUser->id]);
+                if ($contact == null){
+                    $contact = new Contact();
+                }
                 $contact->sendLink($contactUser, $user);
             } else {
                 //User add contact
@@ -309,7 +325,7 @@ class ContactController extends Controller
 
         return $this->render('add', array(
             'keyword' => $keyword,
-            'users' => $searchResultSet->getResultInstances(),
+            'users' => $users,
             'details' => $spaces,
             'pagination' => $pagination,
             'thisUser' => $user,
@@ -444,7 +460,7 @@ class ContactController extends Controller
         }
 
 
-        return $this->redirect(Url::to(['console']));
+        return $this->redirect(Url::to(['add']));
     }
 
 
@@ -639,7 +655,7 @@ class ContactController extends Controller
             $contact->DenyLink($contactUser, $user);
         }
 
-        return $this->redirect(Url::to(['console']));
+        return $this->redirect(Url::to(['index']));
     }
 
     public function actionDisconnect ()
