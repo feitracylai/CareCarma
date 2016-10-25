@@ -3190,3 +3190,8 @@ img.bounceIn {
     background-color: #ec6952;
     color: #ffffff;
 }
+
+.member-view > tbody > tr:first-child > th, .member-view > tbody > tr:first-child > td
+{
+    border-top: none;
+}
