@@ -75,9 +75,8 @@ use yii\helpers\Html;
             <hr>
             <br>
 
-
-            <button type="button" class="btn btn-primary"
-                    data-dismiss="modal"><?php echo Yii::t('SpaceModule.views_space_invite', 'Done'); ?></button>
+            <?php echo Html::a(Yii::t('SpaceModule.views_space_invite', 'Done'),Url::to($space->getUrl()),array('class' => 'btn btn-primary')); ?>
+<!--            <button type="button" class="btn btn-primary" data-dismiss="modal">--><?php //echo Yii::t('SpaceModule.views_space_invite', 'Done'); ?><!--</button>-->
 
             <?php echo \humhub\widgets\LoaderWidget::widget(['id' => 'invite-loader', 'cssClass' => 'loader-modal hidden']); ?>
         </div>
