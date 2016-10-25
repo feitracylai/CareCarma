@@ -72,7 +72,7 @@ use yii\helpers\Html;
         </ul>
     <?php } ?>
         <div class="modal-footer">
-            <hr>
+            
             <br>
 
             <?php echo Html::a(Yii::t('SpaceModule.views_space_invite', 'Done'),Url::to($space->getUrl()),array('class' => 'btn btn-primary')); ?>
