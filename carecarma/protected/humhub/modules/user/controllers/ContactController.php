@@ -239,12 +239,14 @@ class ContactController extends Controller
         ];
         $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
         $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
-       // if ($keyword == ''){
-       //     $users = $contacts;
-       // } else {
+        if ($contacts == []){
+            $users = array();
+        } else {
             $users = $searchResultSet->getResultInstances();
-       // }
-
+        }
+//        $all = User::findAll(['status' => 1]);
+//        Yii::getLogger()->log($all, Logger::LEVEL_INFO, 'MyLog');
+//        $users = $all;
 
         if ($doit == 2){
             $needNotify = true;

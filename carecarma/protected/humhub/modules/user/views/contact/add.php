@@ -44,7 +44,7 @@ use \humhub\modules\space\models\Space;
 
         <?php $wholeusers = \humhub\modules\user\models\User::find()->count(); ?>
 <!--        --><?php //Yii::getLogger()->log([count($users), $wholeusers], \yii\log\Logger::LEVEL_INFO, 'MyLog'); ?>
-        <?php if (count($users) == 0 || count($users) == $wholeusers){ ?>
+        <?php if (count($users) == 0 ){ ?>
 
             <p><?php echo Yii::t('UserModule.views_contact_add', 'No users found!'); ?></p>
         <?php }else{ ?>
