@@ -23,6 +23,7 @@ use yii\filters\VerbFilter;
 use yii\web\HttpException;
 use yii\helpers\BaseJson;
 use humhub\modules\user\models\Device;
+use humhub\modules\user\models\LocalContact;
 use humhub\modules\user\models\ContactInfo;
 use humhub\libs\GCM;
 
@@ -1022,17 +1023,17 @@ class ContactController extends Controller
 
     public function actionImportlocal () {
 
-        $data = Yii::$app->request->post();
-        $contact_list = json_decode($data['contact_list'], TRUE);
-        $user = User::findOne(['username' => $data['username']]);
-
+        $user = Yii::$app->user;
+        $contact_list = Localcontact::findAll(['user_id' => $user->id]);
 
         $output_array = array();
         foreach ($contact_list as $contact) {
             $output_array[] = array(
                 (string)$contact['name'],
-                (string)$contact['phone_number'],
-                (string)$contact['email']);
+                (string)$contact['email'],
+                (string)$contact['phone_number1'],
+                (string)$contact['phone_number2'],
+                (string)$contact['phone_number3']);
         }
 
         $id = $user->id;

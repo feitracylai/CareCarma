@@ -21,7 +21,8 @@ use \humhub\modules\space\models\Space;
 <!--        <p/>-->
         <div class="center-block">
             <?php echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Invite Contact'), $thisUser->createUrl('invite'), array('class' => 'btn btn-primary', 'data-target' => '#globalModal')); ?>
-<!--        </div>-->
+            <?php echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Import from Device'), Url::toRoute(['/user/contact/importlocal']), array('class' => 'btn btn-primary')); ?>
+</div>-->
 <!--        <div class="pull-right">-->
             <?php echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Import from Google'), "https://accounts.google.com/o/oauth2/auth?client_id=584594431619-c8gb5m52css0vs8biotp7jcie27h0iff.apps.googleusercontent.com&redirect_uri=http://www.carecarma.tk/carecarma/index.php?r=user%2Fcontact%2Fimportgoogle&scope=https://www.google.com/m8/feeds/&response_type=code", array('class' => 'btn btn-primary')); ?>
         </div>
