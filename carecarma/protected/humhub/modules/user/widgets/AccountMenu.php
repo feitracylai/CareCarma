@@ -45,14 +45,14 @@ class AccountMenu extends BaseMenu
             'isActive' => (Yii::$app->controller->action->id == "edit" && Yii::$app->controller->id == 'account'),
         ));
 
-        $this->addItem(array(
-            'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Contact'),
-            'icon' => '<i class="fa fa-pencil-square-o"></i>',
-            'group' => 'account',
-            'url' => Url::toRoute('/user/contact/'),
-            'sortOrder' => 120,
-            'isActive' => (Yii::$app->controller->id == 'contact'),
-        ));
+//        $this->addItem(array(
+//            'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Contact'),
+//            'icon' => '<i class="fa fa-pencil-square-o"></i>',
+//            'group' => 'account',
+//            'url' => Url::toRoute('/user/contact/'),
+//            'sortOrder' => 120,
+//            'isActive' => (Yii::$app->controller->id == 'contact'),
+//        ));
 
         $this->addItem(array(
             'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Cosmos setting'),
