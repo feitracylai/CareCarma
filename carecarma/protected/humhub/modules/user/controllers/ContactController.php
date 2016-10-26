@@ -23,7 +23,7 @@ use yii\filters\VerbFilter;
 use yii\web\HttpException;
 use yii\helpers\BaseJson;
 use humhub\modules\user\models\Device;
-use humhub\modules\user\models\LocalContact;
+use humhub\modules\user\models\Localcontact;
 use humhub\modules\user\models\ContactInfo;
 use humhub\libs\GCM;
 
