@@ -71,7 +71,7 @@ use \humhub\modules\space\models\Space;
                     </div>
 
 
-                    <a href="#" class="pull-left contact"">
+                    <a href="<?php echo $user->getUrl(); ?>" class="pull-left contact"">
                     <img class="media-object img-rounded"
                          src="<?php echo $user->getProfileImage()->getUrl(); ?>" width="50"
                          height="50" alt="50x50" data-src="holder.js/50x50"
