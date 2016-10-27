@@ -241,7 +241,6 @@ class ContactController extends Controller
             'page' => $page,
         ];
         $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
-//        $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
 
         $users = $searchResultSet->getResultInstances();
 //        $users = User::findAll(['status'=> 1]);
@@ -276,6 +275,8 @@ class ContactController extends Controller
             }
         }
 
+        $pagination = new \yii\data\Pagination(['totalCount' => count($contacts), 'pageSize' => $searchResultSet->pageSize]);
+//        Yii::getLogger()->log([count($contacts), $searchResultSet->pageSize], Logger::LEVEL_INFO, 'MyLog');
 
         if ($doit == 2){
             $needNotify = true;
@@ -358,7 +359,7 @@ class ContactController extends Controller
             'keyword' => $keyword,
             'users' => $contacts,
             'details' => $spaces,
-//            'pagination' => $pagination,
+            'pagination' => $pagination,
             'thisUser' => $thisUser,
         ));
     }
