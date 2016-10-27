@@ -115,8 +115,8 @@ use \humhub\modules\space\models\Space;
     </ul>
     <?php } ?>
 </div>
-<div class="pagination-container">
-    <?php echo \humhub\widgets\LinkPager::widget(['pagination' => $pagination]); ?>
-</div>
+<!--<div class="pagination-container">-->
+<!--    --><?php //echo \humhub\widgets\LinkPager::widget(['pagination' => $pagination]); ?>
+<!--</div>-->
 
 
