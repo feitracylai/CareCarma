@@ -412,6 +412,15 @@ class SpaceModelMembership extends Behavior
         $activity->originator = $user;
         $activity->create();
 
+        //add in care-receiver's contact
+        $careMembers = Membership::findAll(['space_id' => $this->owner->id, 'group_id' => 'device', 'status' => 3]);
+        if ($careMembers != null){
+            foreach ($careMembers as $careMember) {
+                $careUser = User::findOne(['id' => $careMember->user_id]);
+                $careUser->addContact($user);
+            }
+        }
+
         // Members can't also follow the space
         $this->owner->unfollow($userId);
 
