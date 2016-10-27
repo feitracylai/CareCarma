@@ -15,7 +15,7 @@ $(document).ready(function() {
         timezone: fullCalendarTimezone,
         lang: fullCalendarLanguage,
         // defaultView: 'agendaWeek',
-        defaultView: 'timelineDay',
+        defaultView: 'timelineMonth',
         aspectRatio: 1.5,
         header: {
             left: 'prev,next today',
