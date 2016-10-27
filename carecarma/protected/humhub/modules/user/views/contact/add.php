@@ -80,12 +80,20 @@ use \humhub\modules\space\models\Space;
 
 
                     <div class="media-body">
-                        <h4 class="media-heading">
-                            <?php echo Html::encode($user->displayName); ?>
+                        <a href="<?php echo $user->getUrl(); ?>">
+                            <h4 class="media-heading">
+                                <?php echo Html::encode($user->displayName); ?>
 
-                        </h4>
-                        <?php if ($details != null && $details[$user->id] != null && $details[$user->id] != 0) { ?>
-                            <small>(<?php echo Yii::t('UserModule.views_contact_add', '{detail}', array('{detail}' => Space::findOne(['id' => $details[$user->id]])->name )); ?>)</small>
+                            </h4>
+                        </a>
+
+
+
+                        <?php if ($details != null && isset($details[$user->id])) {?>
+                            <a href="<?php echo $details[$user->id]->getUrl(); ?>">
+                                <small >(<?php echo Yii::t('UserModule.views_contact_add', '{detail}', array('{detail}' => Space::findOne(['id' => $details[$user->id]])->name )); ?>)</small>
+
+                            </a>
                         <?php } ?>
 
 

@@ -202,52 +202,80 @@ class ContactController extends Controller
 
     public function actionAdd()
     {
-        $user = User::findOne(['guid' => Yii::$app->user->guid]);
+        $thisUser = User::findOne(['guid' => Yii::$app->user->guid]);
         $contactUser = User::findOne(['id' => Yii::$app->request->get('connect_id')]);
         $doit = (int) Yii::$app->request->get('doit');
 
-        $userSpaces = Membership::findAll(['user_id' => $user->id, 'status' => 3]);
-        $contacts = array();
-        $spaces = array();
-        foreach ($userSpaces as $space){
-            if ($space !== null)
-            {
-                $spaceId = $space->space_id;
-                foreach (Membership::find()->where(['space_id' => $spaceId])->each() as $spaceContact){
-                    $userId = $spaceContact->user_id;
-                    //check if this person is in contact
-                    $existContact = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $userId]);
-                    if ($userId != $user->id && $spaceContact->status == 3){
-                        if (!$existContact){
-                            $contacts[] = User::findOne(['id' => $userId]);
-                            $spaces[$userId] = $spaceId;
-                        } elseif ($existContact->contact_first == null){
-                            $contacts[] = User::findOne(['id' => $userId]);
-                            $spaces[$userId] = $spaceId;
-                        }
-
-                    }
-                }
-            }
-        }
+//        $userSpaces = Membership::findAll(['user_id' => $user->id, 'status' => 3]);
+//        $contacts = array();
+//        $spaces = array();
+//        foreach ($userSpaces as $space){
+//            if ($space !== null)
+//            {
+//                $spaceId = $space->space_id;
+//                foreach (Membership::find()->where(['space_id' => $spaceId])->each() as $spaceContact){
+//                    $userId = $spaceContact->user_id;
+//                    //check if this person is in contact
+//                    $existContact = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $userId]);
+//                    if ($userId != $user->id && $spaceContact->status == 3){
+//                        if (!$existContact){
+//                            $contacts[] = User::findOne(['id' => $userId]);
+//                            $spaces[$userId] = $spaceId;
+//                        } elseif ($existContact->contact_first == null){
+//                            $contacts[] = User::findOne(['id' => $userId]);
+//                            $spaces[$userId] = $spaceId;
+//                        }
+//
+//                    }
+//                }
+//            }
+//        }
 //        Yii::getLogger()->log($contacts, Logger::LEVEL_INFO, 'MyLog');
+
+
+
         $keyword = Yii::$app->request->get('keyword', "");
         $page = (int) Yii::$app->request->get('page', 1);
         $searchOptions = [
             'model' => \humhub\modules\user\models\User::className(),
             'page' => $page,
-            'limitUsers' => $contacts,
         ];
         $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
         $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
-        if ($contacts == []){
-            $users = array();
-        } else {
-            $users = $searchResultSet->getResultInstances();
+
+        $users = $searchResultSet->getResultInstances();
+//        $users = User::findAll(['status'=> 1]);
+        $thisUserMember = Membership::findAll(['user_id' => $thisUser->id]);
+        $contacts = array();
+        $spaces = array();
+        foreach ($users as $user){
+            $existContact = Contact::findAll(['user_id' => $thisUser->id, 'contact_user_id' => $user->id, 'linked' => 1]);
+            if ($user->id != $thisUser->id && !$existContact){
+                if ($thisUserMember != null){
+                    $isSameSpace = false;
+                    foreach ($thisUserMember as $s){
+                        $m = Membership::findOne(['space_id' => $s->space_id, 'user_id' => $user->id]);
+                        if ($m != null){
+                            $isSameSpace = true;
+//                            array_unshift($spaces, Space::findOne(['id' => $s->space_id]));
+                            $spaces[$user->id] = Space::findOne(['id' => $s->space_id]);
+                            break;
+                        }
+                    }
+                    if ($isSameSpace){
+                        array_unshift($contacts, $user);
+                    } else {
+                        array_push($contacts, $user);
+                    }
+
+                } else {
+                    array_push($contacts, $user);
+                }
+
+
+            }
         }
-//        $all = User::findAll(['status' => 1]);
-//        Yii::getLogger()->log($all, Logger::LEVEL_INFO, 'MyLog');
-//        $users = $all;
+
 
         if ($doit == 2){
             $needNotify = true;
@@ -258,7 +286,7 @@ class ContactController extends Controller
                 $membershipSpaces = Membership::findAll(['user_id' => $contactUser->id]);
                 if ($membershipSpaces != null){
                     foreach ($membershipSpaces as $membershipSpace){
-                        $userMemeber = Membership::findOne(['space_id' => $membershipSpace->space_id, 'user_id' => $user->id]);
+                        $userMemeber = Membership::findOne(['space_id' => $membershipSpace->space_id, 'user_id' => $thisUser->id]);
                         if($userMemeber != null){
                             $needNotify = false;
                             break;
@@ -268,17 +296,17 @@ class ContactController extends Controller
             }
 
             if ($needNotify == true){
-                $contact = Contact::findOne(['user_id' => $user->id, 'contact_user_id' => $contactUser->id]);
+                $contact = Contact::findOne(['user_id' => $thisUser->id, 'contact_user_id' => $contactUser->id]);
                 if ($contact == null){
                     $contact = new Contact();
                 }
-                $contact->sendLink($contactUser, $user);
+                $contact->sendLink($contactUser, $thisUser);
             } else {
                 //User add contact
-                $userContact = Contact::findOne(['user_id' => $user->id, 'contact_user_id' => $contactUser->id]);
+                $userContact = Contact::findOne(['user_id' => $thisUser->id, 'contact_user_id' => $contactUser->id]);
                 if ($userContact == null){
                     $userContact = new Contact();
-                    $userContact->user_id = $user->id;
+                    $userContact->user_id = $thisUser->id;
                     $userContact->contact_user_id = $contactUser->id;
                 }
                 $userContact->contact_first = $contactUser->profile->firstname;
@@ -296,26 +324,26 @@ class ContactController extends Controller
 
                 $notification = new AddContact();
                 $notification->source = $userContact;
-                $notification->originator = $user;
+                $notification->originator = $thisUser;
                 $notification->send($contactUser);
 
                 //contact user add contact
-                $newContact = Contact::findOne(['user_id' => $contactUser->id, 'contact_user_id' => $user->id]);
+                $newContact = Contact::findOne(['user_id' => $contactUser->id, 'contact_user_id' => $thisUser->id]);
                 if ($newContact == null){
                     $newContact = new Contact();
                     $newContact->user_id = $contactUser->id;
-                    $newContact->contact_user_id = $user->id;
+                    $newContact->contact_user_id = $thisUser->id;
                 }
-                $newContact->contact_first = $user->profile->firstname;
-                $newContact->contact_last = $user->profile->lastname;
-                $newContact->contact_mobile = $user->profile->mobile;
-                $newContact->contact_email = $user->email;
+                $newContact->contact_first = $thisUser->profile->firstname;
+                $newContact->contact_last = $thisUser->profile->lastname;
+                $newContact->contact_mobile = $thisUser->profile->mobile;
+                $newContact->contact_email = $thisUser->email;
                 $newContact->linked = 1;
-                $newContact->home_phone = $user->profile->phone_private;
-                $newContact->work_phone = $user->profile->phone_work;
-                if ($user->device_id != null)
+                $newContact->home_phone = $thisUser->profile->phone_private;
+                $newContact->work_phone = $thisUser->profile->phone_work;
+                if ($thisUser->device_id != null)
                 {
-                    $newContact->device_phone = $user->device->phone;
+                    $newContact->device_phone = $thisUser->device->phone;
                 }
                 $newContact->save();
                 $newContact->notifyDevice('add');
@@ -323,15 +351,15 @@ class ContactController extends Controller
 
 //            Yii::getLogger()->log([$privacy, User::CONTACT_NOTIFY_EVERYONE], Logger::LEVEL_INFO, 'MyLog');
 
-            return $this->redirect($user->createUrl('add'));
+            return $this->redirect($thisUser->createUrl('add'));
         }
 
         return $this->render('add', array(
             'keyword' => $keyword,
-            'users' => $users,
+            'users' => $contacts,
             'details' => $spaces,
             'pagination' => $pagination,
-            'thisUser' => $user,
+            'thisUser' => $thisUser,
         ));
     }
 
