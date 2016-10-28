@@ -29,7 +29,16 @@ use humhub\modules\user\models\User;
 
                     <div class="pull-right">
 <!--                        --><?php //Yii::getLogger()->log(print_r($thisUser->createUrl('invite')."&googleemail=". $user[2],true),yii\log\Logger::LEVEL_INFO,'MyLog'); ?>
-                        <?php echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Invite Contact'), $thisUser->createUrl('invite')."&googleemail=". $user[2], array('class' => 'btn btn-primary', 'data-target' => '#globalModal')); ?>
+                        <?php
+                            if ($user[3]=="0" && $user[4] == "0")
+                                echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Invite Contact'), $thisUser->createUrl('invite')."&googleemail=". $user[2], array('class' => 'btn btn-primary', 'data-target' => '#globalModal'));
+                            else if ($user[3]=="1") {
+                                echo Html::a(''.Yii::t('UserModule.views_contact_add', 'User already in CareCarma'), "", array('class' => 'btn btn-primary', 'data-target' => '#globalModal'));
+                            }
+                            else {
+                                echo Html::a(''.Yii::t('UserModule.views_contact_add', 'Invited'), "", array('class' => 'btn btn-primary', 'data-target' => '#globalModal'));
+                            }
+                        ?>
                     </div>
 
 

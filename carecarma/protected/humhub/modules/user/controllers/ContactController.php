@@ -975,13 +975,30 @@ class ContactController extends Controller
 
         $result = $xml->xpath('//gd:email');
 
+        $id = Yii::$app->user->id;
+
+
         $output_array = array();
         foreach ($xml->entry as $entry) {
             foreach ($entry->xpath('gd:email') as $email) {
+                $email_address = (string)$email->attributes()->address;
+                $user_cur = User::findOne(['email' => $email_address]);
+                $email_exist = "0";
+                $email_invite = "0";
+                if ($user_cur != null) {
+                    $email_exist = "1";
+                }
+                $email_cur = Invite::findOne(['user_originator_id:' => $id, 'email' => $email_address]);
+                if ($email_cur != null) {
+                    $email_invite = "1";
+                }
+
                 $output_array[] = array(
                     (string)$entry->title,
                     (string)$entry->attributes()->href,
-                    (string)$email->attributes()->address);
+                    (string)$email->attributes()->address,
+                    (string)$email_exist,
+                    (string)$email_invite);
 
             }
         }
