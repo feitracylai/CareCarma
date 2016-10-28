@@ -29,7 +29,7 @@ use \humhub\modules\space\models\Space;
         </br>
 
         <!-- search form -->
-        <?php echo Html::beginForm(Url::to(['/user/contact/import']), 'get', array('class' => 'form-search')); ?>
+        <?php echo Html::beginForm(Url::to(['/user/contact/add']), 'get', array('class' => 'form-search')); ?>
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
