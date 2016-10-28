@@ -214,10 +214,10 @@ class ContactController extends Controller
         if ($keyword == "")
             $empty = true;
 
-        $page = (int) Yii::$app->request->get('page', 1);
+//        $page = (int) Yii::$app->request->get('page', 1);
         $searchOptions = [
             'model' => \humhub\modules\user\models\User::className(),
-            'page' => $page,
+//            'page' => $page,
 //            'limitUsers' => $contacts,
         ];
         $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);

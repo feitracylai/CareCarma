@@ -48,7 +48,7 @@ use \humhub\modules\space\models\Space;
         <?php if (count($users) == 0 ){ ?>
 
             <p><?php echo Yii::t('UserModule.views_contact_add', 'No users found!'); ?></p>
-        
+<!--        --><?php //}elseif($empty){ ?>
 
         <?php }else{ ?>
     </div>
@@ -117,8 +117,8 @@ use \humhub\modules\space\models\Space;
     </ul>
     <?php } ?>
 </div>
-<div class="pagination-container">
-    <?php echo \humhub\widgets\LinkPager::widget(['pagination' => $pagination]); ?>
-</div>
+<!--<div class="pagination-container">-->
+<!--    --><?php //echo \humhub\widgets\LinkPager::widget(['pagination' => $pagination]); ?>
+<!--</div>-->
 
 
