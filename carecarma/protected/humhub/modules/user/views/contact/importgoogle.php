@@ -33,10 +33,12 @@ use humhub\modules\user\models\User;
                             if ($user[3]=="0" && $user[4] == "0")
                                 echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Invite Contact'), $thisUser->createUrl('invite')."&googleemail=". $user[2], array('class' => 'btn btn-primary', 'data-target' => '#globalModal'));
                             else if ($user[3]=="1") {
-                                echo Html::a(''.Yii::t('UserModule.views_contact_add', 'User already in CareCarma'), "javascript:return false;", array('class' => 'btn btn-primary','data-target' => '#globalModal'));
+                                echo "<a href='javascript:return false;' class='btn btn-primary'>User already in CareCarma</a>";
+//                                Html::a(''.Yii::t('UserModule.views_contact_add', 'User already in CareCarma'), "javascript:return false;", array('class' => 'btn btn-primary', 'data-target' => '#globalModal', 'disabled' => 'disabled'));
                             }
                             else {
-                                echo Html::a(''.Yii::t('UserModule.views_contact_add', 'Invited'), "javascript:return false;", array('class' => 'btn btn-primary', 'data-target' => '#globalModal'));
+                                echo "<a href='javascript:return false;' class='btn btn-primary'>Invited</a>";
+//                                echo Html::a(''.Yii::t('UserModule.views_contact_add', 'Invited'), "javascript:return false;", array('class' => 'btn btn-primary', 'data-target' => '#globalModal', 'disabled' => 'disabled'));
                             }
                         ?>
                     </div>
