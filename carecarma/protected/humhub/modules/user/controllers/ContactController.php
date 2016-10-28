@@ -206,7 +206,23 @@ class ContactController extends Controller
         $contactUser = User::findOne(['id' => Yii::$app->request->get('connect_id')]);
         $doit = (int) Yii::$app->request->get('doit');
 
-        $users = User::findAll(['status'=> 1]);
+//        $users = User::findAll(['status'=> 1]);
+
+
+        $empty = false;
+        $keyword = Yii::$app->request->get('keyword', "");
+        if ($keyword == "")
+            $empty = true;
+
+        $page = (int) Yii::$app->request->get('page', 1);
+        $searchOptions = [
+            'model' => \humhub\modules\user\models\User::className(),
+            'page' => $page,
+//            'limitUsers' => $contacts,
+        ];
+        $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
+
+        $users = $searchResultSet->getResultInstances();
         $thisUserMember = Membership::findAll(['user_id' => $thisUser->id]);
         $contacts = array();
         $spaces = array();
@@ -237,19 +253,6 @@ class ContactController extends Controller
 
             }
         }
-
-        $empty = false;
-        $keyword = Yii::$app->request->get('keyword', "");
-        if ($keyword == "")
-            $empty = true;
-
-        $page = (int) Yii::$app->request->get('page', 1);
-        $searchOptions = [
-            'model' => \humhub\modules\user\models\User::className(),
-            'page' => $page,
-            'limitUsers' => $contacts,
-        ];
-        $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
 
         $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
 //        Yii::getLogger()->log([count($contacts), $searchResultSet->pageSize], Logger::LEVEL_INFO, 'MyLog');
@@ -333,7 +336,7 @@ class ContactController extends Controller
 
         return $this->render('add', array(
             'keyword' => $keyword,
-            'users' => $searchResultSet->getResultInstances(),
+            'users' => $contacts,
             'details' => $spaces,
             'pagination' => $pagination,
             'thisUser' => $thisUser,
