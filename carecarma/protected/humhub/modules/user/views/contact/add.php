@@ -48,7 +48,7 @@ use \humhub\modules\space\models\Space;
         <?php if (count($users) == 0 ){ ?>
 
             <p><?php echo Yii::t('UserModule.views_contact_add', 'No users found!'); ?></p>
-<!--        --><?php //}elseif($empty){ ?>
+        <?php }elseif($empty){ ?>
 
         <?php }else{ ?>
     </div>
