@@ -1,6 +1,7 @@
 <?php
 namespace humhub\modules\user\controllers;
 
+use humhub\models\Setting;
 use humhub\modules\directory\controllers\DirectoryController;
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\models\Space;
@@ -214,10 +215,11 @@ class ContactController extends Controller
         if ($keyword == "")
             $empty = true;
 
-//        $page = (int) Yii::$app->request->get('page', 1);
+        $page = (int) Yii::$app->request->get('page', 1);
         $searchOptions = [
             'model' => \humhub\modules\user\models\User::className(),
-//            'page' => $page,
+            'page' => $page,
+            'pageSize' => Setting::Get('paginationSize'),
 //            'limitUsers' => $contacts,
         ];
         $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
