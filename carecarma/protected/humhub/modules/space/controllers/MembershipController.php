@@ -153,9 +153,14 @@ class MembershipController extends \humhub\modules\content\components\ContentCon
 
         $space->removeMember();
 
+
+
+        if ($space->visibility == Space::VISIBILITY_NONE){
+            return $this->redirect(Url::home());
+        }
+        
         //if user deny the invite, change to follow
         $space->follow();
-
         return $this->redirect($space->getUrl());
     }
 
@@ -172,10 +177,9 @@ class MembershipController extends \humhub\modules\content\components\ContentCon
             throw new HttpException(403, 'Access denied - You cannot invite members!');
         }
 
-        $model = new \humhub\modules\space\models\forms\InviteForm();
-        $model->space = $space;
 
-        $contacts = Contact::findAll(['user_id' => Yii::$app->user->id]);
+
+        $contacts = Contact::findAll(['user_id' => Yii::$app->user->id, 'linked' => 1]);
         $users = array();
 //        $allUsers = User::findAll(['group_id' => 1]);
 //        foreach ($allUsers as $user){
