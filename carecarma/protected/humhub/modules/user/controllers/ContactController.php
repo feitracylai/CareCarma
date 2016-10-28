@@ -254,7 +254,7 @@ class ContactController extends Controller
             }
         }
 
-        $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
+        $pagination = new \yii\data\Pagination(['totalCount' => count($contacts), 'pageSize' => $searchResultSet->pageSize]);
 //        Yii::getLogger()->log([count($contacts), $searchResultSet->pageSize], Logger::LEVEL_INFO, 'MyLog');
 
         if ($doit == 2){
