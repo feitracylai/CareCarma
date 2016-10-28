@@ -29,9 +29,9 @@ class Comments extends \yii\base\Widget
 
         // Count all Comments
         $commentCount = \humhub\modules\comment\models\Comment::GetCommentCount($modelName, $modelId);
-        $comments = \humhub\modules\comment\models\Comment::GetCommentsLimited($modelName, $modelId, 2);
+        $comments = \humhub\modules\comment\models\Comment::GetCommentsLimited($modelName, $modelId, 5);
 
-        $isLimited = ($commentCount > 2);
+        $isLimited = ($commentCount > 5);
 
         return $this->render('comments', array(
                     'object' => $this->object,

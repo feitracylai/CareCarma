@@ -29,13 +29,16 @@ use \humhub\modules\space\models\Space;
         </br>
 
         <!-- search form -->
-        <?php echo Html::beginForm(Url::to(['/user/contact/import']), 'get', array('class' => 'form-search')); ?>
+        <?php echo Html::beginForm(Url::to(['/user/contact/add']), 'get', array('class' => 'form-search')); ?>
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="form-group form-group-search">
                     <?php echo Html::textInput("keyword", $keyword, array("class" => "form-control form-search", "placeholder" => Yii::t('UserModule.views_contact_add', 'search for users'))); ?>
                     <?php echo Html::submitButton(Yii::t('UserModule.views_contact_add', 'Search'), array('class' => 'btn btn-default btn-sm form-button-search')); ?>
+                    <?php if (strlen($keyword) == 1 || strlen($keyword) == 2):?>
+                    <label style="color: red">Please type at least 3 words</label>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="col-md-3"></div>
@@ -48,6 +51,8 @@ use \humhub\modules\space\models\Space;
         <?php if (count($users) == 0 ){ ?>
 
             <p><?php echo Yii::t('UserModule.views_contact_add', 'No users found!'); ?></p>
+        <?php }elseif($empty || strlen($keyword) == 1 || strlen($keyword) == 2){ ?>
+
         <?php }else{ ?>
     </div>
 

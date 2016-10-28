@@ -1,6 +1,7 @@
 <?php
 namespace humhub\modules\user\controllers;
 
+use humhub\models\Setting;
 use humhub\modules\directory\controllers\DirectoryController;
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\models\Space;
@@ -206,44 +207,24 @@ class ContactController extends Controller
         $contactUser = User::findOne(['id' => Yii::$app->request->get('connect_id')]);
         $doit = (int) Yii::$app->request->get('doit');
 
-//        $userSpaces = Membership::findAll(['user_id' => $user->id, 'status' => 3]);
-//        $contacts = array();
-//        $spaces = array();
-//        foreach ($userSpaces as $space){
-//            if ($space !== null)
-//            {
-//                $spaceId = $space->space_id;
-//                foreach (Membership::find()->where(['space_id' => $spaceId])->each() as $spaceContact){
-//                    $userId = $spaceContact->user_id;
-//                    //check if this person is in contact
-//                    $existContact = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $userId]);
-//                    if ($userId != $user->id && $spaceContact->status == 3){
-//                        if (!$existContact){
-//                            $contacts[] = User::findOne(['id' => $userId]);
-//                            $spaces[$userId] = $spaceId;
-//                        } elseif ($existContact->contact_first == null){
-//                            $contacts[] = User::findOne(['id' => $userId]);
-//                            $spaces[$userId] = $spaceId;
-//                        }
-//
-//                    }
-//                }
-//            }
-//        }
-//        Yii::getLogger()->log($contacts, Logger::LEVEL_INFO, 'MyLog');
+//        $users = User::findAll(['status'=> 1]);
 
 
-
+        $empty = false;
         $keyword = Yii::$app->request->get('keyword', "");
+        if ($keyword == "")
+            $empty = true;
+
         $page = (int) Yii::$app->request->get('page', 1);
         $searchOptions = [
             'model' => \humhub\modules\user\models\User::className(),
             'page' => $page,
+            'pageSize' => Setting::Get('paginationSize'),
+//            'limitUsers' => $contacts,
         ];
         $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
 
         $users = $searchResultSet->getResultInstances();
-//        $users = User::findAll(['status'=> 1]);
         $thisUserMember = Membership::findAll(['user_id' => $thisUser->id]);
         $contacts = array();
         $spaces = array();
@@ -275,7 +256,7 @@ class ContactController extends Controller
             }
         }
 
-        $pagination = new \yii\data\Pagination(['totalCount' => count($contacts), 'pageSize' => $searchResultSet->pageSize]);
+        $pagination = new \yii\data\Pagination(['totalCount' => count($contacts)]);
 //        Yii::getLogger()->log([count($contacts), $searchResultSet->pageSize], Logger::LEVEL_INFO, 'MyLog');
 
         if ($doit == 2){
@@ -361,6 +342,7 @@ class ContactController extends Controller
             'details' => $spaces,
             'pagination' => $pagination,
             'thisUser' => $thisUser,
+            'empty' => $empty
         ));
     }
 
