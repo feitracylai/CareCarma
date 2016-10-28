@@ -970,8 +970,8 @@ class ContactController extends Controller
                 if ($user_cur != null) {
                     $email_exist = "1";
                 }
-                $email_cur = Invite::findOne(['user_originator_id:' => $id, 'email' => $email_address]);
-                if ($email_cur != null) {
+                $userInvite = Invite::findOne(['email' => $email_address]);
+                if ($userInvite != null && $userInvite->user_originator_id == $id) {
                     $email_invite = "1";
                 }
 
@@ -981,6 +981,7 @@ class ContactController extends Controller
                     (string)$email->attributes()->address,
                     (string)$email_exist,
                     (string)$email_invite);
+                Yii::getLogger()->log(print_r($output_array,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
             }
         }
