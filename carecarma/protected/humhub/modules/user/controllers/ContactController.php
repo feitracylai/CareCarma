@@ -1052,8 +1052,9 @@ class ContactController extends Controller
 
     public function actionImportlocal () {
 
-        $user = Yii::$app->user;
+        $user = User::findOne(['id' => Yii::$app->user->id]);
         $contact_list = Localcontact::findAll(['user_id' => $user->id]);
+        $delete = Yii::$app->request->get('delete');
 
         $output_array = array();
         foreach ($contact_list as $contact) {
@@ -1069,6 +1070,12 @@ class ContactController extends Controller
         $searchModel = new ContactSearch();
         $searchModel->status = 'importlocal';
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
+
+        if ($delete){
+            Localcontact::deleteAll(['user_id' => $user->id]);
+
+            return $this->redirect($user->createUrl('add'));
+        }
 
         return $this->render('importlocal', array(
             'dataProvider' => $dataProvider,
