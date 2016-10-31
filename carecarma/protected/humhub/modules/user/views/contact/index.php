@@ -6,6 +6,7 @@ use humhub\modules\user\models\Contact;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use humhub\widgets\GridView;
+
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -54,14 +55,42 @@ use humhub\widgets\GridView;
 //
 //                ],
 
+//                [
+//                    'label' => Yii::t('UserModule.views_contact_index', 'Circles'),
+//                    'class' => 'humhub\libs\DropDownGridColumn',
+//                    'attribute' => 'contact_id',
+//                    'options' => function ($model) use ($spaces){
+//                        $spaceName = array();
+////                        Yii::getLogger()->log($model->contact_user_id, \yii\log\Logger::LEVEL_INFO, 'MyLog');
+//                        foreach ($spaces as $space){
+//                            if ($space->isMember($model->contact_user_id)){
+//                                $spaceName[$space->name] = ['disabled' =>true, 'label' => $space->name];
+//                            } else {
+//                                $spaceName[$space->name] = ['label' => $space->name];
+//                            }
+//
+//                        }
+//                        return $spaceName;
+//                    },
+//                    'submitAttributes' => ['contact_id'],
+//                    'dropDownOptions' =>  $spacesName,
+//
+//
+//                ],
                 [
                     'label' => Yii::t('UserModule.views_contact_index', 'Circles'),
-                    'class' => 'humhub\libs\DropDownGridColumn',
-                    'attribute' => 'relation',
-                    'options' => ['style' => 'width:160px; min-width:80px;'],
-                    'submitAttributes' => ['contact_id'],
+                    'class' => 'humhub\modules\user\libs\CircleInviteDropDownColumn',
+                    'submitAttributes' => ['contact_user_id'],
+                    'selection' => function ($model) use ($spaces){
+                        $selectionName = array();
+                        foreach ($spaces as $space){
+                            if ($space->isMember($model->contact_user_id)){
+                                $selectionName[] = $space->name;
+                            }
+                        }
+                        return $selectionName;
+                    },
                     'dropDownOptions' =>  $spaceName,
-
 
 
                 ],

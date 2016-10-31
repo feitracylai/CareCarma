@@ -3195,3 +3195,8 @@ img.bounceIn {
 {
     border-top: none;
 }
+
+.circleInvite option:disabled
+{
+    background-color: #ebebeb;
+}
