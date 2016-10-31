@@ -42,6 +42,8 @@ class DropDownGridColumn extends DataColumn
     public $ajaxOptions = array();
     public $readonly = false;
 
+    public $dropDownFunction = false;
+
     /**
      * @inheritdoc
      */
@@ -90,7 +92,9 @@ class DropDownGridColumn extends DataColumn
         $options = [];
         if (is_array($this->dropDownOptions)) {
             $options = $this->dropDownOptions;
-        } else {
+        } elseif($this->dropDownFunction){
+            $options = call_user_func($this->dropDownOptions, $model, $key, $index, $this);
+        }else {
             $options = $model[$this->dropDownOptions];
         }
 
