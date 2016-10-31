@@ -75,7 +75,8 @@ use humhub\widgets\GridView;
                             return Html::a('<i class="fa fa-eye"></i>', $user->createUrl('view', ['id' => $model->contact_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View']);
                         },
                         'update' => function($url, $model) use ($user) {
-                            return Html::a('<i class="fa fa-pencil"></i>',  $user->createUrl('edit', ['id' => $model->contact_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Edit']);
+//                            return Html::a('<i class="fa fa-pencil"></i>',  $user->createUrl('edit', ['id' => $model->contact_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Edit']);
+                            return;
                         },
                         'delete' => function($url, $model) use ($user) {
                             return Html::a('<i class="fa fa-times"></i>',  $user->createUrl('delete', ['id' => $model->contact_id]), ['class' => 'btn btn-danger btn-xs tt', 'title' => 'Delete']);
