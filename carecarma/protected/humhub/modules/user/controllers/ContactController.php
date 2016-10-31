@@ -52,25 +52,23 @@ class ContactController extends Controller
         $searchModel = new ContactSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
 
-        $spaceName = array();
         $spaces = array();
         $members = Membership::findAll(['user_id' => $user->id]);
         if ($members != null){
             foreach ($members as $member){
                 $space = Space::findOne(['id' => $member->space_id]);
-                $spaceName[] = $space->name;
                 $spaces[] = $space;
             }
         }
 
-        if (Yii::$app->request->post('dropDownColumnSubmit')){
-            Yii::$app->response->format = 'json';
-            $submitSpace = $spaces[Yii::$app->request->post('circle')];
-            $contact_user_id = Yii::$app->request->post('contact_user_id');
-            $submitSpace->inviteMember($contact_user_id, $user->id);
-
-//            $this->redirect($submitSpace->createUrl('/space/membership/status-invite', ['user_id' => 2]));
-        }
+//        if (Yii::$app->request->post('dropDownColumnSubmit')){
+//            Yii::$app->response->format = 'json';
+//            $submitSpace = $spaces[Yii::$app->request->post('circle')];
+//            $contact_user_id = Yii::$app->request->post('contact_user_id');
+//            $submitSpace->inviteMember($contact_user_id, $user->id);
+//
+////            $this->redirect($submitSpace->createUrl('/space/membership/status-invite', ['user_id' => 2]));
+//        }
 		
 		// Relationship Change
 //        if (Yii::$app->request->post('dropDownColumnSubmit')) {
@@ -92,7 +90,6 @@ class ContactController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'user' => $user,
-            'spaceName' => $spaceName,
             'spaces' => $spaces,
         ]);
     }
