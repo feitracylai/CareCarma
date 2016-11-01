@@ -1,8 +1,5 @@
 $(document).ready(function() {
 
-    // console.log(fullCalendarLoadUrl);
-    console.log(fullCalendarLoadUrl.replace('-selectors-', fullCalendarSelectors));
-
     var jsonDateFormat = "YYYY-MM-DD HH:mm:ss";
 
     if (fullCalendarCanWrite == 'false' || fullCalendarCanWrite == false) {
@@ -14,18 +11,15 @@ $(document).ready(function() {
     var calendar = $('#calendar').fullCalendar({
         timezone: fullCalendarTimezone,
         lang: fullCalendarLanguage,
-        // defaultView: 'agendaWeek',
-        defaultView: 'timelineMonth',
+//        defaultView: 'agendaWeek',
+        defaultView: 'month',
         aspectRatio: 1.5,
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'timelineDay,timelineWeek,timelineMonth,timelineYear'
+            right: 'month,agendaWeek,agendaDay'
         },
-        // editable: fullCalendarCanWrite,
-        // selectable: true,
-        // selectHelper: true,
-        editable: true, // enable draggable events
+        editable: fullCalendarCanWrite,
         events: {
             url: fullCalendarLoadUrl.replace('-selectors-', fullCalendarSelectors),
             data: {selectors: fullCalendarSelectors, filters: fullCalendarFilters},
@@ -33,17 +27,12 @@ $(document).ready(function() {
                 //alert("loading error!");
             }
         },
-        resourceLabelText: 'Members',
-        resources: {
-            url: fullCalendarLoadUrl.replace('load-ajax', 'resource')
-        },
-        // selectable: fullCalendarCanWrite,
-        // selectHelper: fullCalendarCanWrite,
+        selectable: fullCalendarCanWrite,
+        selectHelper: fullCalendarCanWrite,
         select: function(start, end) {
             var editUrl = fullCalendarCreateUrl;
             editUrl = editUrl.replace('-start-', encodeURIComponent(start.format(jsonDateFormat)));
             editUrl = editUrl.replace('-end-', encodeURIComponent(end.format(jsonDateFormat)));
-            console.log(editUrl);
             $('#globalModal').modal({
                 show: 'true',
                 //remote: editUrl
@@ -55,7 +44,6 @@ $(document).ready(function() {
             editUrl = event.updateUrl.replace('-end-', encodeURIComponent(event.end.format(jsonDateFormat)));
             editUrl = editUrl.replace('-start-', '');
             editUrl = editUrl.replace('-id-', encodeURIComponent(event.id));
-
             $.ajax({
                 url: editUrl
             });
@@ -75,8 +63,6 @@ $(document).ready(function() {
             $('#loading').toggle(bool);
         }
     });
-
-    console.log(events);
 
 
 

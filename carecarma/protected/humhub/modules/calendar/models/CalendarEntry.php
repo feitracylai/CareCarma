@@ -10,7 +10,6 @@ use humhub\libs\DbDateValidator;
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\calendar\models\CalendarEntryParticipant;
-use humhub\modules\user\models\User;
 
 /**
  * This is the model class for table "calendar_entry".
@@ -151,13 +150,9 @@ class CalendarEntry extends ContentActiveRecord implements \humhub\modules\searc
     public static function getContainerEntriesByOpenRange(DateTime $start, DateTime $end, ContentContainerActiveRecord $contentContainer, $limit = 0)
     {
         $entries = array();
-//        Yii::getLogger()->log(print_r($contentContainer,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-//        $user = User::findOne(['id' => 5]);
-//        Yii::getLogger()->log(print_r($user,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-//        Yii::getLogger()->log(print_r($contentContainer,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $query = self::find()->contentContainer2($contentContainer)->readable2();
+        
+        $query = self::find()->contentContainer($contentContainer)->readable();
         //Search for all container entries with start and/or end within the given range
-//        Yii::getLogger()->log(print_r($query,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $query->andFilterWhere(
                     ['or',
                         ['and',
@@ -176,39 +171,7 @@ class CalendarEntry extends ContentActiveRecord implements \humhub\modules\searc
         if ($limit != 0) {
             $query->limit($limit);
         }
-//        Yii::getLogger()->log(print_r($query,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-//        Yii::getLogger()->log(print_r($query->all(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        foreach ($query->all() as $entry) {
-            $entries[] = $entry;
-        }
-//        Yii::getLogger()->log(print_r($entries,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        return $entries;
-    }
 
-
-
-    public static function getContainerEntriesByOpenRange_family(DateTime $start, DateTime $end, ContentContainerActiveRecord $contentContainer, $limit = 0)
-    {
-        $entries = array();
-        $query = self::find()->contentContainer_family($contentContainer)->readable_family();
-        $query->andFilterWhere(
-            ['or',
-                ['and',
-                    ['>=', 'start_datetime', $start->format('Y-m-d H:i:s')],
-                    ['<=', 'start_datetime', $end->format('Y-m-d H:i:s')]
-                ],
-                ['and',
-                    ['>=', 'end_datetime', $start->format('Y-m-d H:i:s')],
-                    ['<=', 'end_datetime', $end->format('Y-m-d H:i:s')]
-                ]
-            ]
-        );
-
-        $query->orderBy('start_datetime ASC');
-
-        if ($limit != 0) {
-            $query->limit($limit);
-        }
         foreach ($query->all() as $entry) {
             $entries[] = $entry;
         }
@@ -224,7 +187,7 @@ class CalendarEntry extends ContentActiveRecord implements \humhub\modules\searc
         if ($interval->days > 50) {
             throw new Exception('Range maximum exceeded!');
         }
-//        Yii::getLogger()->log(print_r($contentContainer,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
         $query = self::find()->contentContainer($contentContainer)->readable();
         $query->andWhere(['>=', 'start_datetime', $start->format('Y-m-d H:i:s')]);
         $query->andWhere(['<=', 'end_datetime', $end->format('Y-m-d H:i:s')]);
@@ -396,12 +359,9 @@ class CalendarEntry extends ContentActiveRecord implements \humhub\modules\searc
             $endDateTime->add(new DateInterval('PT2H'));
             $end = $endDateTime->format('Y-m-d');
         }
-        $part = CalendarEntryParticipant::findOne(['calendar_entry_id' => $this->id]);
-        
 
         return array(
             'id' => $this->id,
-            'resourceId' => $part->user_id,
             'title' => $this->title,
             'editable' => $this->content->canWrite(),
             'allDay' => ($this->all_day) ? true : false,

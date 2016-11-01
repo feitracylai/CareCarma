@@ -21,11 +21,6 @@ class FullCalendar extends Widget
 
     public function run()
     {
-//        Yii::getLogger()->log(print_r($this->loadUrl,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-//        Yii::getLogger()->log(print_r($this->canWrite,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-//        Yii::getLogger()->log(print_r($this->createUrl,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-//        Yii::getLogger()->log(print_r($this->selectors,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-//        Yii::getLogger()->log(print_r($this->filters,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         return $this->render('fullCalendar', [
                     'loadUrl' => $this->loadUrl,
                     'canWrite' => $this->canWrite,
