@@ -22,8 +22,9 @@ use yii\helpers\Html;
         <div class="modal-body">
 
 
-
-            <p><?php echo Yii::t('UserModule.views_contact_circleInvite', 'No users in your people! Or they already in this circle.'); ?></p>
+            <?php if (count($spacesInvite) == 0):  ?>
+            <p><?php echo Yii::t('UserModule.views_contact_circleInvite', 'This PEOPLE already in all of your circles.'); ?></p>
+            <?php else: ?>
 
         </div>
 
@@ -69,6 +70,8 @@ use yii\helpers\Html;
             <?php endforeach; ?>
             <!-- END: Results -->
         </ul>
+
+        <?php endif; ?>
 
         <div class="modal-footer">
 
