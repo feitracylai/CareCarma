@@ -231,6 +231,13 @@ class ContactController extends Controller
                // $user = User::findOne(['id' => $contact->user_id]);
 
 //                $contact->notifyDevice('update');
+                $gcm = new GCM();
+                $device_id = $user->device_id;
+                $device = Device::findOne(['device_id' => $device_id]);
+                $data = array();
+                $data['type'] = 'contact,updated';
+                $gcm_id = $device->gcmId;
+                $gcm->send($gcm_id, $data);
                 return $this->redirect(Url::toRoute('/user/contact'));
             }
         }
@@ -341,7 +348,7 @@ class ContactController extends Controller
                     $userContact->device_phone = $contactUser->device->phone;
                 }
                 $userContact->save();
-                $userContact->notifyDevice('add');
+//                $userContact->notifyDevice('add');
 
                 $notification = new AddContact();
                 $notification->source = $userContact;
@@ -367,7 +374,26 @@ class ContactController extends Controller
                     $newContact->device_phone = $thisUser->device->phone;
                 }
                 $newContact->save();
-                $newContact->notifyDevice('add');
+//                $newContact->notifyDevice('add');
+
+                $gcm = new GCM();
+                $device_id = $thisUser->device_id;
+                $device = Device::findOne(['device_id' => $device_id]);
+                $data = array();
+                $data['type'] = 'contact,updated';
+                Yii::getLogger()->log($data, Logger::LEVEL_INFO, 'MyLog');
+                $gcm_id = $device->gcmId;
+                $gcm->send($gcm_id, $data);
+
+                $gcm = new GCM();
+                $user = User::findOne(['user_id' => $contactUser->id]);
+                $device_id = $user->device_id;
+                $device = Device::findOne(['device_id' => $device_id]);
+                $data = array();
+                $data['type'] = 'contact,updated';
+                Yii::getLogger()->log($data, Logger::LEVEL_INFO, 'MyLog');
+                $gcm_id = $device->gcmId;
+                $gcm->send($gcm_id, $data);
             }
 
 //            Yii::getLogger()->log([$privacy, User::CONTACT_NOTIFY_EVERYONE], Logger::LEVEL_INFO, 'MyLog');
@@ -541,6 +567,15 @@ class ContactController extends Controller
             $contact->delete();
            // $user = User::findOne(['id' => $contact->user_id]);
             $contact->notifyDevice('delete');
+
+            $gcm = new GCM();
+            $device_id = $user->device_id;
+            $device = Device::findOne(['device_id' => $device_id]);
+            $data = array();
+            $data['type'] = 'contact,updated';
+            $gcm_id = $device->gcmId;
+            $gcm->send($gcm_id, $data);
+
             return $this->redirect(Url::toRoute('index'));
         }
         return $this->render('delete', array('model' => $contact, 'user' => $user));
