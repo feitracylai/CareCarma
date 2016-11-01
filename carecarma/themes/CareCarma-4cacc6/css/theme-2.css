@@ -2235,7 +2235,7 @@ ul.tag_input.focus {
     position: relative
 }
 
-.btn_container .label-public {
+.btn_container .label-public, .btn_container .label-private{
     position: absolute;
     right: 40px;
     top: 11px
@@ -3195,3 +3195,4 @@ img.bounceIn {
 {
     border-top: none;
 }
+

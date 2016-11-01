@@ -109,7 +109,7 @@ class CreateController extends Controller
     {
         $space = Space::find()->where(['id' => $space_id])->one();
 
-        $contacts = Contact::findAll(['user_id' => Yii::$app->user->id]);
+        $contacts = Contact::findAll(['user_id' => Yii::$app->user->id, 'linked' => 1]);
         $users = array();
 
         foreach ($contacts as $contact){

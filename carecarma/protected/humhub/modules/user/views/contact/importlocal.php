@@ -18,7 +18,9 @@ use humhub\modules\user\models\User;
     <div class="panel-heading">
         <?php echo Yii::t('UserModule.views_contact_import', '<strong>Import</strong> from Local'); ?>
     </div>
-
+    <div class="panel-body">
+        <?php echo Html::a(Yii::t('UserModule.views_contact_import', 'Delete All'), $thisUser->createUrl('importlocal', ['delete' => true]), array('class' => 'btn btn-danger pull-right')); ?>
+    </div>
 
     <ul class="media-list">
         <!-- BEGIN: Results -->

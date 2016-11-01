@@ -19,5 +19,7 @@
 
 <?php if ($object->content->isPublic()) : ?>
     <span class="label label-success"><?php echo Yii::t('ContentModule.widgets_views_label', 'Public'); ?></span>
+<?php else: ?>
+    <span class="label label-default"><?php echo Yii::t('ContentModule.widgets_views_label', '<i class="fa fa-lock"></i> Private'); ?></span>
 <?php endif; ?>
 

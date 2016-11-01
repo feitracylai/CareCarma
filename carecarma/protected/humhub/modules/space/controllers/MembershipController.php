@@ -153,9 +153,24 @@ class MembershipController extends \humhub\modules\content\components\ContentCon
 
         $space->removeMember();
 
+        //send inviteDeclined notification
+        $userId = Yii::$app->user->id;
+        $user = User::findOne(['id' => $userId]);
+        $membership = $this->getMembership($userId);
+
+        $notification = new \humhub\modules\space\notifications\InviteDeclined();
+        $notification->source = $this->owner;
+        $notification->originator = $user;
+        $notification->send($membership->originator);
+
+
+
+        if ($space->visibility == Space::VISIBILITY_NONE){
+            return $this->redirect(Url::home());
+        }
+
         //if user deny the invite, change to follow
         $space->follow();
-
         return $this->redirect($space->getUrl());
     }
 
@@ -172,10 +187,9 @@ class MembershipController extends \humhub\modules\content\components\ContentCon
             throw new HttpException(403, 'Access denied - You cannot invite members!');
         }
 
-        $model = new \humhub\modules\space\models\forms\InviteForm();
-        $model->space = $space;
 
-        $contacts = Contact::findAll(['user_id' => Yii::$app->user->id]);
+
+        $contacts = Contact::findAll(['user_id' => Yii::$app->user->id, 'linked' => 1]);
         $users = array();
 //        $allUsers = User::findAll(['group_id' => 1]);
 //        foreach ($allUsers as $user){
@@ -193,20 +207,33 @@ class MembershipController extends \humhub\modules\content\components\ContentCon
 
         if ($doit == 2) {
 
-            $statusInvite = false;
+//            $statusInvite = false;
 //            $guid = $_POST['data'];
             $user = User::findOne(['id' => Yii::$app->request->get('user_id')]);
 
             // Invite existing members
 
             $space->inviteMember($user->id, Yii::$app->user->id);
-            $statusInvite = $space->getMembership($user->id)->status;
+//            $statusInvite = $space->getMembership($user->id)->status;
 
 
 //            return $this->renderAjax('statusInvite', array('status' => $statusInvite, 'space' => $space));
         }
 
         return $this->renderAjax('invite', array('space' => $space, 'users' => $users));
+    }
+
+    public function actionStatusInvite()
+    {
+        $statusInvite = false;
+
+        $space = $this->getSpace();
+        $contactUserId = Yii::$app->request->get('user_id');
+
+//        $space->inviteMember($contactUserId, Yii::$app->user->id);
+//        $statusInvite = $space->getMembership($contactUserId)->status;
+
+        return $this->renderAjax('statusInvite', array('status' => $statusInvite, 'space' => $space));
     }
 
 

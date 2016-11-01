@@ -95,6 +95,7 @@ use humhub\modules\space\models\Space;
                 <div class="pull-right">
 
                     <span class="label label-success label-public hidden"><?php echo Yii::t('ContentModule.widgets_views_contentForm', 'Public'); ?></span>
+                    <span class="label label-default label-private"><?php echo Yii::t('ContentModule.widgets_views_contentForm', '<i class="fa fa-lock"></i> Private'); ?></span>
 
                     <ul class="nav nav-pills preferences" style="right: 0; top: 5px;">
                         <li class="dropdown">
@@ -166,12 +167,14 @@ use humhub\modules\space\models\Space;
         $('#contentForm_visibility').prop( "checked", true );
         $('#contentForm_visibility_entry').html('<i class="fa fa-lock"></i> <?php echo Yii::t('ContentModule.widgets_views_contentForm', 'Make private'); ?>');
         $('.label-public').removeClass('hidden');
+        $('.label-private').addClass('hidden');
     }
     
     function setPrivateVisibility() {
         $('#contentForm_visibility').prop( "checked", false );
         $('#contentForm_visibility_entry').html('<i class="fa fa-unlock"></i> <?php echo Yii::t('ContentModule.widgets_views_contentForm', 'Make public'); ?>');
         $('.label-public').addClass('hidden');
+        $('.label-private').removeClass('hidden');
     }
 
     function changeVisibility() {

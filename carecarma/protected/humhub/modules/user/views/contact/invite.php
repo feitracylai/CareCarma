@@ -15,23 +15,12 @@ use humhub\models\Setting;
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title"
-                id="myModalLabel"><?php echo Yii::t('UserModule.views_contact_invite', '<strong>Invite</strong> contacts'); ?></h4>
+                id="myModalLabel"><?php echo Yii::t('UserModule.views_contact_invite', 'Invite <strong>PEOPLE</strong> by email'); ?></h4>
         </div>
         <div class="modal-body">
 
             <br/>
 
-            <?php if (Setting::Get('internalUsersCanInvite', 'authentication_internal')) : ?>
-                <div class="text-center">
-                    <ul id="tabs" class="nav nav-tabs tabs-center" data-tabs="tabs">
-
-                        <li class="active tab-external"><a href="#external"
-                                                    data-toggle="tab"><?php echo Yii::t('UserModule.views_contact_invite', 'Invite by email'); ?></a>
-                        </li>
-                    </ul>
-                </div>
-                <br/>
-            <?php endif; ?>
 
             <div class="tab-content">
 

@@ -466,10 +466,10 @@ class SpaceModelMembership extends Behavior
             $activity->create();
         } elseif ($membership->status == Membership::STATUS_INVITED && $membership->originator !== null) {
             // Was invited, but declined the request - inform originator
-            $notification = new \humhub\modules\space\notifications\InviteDeclined();
-            $notification->source = $this->owner;
-            $notification->originator = $user;
-            $notification->send($membership->originator);
+//            $notification = new \humhub\modules\space\notifications\InviteDeclined();
+//            $notification->source = $this->owner;
+//            $notification->originator = $user;
+//            $notification->send($membership->originator);
         } elseif ($membership->status == Membership::STATUS_APPLICANT) {
             $notification = new \humhub\modules\space\notifications\ApprovalRequestDeclined();
             $notification->source = $this->owner;
