@@ -15,7 +15,6 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
     <div class="panel-heading"><?php echo Yii::t('UserModule.views_contact_edit', '<strong>Edit</strong> contact'); ?></div>
     <div class="panel-body">
 
-        <?php if ($contact->contact_user_id != null){ ?>
             <?php $contactUser = User::findOne(['id' => $contact->contact_user_id]) ?>
             <div class="media">
 
@@ -33,12 +32,9 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
                     </h4>
                 </div>
 
-                <?php echo Html::a(Yii::t('UserModule.views_contact_edit', 'Disconnect'), $space->createUrl('disconnect', ['Cid' => $contact->contact_id, 'rguid' => $user->guid]), array('class' => 'btn btn-danger btn-xs pull-right', 'data-method' => 'POST', 'data-confirm' => 'Are you sure? Click "OK" if you want to disconnect this user account with your contact.')); ?>
             </div>
 
-        <?php }else{ ?>
-            <?php echo Html::a(Yii::t('UserModule.views_contact_edit', 'Connect'), $space->createUrl('connect', ['Cid' => $contact->contact_id, 'rguid' => $user->guid]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>
-        <?php } ?>
+
         <hr>
         <?php $form = \yii\widgets\ActiveForm::begin(); ?>
         <?php echo $hForm->render($form); ?>
