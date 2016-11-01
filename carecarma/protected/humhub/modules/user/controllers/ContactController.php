@@ -85,7 +85,7 @@ class ContactController extends Controller
         $id = (int) Yii::$app->request->get('id');
         $contact = Contact::findOne(['contact_id' => $id, 'user_id' => $user->id]);
         if ($contact == null) {
-            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
+            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'PEOPLE not found!'));
         }
         return $this->render('view', array(
             'contact' => $contact,
@@ -143,7 +143,7 @@ class ContactController extends Controller
         $contact = Contact::findOne(['contact_id' => Yii::$app->request->get('id'), 'user_id' => $user->id]);
         $contact->scenario = 'editContact';
         if ($contact == null)
-            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
+            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'PEOPLE not found!'));
         // Build Form Definition
         $definition = array();
         $definition['elements'] = array();
@@ -553,7 +553,7 @@ class ContactController extends Controller
         $doit = (int) Yii::$app->request->get('doit');
         $contact = Contact::findOne(['contact_id' => $id, 'user_id' => $user->id]);
         if ($contact == null) {
-            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
+            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'PEOPLE not found!'));
         }
         if ($doit == 2) {
             if ($contact->contact_user_id != null){
@@ -646,7 +646,7 @@ class ContactController extends Controller
         $id = (int) Yii::$app->request->get('id');
         $contact = Contact::findOne(['contact_id' => $id, 'user_id' => $user->id]);
         if ($contact == null) {
-            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
+            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'PEOPLE not found!'));
         }
         $userSpaces = Membership::findAll(['user_id' => $user->id, 'status' => 3]);
         $users = array();
