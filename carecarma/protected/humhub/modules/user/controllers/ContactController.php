@@ -69,22 +69,7 @@ class ContactController extends Controller
 //
 ////            $this->redirect($submitSpace->createUrl('/space/membership/status-invite', ['user_id' => 2]));
 //        }
-		
-		// Relationship Change
-//        if (Yii::$app->request->post('dropDownColumnSubmit')) {
-//            Yii::$app->response->format = 'json';
-//            $contact = Contact::findOne(['contact_id' => Yii::$app->request->post('contact_id')]);
-//            if ($contact === null) {
-//                throw new \yii\web\HttpException(404, 'Could not find contacts!');
-//            }
-//
-//
-//            if ($contact->load(Yii::$app->request->post()) && $contact->validate() && $contact->save()) {
-//
-//                return Yii::$app->request->post();
-//            }
-//            return $contact->getErrors();
-//        }
+
 		
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -93,6 +78,7 @@ class ContactController extends Controller
             'spaces' => $spaces,
         ]);
     }
+
     public function actionView()
     {
         $user = User::findOne(['guid' => Yii::$app->user->guid]);
@@ -106,6 +92,51 @@ class ContactController extends Controller
             'user' => $user
         ));
     }
+
+    public function actionCircleInvite()
+    {
+        $user = User::findOne(['id' => Yii::$app->user->id]);
+        Yii::getLogger()->log($user->id, Logger::LEVEL_ERROR, 'MyLog');
+        $contact_user_id = Yii::$app->request->get('cuid');
+        $doit = (int)Yii::$app->request->get('doit');
+
+        $spacesInvite = array();
+        $members = Membership::findAll(['user_id' => $user->id]);
+        if ($members != null){
+            foreach ($members as $member){
+                $space = Space::findOne(['id' => $member->space_id]);
+                if (!$space->isMember($contact_user_id)){
+                    $spacesInvite[] = $space;
+                }
+
+            }
+        }
+
+        if ($doit == 2)
+        {
+            $spaceId = Yii::$app->request->get('space_id');
+            $inviteSpace = Space::findOne(['id' => $spaceId]);
+            $inviteSpace->inviteMember($contact_user_id, $user->id);
+
+        } elseif ($doit == 3) {
+            //Remove circle invite
+            $removeSpace = Space::findOne(['id' => Yii::$app->request->get('space_id')]);
+            if ($removeSpace->isSpaceOwner($contact_user_id)) {
+                throw new HttpException(500, 'Owner cannot be removed!');
+            }
+
+            $removeSpace->removeMember($contact_user_id);
+        }
+
+
+        return $this->renderAjax('circle-invite', array(
+            'spacesInvite' => $spacesInvite,
+            'cuid' => $contact_user_id,
+            'user' => $user,
+        ));
+    }
+    
+
     public function actionEdit()
     {
         $user = User::findOne(['guid' => Yii::$app->user->guid]);

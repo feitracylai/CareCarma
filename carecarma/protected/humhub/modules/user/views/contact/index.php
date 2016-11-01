@@ -38,22 +38,6 @@ use humhub\widgets\GridView;
 
                 ],
 
-//                'nickname',
-//                [
-//                    'label' => Yii::t('UserModule.views_contact_index', 'Relationship'),
-//                    'class' => 'humhub\libs\DropDownGridColumn',
-//                    'attribute' => 'relation',
-//                    'options' => ['style' => 'width:160px; min-width:80px;'],
-//                    'submitAttributes' => ['contact_id'],
-//                    'dropDownOptions' =>  $relationship,
-//                    'value' =>
-//                    function ($data) use ($relationship) {
-//
-//                         return $relationship[$data->relation];
-//                    },
-//
-//
-//                ],
 
                 [
                     'label' => Yii::t('UserModule.views_contact_index', 'Circles'),
@@ -101,8 +85,8 @@ use humhub\widgets\GridView;
                             return Html::a('<i class="fa fa-eye"></i>', $user->createUrl('view', ['id' => $model->contact_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View']);
                         },
                         'update' => function($url, $model) use ($user) {
-//                            return Html::a('<i class="fa fa-pencil"></i>',  $user->createUrl('edit', ['id' => $model->contact_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Edit']);
-                            return;
+                            return Html::a('<i class="fa fa-plus"></i>',  $user->createUrl('circle-invite', ['cuid' => $model->contact_user_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Invite in Circles', 'data-target' => '#globalModal']);
+//                            return;
                         },
                         'delete' => function($url, $model) use ($user) {
                             return Html::a('<i class="fa fa-times"></i>',  $user->createUrl('delete', ['id' => $model->contact_id]), ['class' => 'btn btn-danger btn-xs tt', 'title' => 'Delete']);
