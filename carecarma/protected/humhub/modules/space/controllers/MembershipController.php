@@ -151,15 +151,18 @@ class MembershipController extends \humhub\modules\content\components\ContentCon
             throw new HttpException(500, Yii::t('SpaceModule.controllers_SpaceController', 'As owner you cannot revoke your membership!'));
         }
 
-        $space->removeMember();
+
 
         //send inviteDeclined notification
         $userId = Yii::$app->user->id;
         $user = User::findOne(['id' => $userId]);
-        $membership = $this->getMembership($userId);
+        $membership = $space->getMembership($userId);
+
+
+        $space->removeMember();
 
         $notification = new \humhub\modules\space\notifications\InviteDeclined();
-        $notification->source = $this->owner;
+        $notification->source = $space;
         $notification->originator = $user;
         $notification->send($membership->originator);
 
