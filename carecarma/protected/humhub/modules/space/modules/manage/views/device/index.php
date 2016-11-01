@@ -7,8 +7,11 @@ use humhub\modules\space\models\Space;
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\modules\manage\widgets\DeviceMenu;
 ?>
+<?php if ($space->isAdmin()): ?>
 <?= DeviceMenu::widget(['space' => $space]); ?>
 <br/>
+<?php endif; ?>
+
 <div class="panel panel-default ">
     <div class="panel-heading">
         <?php echo Yii::t('SpaceModule.views_admin_receiver', '<strong>Current</strong> Care Receiver'); ?>
