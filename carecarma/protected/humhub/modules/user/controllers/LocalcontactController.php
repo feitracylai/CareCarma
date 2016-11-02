@@ -45,18 +45,20 @@ class LocalcontactController extends Controller
      */
     public function actionCreate()
     {
-        Yii::getLogger()->log(print_r(Yii::$app->request->post(), true), yii\log\Logger::LEVEL_INFO, 'MyLog');
+//        Yii::getLogger()->log(print_r(Yii::$app->request->post(), true), yii\log\Logger::LEVEL_INFO, 'MyLog');
 
         $data = Yii::$app->request->post();
+        Yii::getLogger()->log(Yii::$app->user->id, yii\log\Logger::LEVEL_INFO, 'MyLog');
         $json_data = $data['contact'];
-        $username = $data['username'];
+//        $username = $data['username'];
         $contact_list = json_decode($json_data, TRUE);
-        $user = User::findOne(['username' => $username]);
+//        $user = User::findOne(['username' => $username]);
 
 
         foreach ($contact_list as $contact) {
 
-            $user_id = $user->id;
+//            $user_id = $user->id;
+            $user_id = Yii::$app->user->id;
             $name = $contact['name'];
             $email = $contact['email'];
             $phone_number1 = $contact['phone_number1'];
