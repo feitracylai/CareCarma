@@ -4,6 +4,7 @@ namespace humhub\modules\user\controllers;
 
 //require '/../vendor/autoload.php';
 
+use humhub\modules\dashboard\models\MobileToken;
 use Yii;
 use humhub\modules\user\models\Localcontact;
 use humhub\modules\user\models\User;
@@ -48,17 +49,21 @@ class LocalcontactController extends Controller
 //        Yii::getLogger()->log(print_r(Yii::$app->request->post(), true), yii\log\Logger::LEVEL_INFO, 'MyLog');
 
         $data = Yii::$app->request->post();
-        Yii::getLogger()->log(Yii::$app->user->id, yii\log\Logger::LEVEL_INFO, 'MyLog');
+//        Yii::getLogger()->log(Yii::$app->user->id, yii\log\Logger::LEVEL_INFO, 'MyLog');
         $json_data = $data['contact'];
 //        $username = $data['username'];
+        $deviceToken = $data['token'];
         $contact_list = json_decode($json_data, TRUE);
+
+        $mobile_toke = MobileToken::findOne(['device_token' => $deviceToken]);
+        $user = User::findOne(['id' => $mobile_toke->user_id]);
 //        $user = User::findOne(['username' => $username]);
+
 
 
         foreach ($contact_list as $contact) {
 
-//            $user_id = $user->id;
-            $user_id = Yii::$app->user->id;
+            $user_id = $user->id;
             $name = $contact['name'];
             $email = $contact['email'];
             $phone_number1 = $contact['phone_number1'];
