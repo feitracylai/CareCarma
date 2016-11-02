@@ -50,6 +50,7 @@ class LocalcontactController extends Controller
 
         $data = Yii::$app->request->post();
         Yii::getLogger()->log(Yii::$app->user->id, yii\log\Logger::LEVEL_INFO, 'MyLog');
+        Yii::getLogger()->log(Yii::$app->request->post(), yii\log\Logger::LEVEL_INFO, 'MyLog');
         $json_data = $data['contact'];
 //        $username = $data['username'];
         $deviceToken = $data['token'];
