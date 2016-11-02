@@ -409,8 +409,8 @@ input[type=text], input[type=password], input[type=select] {
 
 #topbar-first .notifications .btn-group > .label {
     position: absolute;
-    top: 7px;
-    right: -2px
+    top: 12px;
+    right: -5px
 }
 
 #topbar-first .notifications .arrow:after {
@@ -2840,6 +2840,21 @@ img.bounceIn {
 
     #topbar-first .topbar-actions {
         height: 51px;
+    }
+
+    #topbar-first .notifications
+    {
+        height: 51px;
+    }
+
+    #topbar-first .notifications .btn-group > a {
+        margin: 10px 2px;
+    }
+
+    #topbar-first .notifications .btn-group > .label{
+        position: absolute;
+        top: 0;
+        right: -5px;
     }
 
     #topbar-first {
