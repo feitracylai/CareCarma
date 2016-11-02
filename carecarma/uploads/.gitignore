@@ -4,5 +4,7 @@
 !.gitignore
 !index.html
 !file
-!profile_image
+!/profile_image
+!/logo_image
+
 
