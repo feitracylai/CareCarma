@@ -4,6 +4,7 @@ namespace humhub\modules\user\controllers;
 
 //require '/../vendor/autoload.php';
 
+use humhub\libs\Firebase;
 use humhub\modules\dashboard\models\MobileToken;
 use Yii;
 use humhub\modules\user\models\Localcontact;
@@ -62,6 +63,9 @@ class LocalcontactController extends Controller
         $post->save();
         $user = User::findOne(['id' => Yii::$app->user->id]);
 //        $user = User::findOne(['username' => $username]);
+
+        $firebase = new Firebase();
+        $firebase->send($deviceToken, 'get it');
 
 
 
