@@ -1,0 +1,15 @@
+{
+    "id": "massuserimport",
+    "name": "Mass User Import",
+    "description": "Imports User from a CSV file.",
+    "keywords": [
+        "user",
+        "mass",
+        "import"
+    ],
+    "humhub": {
+        "minVersion": "1.0"
+    },
+    "version": "1.0.6",
+    "screenshots": ["assets/screen_1.jpg"]
+}
