@@ -118,7 +118,7 @@ class CreateController extends Controller
             $users[] = User::findOne(['id' => $contactUserId]);
         }
 
-        Yii::getLogger()->log($users, Logger::LEVEL_INFO, 'MyLog');
+//        Yii::getLogger()->log($users, Logger::LEVEL_INFO, 'MyLog');
         return $this->renderAjax('invite', array('users' => $users, 'space' => $space, 'space_id' => $space_id));
     }
 
