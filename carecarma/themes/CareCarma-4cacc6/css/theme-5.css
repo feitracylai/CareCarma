@@ -620,6 +620,11 @@ input[type=text], input[type=password], input[type=select] {
     min-height: 49px
 }
 
+#topbar-second .nav > li > .dashboard{
+    padding: 4px 8px 1px;
+    line-height:18px;
+}
+
 #topbar-second .nav > li > a:hover, #topbar-second .nav > li > a:active, #topbar-second .nav > li > a:focus {
     border-bottom: 3px solid #926ecd;
     background-color: #f7f7f7;
@@ -629,6 +634,10 @@ input[type=text], input[type=password], input[type=select] {
 
 #topbar-second .nav > li > a i {
     font-size: 20px
+}
+
+#topbar-second .nav > li > a.dashboard i{
+    font-size: 25px;
 }
 
 #topbar-second .nav > li > a .caret {
@@ -657,6 +666,10 @@ input[type=text], input[type=password], input[type=select] {
 @media only screen and (max-width: 404px){
     #topbar-second .nav > li > a{
         padding:6px 2px 0;
+    }
+
+    #topbar-second .nav > li > .dashboard{
+        padding: 6px 2px 0;
     }
 }
 
@@ -2777,6 +2790,11 @@ img.bounceIn {
         font-size: 25px;
         padding-top: 5px;
         padding-right: 5px;
+    }
+
+    #topbar-second .nav > li > a.dashboard i   {
+        font-size: 28px;
+        padding: 3px;
     }
 
     #space-menu > .title {

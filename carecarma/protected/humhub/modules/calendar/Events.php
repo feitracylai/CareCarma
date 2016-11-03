@@ -23,7 +23,7 @@ class Events extends \yii\base\Object
         $user = Yii::$app->user->getIdentity();
         if ($user->isModuleEnabled('calendar')) {
             $event->sender->addItem(array(
-                'label' => Yii::t('CalendarModule.base', 'Calendar'),
+                'label' => Yii::t('CalendarModule.base', 'Main Calendar'),
                 'url' => Url::to(['/calendar/global/index']),
                 'icon' => '<i class="fa fa-calendar"></i>',
                 'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'calendar' && Yii::$app->controller->id == 'global'),
