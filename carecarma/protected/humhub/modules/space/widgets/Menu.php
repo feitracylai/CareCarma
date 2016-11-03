@@ -54,7 +54,7 @@ class Menu extends \humhub\widgets\BaseMenu
 #            'isActive' => (Yii::$app->controller->id == "admin" && Yii::$app->controller->action->id == "index"),
 #        ));
 
-        if ($this->space->isMember()) {
+        if ($this->space->isAdmin()) {
                 $this->addItem(array(
                     'label' => Yii::t('SpaceModule.widgets_SpaceMenuWidget', 'Care receiver'),
                     'group' => 'modules',
