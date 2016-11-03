@@ -1,4 +1,3 @@
-
 <?php
 
 namespace humhub\modules\space\widgets;
@@ -73,4 +72,3 @@ class Menu extends \humhub\widgets\BaseMenu
 }
 
 ?>
-
