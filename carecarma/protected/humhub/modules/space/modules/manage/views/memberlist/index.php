@@ -50,8 +50,8 @@ use yii\helpers\Html;
                                     ],
                                     [
                                         'label' => Yii::t('SpaceModule.widgets_views_spaceMembers', 'Apt/Unit'),
-                                        'value' => $user->profile->street2,
-//                                        'value' => $user->profile->address2,
+//                                        'value' => $user->profile->street2,
+                                        'value' => $user->profile->address2,
                                     ],
                                     [
                                         'label' => Yii::t('SpaceModule.widgets_views_spaceMembers', 'City'),
