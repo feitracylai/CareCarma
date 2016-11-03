@@ -6,8 +6,8 @@ use yii\base\Exception;
 $user = null;
 
 //comment 2 lines below when install the app
-    $userId = Yii::$app->user->id;
-    $user = \humhub\modules\user\models\User::findOne(['id' => $userId]);
+//    $userId = Yii::$app->user->id;
+//    $user = \humhub\modules\user\models\User::findOne(['id' => $userId]);
 
 
 
