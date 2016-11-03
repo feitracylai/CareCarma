@@ -115,8 +115,10 @@ class CreateController extends Controller
 
         foreach ($contacts as $contact){
             $contactUserId = $contact->contact_user_id;
-	    Yii::getLogger()->log($contactUserId, Logger::LEVEL_INFO, 'MyLog');
-            $users[] = User::findOne(['id' => $contactUserId]);
+            if (!$contactUserId) {
+                $users[] = User::findOne(['id' => $contactUserId]);
+            }
+
         }
 
 //        Yii::getLogger()->log($users, Logger::LEVEL_INFO, 'MyLog');
