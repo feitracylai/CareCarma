@@ -27,7 +27,7 @@ use yii\helpers\Html;
             <!-- BEGIN: Results -->
             <?php foreach ($users as $user) : ?>
                 <li>
-		<?php Yii::getLogger()->log($user->id, \yii\log\Logger::LEVEL_INFO, 'MyLog'); ?>
+		
                     <div class="media" id="media-<?php echo $user->guid; ?>">
                         <?php $membership = \humhub\modules\space\models\Membership::findOne(['space_id' => $space_id, 'user_id' => $user->id, 'status' => \humhub\modules\space\models\Membership::STATUS_INVITED]) ?>
                         <div class="pull-right" >
