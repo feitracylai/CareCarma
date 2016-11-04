@@ -9,6 +9,7 @@
 namespace humhub\modules\user\models;
 
 use Yii;
+use yii\log\Logger;
 
 /**
  * This is the model class for table "profile".
@@ -207,7 +208,23 @@ class Profile extends \yii\db\ActiveRecord
                     $profileField->editable = false;
                 }
 
-                $fieldDefinition = $profileField->fieldType->getFieldFormDefinition();
+
+                if ($profileField->internal_name == 'country'){
+                    $fieldDefinition = [
+                        'country' => [
+                            'type' => 'dropdownlist',
+                            'class' => 'form-control',
+                            'items' =>  Yii::$app->params['availableCountries'],
+                            'prompt' => 'Please select:',
+                        ],
+                    ];
+//                } elseif (){
+
+                } else {
+                    $fieldDefinition = $profileField->fieldType->getFieldFormDefinition();
+                }
+
+
                 $category['elements'] = array_merge($category['elements'], $fieldDefinition);
 
                 $profileField->fieldType->loadDefaults($this);
