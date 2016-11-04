@@ -64,11 +64,21 @@ class AccountMenu extends BaseMenu
         ));
 
         $this->addItem(array(
+            'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Privacy'),
+            'icon' => '<i class="fa fa-lock"></i>',
+            'group' => 'account',
+            'url' => Url::toRoute('/user/account/privacy'),
+            'sortOrder' => 140,
+            'isActive' => (Yii::$app->controller->action->id == "privacy" && Yii::$app->controller->id == 'account'),
+        ));
+
+
+        $this->addItem(array(
             'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Settings'),
             'icon' => '<i class="fa fa-wrench"></i>',
             'group' => 'account',
             'url' => Url::toRoute('/user/account/edit-settings'),
-            'sortOrder' => 140,
+            'sortOrder' => 150,
             'isActive' => (Yii::$app->controller->action->id == "edit-settings" && Yii::$app->controller->id == 'account'),
         ));
 

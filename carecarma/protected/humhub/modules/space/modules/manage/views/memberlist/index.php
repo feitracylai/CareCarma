@@ -5,6 +5,7 @@ use yii\helpers\Html;
 
 <div class="panel panel-default members" id="space-members-panel">
 
+
     <div class="panel-heading"><?php echo Yii::t('SpaceModule.widgets_views_spaceMembers', '<strong>Circle Members</strong>'); ?></div>
     <div class="panel-body">
         <?php foreach ($members as $membership) : ?>
@@ -16,6 +17,8 @@ use yii\helpers\Html;
                     <strong><?php echo Html::encode($user->displayName); ?></strong>
 <!--                    <hr>-->
                 </div>
+
+                <?php if ($space->isMember(Yii::$app->user->id)){ ?>
 
                 <div class="contactInfo" id="info-<?php echo $user->guid; ?>" hidden>
                     <div class="middle">
@@ -78,6 +81,8 @@ use yii\helpers\Html;
 
                     })
                 </script>
+                <?php } ?>
+
                 <hr>
             <?php endif; ?>
         <?php endforeach; ?>

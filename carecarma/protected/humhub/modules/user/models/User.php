@@ -8,7 +8,9 @@
 
 namespace humhub\modules\user\models;
 
+use humhub\modules\content\models\Content;
 use humhub\modules\space\models\Membership;
+use humhub\modules\space\models\Space;
 use humhub\modules\user\notifications\LinkAccepted;
 use Yii;
 use yii\base\Exception;
@@ -74,6 +76,11 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
     const VISIBILITY_REGISTERED_ONLY = 1; // Only for registered members
     const VISIBILITY_ALL = 2; // Visible for all (also guests)
 
+
+    /**Profile About Page**/
+    const ABOUT_PAGE_PRIVATE = 0;
+    const ABOUT_PAGE_PUBLIC = 1;
+
     /**Contact LINK Setting**/
     const CONTACT_NOTIFY_EVERYONE = 0;
     const CONTACT_NOTIFY_NOCIRCLE = 1;
@@ -81,7 +88,8 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
 
     /****User Group****/
     const USERGROUP_SELF = 'u_self';
-    const USERGROUP_FRIEND = 'u_friend';
+    const USERGROUP_CIRCLEMEMBER = 'u_circlemember';
+    const USERGROUP_PEOPLE = 'u_people';
     const USERGROUP_USER = 'u_user';
     const USERGROUP_GUEST = 'u_guest';
 
@@ -641,15 +649,21 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             return self::USERGROUP_SELF;
         }
 
-        $spaces = Membership::findAll(['user_id' => $this->id]);
+        $spaces = Membership::findAll(['user_id' => Yii::$app->user->id]);
         foreach ($spaces as $memberSpace) {
-            $spaceId = $memberSpace->space_id;
-            $spaceMember = Membership::findAll(['space_id' => $spaceId, 'user_id' => Yii::$app->user->getIdentity()->id]);
-            if ($spaceMember != null) {
-                return self::USERGROUP_FRIEND;
+            $space = Space::findOne(['id' => $memberSpace->space_id]);
+            if ($space->isMember($this->id)) {
+                return self::USERGROUP_CIRCLEMEMBER;
             }
 
         }
+
+        $contact = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $this->id]);
+        if ($contact != null){
+            return self::USERGROUP_PEOPLE;
+        }
+
+
 
         return self::USERGROUP_USER;
     }

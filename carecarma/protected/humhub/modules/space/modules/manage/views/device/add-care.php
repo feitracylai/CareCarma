@@ -24,8 +24,8 @@ use humhub\widgets\GridView;
         <?= AddCareMenu::widget(['space' => $space]); ?>
         <p/>
         <p>
-            <?php echo Yii::t('SpaceModule.views_admin_receiver_add', 'If you add someone to be a "Care Receiver", his/her account can be managed by the administers in this circle.'); ?><br>
-            <?php echo Yii::t('SpaceModule.views_admin_receiver_add', 'One account just can be set as a Care Receiver in <u>only one</u> circles.'); ?>
+            <?php echo Yii::t('SpaceModule.views_admin_receiver_add', 'If you add someone to be a "Care Receiver", his/her account can be managed by the administrators in this circle.'); ?><br>
+            <?php echo Yii::t('SpaceModule.views_admin_receiver_add', 'If an account is set as a Care Receiver in one circle, it can not be set as a Care Receiver in any other circle.'); ?>
         </p>
         <hr/>
         <ul class="media-list">

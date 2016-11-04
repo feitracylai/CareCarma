@@ -60,8 +60,8 @@ $this->pageTitle = Yii::t('UserModule.views_auth_login', 'Login');
 
     </div>
 
-
-    <?= humhub\widgets\LanguageChooser::widget(); ?>
+    <!--If use this, we should change some css settings>
+<!--    --><?//= humhub\widgets\LanguageChooser::widget(); ?>
 </div>
 
 

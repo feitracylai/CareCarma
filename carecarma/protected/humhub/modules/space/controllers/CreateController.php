@@ -12,6 +12,7 @@ use humhub\modules\user\models\Contact;
 use humhub\modules\user\models\User;
 use Yii;
 use yii\helpers\Url;
+use yii\log\Logger;
 use yii\web\HttpException;
 use humhub\components\Controller;
 use humhub\modules\space\models\Space;
@@ -114,10 +115,13 @@ class CreateController extends Controller
 
         foreach ($contacts as $contact){
             $contactUserId = $contact->contact_user_id;
-            $users[] = User::findOne(['id' => $contactUserId]);
+            if ($contactUserId != null) {
+                $users[] = User::findOne(['id' => $contactUserId]);
+            }
+
         }
 
-
+//        Yii::getLogger()->log($users, Logger::LEVEL_INFO, 'MyLog');
         return $this->renderAjax('invite', array('users' => $users, 'space' => $space, 'space_id' => $space_id));
     }
 

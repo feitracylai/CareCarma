@@ -20,7 +20,7 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
     </div>
     <div class="panel-body">
         <p>
-            <?php echo Yii::t('UserModule.views_account_editDevice', '{first} {last} can use this e-mail to login, and receive the missed messages. Please make sure this email address is valid.', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
+            <?php echo Yii::t('SpaceModule.views_admin_receiver_edit', '{first} {last} can use this e-mail to login, and receive the missed messages. Please make sure this email address is valid.', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
         </p>
         <?php $form = ActiveForm::begin(); ?>
 

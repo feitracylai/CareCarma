@@ -1,0 +1,56 @@
+*** CONFIGURABLE USER DETAILS ***
+*********************************
+
+*** REQUIRED data ***************
+*********************************
+user.email:_____________The users email adress has to be unique.                                                          REQUIRED
+profile.firstname:______Users first name.                                                                                 REQUIRED
+profile.lastname:_______Users last name.                                                                                  REQUIRED
+
+*** Further Details *************
+*********************************
+password.newPassword:___The user password.                                                                                GENERATED IF EMPTY: If left empty, a 15 sign long, safe and random password will be generated.
+user.username:__________Unique name to identify users.                                                                    GENERATED IF EMPTY: Will be generated from profile.firstname and profile.lastname if empty. If a given username is already taken, a number will be appended. 
+user.group_id:__________Group id user should be initially imported to.                                                    Default: "defaultUserGroup" from settings or the group with the smallest id.
+user.super_admin:_______0: standard user | 1: super admin                                                                 Default: 0
+user.tags:______________User tags.                                                                                        Default: empty
+user.language:__________The users preferred language.                                                                     Default: empty
+user.visibility:________0: Not visible | 1: visible                                                                       Default: 1
+user.time_zone:_________The timezone                                                                                      Default: Europe/Berlin, depending on your installation
+profile.title:__________User detail information.                                                                          Default: empty
+profile.street:_________User detail information.                                                                          Default: empty
+profile.zip:____________User detail information.                                                                          Default: empty
+profile.city:___________User detail information.                                                                          Default: empty
+profile.country:________User detail information.                                                                          Default: empty
+profile.state:__________User detail information.                                                                          Default: empty
+profile.birthday:_______User detail information.                                                                          Default: empty
+profile.phone_private:__User detail information.                                                                          Default: empty
+profile.phone_work:_____User detail information.                                                                          Default: empty
+profile.mobile:_________User detail information.                                                                          Default: empty
+profile.fax:____________User detail information.                                                                          Default: empty
+profile.im_skype:_______Skype user name.                                                                                  Default: empty
+profile.im_msn:_________Msn user name.                                                                                    Default: empty
+profile.im_xmpp:________xmpp user name.                                                                                   Default: empty
+profile.url_facebook:___Social network url.                                                                               Default: empty
+profile.url_linkedin:___Social network url.                                                                               Default: empty
+profile.url_xing:_______Social network url.                                                                               Default: empty
+profile.url_youtube:____Social network url.                                                                               Default: empty
+profile.url_vimeo:______Social network url.                                                                               Default: empty
+profile.url_flickr:_____Social network url.                                                                               Default: empty
+profile.url_myspace:____Social network url.                                                                               Default: empty
+profile.url_googleplus:_Social network url.                                                                               Default: empty
+profile.url_twitter:____Social network url.                                                                               Default: empty
+
+*** Example csv *****************
+*********************************
+Please copy and adapt the csv below.
+
+user.email;profile.firstname;profile.lastname;user.username;password.newPassword;profile.street;profile.zip;profile.city;profile.country;profile.mobile
+max.mustermann@mail.com;Max;Mustermann;m_mustermann;dummyPassword124;Musterstr.;88888;Musterhausen;Musterland;0190888888888
+martha.mustermann@mail.com;Martha;Mustermann;ma_mustermann;dummyPassword123;;;;;0190999999999
+pia.mustermann1@mail.com;Pia;Mustermann;;;;;;;
+pia.mustermann2@mail.com;Pia;Mustermann;;;;;;;
+pia.mustermann3@mail.com;Pia;Mustermann;;;;;;;
+pia.mustermann4@mail.com;Pia;Mustermann;;;;;;;
+pia.mustermann5@mail.com;Pia;Mustermann;;;;;;;
+martha.mustermann2@mail.com;Martha;Mustermann;ma_mustermann;;;;;;

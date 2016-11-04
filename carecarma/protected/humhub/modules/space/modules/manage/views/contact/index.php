@@ -16,8 +16,9 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
     <div class="panel-heading"><?php echo Yii::t('SpaceModule.views_admin_receiver_contact', '<strong>Contacts</strong>'); ?></div>
 
     <div class="panel-body">
-        <?=ContactMenu::widget(['space' => $space]); ?>
-        <br/>
+        <!---Care Receiver can not add contacts->
+<!--        <?//=ContactMenu::widget(['space' => $space]); ?>-->
+<!--        <br/>-->
         <p>
             <?php echo Yii::t('SpaceModule.views_admin_receiver_contact', "In this overview you can find and manage
               {first} {last}'s contacts.", array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
@@ -69,6 +70,7 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
                         },
                         'update' => function($url, $model) use ($space, $user) {
                             return Html::a('<i class="fa fa-pencil"></i>', $space->createUrl('edit', ['Cid' => $model->contact_id, 'rguid' => $user->guid]), ['class' => 'btn btn-primary btn-xs tt']);
+//                            return;
                         },
                         'delete' => function($url, $model) use ($space, $user) {
                             return Html::a('<i class="fa fa-times"></i>', $space->createUrl('delete', ['Cid' => $model->contact_id, 'rguid' => $user->guid]), ['class' => 'btn btn-danger btn-xs tt']);

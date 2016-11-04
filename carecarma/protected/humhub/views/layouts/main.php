@@ -96,7 +96,7 @@ AppAsset::register($this);
                 <?php echo \humhub\modules\user\widgets\AccountTopMenu::widget(); ?>
             </div>
 
-            <div class="notifications pull-right hidden-xs hidden-sm">
+            <div class="notifications pull-right">
 
                 <?php
                 echo \humhub\widgets\NotificationArea::widget(['widgets' => [

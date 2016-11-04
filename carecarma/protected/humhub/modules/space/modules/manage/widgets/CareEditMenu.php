@@ -49,7 +49,7 @@ class CareEditMenu extends \humhub\widgets\BaseMenu
             'label' => Yii::t('SpaceModule.widgets_SpaceCareMenu', 'Cosmos Setting'),
             'url' => $this->space->createUrl('/space/manage/device/device',['rguid' => $rguid]),
             'sortOrder' => 400,
-            'isActive' => (Yii::$app->controller->action->id == 'device' && Yii::$app->controller->id === 'device'),
+            'isActive' => (Yii::$app->controller->action->id == 'device' || Yii::$app->controller->action->id === 'delete-device' && Yii::$app->controller->id === 'device' ),
         ));
 
         $this->addItem(array(

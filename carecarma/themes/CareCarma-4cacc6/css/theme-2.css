@@ -409,8 +409,8 @@ input[type=text], input[type=password], input[type=select] {
 
 #topbar-first .notifications .btn-group > .label {
     position: absolute;
-    top: 7px;
-    right: -2px
+    top: 12px;
+    right: -5px
 }
 
 #topbar-first .notifications .arrow:after {
@@ -610,7 +610,7 @@ input[type=text], input[type=password], input[type=select] {
 }
 
 #topbar-second .nav > li > a {
-    padding: 6px 13px 0;
+    padding: 6px 8px 0;
     text-decoration: none;
     text-shadow: none;
     font-weight: 600;
@@ -618,6 +618,11 @@ input[type=text], input[type=password], input[type=select] {
     text-transform: uppercase;
     text-align: center;
     min-height: 49px
+}
+
+#topbar-second .nav > li > .dashboard{
+    padding: 4px 8px 1px;
+    line-height:18px;
 }
 
 #topbar-second .nav > li > a:hover, #topbar-second .nav > li > a:active, #topbar-second .nav > li > a:focus {
@@ -629,6 +634,10 @@ input[type=text], input[type=password], input[type=select] {
 
 #topbar-second .nav > li > a i {
     font-size: 20px
+}
+
+#topbar-second .nav > li > a.dashboard i{
+    font-size: 25px;
 }
 
 #topbar-second .nav > li > a .caret {
@@ -656,7 +665,11 @@ input[type=text], input[type=password], input[type=select] {
 /*My Addition: begin*/
 @media only screen and (max-width: 404px){
     #topbar-second .nav > li > a{
-        padding:6px 2.5px 0;
+        padding:6px 2px 0;
+    }
+
+    #topbar-second .nav > li > .dashboard{
+        padding: 6px 2px 0;
     }
 }
 
@@ -2778,6 +2791,11 @@ img.bounceIn {
         padding-right: 5px;
     }
 
+    #topbar-second .nav > li > a.dashboard i   {
+        font-size: 28px;
+        padding: 3px;
+    }
+
     #space-menu > .title {
         display: none
     }
@@ -2839,6 +2857,21 @@ img.bounceIn {
 
     #topbar-first .topbar-actions {
         height: 51px;
+    }
+
+    #topbar-first .notifications
+    {
+        height: 51px;
+    }
+
+    #topbar-first .notifications .btn-group > a {
+        margin: 10px 2px;
+    }
+
+    #topbar-first .notifications .btn-group > .label{
+        position: absolute;
+        top: 0;
+        right: -5px;
     }
 
     #topbar-first {

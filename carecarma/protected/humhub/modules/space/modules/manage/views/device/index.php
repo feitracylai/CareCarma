@@ -1,3 +1,4 @@
+
 <?php
 
 use humhub\widgets\GridView;
@@ -7,8 +8,11 @@ use humhub\modules\space\models\Space;
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\modules\manage\widgets\DeviceMenu;
 ?>
+<?php if ($space->isAdmin()): ?>
 <?= DeviceMenu::widget(['space' => $space]); ?>
 <br/>
+<?php endif; ?>
+
 <div class="panel panel-default ">
     <div class="panel-heading">
         <?php echo Yii::t('SpaceModule.views_admin_receiver', '<strong>Current</strong> Care Receiver'); ?>
@@ -61,9 +65,9 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                             'class' => 'yii\grid\ActionColumn',
                             'buttons' => [
                                 'view' => function($url,$model) use ($space) {
-                                    return Html::a('<i class="fa fa-eye"></i>', Url::toRoute(['report', 'sguid' => $space->guid, 'rguid' => $model->user->guid
-
-                                    ]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View his/her health report']);
+//                                    return Html::a('<i class="fa fa-eye"></i>', Url::toRoute(['report', 'sguid' => $space->guid, 'rguid' => $model->user->guid
+//                                    ]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View his/her health report']);
+                                    return;
                                 },
                                 'delete' => function ($url,$model) use ($space) {
                                     if ($space->isAdmin()){

@@ -85,7 +85,7 @@ class ContactController extends Controller
         $id = (int) Yii::$app->request->get('id');
         $contact = Contact::findOne(['contact_id' => $id, 'user_id' => $user->id]);
         if ($contact == null) {
-            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
+            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'PEOPLE not found!'));
         }
         return $this->render('view', array(
             'contact' => $contact,
@@ -143,7 +143,7 @@ class ContactController extends Controller
         $contact = Contact::findOne(['contact_id' => Yii::$app->request->get('id'), 'user_id' => $user->id]);
         $contact->scenario = 'editContact';
         if ($contact == null)
-            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
+            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'PEOPLE not found!'));
         // Build Form Definition
         $definition = array();
         $definition['elements'] = array();
@@ -553,7 +553,7 @@ class ContactController extends Controller
         $doit = (int) Yii::$app->request->get('doit');
         $contact = Contact::findOne(['contact_id' => $id, 'user_id' => $user->id]);
         if ($contact == null) {
-            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
+            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'PEOPLE not found!'));
         }
         if ($doit == 2) {
             if ($contact->contact_user_id != null){
@@ -646,7 +646,7 @@ class ContactController extends Controller
         $id = (int) Yii::$app->request->get('id');
         $contact = Contact::findOne(['contact_id' => $id, 'user_id' => $user->id]);
         if ($contact == null) {
-            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
+            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'PEOPLE not found!'));
         }
         $userSpaces = Membership::findAll(['user_id' => $user->id, 'status' => 3]);
         $users = array();
@@ -944,26 +944,6 @@ class ContactController extends Controller
             return false;
         }
     }
-    
-
-    public function actionSetting()
-    {
-        $user = Yii::$app->user->getIdentity();
-        $model = new SecuritySetting();
-
-        $model->contact_notify_setting = $user->getSetting("contact_notify_setting", 'contact', \humhub\models\Setting::Get('contact_notify_setting', 'send'));
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $user->setSetting("contact_notify_setting", $model->contact_notify_setting, 'contact');
-
-            Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_ContactController', 'Saved'));
-        }
-
-        return $this->render('setting', array(
-            'model' => $model
-        ));
-    }
-
 
 
     public function actionImportgoogle ()

@@ -27,6 +27,11 @@ class Linked extends BaseNotification
     /**
      * @inheritdoc
      */
+    public $markAsSeenOnClick = false;
+
+    /**
+     * @inheritdoc
+     */
     public function getUrl()
     {
         return $this->originator->getUrl();

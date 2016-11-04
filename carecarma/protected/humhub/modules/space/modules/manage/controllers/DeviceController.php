@@ -2,7 +2,6 @@
 namespace humhub\modules\space\modules\manage\controllers;
 use humhub\modules\admin\models\Log;
 use humhub\modules\space\modules\manage\models\MembershipSearch;
-use humhub\modules\user\models\Users;
 use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
@@ -130,17 +129,6 @@ class DeviceController extends ContentContainerController
             $device = Device::find()->where(['device_id' => $form->models['User']->device_id])->one();
             if ($device != null || $form->models['User']->device_id == '') {
                 if ($form->models['User']->save()) {
-                    // Save User Profile
-
-                    $community_users = new Users();
-                    $community_users->firstname = $form->models['Profile']->firstname;
-                    $community_users->lastname = $form->models['Profile']->lastname;
-                    $community_users->username = $form->models['User']->username;
-                    $community_users->profilename = $form->models['User']->username;
-                    $community_users->email = $form->models['User']->email;
-                    $community_users->email = $form->models['User']->id;
-                    $community_users->usertype = 'user';
-                    $community_users->save();
 
                     // save the temp_password
                     $user_current = User::findOne(['id' => $userModel->id]);
@@ -158,19 +146,22 @@ class DeviceController extends ContentContainerController
                     foreach ($memebers as $memeber) {
                         if ($memeber->user_id != $form->models['User']->id && $memeber->status == 3) {
                             $contact_user = User::findOne(['id' => $memeber->user_id]);
-                            $contact = new Contact();
-                            $contact->contact_user_id = $contact_user->id;
-                            $contact->contact_first = $contact_user->profile->firstname;
-                            $contact->contact_last = $contact_user->profile->lastname;
-                            $contact->contact_mobile = $contact_user->profile->mobile;
-                            $contact->contact_email = $contact_user->email;
-                            $contact->home_phone = $contact_user->profile->phone_private;
-                            $contact->work_phone = $contact_user->profile->phone_work;
-                            if ($contact_user->device_id != null) {
-                                $contact->device_phone = $contact_user->device->phone;
-                            }
-                            $contact->user_id = $form->models['User']->id;
-                            $contact->save();
+                            $user = User::findOne(['id' => $form->models['User']->id]);
+                            $user->addContact($contact_user);
+//                            $contact = new Contact();
+//                            $contact->contact_user_id = $contact_user->id;
+//                            $contact->contact_first = $contact_user->profile->firstname;
+//                            $contact->contact_last = $contact_user->profile->lastname;
+//                            $contact->contact_mobile = $contact_user->profile->mobile;
+//                            $contact->contact_email = $contact_user->email;
+//                            $contact->home_phone = $contact_user->profile->phone_private;
+//                            $contact->work_phone = $contact_user->profile->phone_work;
+//                            if ($contact_user->device_id != null) {
+//                                $contact->device_phone = $contact_user->device->phone;
+//                            }
+//                            $contact->user_id = $form->models['User']->id;
+//                            $contact->save();
+
                         }
                     }
                     // Become Care Receiver in this space
@@ -365,6 +356,8 @@ class DeviceController extends ContentContainerController
         ];
     }
 
+
+
     public function actionProfile() {
         $space = $this->getSpace();
         if (!$space->isAdmin())
@@ -388,20 +381,6 @@ class DeviceController extends ContentContainerController
             $user->save();
             $user->updateUserContacts();
 
-            //community database refresh
-            $community_users = Users::findOne(['id' => $user->id]);
-            $community_users->firstname = $user->profile->firstname;
-            $community_users->lastname = $user->profile->lastname;
-            $community_users->mobile = $user->profile->mobile;
-            $community_users->address = $user->profile->street;
-            $community_users->unitnumber = $user->profile->address2;
-            $community_users->city = $user->profile->city;
-            $community_users->state = $user->profile->state;
-            $community_users->country = $user->profile->country;
-            $community_users->postalcode = $user->profile->zip;
-            $community_users->dob = $user->profile->birthday;
-            $community_users->gender = $user->profile->gender;
-            $community_users->save();
 
             Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
 //            return $this->redirect(Url::to(['profile']));
@@ -423,9 +402,7 @@ class DeviceController extends ContentContainerController
         if ($emailModel->load(Yii::$app->request->post()) && $emailModel->validate() && $emailModel->sendChangeEmail()) {
             $user->email = $emailModel->newEmail;
             $user->save();
-            $community_user = Users::findOne(['id' => $user->id]);
-            $community_user->email = $user->email;
-            $community_user->save();
+
             Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
 //                    return $this->render('changeEmail_success', array('model' => $emailModel));
         }
@@ -476,6 +453,44 @@ class DeviceController extends ContentContainerController
             'user' => $user,
             'space' => $space,
         ));
+    }
+
+    public function actionDeleteDevice()
+    {
+
+        $space = $this->getSpace();
+        if (!$space->isAdmin())
+            throw new HttpException(403, 'Access denied - Circle Administrator only!');
+
+        $user = $this->getCare();
+        $doit = (int) Yii::$app->request->get('doit');
+        $model = new \humhub\modules\user\models\forms\AccountDevice();
+
+
+        if ($doit == 2) {
+
+            $device = Device::findOne(['device_id' => $user->device_id]);
+            if ($device->gcmId != null) {
+
+                $gcm = new GCM();
+                $data = array();
+                $data['type'] = "deactivate";
+                $gcm_registration_id = $device->gcmId;
+                $gcm->send($gcm_registration_id, $data);
+            }
+
+
+            $user->device_id = null;
+            $user->save();
+            $user->updateUserContacts();
+
+
+
+            return $this->redirect($space->createUrl('device',['rguid' => $user->guid]));
+        }
+
+
+        return $this->render('deleteDevice', array('model' => $model, 'user' => $user, 'space' => $space));
     }
 
 //    public function actionAccountSettings()

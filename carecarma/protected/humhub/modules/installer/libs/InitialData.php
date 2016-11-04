@@ -105,14 +105,7 @@ class InitialData
         $cSocial->is_system = 1;
         $cSocial->description = '';
         $cSocial->save();
-
-        $cPrivacy = new ProfileFieldCategory;
-        $cPrivacy->title = "Privacy";
-        $cPrivacy->sort_order = 900;
-        $cPrivacy->visibility = 1;
-        $cPrivacy->is_system = 1;
-        $cPrivacy->description = '';
-        $cPrivacy->save();
+        
 
 
         // Add Fields
@@ -156,6 +149,7 @@ class InitialData
         $field->profile_field_category_id = $cGeneral->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->maxLength = 50;
             $field->fieldType->save();
@@ -316,6 +310,9 @@ class InitialData
         $field->profile_field_category_id = $cCommunication->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->editable = 0;
+        $field->visible = 0;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->maxLength = 100;
             $field->fieldType->save();
@@ -328,6 +325,9 @@ class InitialData
         $field->profile_field_category_id = $cCommunication->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->editable = 0;
+        $field->visible = 0;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->maxLength = 100;
             $field->fieldType->save();
@@ -340,6 +340,9 @@ class InitialData
         $field->profile_field_category_id = $cCommunication->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->editable = 0;
+        $field->visible = 0;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->maxLength = 100;
             $field->fieldType->save();
@@ -353,6 +356,9 @@ class InitialData
         $field->profile_field_category_id = $cCommunication->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->editable = 0;
+        $field->visible = 0;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->validator = 'email';
             $field->fieldType->save();
@@ -365,6 +371,9 @@ class InitialData
         $field->profile_field_category_id = $cSocial->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->editable = 0;
+        $field->visible = 0;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->validator = 'url';
             $field->fieldType->save();
@@ -377,6 +386,9 @@ class InitialData
         $field->profile_field_category_id = $cSocial->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->editable = 0;
+        $field->visible = 0;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->validator = 'url';
             $field->fieldType->save();
@@ -389,6 +401,9 @@ class InitialData
         $field->profile_field_category_id = $cSocial->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->editable = 0;
+        $field->visible = 0;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->validator = 'url';
             $field->fieldType->save();
@@ -401,6 +416,9 @@ class InitialData
         $field->profile_field_category_id = $cSocial->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->editable = 0;
+        $field->visible = 0;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->validator = 'url';
             $field->fieldType->save();
@@ -413,6 +431,9 @@ class InitialData
         $field->profile_field_category_id = $cSocial->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->editable = 0;
+        $field->visible = 0;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->validator = 'url';
             $field->fieldType->save();
@@ -425,6 +446,9 @@ class InitialData
         $field->profile_field_category_id = $cSocial->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->editable = 0;
+        $field->visible = 0;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->validator = 'url';
             $field->fieldType->save();
@@ -437,6 +461,9 @@ class InitialData
         $field->profile_field_category_id = $cSocial->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->editable = 0;
+        $field->visible = 0;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->validator = 'url';
             $field->fieldType->save();
@@ -449,6 +476,9 @@ class InitialData
         $field->profile_field_category_id = $cSocial->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->editable = 0;
+        $field->visible = 0;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->validator = 'url';
             $field->fieldType->save();
@@ -461,6 +491,9 @@ class InitialData
         $field->profile_field_category_id = $cSocial->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->editable = 0;
+        $field->visible = 0;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->validator = 'url';
             $field->fieldType->save();
@@ -473,22 +506,14 @@ class InitialData
         $field->profile_field_category_id = $cSocial->id;
         $field->field_type_class = \humhub\modules\user\models\fieldtype\Text::className();
         $field->is_system = 1;
+        $field->editable = 0;
+        $field->visible = 0;
+        $field->care_edit = 0;
         if ($field->save()) {
             $field->fieldType->validator = 'url';
             $field->fieldType->save();
         }
 
-        $field = new ProfileField();
-        $field->internal_name = "privacy";
-        $field->title = 'Profile Privacy';
-        $field->sort_order = 100;
-        $field->profile_field_category_id = $cPrivacy->id;
-        $field->field_type_class = \humhub\modules\user\models\fieldtype\Select::className();
-        $field->is_system = 1;
-        if ($field->save()) {
-            $field->fieldType->options = "Only Me\r\nCircle Members\r\nPublic";
-            $field->fieldType->save();
-        }
 
         $group = new Group();
         $group->name = "Users";
