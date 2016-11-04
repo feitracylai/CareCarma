@@ -658,7 +658,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
 
         }
 
-        $contact = Content::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $this->id]);
+        $contact = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $this->id]);
         if ($contact != null){
             return self::USERGROUP_PEOPLE;
         }
