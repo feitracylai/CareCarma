@@ -944,26 +944,6 @@ class ContactController extends Controller
             return false;
         }
     }
-    
-
-    public function actionSetting()
-    {
-        $user = Yii::$app->user->getIdentity();
-        $model = new SecuritySetting();
-
-        $model->contact_notify_setting = $user->getSetting("contact_notify_setting", 'contact', \humhub\models\Setting::Get('contact_notify_setting', 'send'));
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $user->setSetting("contact_notify_setting", $model->contact_notify_setting, 'contact');
-
-            Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_ContactController', 'Saved'));
-        }
-
-        return $this->render('setting', array(
-            'model' => $model
-        ));
-    }
-
 
 
     public function actionImportgoogle ()

@@ -16,7 +16,7 @@ use humhub\modules\user\models\User;
 class SecuritySetting extends Model
 {
     public $contact_notify_setting;
-
+    public $view_about_page;
 
     /**
      * Declares the validation rules.
@@ -30,6 +30,11 @@ class SecuritySetting extends Model
                     User::CONTACT_NOTIFY_NOCIRCLE,
                     User::CONTACT_NOTIFY_EVERYONE,)
             ),
+            array(['view_about_page'], 'in',
+                'range' => array(
+                    User::ABOUT_PAGE_PRIVATE,
+                    User::ABOUT_PAGE_PUBLIC,
+                )),
 
         );
     }
@@ -42,7 +47,8 @@ class SecuritySetting extends Model
     public function attributeLabels()
     {
         return array(
-            'contact_notify_setting' => Yii::t('UserModule.forms_SecuritySettingForm', 'Who need verify?'),
+            'contact_notify_setting' => Yii::t('UserModule.forms_SecuritySettingForm', 'Who need your verification?'),
+            'view_about_page' => Yii::t('UserModule.forms_SecuritySettingForm', 'Who can see your profile info?'),
         );
     }
 

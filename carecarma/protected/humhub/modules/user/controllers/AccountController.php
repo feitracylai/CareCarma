@@ -8,7 +8,6 @@
 
 namespace humhub\modules\user\controllers;
 
-use humhub\modules\user\models\Users;
 use Yii;
 use \humhub\components\Controller;
 use \yii\helpers\Url;
@@ -19,6 +18,8 @@ use \humhub\libs\Push;
 use \humhub\modules\user\models\User;
 use \humhub\modules\user\models\Device;
 use humhub\modules\user\models\Contact;
+use humhub\modules\user\models\forms\SecuritySetting;
+
 
 /**
  * AccountController provides all standard actions for the current logged in
@@ -77,21 +78,6 @@ class AccountController extends Controller
 
             //user in the contacts also change
             $user->updateUserContacts();
-
-            //community database refresh
-            $community_users = Users::findOne(['id' => $user->id]);
-            $community_users->firstname = $user->profile->firstname;
-            $community_users->lastname = $user->profile->lastname;
-            $community_users->mobile = $user->profile->mobile;
-            $community_users->address = $user->profile->street;
-            $community_users->unitnumber = $user->profile->address2;
-            $community_users->city = $user->profile->city;
-            $community_users->state = $user->profile->state;
-            $community_users->country = $user->profile->country;
-            $community_users->postalcode = $user->profile->zip;
-            $community_users->dob = $user->profile->birthday;
-            $community_users->gender = $user->profile->gender;
-            $community_users->save();
 
 
 
@@ -244,13 +230,13 @@ class AccountController extends Controller
     }
 
     public function actionActivation() {
-        Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $data = Yii::$app->request->post();
-        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm_id = $data['gcm_id'];
         $phone = $data['phone'];
-        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        Yii::getLogger()->log(print_r($phone,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        Yii::getLogger()->log(print_r($phone,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
 
         $device = new Device();
@@ -270,7 +256,7 @@ class AccountController extends Controller
         $data2 = array();
         $data2['type'] = "active,device_id";
         $data2['device_id'] = $device_id;
-        Yii::getLogger()->log(print_r($data2,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        Yii::getLogger()->log(print_r($data2,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm->send($gcm_id, $data2);
     }
 
@@ -516,9 +502,6 @@ class AccountController extends Controller
         $user->email = $email;
         $user->save();
 
-        $community_user = Users::findOne(['id' => $user->id]);
-        $community_user->email = $email;
-        $community_user->save();
 
         return $this->render('changeEmailValidate', array('newEmail' => $email));
     }
@@ -803,8 +786,27 @@ class AccountController extends Controller
         ];
     }
 
+    public function actionPrivacy()
+    {
+
+        $user = Yii::$app->user->getIdentity();
+        $model = new SecuritySetting();
+
+        $model->contact_notify_setting = $user->getSetting("contact_notify_setting", 'contact', \humhub\models\Setting::Get('contact_notify_setting', 'send'));
+        $model->view_about_page = $user->getSetting("view_about_page", 'profile', \humhub\models\Setting::Get('view_about_page', 'private'));
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $user->setSetting("contact_notify_setting", $model->contact_notify_setting, 'contact');
+            $user->setSetting("view_about_page", $model->view_about_page, 'profile');
 
 
+            Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_ContactController', 'Saved'));
+        }
+
+        return $this->render('privacy', array(
+            'model' => $model
+        ));
+    }
 }
 
 ?>

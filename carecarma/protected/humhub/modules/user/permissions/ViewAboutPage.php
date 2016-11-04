@@ -14,6 +14,8 @@ class ViewAboutPage extends \humhub\libs\BasePermission
      */
     public $defaultAllowedGroups = [
         User::USERGROUP_SELF,
+        User::USERGROUP_PEOPLE,
+        User::USERGROUP_CIRCLEMEMBER
     ];
 
     /**
@@ -29,22 +31,12 @@ class ViewAboutPage extends \humhub\libs\BasePermission
     public function getDefaultState($groupId)
     {
         $user = User::findOne(['guid' => Yii::$app->request->get('uguid')]);
-//        Yii::getLogger()->log($groupId, Logger::LEVEL_INFO, 'MyLog');
-        if ($groupId == User::USERGROUP_FRIEND && $user->profile->privacy == 1 ) {
-            return self::STATE_ALLOW;
-        } elseif ($groupId == User::USERGROUP_USER && $user->profile->privacy == 2 ) {
+        $notify_permission = $user->getSetting("contact_notify_setting", 'contact', \humhub\models\Setting::Get('contact_notify_setting', 'send'));
+//        Yii::getLogger()->log($notify_permission, Logger::LEVEL_INFO, 'MyLog');
+        if ($groupId == User::USERGROUP_USER && $notify_permission == User::ABOUT_PAGE_PUBLIC){
             return self::STATE_ALLOW;
         }
-        if ($user->profile->privacy == 0){
-            //check if this user is a careReceiver
-            $membership = Membership::findOne(['user_id' => $user->id, 'group_id' => 'device']);
-            if ($membership != null){
-                $admin = Membership::findOne(['user_id' => Yii::$app->user->id, 'group_id' => 'admin', 'space_id' => $membership->space_id]);
-                if ($admin != null) {
-                    return self::STATE_ALLOW;
-                }
-            }
-        }
+
 
         return parent::getDefaultState($groupId);
     }
