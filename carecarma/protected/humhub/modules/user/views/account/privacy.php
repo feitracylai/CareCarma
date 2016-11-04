@@ -21,7 +21,7 @@ use humhub\compat\CHtml;
 
     <?php echo $form->field($model, 'view_about_page')->dropdownList([
         User::ABOUT_PAGE_PRIVATE => Yii::t('UserModule.views_account_privacy', 'Your circle members & Your People'),
-        User::ABOUT_PAGE_PUBLIC => Yii::t('UserModule.views_account_privacy', 'Only person not in my circles'),
+        User::ABOUT_PAGE_PUBLIC => Yii::t('UserModule.views_account_privacy', 'Everyone'),
         ]); ?>
 
     <hr>
