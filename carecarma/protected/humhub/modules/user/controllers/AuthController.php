@@ -342,25 +342,6 @@ class AuthController extends Controller
                 $form->models['UserPassword']->save();
 
 
-                $users = new Users;
-                $users->firstname = $form->models['Profile']->firstname;
-                $users->lastname = $form->models['Profile']->lastname;
-                $users->username = $form->models['User']->username;
-                $users->profilename = $form->models['User']->username;
-                $users->email = $form->models['User']->email;
-                $users->id = $form->models['User']->id;
-//                $users->password = Hash::
-//                $users->ipaddress = $input['ipaddress'];
-//                $users->postalcode = $input['zipcode'];
-                $users->usertype = 'user';
-//                $users->activation_code = $input['activation_code'];
-//                $users->createdyear = Date('Y');
-//                $users->lattidude = $input['lat'];
-//                $users->longitude = $input['lng'];
-                /* End Lat and Lon Calculation */
-//                $users->createdon = Carbon::now();
-                $users->save();
-
 
                 // Autologin user
                 if (!$needApproval) {
