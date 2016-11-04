@@ -115,7 +115,7 @@ class CreateController extends Controller
 
         foreach ($contacts as $contact){
             $contactUserId = $contact->contact_user_id;
-            if (!$contactUserId) {
+            if ($contactUserId != null) {
                 $users[] = User::findOne(['id' => $contactUserId]);
             }
 

@@ -246,7 +246,8 @@ class Stream extends \yii\base\Action
             $underlyingObject = $wallEntry->content->getPolymorphicRelation();
 
             if ($underlyingObject === null) {
-                throw new Exception('Could not get contents underlying object!');
+	    	continue;
+            //    throw new Exception('Could not get contents underlying object!');
             }
 
             $underlyingObject->populateRelation('content', $wallEntry->content);
