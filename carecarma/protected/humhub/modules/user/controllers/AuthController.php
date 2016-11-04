@@ -334,7 +334,6 @@ class AuthController extends Controller
 
                 // Save User Profile
                 $form->models['Profile']->user_id = $form->models['User']->id;
-                $form->models['Profile']->privacy = '0';
                 $form->models['Profile']->save();
 
                 // Save User Password
@@ -389,6 +388,8 @@ class AuthController extends Controller
     public function actionLogout()
     {
         $language = Yii::$app->user->language;
+
+
 
         Yii::$app->user->logout();
 
