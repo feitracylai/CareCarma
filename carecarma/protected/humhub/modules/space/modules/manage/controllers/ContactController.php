@@ -152,6 +152,16 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 100,
                 ),
+                'watch_primary_number' => array(
+                    'type' => 'checkbox',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
+                'phone_primary_number' => array(
+                    'type' => 'checkbox',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
             ),
         );
 
@@ -163,7 +173,7 @@ class ContactController extends Controller
                 'label' => Yii::t('UserModule.controllers_ContactController', 'Delete'),
                 'class' => 'btn btn-danger ',
             ),
-            
+
             'save' => array(
                 'type' => 'submit',
                 'label' => Yii::t('UserModule.controllers_ContactController', 'Save'),
