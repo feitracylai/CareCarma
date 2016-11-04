@@ -135,7 +135,6 @@ class DeviceController extends ContentContainerController
                     $user_current->temp_password = $userPasswordModel->newPassword;
                     $user_current->save();
                     $form->models['Profile']->user_id = $form->models['User']->id;
-                    $form->models['Profile']->privacy = '0';
                     $form->models['Profile']->save();
                     // Save User Password
                     $form->models['UserPassword']->user_id = $form->models['User']->id;
@@ -231,29 +230,6 @@ class DeviceController extends ContentContainerController
     {
         $space = $this->getSpace();
         $userId = Yii::$app->request->get('linkId');
-//        $memberships = Membership::findAll(['user_id' => $userId]);
-
-//        $isSpaceOwner = false;
-//        $isSpaceAdmin = false;
-//        foreach ($memberships as $membership) {
-//            $otherSpace = Space::findOne(['id' => $membership->space_id]);
-//            if ($otherSpace->isSpaceOwner($userId)) {
-//                $isSpaceOwner = true;
-//            } elseif ($otherSpace->isAdmin($userId)) {
-//                $isSpaceAdmin = true;
-//            }
-//        }
-
-
-//        if ($space->isOtherCareReceiver($userId)){
-//            return $this->renderAjax('care-remind', ['status' => 'care']);
-//        } elseif ($isSpaceOwner){
-//            return $this->renderAjax('care-remind', ['status' => 'owner']);
-//        } elseif ($isSpaceAdmin) {
-//            return $this->renderAjax('care-remind', ['status' => 'admin', 'space' => $space, 'userId' => $userId]);
-//        } else {
-//            return $this->redirect($space->createUrl('device/add-care'));
-//        }
 
 
 

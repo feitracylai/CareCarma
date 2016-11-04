@@ -16,7 +16,6 @@ use humhub\modules\admin\components\Controller;
 use humhub\modules\user\models\User;
 use humhub\modules\user\models\Password;
 use humhub\modules\user\models\Group;
-use humhub\modules\user\models\Users;
 
 /**
  * User management
@@ -147,23 +146,7 @@ class UserController extends Controller
                     //user in the contacts also change
                     $user->updateUserContacts();
 
-                    //community database refresh
-                    $community_users = Users::findOne(['id' => $user->id]);
-                    $community_users->username = $user->username;
-                    $community_users->profilename = $user->username;
-                    $community_users->email = $user->email;
-                    $community_users->firstname = $user->profile->firstname;
-                    $community_users->lastname = $user->profile->lastname;
-                    $community_users->mobile = $user->profile->mobile;
-                    $community_users->address = $user->profile->street;
-                    $community_users->unitnumber = $user->profile->address2;
-                    $community_users->city = $user->profile->city;
-                    $community_users->state = $user->profile->state;
-                    $community_users->country = $user->profile->country;
-                    $community_users->postalcode = $user->profile->zip;
-                    $community_users->dob = $user->profile->birthday;
-                    $community_users->gender = $user->profile->gender;
-                    $community_users->save();
+
                     return $this->redirect(Url::toRoute('/admin/user'));
                 }
             } else {
@@ -288,7 +271,6 @@ class UserController extends Controller
                 if ($form->models['User']->save()) {
                     // Save User Profile
                     $form->models['Profile']->user_id = $form->models['User']->id;
-                    $form->models['Profile']->privacy = '0';
                     $form->models['Profile']->save();
 
                     // Save User Password
@@ -296,22 +278,7 @@ class UserController extends Controller
                     $form->models['UserPassword']->setPassword($form->models['UserPassword']->newPassword);
                     $form->models['UserPassword']->save();
 
-                    $users = new Users;
-                    $users->firstname = $form->models['Profile']->firstname;
-                    $users->lastname = $form->models['Profile']->lastname;
-                    $users->username = $form->models['User']->username;
-                    $users->profilename = $form->models['User']->username;
-                    $users->email = $form->models['User']->email;
 
-                    $users->id = $form->models['User']->id;
-                    $users->usertype = 'user';
-//                $users->activation_code = $input['activation_code'];
-//                $users->createdyear = Date('Y');
-//                $users->lattidude = $input['lat'];
-//                $users->longitude = $input['lng'];
-                    /* End Lat and Lon Calculation */
-//                $users->createdon = Carbon::now();
-                    $users->save();
 
                     return $this->redirect(Url::to(['index']));
                 }
