@@ -11,6 +11,7 @@ namespace humhub\modules\dashboard\controllers;
 use humhub\modules\dashboard\models\MobileToken;
 use humhub\modules\dashboard\models\MobileTokenQuery;
 use humhub\modules\tour\widgets\Dashboard;
+use humhub\modules\user\models\Localcontact;
 use Yii;
 use yii\web\Controller;
 use humhub\models\Setting;
@@ -60,11 +61,27 @@ class DashboardController extends Controller
                 $post->device_token = $_GET['yourKey'];
                 $post->user_id = Yii::$app->user->getId();
                 $post->save();
+                $localcontact_list = Localcontact::findAll(['token' => $_GET['yourKey']]);
+                if ($localcontact_list != null){
+                    foreach ($localcontact_list as $localcontact){
+                        $localcontact->user_id = Yii::$app->user->getId();
+                        $localcontact->save();
+                    }
+                }
+
+
             }
             else if($record != null) {            // if user does sign out & login in with different account
                 $post = MobileToken::find()->where(['device_token'=>$_GET['yourKey']])->one();
                 $post->user_id = Yii::$app->user->getId();
                 $post->save();
+                $localcontact_list = Localcontact::findAll(['token' => $_GET['yourKey']]);
+                if ($localcontact_list != null){
+                    foreach ($localcontact_list as $localcontact){
+                        $localcontact->user_id = Yii::$app->user->getId();
+                        $localcontact->save();
+                    }
+                }
             }
         }
 

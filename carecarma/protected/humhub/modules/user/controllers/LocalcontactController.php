@@ -49,14 +49,13 @@ class LocalcontactController extends Controller
 
         $data = Yii::$app->request->post();
         $json_data = $data['contact'];
-        $username = $data['username'];
+        $token = $data['token'];
         $contact_list = json_decode($json_data, TRUE);
-        $user = User::findOne(['username' => $username]);
+//        $user = User::findOne(['username' => $username]);
 
 
         foreach ($contact_list as $contact) {
 
-            $user_id = $user->id;
             $name = $contact['name'];
             $email = $contact['email'];
             $phone_number1 = $contact['phone_number1'];
@@ -64,7 +63,8 @@ class LocalcontactController extends Controller
             $phone_number3 = $contact['phone_number3'];
 
             $model = new localcontact();
-            $model->user_id = $user_id;
+            $model->user_id = 0;
+            $model->token= $token;
             $model->name = $name;
             $model->email = $email;
             $model->phone_number1 = $phone_number1;

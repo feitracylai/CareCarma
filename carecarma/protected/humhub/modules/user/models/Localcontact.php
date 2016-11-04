@@ -14,6 +14,7 @@ use Yii;
  * @property string $phone_number1
  * @property string $phone_number2
  * @property string $phone_number3
+ * @property string $token
  */
 class Localcontact extends \yii\db\ActiveRecord
 {
@@ -48,7 +49,8 @@ class Localcontact extends \yii\db\ActiveRecord
             'email' => 'Email',
             'phone_number1' => 'Phone Number 1',
             'phone_number2' => 'Phone Number 2',
-            'phone_number3' => 'Phone Number 3'
+            'phone_number3' => 'Phone Number 3',
+            'token' => 'Token'
         ];
     }
 }
