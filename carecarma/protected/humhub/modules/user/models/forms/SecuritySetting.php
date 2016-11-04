@@ -47,7 +47,7 @@ class SecuritySetting extends Model
     public function attributeLabels()
     {
         return array(
-            'contact_notify_setting' => Yii::t('UserModule.forms_SecuritySettingForm', 'Who need your verification?'),
+            'contact_notify_setting' => Yii::t('UserModule.forms_SecuritySettingForm', 'Who needs your verification?'),
             'view_about_page' => Yii::t('UserModule.forms_SecuritySettingForm', 'Who can see your profile info?'),
         );
     }

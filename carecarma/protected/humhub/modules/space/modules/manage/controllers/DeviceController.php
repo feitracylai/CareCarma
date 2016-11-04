@@ -356,6 +356,8 @@ class DeviceController extends ContentContainerController
         ];
     }
 
+
+
     public function actionProfile() {
         $space = $this->getSpace();
         if (!$space->isAdmin())
@@ -451,6 +453,44 @@ class DeviceController extends ContentContainerController
             'user' => $user,
             'space' => $space,
         ));
+    }
+
+    public function actionDeleteDevice()
+    {
+
+        $space = $this->getSpace();
+        if (!$space->isAdmin())
+            throw new HttpException(403, 'Access denied - Circle Administrator only!');
+
+        $user = $this->getCare();
+        $doit = (int) Yii::$app->request->get('doit');
+        $model = new \humhub\modules\user\models\forms\AccountDevice();
+
+
+        if ($doit == 2) {
+
+            $device = Device::findOne(['device_id' => $user->device_id]);
+            if ($device->gcmId != null) {
+
+                $gcm = new GCM();
+                $data = array();
+                $data['type'] = "deactivate";
+                $gcm_registration_id = $device->gcmId;
+                $gcm->send($gcm_registration_id, $data);
+            }
+
+
+            $user->device_id = null;
+            $user->save();
+            $user->updateUserContacts();
+
+
+
+            return $this->redirect($space->createUrl('device',['rguid' => $user->guid]));
+        }
+
+
+        return $this->render('deleteDevice', array('model' => $model, 'user' => $user, 'space' => $space));
     }
 
 //    public function actionAccountSettings()
