@@ -23,8 +23,8 @@ use yii\log\Logger;
  * @property string $device_phone
  * @property string $home_phone
  * @property string $work_phone
- * @property integer watch_primary_number
- * @property integer phone_primary_number
+ * @property integer $watch_primary_number
+ * @property integer $phone_primary_number
  */
 class Contact extends \yii\db\ActiveRecord
 {
