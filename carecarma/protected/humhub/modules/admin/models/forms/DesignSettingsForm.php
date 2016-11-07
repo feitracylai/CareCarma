@@ -40,7 +40,7 @@ class DesignSettingsForm extends \yii\base\Model
             array(['displayName', 'spaceOrder'], 'safe'),
             array('logo', 'file', 'extensions' => ['jpg', 'png', 'jpeg'], 'maxSize' => 3 * 1024 * 1024),
             array('logo', 'dimensionValidation', 'skipOnError' => true),
-            array('dateInputDisplayFormat', 'in', 'range' => ['', 'php:d/m/Y']),
+            array('dateInputDisplayFormat', 'in', 'range' => ['', 'php:m/d/Y']),
         );
     }
 
