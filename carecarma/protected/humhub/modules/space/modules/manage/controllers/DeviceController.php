@@ -397,7 +397,8 @@ class DeviceController extends ContentContainerController
         $user =  $this->getCare();
         $deviceOld = Device::findOne(['device_id' => $user->device_id]);
         $deviceModel = new \humhub\modules\user\models\forms\AccountDevice();
-        if ($deviceModel->load(Yii::$app->request->post())&& $deviceModel->validate()) {
+//        bug here!!!! it doesn't check if the password is correct.
+        if ($deviceModel->load(Yii::$app->request->post())) {
             $device = Device::find()->where(['device_id' => $deviceModel->deviceId])->one();
             if ($device!=null) {
                 if ($device != $deviceOld) {
