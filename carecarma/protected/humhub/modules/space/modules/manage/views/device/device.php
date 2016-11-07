@@ -35,6 +35,7 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
             <?php endif; ?>
         </div>
 
+        <?php echo $form->field($model, 'currentPassword')->passwordInput(['maxlength' => 45]); ?>
 
         <?php echo $form->field($model, 'deviceId')->textInput(['maxlength' => 45]); ?>
 

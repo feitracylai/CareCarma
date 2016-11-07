@@ -401,6 +401,7 @@ class DeviceController extends ContentContainerController
             $device = Device::find()->where(['device_id' => $deviceModel->deviceId])->one();
             if ($device!=null) {
                 if ($device != $deviceOld) {
+                    $user->temp_password = $deviceModel->currentPassword;
                     $user->device_id = $deviceModel->deviceId;
                     $user->save();
 
