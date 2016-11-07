@@ -12,7 +12,7 @@ $this->registerJsVar('scSpaceListUrl', Url::to(['/space/list', 'ajax' => 1]));
 ?>
 
 <li class="dropdown">
-    <a href="#" id="space-menu" class="dropdown-toggle" data-toggle="dropdown">
+    <a href="#" id="space-menu" class="dropdown-toggle" data-toggle="dropdown" style="padding: 4px 8px 6px; line-height: 9px">
         <!-- start: Show space image and name if chosen -->
         <?php if ($currentSpace) { ?>
             <?php echo \humhub\modules\space\widgets\Image::widget([
@@ -27,7 +27,7 @@ $this->registerJsVar('scSpaceListUrl', Url::to(['/space/list', 'ajax' => 1]));
         <?php
         if (!$currentSpace) {
 //            echo '<i class="fa fa-dot-circle-o" style="font-size: 14px;"></i><br>' . Yii::t('SpaceModule.widgets_views_spaceChooser', 'My circles');
-            echo '<img src="'.Yii::getAlias("@web").'/img/circle icon.png" style="width:30px; height:20px"><br>' . Yii::t('SpaceModule.widgets_views_spaceChooser', 'My circles');
+            echo '<img src="'.Yii::getAlias("@web").'/img/circle icon.png" style="width:45px; height:30px"><br>' . Yii::t('SpaceModule.widgets_views_spaceChooser', 'My circles');
         }
         ?>
         <!-- end: Show space image and name if chosen -->
