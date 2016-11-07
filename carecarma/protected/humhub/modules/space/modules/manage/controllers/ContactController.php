@@ -188,7 +188,14 @@ class ContactController extends Controller
         if ($form->submitted('save') && $form->validate()) {
             if ($form->save()) {
 
-                $contact->notifyDevice('update');
+                $gcm = new GCM();
+                $device_id = $user->device_id;
+                $device = Device::findOne(['device_id' => $device_id]);
+                $data = array();
+                $data['type'] = 'contact,updated';
+                $gcm_id = $device->gcmId;
+                $gcm->send($gcm_id, $data);
+//                $contact->notifyDevice('update');
 
                 return $this->redirect($space->createUrl('index', ['rguid' => $user->guid]));
             }
@@ -274,7 +281,15 @@ class ContactController extends Controller
 
             $contact->delete();
 
-            $contact->notifyDevice('delete');
+            $gcm = new GCM();
+            $device_id = $user->device_id;
+            $device = Device::findOne(['device_id' => $device_id]);
+            $data = array();
+            $data['type'] = 'contact,updated';
+            $gcm_id = $device->gcmId;
+            $gcm->send($gcm_id, $data);
+
+//            $contact->notifyDevice('delete');
 
             return $this->redirect($space->createUrl('index', ['rguid' => $user->guid]));
         }

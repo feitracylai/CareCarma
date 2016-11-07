@@ -579,6 +579,9 @@ class DeviceController extends ContentContainerController
             $user->delete();
             $this->redirect($space->createUrl('/space/manage/device/index'));
         }
+
+
+
         return $this->render('delete', array(
             'space' => $space,
             'model' => $model,
