@@ -127,7 +127,7 @@ class Invite extends \yii\db\ActiveRecord
             ]);
             $mail->setFrom([\humhub\models\Setting::Get('systemEmailAddress', 'mailing') => \humhub\models\Setting::Get('systemEmailName', 'mailing')]);
             $mail->setTo($this->email);
-            $mail->setSubject(Yii::t('UserModule.views_mails_UserInviteSpace', 'Contact Invite'));
+            $mail->setSubject(Yii::t('UserModule.views_mails_UserInviteSpace', 'Invitation to join'));
             $mail->send();
 
             // Switch back to users language

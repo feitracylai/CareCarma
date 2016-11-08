@@ -649,7 +649,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             return self::USERGROUP_SELF;
         }
 
-        $spaces = Membership::findAll(['user_id' => Yii::$app->user->id]);
+        $spaces = Membership::findAll(['user_id' => Yii::$app->user->id, 'status' => Membership::STATUS_MEMBER]);
         foreach ($spaces as $memberSpace) {
             $space = Space::findOne(['id' => $memberSpace->space_id]);
             if ($space->isMember($this->id)) {

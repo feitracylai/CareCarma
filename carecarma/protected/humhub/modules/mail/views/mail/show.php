@@ -133,7 +133,7 @@ use humhub\compat\CActiveForm;
 
                     <!-- Button to trigger modal to add user to conversation -->
                     <?php
-                    echo Html::a('<i class="fa fa-plus"></i> ' . Yii::t('MailModule.views_mail_show', 'Add user'), ['/mail/mail/add-user', 'id' => $message->id, 'ajax' => 1], array(
+                    echo Html::a('<i class="fa fa-plus"></i> ' . Yii::t('MailModule.views_mail_show', 'Add participant'), ['/mail/mail/add-user', 'id' => $message->id, 'ajax' => 1], array(
                         'class' => 'btn btn-info',
                         'data-target' => '#globalModal'
                     ));

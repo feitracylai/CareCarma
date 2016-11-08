@@ -44,7 +44,7 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
                 ],
                 'nickname',
                 [
-                    'label' => Yii::t('UserModule.views_contact_index', 'Relationship'),
+                    'label' => Yii::t('UserModule.views_contact_index', 'Relationship to {first} {last}', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)),
                     'class' => 'humhub\libs\DropDownGridColumn',
                     'attribute' => 'relation',
                     'submitAttributes' => ['contact_id'],
@@ -65,12 +65,12 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
                         'view' => function($url, $model) use ($space, $user) {
 //                            return Html::a('<i class="fa fa-eye"></i>', Url::toRoute(['view', 'Cid' => $model->contact_id, 'id' => $model->user_id, 'sguid' => $space->guid]), ['class' => 'btn btn-primary btn-xs tt']);
 //                            Yii::getLogger()->log($user->id, \yii\log\Logger::LEVEL_INFO, 'MyLog');
-                            return Html::a('<i class="fa fa-eye"></i>', $space->createUrl('view', ['Cid' => $model->contact_id, 'rguid' => $user->guid]), ['class' => 'btn btn-primary btn-xs tt']);
+                            return Html::a('<i class="fa fa-eye"></i>', $space->createUrl('edit', ['Cid' => $model->contact_id, 'rguid' => $user->guid]), ['class' => 'btn btn-primary btn-xs tt']);
 
                         },
                         'update' => function($url, $model) use ($space, $user) {
-                            return Html::a('<i class="fa fa-pencil"></i>', $space->createUrl('edit', ['Cid' => $model->contact_id, 'rguid' => $user->guid]), ['class' => 'btn btn-primary btn-xs tt']);
-//                            return;
+//                            return Html::a('<i class="fa fa-pencil"></i>', $space->createUrl('edit', ['Cid' => $model->contact_id, 'rguid' => $user->guid]), ['class' => 'btn btn-primary btn-xs tt']);
+                            return;
                         },
                         'delete' => function($url, $model) use ($space, $user) {
                             return Html::a('<i class="fa fa-times"></i>', $space->createUrl('delete', ['Cid' => $model->contact_id, 'rguid' => $user->guid]), ['class' => 'btn btn-danger btn-xs tt']);
