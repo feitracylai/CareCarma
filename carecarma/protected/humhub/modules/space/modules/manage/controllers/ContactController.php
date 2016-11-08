@@ -189,7 +189,7 @@ class ContactController extends Controller
 
         $form = new HForm($definition);
         $form->models['Contact'] = $contact;
-
+        Yii::getLogger()->log(print_r($form,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         if ($form->submitted('save') && $form->validate()) {
 
 
