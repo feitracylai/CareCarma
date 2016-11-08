@@ -20,11 +20,11 @@ use \humhub\modules\space\models\Space;
 <!--        --><?//=\humhub\modules\user\widgets\ContactMenu::widget(); ?>
 <!--        <p/>-->
         <div class="center-block">
-            <?php echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Invite Contact'), $thisUser->createUrl('invite'), array('class' => 'btn btn-primary', 'data-target' => '#globalModal')); ?>
-            <?php echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Import from Device'), $thisUser->createUrl('/user/contact/importlocal'), array('class' => 'btn btn-primary')); ?>
+            <?php echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Invite by e-mail'), $thisUser->createUrl('invite'), array('class' => 'btn btn-primary', 'data-target' => '#globalModal')); ?>
+<!--            --><?php //echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Import from Device'), $thisUser->createUrl('/user/contact/importlocal'), array('class' => 'btn btn-primary')); ?>
 
 <!--        <div class="pull-right">-->
-            <?php echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Import from Google'), "https://accounts.google.com/o/oauth2/auth?client_id=584594431619-c8gb5m52css0vs8biotp7jcie27h0iff.apps.googleusercontent.com&redirect_uri=http://www.carecarma.tk/carecarma/index.php?r=user%2Fcontact%2Fimportgoogle&scope=https://www.google.com/m8/feeds/&response_type=code", array('class' => 'btn btn-primary')); ?>
+            <?php echo Html::a('<img src="'.Yii::getAlias("@web").'/img/google.png" style="width:15px; margin-right: 5px">'.Yii::t('UserModule.views_contact_add', 'Import from Google'), "https://accounts.google.com/o/oauth2/auth?client_id=584594431619-c8gb5m52css0vs8biotp7jcie27h0iff.apps.googleusercontent.com&redirect_uri=http://www.carecarma.tk/carecarma/index.php?r=user%2Fcontact%2Fimportgoogle&scope=https://www.google.com/m8/feeds/&response_type=code", array('class' => 'btn btn-primary')); ?>
         </div>
         </br>
 
@@ -68,7 +68,7 @@ use \humhub\modules\space\models\Space;
                         <?php $contact = \humhub\modules\user\models\Contact::findOne(['user_id' => $thisUser->id, 'contact_user_id' => $user->id]);
                         if ($contact == null){
                             echo Html::a('<i class="fa fa-plus"></i> '.Yii::t('UserModule.views_contact_add', 'Add'), $thisUser->createUrl('/user/contact/add', ['doit' => 2, 'connect_id' => $user->id]), array('class' => 'btn btn-primary  pull-right', 'data-method' => 'POST'));
-                        } elseif ($contact != null && $contact->contact_first == null ) { ?>
+                        } elseif ($contact != null && $contact->linked == 0 ) { ?>
 
                         <a class="btn btn-default" disabled><i class="fa fa-plus"></i> Request Sent </a>&nbsp;
                         <?php echo Html::a(Yii::t('UserModule.views_contact_add', 'Cancel Request'),  Url::toRoute(['/user/contact/link-cancel', 'id' => $contact->contact_id]), array('class' => 'btn btn-danger pull-right'));

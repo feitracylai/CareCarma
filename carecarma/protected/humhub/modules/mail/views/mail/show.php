@@ -113,38 +113,41 @@ use humhub\compat\CActiveForm;
                 </div>
                 <hr>
 
+                <!-- Button to trigger modal to add user to conversation -->
                 <?php
-                echo \humhub\widgets\AjaxButton::widget([
-                    'label' => Yii::t('MailModule.views_mail_show', 'Send'),
-                    'ajaxOptions' => [
-                        'type' => 'POST',
-                        'beforeSend' => '$.proxy(function() { $(this).prop("disabled",true); },this)',
-                        'success' => 'function(html){ $("#mail_message_details").html(html); }',
-                        'url' => Url::to(['/mail/mail/show', 'id' => $message->id]),
-                    ],
-                    'htmlOptions' => [
-                        'class' => 'btn btn-primary'
-                    ]
-                ]);
+                echo Html::a('<i class="fa fa-plus"></i> ' . Yii::t('MailModule.views_mail_show', 'Add participant'), ['/mail/mail/add-user', 'id' => $message->id, 'ajax' => 1], array(
+                    'class' => 'btn btn-info',
+                    'data-target' => '#globalModal'
+                ));
                 ?>
+
+                <!--                    --><?php //if (count($message->users) > 2): ?>
+                <!--                        <a class="btn btn-danger"-->
+                <!--                           href="--><?php //echo Url::to(['leave', 'id' => $message->id]); ?><!--"><i-->
+                <!--                                class="fa fa-sign-out"></i> --><?php //echo Yii::t('MailModule.views_mail_show', "Leave discussion"); ?>
+                <!--                        </a>-->
+                <!--                    --><?php //endif; ?>
 
 
                 <div class="pull-right">
 
-                    <!-- Button to trigger modal to add user to conversation -->
                     <?php
-                    echo Html::a('<i class="fa fa-plus"></i> ' . Yii::t('MailModule.views_mail_show', 'Add participant'), ['/mail/mail/add-user', 'id' => $message->id, 'ajax' => 1], array(
-                        'class' => 'btn btn-info',
-                        'data-target' => '#globalModal'
-                    ));
+                    echo \humhub\widgets\AjaxButton::widget([
+                        'label' => Yii::t('MailModule.views_mail_show', 'Send'),
+                        'ajaxOptions' => [
+                            'type' => 'POST',
+                            'beforeSend' => '$.proxy(function() { $(this).prop("disabled",true); },this)',
+                            'success' => 'function(html){ $("#mail_message_details").html(html); }',
+                            'url' => Url::to(['/mail/mail/show', 'id' => $message->id]),
+                        ],
+                        'htmlOptions' => [
+                            'class' => 'btn btn-primary'
+                        ]
+                    ]);
                     ?>
 
-                    <?php if (count($message->users) > 2): ?>
-                        <a class="btn btn-danger"
-                           href="<?php echo Url::to(['leave', 'id' => $message->id]); ?>"><i
-                                class="fa fa-sign-out"></i> <?php echo Yii::t('MailModule.views_mail_show', "Leave discussion"); ?>
-                        </a>
-                    <?php endif; ?>
+
+
                 </div>
 
                 <?php CActiveForm::end(); ?>

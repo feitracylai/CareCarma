@@ -34,6 +34,7 @@ class AccountEmailing extends \yii\base\Model
 
     public $receive_email_activities;
     public $receive_email_notifications;
+    public $receive_email_messages;
     public $enable_html5_desktop_notifications;
 
     /**
@@ -42,7 +43,7 @@ class AccountEmailing extends \yii\base\Model
     public function rules()
     {
         return array(
-            array(['receive_email_activities', 'receive_email_notifications'], 'in',
+            array(['receive_email_activities', 'receive_email_notifications', 'receive_email_messages'], 'in',
                 'range' => array(
                     User::RECEIVE_EMAIL_NEVER,
                     User::RECEIVE_EMAIL_DAILY_SUMMARY,
@@ -61,7 +62,8 @@ class AccountEmailing extends \yii\base\Model
     public function attributeLabels()
     {
         return array(
-            'receive_email_notifications' => Yii::t('UserModule.forms_AccountEmailingForm', 'Send notifications?'),
+            'receive_email_notifications' => Yii::t('UserModule.forms_AccountEmailingForm', 'Send e-mails?'),
+            'receive_email_messages' => Yii::t('UserModule.forms_AccountEmailingForm', 'Send e-mails?'),
             'receive_email_activities' => Yii::t('UserModule.forms_AccountEmailingForm', 'Send activities?'),
             'enable_html5_desktop_notifications' => Yii::t('UserModule.views_account_emailing', 'Get a desktop notification when you are online.')
         );
