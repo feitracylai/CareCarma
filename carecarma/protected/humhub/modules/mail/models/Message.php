@@ -7,6 +7,7 @@ use humhub\components\ActiveRecord;
 use humhub\models\Setting;
 use humhub\modules\user\models\User;
 use humhub\modules\mail\models\MessageEntry;
+use yii\log\Logger;
 
 /**
  * This is the model class for table "message".
@@ -199,6 +200,22 @@ class Message extends ActiveRecord
      */
     public function notify($user)
     {
+        $receive_email_messages = $user->getSetting("receive_email_messages", 'message', Setting::Get('receive_email_notifications', 'mailing'));
+        $isOnline = (count($user->httpSessions) > 0);
+        $willSend = false;
+
+
+        if ($receive_email_messages == User::RECEIVE_EMAIL_WHEN_OFFLINE && !$isOnline){
+            $willSend = true;
+        } elseif ($receive_email_messages == User::RECEIVE_EMAIL_ALWAYS) {
+            $willSend = true;
+        }
+
+        if (!$willSend){
+            return;
+        }
+
+
         $andAddon = "";
         if (count($this->users) > 2) {
             $counter = count($this->users) - 1;

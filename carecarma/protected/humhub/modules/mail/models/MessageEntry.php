@@ -103,6 +103,8 @@ class MessageEntry extends ActiveRecord
      */
     public function notify()
     {
+
+
         $senderName = $this->user->displayName;
         $senderGuid = $this->user->guid;
 
@@ -111,21 +113,24 @@ class MessageEntry extends ActiveRecord
             if ($user->id == $this->user_id)
                 continue;
 
-            Yii::setAlias('@mailmodule', Yii::$app->getModule('mail')->getBasePath());
+            $receive_email_messages = $user->getSetting("receive_email_messages", 'message', Setting::Get('receive_email_notifications', 'mailing'));
+            $isOnline = (count($user->httpSessions) > 0);
+            $willSend = false;
 
-            if ($user->activated == 1){
-//                $gcm = new GCM();
-//                $push = new Push();
-//
-//                $push->setTitle('message');
-//                $push->setSender($this->user_id);
-//                $push->setData($this->content);
-//
-//                $gcm_registration_id = $user->gcmId;
-//                $gcm->send($gcm_registration_id, $push->getPush());
-//
+
+            if ($receive_email_messages == User::RECEIVE_EMAIL_WHEN_OFFLINE && !$isOnline){
+                $willSend = true;
+            } elseif ($receive_email_messages == User::RECEIVE_EMAIL_ALWAYS) {
+                $willSend = true;
+            }
+
+            if (!$willSend){
                 continue;
             }
+
+            Yii::setAlias('@mailmodule', Yii::$app->getModule('mail')->getBasePath());
+
+
 
             $mail = Yii::$app->mailer->compose([
                 'html' => '@mailmodule/views/emails/NewMessageEntry',
