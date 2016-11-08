@@ -436,11 +436,13 @@ class AccountController extends Controller
 
         $model->receive_email_activities = $user->getSetting("receive_email_activities", 'core', \humhub\models\Setting::Get('receive_email_activities', 'mailing'));
         $model->receive_email_notifications = $user->getSetting("receive_email_notifications", 'core', \humhub\models\Setting::Get('receive_email_notifications', 'mailing'));
+        $model->receive_email_messages = $user->getSetting('receive_email_messages', 'message', \humhub\models\Setting::Get('receive_email_messages', 'mailing'));
         $model->enable_html5_desktop_notifications = $user->getSetting("enable_html5_desktop_notifications", 'core', \humhub\models\Setting::Get('enable_html5_desktop_notifications', 'notification'));
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user->setSetting("receive_email_activities", $model->receive_email_activities);
             $user->setSetting("receive_email_notifications", $model->receive_email_notifications);
+            $user->setSetting("receive_email_messages", $model->receive_email_messages);
             $user->setSetting('enable_html5_desktop_notifications', $model->enable_html5_desktop_notifications);
 
             Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));

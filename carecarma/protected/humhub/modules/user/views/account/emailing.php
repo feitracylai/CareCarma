@@ -34,6 +34,18 @@ use humhub\modules\user\models\User;
 
     <hr>
 
+    <strong><?php echo Yii::t('UserModule.views_account_emailing', 'Messages'); ?></strong><br>
+
+    <?php echo Yii::t('UserModule.views_account_emailing', 'Get an email, when other users add you in a message conversation.'); ?>
+    <br>
+    <br>
+
+    <?php echo $form->field($model, 'receive_email_messages')->dropdownList([User::RECEIVE_EMAIL_NEVER => Yii::t('UserModule.views_account_emailing', 'Never'),
+        User::RECEIVE_EMAIL_WHEN_OFFLINE => Yii::t('UserModule.views_account_emailing', 'When I´m offline'),
+        User::RECEIVE_EMAIL_ALWAYS => Yii::t('UserModule.views_account_emailing', 'Always')]); ?>
+
+    <hr>
+
 
     <strong><?php echo Yii::t('UserModule.views_account_emailing', 'Activities'); ?></strong><br/>
     <?php echo Yii::t('UserModule.views_account_emailing', 'Get an email, by every activity from other users you follow or work<br>together in circle.'); ?>
