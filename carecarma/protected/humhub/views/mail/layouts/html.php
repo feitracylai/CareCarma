@@ -565,12 +565,12 @@ use humhub\models\Setting;
                                                                                     <?php $logo = new \humhub\libs\LogoImage() ?>
                                                                                     <?php if ($logo->hasImage()) : ?>
                                                                                         <a class="navbar-brand hidden-xs" style="height: 50px; padding:0; "
-                                                                                           href="http://www.carecarma.tk/">
+                                                                                           href="http://www.carecarma.com/">
                                                                                             <img class="img-rounded" src="<?php echo $logo->getImage("", true); ?>"
                                                                                                  id="img-logo" />
                                                                                         </a>
                                                                                     <?php endif; ?>
-                                                                                    <a href="http://www.carecarma.tk/"
+                                                                                    <a href="http://www.carecarma.com/"
                                                                                        style="font-size: 25px; line-height: 25px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; color:#ffffff; font-weight:600; text-align:left;<?php if ($logo->hasImage()) : ?>display:none;<?php endif; ?>">
                                                                                         <?php echo Html::encode(Yii::$app->name); ?>
                                                                                     </a>
