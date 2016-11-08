@@ -177,6 +177,7 @@ class ContactController extends Controller
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 255,
+                    'readonly' => 'true',
                 ),
                 'device_phone' =>array(
                     'type' => 'text',
@@ -188,16 +189,19 @@ class ContactController extends Controller
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 255,
+                    'readonly' => 'true',
                 ),
                 'work_phone' =>array(
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 255,
+                    'readonly' => 'true',
                 ),
                 'contact_email' => array(
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 100,
+                    'readonly' => 'true',
                 ),
                 'watch_primary_number' => array(
                     'type' => 'checkbox',

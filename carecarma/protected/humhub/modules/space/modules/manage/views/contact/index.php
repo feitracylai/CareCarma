@@ -44,7 +44,7 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
                 ],
                 'nickname',
                 [
-                    'label' => Yii::t('UserModule.views_contact_index', 'Relationship'),
+                    'label' => Yii::t('UserModule.views_contact_index', 'Relationship to {first} {last}', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)),
                     'class' => 'humhub\libs\DropDownGridColumn',
                     'attribute' => 'relation',
                     'submitAttributes' => ['contact_id'],
