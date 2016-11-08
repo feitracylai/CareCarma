@@ -1,7 +1,6 @@
-
-
-
-
+#cropimage{
+    overflow:hidden;
+}
 
 .colorDefault {
     color: #ededed
