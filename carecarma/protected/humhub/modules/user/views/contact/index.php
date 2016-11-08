@@ -82,13 +82,11 @@ use humhub\widgets\GridView;
                     'options' => ['style' => 'width:80px; min-width:80px;'],
                     'buttons' => [
                         'view' => function($url, $model) use ($user) {
-                            return Html::a('<i class="fa fa-plus"></i>',  $user->createUrl('circle-invite', ['cuid' => $model->contact_user_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Invite in Circles', 'data-target' => '#globalModal']);
 
-//                            return Html::a('<i class="fa fa-eye"></i>', $user->createUrl('view', ['id' => $model->contact_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View']);
+                            return Html::a('<i class="fa fa-eye"></i>', $user->createUrl('edit', ['id' => $model->contact_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View']);
                         },
                         'update' => function($url, $model) use ($user) {
-                            return Html::a('<i class="fa fa-edit"></i>', $user->createUrl('edit', ['id' => $model->contact_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View']);
-
+                            return Html::a('<i class="fa fa-plus"></i>',  $user->createUrl('circle-invite', ['cuid' => $model->contact_user_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Invite in Circles', 'data-target' => '#globalModal']);
 //                            return;
                         },
                         'delete' => function($url, $model) use ($user) {

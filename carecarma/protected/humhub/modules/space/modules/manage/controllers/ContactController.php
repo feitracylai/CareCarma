@@ -130,6 +130,7 @@ class ContactController extends Controller
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 255,
+                    'readonly' => 'true',
                 ),
                 'device_phone' =>array(
                     'type' => 'text',
@@ -141,16 +142,19 @@ class ContactController extends Controller
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 255,
+                    'readonly' => 'true',
                 ),
                 'work_phone' =>array(
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 255,
+                    'readonly' => 'true',
                 ),
                 'contact_email' => array(
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 100,
+                    'readonly' => 'true',
                 ),
                 'watch_primary_number' => array(
                     'type' => 'checkbox',
@@ -184,9 +188,10 @@ class ContactController extends Controller
 
         $form = new HForm($definition);
         $form->models['Contact'] = $contact;
-        Yii::getLogger()->log(print_r($form,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
         if ($form->submitted('save') && $form->validate()) {
+
+
             if ($form->save()) {
 
                 $gcm = new GCM();
