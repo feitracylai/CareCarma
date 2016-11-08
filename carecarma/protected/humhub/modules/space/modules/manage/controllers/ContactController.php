@@ -92,6 +92,7 @@ class ContactController extends Controller
         $space = $this->getSpace();
         $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
         $contact = Contact::findOne(['contact_id' => Yii::$app->request->get('Cid'), 'user_id' => $user->id]);
+        Yii::getLogger()->log(print_r(Yii::$app->request->get('Cid'),true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
         if ($contact == null)
             throw new \yii\web\HttpException(404, Yii::t('SpaceModule.controllers_ContactController', 'Contact not found!'));
