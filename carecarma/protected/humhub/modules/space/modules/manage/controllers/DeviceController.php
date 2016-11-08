@@ -317,8 +317,11 @@ class DeviceController extends ContentContainerController
             $contact->save();
         }
         $gcm = new GCM();
-        $gcm_id = $device->gcmId;
-        $gcm->send($gcm_id, $this->getUsernamePassword($user));
+
+        if ($device != null) {
+            $gcm_id = $device->gcmId;
+            $gcm->send($gcm_id, $this->getUsernamePassword($user));
+        }
         $user_new = User::findOne(['device_id' => $device_id]);
         $user_new->temp_password = null;
         $user_new->save();

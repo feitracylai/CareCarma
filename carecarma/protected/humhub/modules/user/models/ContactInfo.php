@@ -49,10 +49,10 @@ class ContactInfo
         $gcm = new GCM();
         $user = User::findOne(['id' => $contact_list['data'][0]['user_id']]);
         $device = Device::findOne(['id' => $user->device_id]);
-        $gcm_id = $device->gcmId;
-
-//        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $gcm->send($gcm_id, $contact_list);
+        if ($device != null) {
+            $gcm_id = $device->gcmId;
+            $gcm->send($gcm_id, $contact_list);
+        }
 
 
     }

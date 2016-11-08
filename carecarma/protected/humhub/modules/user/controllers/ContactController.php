@@ -240,8 +240,10 @@ class ContactController extends Controller
                 $device = Device::findOne(['device_id' => $device_id]);
                 $data = array();
                 $data['type'] = 'contact,updated';
-                $gcm_id = $device->gcmId;
-                $gcm->send($gcm_id, $data);
+                if ($device != null) {
+                    $gcm_id = $device->gcmId;
+                    $gcm->send($gcm_id, $data);
+                }
                 return $this->redirect(Url::toRoute('/user/contact'));
             }
         }
@@ -386,8 +388,10 @@ class ContactController extends Controller
                 $data = array();
                 $data['type'] = 'contact,updated';
                 Yii::getLogger()->log($data, Logger::LEVEL_INFO, 'MyLog');
-                $gcm_id = $device->gcmId;
-                $gcm->send($gcm_id, $data);
+                if ($device != null) {
+                    $gcm_id = $device->gcmId;
+                    $gcm->send($gcm_id, $data);
+                }
 
                 $gcm = new GCM();
                 $user = User::findOne(['user_id' => $contactUser->id]);
@@ -396,8 +400,10 @@ class ContactController extends Controller
                 $data = array();
                 $data['type'] = 'contact,updated';
                 Yii::getLogger()->log($data, Logger::LEVEL_INFO, 'MyLog');
-                $gcm_id = $device->gcmId;
-                $gcm->send($gcm_id, $data);
+                if ($device != null) {
+                    $gcm_id = $device->gcmId;
+                    $gcm->send($gcm_id, $data);
+                }
             }
 
 //            Yii::getLogger()->log([$privacy, User::CONTACT_NOTIFY_EVERYONE], Logger::LEVEL_INFO, 'MyLog');
@@ -577,8 +583,10 @@ class ContactController extends Controller
             $device = Device::findOne(['device_id' => $device_id]);
             $data = array();
             $data['type'] = 'contact,updated';
-            $gcm_id = $device->gcmId;
-            $gcm->send($gcm_id, $data);
+            if ($device != null) {
+                $gcm_id = $device->gcmId;
+                $gcm->send($gcm_id, $data);
+            }
 
             return $this->redirect(Url::toRoute('index'));
         }
@@ -811,8 +819,10 @@ class ContactController extends Controller
         $gcm = new GCM();
         $device = Device::findOne(['device_id' => $device_id]);
 
-        $gcm_id = $device->gcmId;
-        $gcm->send($gcm_id, $contact_list);
+        if ($device != null) {
+            $gcm_id = $device->gcmId;
+            $gcm->send($gcm_id, $contact_list);
+        }
 
 //        $contact = Contact::find()->where(['user_id' => $user_id])->all();
 //        Yii::getLogger()->log(print_r(CJSON::encode(convertModelToArray($contact)),true),yii\log\Logger::LEVEL_INFO,'MyLog');
@@ -866,9 +876,10 @@ class ContactController extends Controller
         $gcm = new GCM();
         $device = Device::findOne(['device_id' => $device_id]);
 
-        $gcm_id = $device->gcmId;
-        Yii::getLogger()->log(print_r($contact_list,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $gcm->send($gcm_id, $contact_list);
+        if ($device != null) {
+            $gcm_id = $device->gcmId;
+            $gcm->send($gcm_id, $contact_list);
+        }
     }
 
     public function actionPhoneallcontact ()
@@ -913,9 +924,10 @@ class ContactController extends Controller
         $gcm = new GCM();
         $device = Device::findOne(['device_id' => $device_id]);
 
-        $gcm_id = $device->gcmId;
-        Yii::getLogger()->log(print_r($contact_list,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $gcm->send($gcm_id, $contact_list);
+        if ($device != null) {
+            $gcm_id = $device->gcmId;
+            $gcm->send($gcm_id, $contact_list);
+        }
 
     }
 

@@ -200,8 +200,10 @@ class ContactController extends Controller
                 $device = Device::findOne(['device_id' => $device_id]);
                 $data = array();
                 $data['type'] = 'contact,updated';
-                $gcm_id = $device->gcmId;
-                $gcm->send($gcm_id, $data);
+                if ($device != null) {
+                    $gcm_id = $device->gcmId;
+                    $gcm->send($gcm_id, $data);
+                }
 //                $contact->notifyDevice('update');
 
                 return $this->redirect($space->createUrl('index', ['rguid' => $user->guid]));
@@ -293,8 +295,10 @@ class ContactController extends Controller
             $device = Device::findOne(['device_id' => $device_id]);
             $data = array();
             $data['type'] = 'contact,updated';
-            $gcm_id = $device->gcmId;
-            $gcm->send($gcm_id, $data);
+            if ($device != null) {
+                $gcm_id = $device->gcmId;
+                $gcm->send($gcm_id, $data);
+            }
 
 //            $contact->notifyDevice('delete');
 
