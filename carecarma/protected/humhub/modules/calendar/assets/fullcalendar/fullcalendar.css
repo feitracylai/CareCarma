@@ -5,23 +5,32 @@
  */
 
 
-@media only screen and (max-device-width: 455px)
+@media(max-width: 480px)
 {
-	.fc-button {
-	position: relative;
-	display: inline-block;
-	padding: 0 .3em;
-	overflow: hidden;
-	height: 1.9em;
-	line-height: 1.9em;
-	white-space: nowrap;
-	cursor: pointer;
+	.fc .fc-header-space {
+    padding-left: 2px;
+}
+	
+	html .fc,
+.fc table {
+	font-size: 1em;
 	}
+
+.fc-button {
+    position: relative;
+    display: inline-block;
+    padding: 0 .4em;
+    overflow: hidden;
+    height: 1.9em;
+    line-height: 1.9em;
+    white-space: nowrap;
+    cursor: pointer;
+}
 
 	.fc-header-title h2 {
 	margin-top: 0px;
 	white-space: nowrap;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     color: #555555;
 	}
