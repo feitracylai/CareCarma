@@ -36,6 +36,17 @@ class ContactLink extends Behavior
 //        \Yii::getLogger()->log($this->owner, Logger::LEVEL_INFO, 'MyLog');
         $this->owner->save();
 
+        $oppContact = Contact::findOne(['user_id' => $contactUser->id, 'contact_user_id' => $user->id]);
+        if ($oppContact == null){
+            $oppContact = new Contact();
+            $oppContact->scenario = 'linkContact';
+            $oppContact->user_id = $contactUser->id;
+            $oppContact->contact_user_id = $user->id;
+        }
+        $oppContact->linked = 0;
+        $oppContact->save();
+
+
         //send notification
         $notification = new Linked();
         $notification->source = $this->owner;
@@ -46,12 +57,7 @@ class ContactLink extends Behavior
 
     public function LinkUser($contactUser, $user)
     {
-        if ($this->owner->contact_first == null & $this->owner->contact_last == null)
-        {
-            $data = 'add';
-        } else {
-            $data = 'update';
-        }
+
         $this->owner->linked = 1;
         $this->owner->contact_first = $contactUser->profile->firstname;
         $this->owner->contact_last = $contactUser->profile->lastname;
@@ -64,7 +70,7 @@ class ContactLink extends Behavior
             $this->owner->device_phone = $contactUser->device->phone;
         }
         $this->owner->save();
-        $this->owner->notifyDevice($data);
+//        $this->owner->notifyDevice($data);
 
         //add contact 2
         $contact = Contact::findOne(['user_id' => $contactUser->id, 'contact_user_id' => $user->id]);
@@ -85,7 +91,7 @@ class ContactLink extends Behavior
             $contact->device_phone = $user->device->phone;
         }
         $contact->save();
-        $contact->notifyDevice('add');
+//        $contact->notifyDevice('add');
 
 
         //Send notification to Accept
@@ -104,13 +110,14 @@ class ContactLink extends Behavior
     public function DenyLink ($contactUser, $user)
     {
 
-        if ($this->owner->contact_first == null && $this->owner->contact_last == null){
-            $this->owner->delete();
-        } else {
-            $this->owner->linked = 1;
-            $this->owner->contact_user_id = null;
-            $this->owner->save();
-        }
+//        if ($this->owner->contact_first == null && $this->owner->contact_last == null){
+//            $this->owner->delete();
+//        } else {
+//            $this->owner->linked = 1;
+//            $this->owner->contact_user_id = null;
+//            $this->owner->save();
+//        }
+        $this->owner->delete();
 
         //Send notification to Deny
         $notification = new LinkDenied();
@@ -166,6 +173,7 @@ class ContactLink extends Behavior
 
 
     }
+
 
 
 }

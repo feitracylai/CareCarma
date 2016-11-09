@@ -87,6 +87,8 @@ $this->registerCssFile('@web/resources/space/colorpicker/css/bootstrap-colorpick
     // show Tooltips on elements inside the views, which have the class 'tt'
     $('.tt').tooltip({html: false});
 
+    $('#collapse-access-settings').hide();
+
     // Shake modal after wrong validation
 <?php if ($model->hasErrors()) { ?>
         $('.modal-dialog').removeClass('fadeIn');
@@ -97,12 +99,14 @@ $this->registerCssFile('@web/resources/space/colorpicker/css/bootstrap-colorpick
         // change link arrow
         $('#access-settings-link i').removeClass('fa-caret-right');
         $('#access-settings-link i').addClass('fa-caret-down');
+        $(this).show();
     })
 
     $('#collapse-access-settings').on('hide.bs.collapse', function () {
         // change link arrow
         $('#access-settings-link i').removeClass('fa-caret-down');
         $('#access-settings-link i').addClass('fa-caret-right');
+        $(this).hide();
     })
 
     // prevent enter key and simulate ajax button submit click

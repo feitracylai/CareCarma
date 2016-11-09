@@ -73,6 +73,10 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
                             return;
                         },
                         'delete' => function($url, $model) use ($space, $user) {
+                            if ($space->isMember($model->contact_user_id)){
+                                return;
+                            }
+
                             return Html::a('<i class="fa fa-times"></i>', $space->createUrl('delete', ['Cid' => $model->contact_id, 'rguid' => $user->guid]), ['class' => 'btn btn-danger btn-xs tt']);
                         }
                     ],

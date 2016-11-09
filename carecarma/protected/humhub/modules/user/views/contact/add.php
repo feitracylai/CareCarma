@@ -9,6 +9,9 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use \humhub\modules\space\models\Space;
 
+
+Url::remember();
+
 ?>
 
 <div class="panel panel-default">
