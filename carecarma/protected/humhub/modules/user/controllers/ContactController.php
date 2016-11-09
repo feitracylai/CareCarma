@@ -631,7 +631,7 @@ class ContactController extends Controller
 
             $contact->delete();
            // $user = User::findOne(['id' => $contact->user_id]);
-            $contact->notifyDevice('delete');
+//            $contact->notifyDevice('delete');
 
             $gcm = new GCM();
             $device_id = $user->device_id;
