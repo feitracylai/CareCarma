@@ -5,7 +5,7 @@
  */
 
 
-@media only screen and (max-device-width: 320px)
+@media only screen and (max-device-width: 455px)
 {
 	.fc-button {
 	position: relative;
