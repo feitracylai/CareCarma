@@ -46,9 +46,6 @@
                 </div><!--//navbar-header-->
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <!--<li class="active nav-item"><a href="index.html">Home</a></li>
-                        <li class="nav-item"><a href="about.html">About Us</a></li>
-                        <li class="nav-item"><a href="contact.html">Contact</a></li>-->
                         <li class="nav-item"><a href="carecarma/index.php?r=user%2Fauth%2Flogin">Log in</a></li>
                         <li class="nav-item nav-item-cta last"><a class="btn btn-cta btn-cta-secondary" href="carecarma/index.php?r=user%2Fauth%2Fsignup">Sign up</a></li>
                     </ul><!--//nav-->
@@ -69,8 +66,7 @@
                 <div class="container text-center">
                     <img src="assets/images/carecarma_blue_logo.png" style="width: 800px;">
                     <p><a class="btn btn-cta btn-cta-primary" href="carecarma/index.php?r=user%2Fauth%2Fsignup">Try It Now</a></p>
-                    <button type="button" class="play-trigger btn-link " data-toggle="modal" data-target="#modal-video" ><i class="fa fa-youtube-play"></i> Watch the video</button>
-
+                    <button id="introVid" type="button" class="play-trigger btn-link " data-toggle="modal" data-target="#modal-video" ><i class="fa fa-youtube-play"></i> Watch the video</button>
                 </div><!--//container-->
                 <div class="bottom" style="text-align:center;position: absolute; padding-top: 8%;width: 100%;">
                     <a href="#why" class="btn-scroll btn-circle-scroll page-scroll">
@@ -84,26 +80,6 @@
     </div>
 
 
-    <!--<div class="visible-xs visible-sm">-->
-        <!--<div class="bg-slider-wrapper">-->
-            <!--<div class="flexslider bg-slider">-->
-                <!--<ul class="slides">-->
-                    <!--<li class="slide slide-1"></li>-->
-                    <!--<li class="slide slide-2"></li>-->
-                    <!--<li class="slide slide-3"></li>-->
-                <!--</ul>-->
-            <!--</div>-->
-        <!--</div>&lt;!&ndash;//bg-slider-wrapper&ndash;&gt;-->
-
-        <!--<section class="promo section section-on-bg">-->
-            <!--<div class="container text-center">-->
-                <!--<h2 class="title">CareCarma</h2>-->
-                <!--<p class="intro">It Starts With Family</p>-->
-                <!--<p><a class="btn btn-cta btn-cta-primary" href="carecarma/index.php?r=user%2Fauth%2Fsignup">Try It Now</a></p>-->
-                <!--<button type="button" class="play-trigger btn-link " data-toggle="modal" data-target="#modal-video" ><i class="fa fa-youtube-play"></i> Watch the video</button>-->
-            <!--</div>&lt;!&ndash;//container&ndash;&gt;-->
-        <!--</section>&lt;!&ndash;//promo&ndash;&gt;-->
-    <!--</div>-->
 
 
     <!--
@@ -166,52 +142,6 @@
             </div><!--//container-->
         </section><!--//why-->  
         
-        <!-- ******Testimonials Section****** -->
-        <!--<section class="section testimonials">-->
-            <!--<div class="container">-->
-                <!--<h2 class="title text-center">What are people saying about Velocity?</h2>-->
-                <!--<div id="testimonials-carousel" class="carousel slide" data-ride="carousel">-->
-                    <!--<ol class="carousel-indicators">-->
-                        <!--<li data-target="#testimonials-carousel" data-slide-to="0" class="active"></li>-->
-                        <!--<li data-target="#testimonials-carousel" data-slide-to="1"></li>-->
-                        <!--<li data-target="#testimonials-carousel" data-slide-to="2"></li>-->
-                    <!--</ol>&lt;!&ndash;//carousel-indicators&ndash;&gt;-->
-                    <!--<div class="carousel-inner">-->
-                        <!--<div class="item active">-->
-                            <!--<figure class="profile"><img src="assets/images/people/profile-m-1.png" alt="" /></figure>-->
-                            <!--<div class="content">-->
-                                <!--<blockquote>-->
-                                <!--<i class="fa fa-quote-left"></i>-->
-                                <!--<p>We used Velocity as a front-end design template for our product site. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum elit tortor, consectetur vitae varius at, interdum eget libero. Morbi.</p>-->
-                                <!--</blockquote>-->
-                                <!--<p class="source">Kevin Knight<br /><span class="title">Co-Founder, Startup Hub</span></p>-->
-                            <!--</div>&lt;!&ndash;//content&ndash;&gt;                         -->
-                        <!--</div>&lt;!&ndash;//item&ndash;&gt;                        -->
-                        <!--<div class="item">-->
-                            <!--<figure class="profile"><img src="assets/images/people/profile-m-2.png" alt="" /></figure>-->
-                            <!--<div class="content">-->
-                                <!--<blockquote>-->
-                                <!--<i class="fa fa-quote-left"></i>-->
-                                <!--<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint.</p>-->
-                                <!--</blockquote>-->
-                                <!--<p class="source">Diana	Luna<br /><span class="title">Entrepreneur, Maecenas</span></p>-->
-                            <!--</div>&lt;!&ndash;//content&ndash;&gt;                         -->
-                        <!--</div>&lt;!&ndash;//item&ndash;&gt;  -->
-                        <!--<div class="item">-->
-                            <!--<figure class="profile"><img src="assets/images/people/profile-m-3.png" alt="" /></figure>-->
-                            <!--<div class="content">-->
-                                <!--<blockquote>-->
-                                <!--<i class="fa fa-quote-left"></i>-->
-                                <!--<p>Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere.</p>-->
-                                <!--</blockquote>-->
-                                <!--<p class="source">Tony Lee<br /><span class="title">CTO, Lorem Ipsum</span></p>-->
-                            <!--</div>&lt;!&ndash;//content&ndash;&gt;                         -->
-                        <!--</div>&lt;!&ndash;//item&ndash;&gt;                                         -->
-                    <!--</div>&lt;!&ndash;//carousel-inner&ndash;&gt;-->
-                    <!---->
-                <!--</div>&lt;!&ndash;//carousel&ndash;&gt;-->
-            <!--</div>&lt;!&ndash;//container&ndash;&gt;-->
-        <!--</section>&lt;!&ndash;//testimonials&ndash;&gt;          -->
 
 
         
@@ -221,55 +151,12 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="container">
-                <!--<div class="row">                    -->
-                    <!--<div class="footer-col links col-md-2 col-sm-4 col-xs-12">-->
-                        <!--<div class="footer-col-inner">-->
-                            <!--<h3 class="title">About us</h3>-->
-                            <!--<ul class="list-unstyled">-->
-                                <!--&lt;!&ndash;<li><a href="about.html"><i class="fa fa-caret-right"></i>Who we are</a></li>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-caret-right"></i>Press</a></li>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<li><a href="blog.html"><i class="fa fa-caret-right"></i>Blog</a></li>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-caret-right"></i>Jobs</a></li>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<li><a href="contact.html"><i class="fa fa-caret-right"></i>Contact us</a></li>&ndash;&gt;-->
-                            <!--</ul>-->
-                        <!--</div>&lt;!&ndash;//footer-col-inner&ndash;&gt;-->
-                    <!--</div>&lt;!&ndash;//foooter-col&ndash;&gt;    -->
-                    <!--<div class="footer-col links col-md-2 col-sm-4 col-xs-12">-->
-                        <!--<div class="footer-col-inner">-->
-                            <!--<h3 class="title">Product</h3>-->
-                            <!--<ul class="list-unstyled">-->
-                                <!--&lt;!&ndash;<li><a href="features.html"><i class="fa fa-caret-right"></i>How it works</a></li>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-caret-right"></i>API</a></li>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<li><a href="download.html"><i class="fa fa-caret-right"></i>Download Apps</a></li>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<li><a href="pricing.html"><i class="fa fa-caret-right"></i>Pricing</a></li>&ndash;&gt;-->
-                            <!--</ul>-->
-                        <!--</div>&lt;!&ndash;//footer-col-inner&ndash;&gt;-->
-                    <!--</div>&lt;!&ndash;//foooter-col&ndash;&gt;              -->
-                    <!--<div class="footer-col links col-md-2 col-sm-4 col-xs-12 sm-break">-->
-                        <!--<div class="footer-col-inner">-->
-                            <!--<h3 class="title">Support</h3>-->
-                            <!--<ul class="list-unstyled">-->
-                                <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-caret-right"></i>Help</a></li>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-caret-right"></i>Documentation</a></li>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-caret-right"></i>Terms</a></li>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-caret-right"></i>Privacy</a></li>&ndash;&gt;-->
-                            <!--</ul>-->
-                        <!--</div>&lt;!&ndash;//footer-col-inner&ndash;&gt;            -->
-                    <!--</div>&lt;!&ndash;//foooter-col&ndash;&gt;   -->
-                    <!--<div class="footer-col connect col-md-6 col-sm-12 col-xs-12">-->
-                        <!--<div class="footer-col-inner">-->
-                            <!--<ul class="social list-inline">-->
-                                <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-twitter"></i></a></li>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-facebook"></i></a></li>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-google-plus"></i></a></li>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-instagram"></i></a></li>        &ndash;&gt;-->
-                                <!--&lt;!&ndash;<li class="row-end"><a href="#"><i class="fa fa-rss"></i></a></li>             &ndash;&gt;-->
-                            <!--</ul>-->
+                        <div class="footer-col-inner">
+                            <ul class="social list-inline">
 
-                        <!--</div>&lt;!&ndash;//footer-col-inner&ndash;&gt;-->
-                    <!--</div>&lt;!&ndash;//foooter-col&ndash;&gt;-->
-                    <!--<div class="clearfix"></div> -->
-                <!--</div>&lt;!&ndash;//row&ndash;&gt;-->
+                            </ul>
+
+                        </div><!--//footer-col-inner-->
 
                 <hr class="footer-divider">
                 <div class="container text-center">
@@ -287,17 +174,19 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <button id="video-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 id="videoModalLabel" class="modal-title sr-only">Video Tour</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="video-container">
-                        <iframe id="vimeo-video" src="//player.vimeo.com/video/28872840?color=ffffff&amp;wmode=transparent" width="720" height="405" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    <div class="video-container" id="video-container">
+
+                        <!--<iframe id="CareCarma-video" src="video.html" width="750" height="450" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
                     </div><!--//video-container-->
                 </div><!--//modal-body-->
             </div><!--//modal-content-->
         </div><!--//modal-dialog-->
     </div><!--//modal-->
+
 
 
  
@@ -336,6 +225,14 @@
                 scaleBannerVideoSize('.video-container .filter');
                 scaleBannerVideoSize('.video-container video');
             });
+        });
+
+        $('#introVid').click(function () {
+            $('#video-container').html('<iframe id="CareCarma-video" src="video.html" width="750" height="450" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>');
+        });
+
+        $('#video-close').click(function () {
+            $('#CareCarma-video').remove();
         });
 
         function scaleVideoContainer() {
@@ -377,11 +274,7 @@
             });
         }
     </script>
-    <!-- jQuery -->
-<!--
-    <script src="assets/plugins/jquery/jquery.js"></script>
 
--->
 
 
     <!-- Plugin JavaScript -->
