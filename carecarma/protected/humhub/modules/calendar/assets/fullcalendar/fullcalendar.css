@@ -5,36 +5,9 @@
  */
 
 
-@media(max-width: 480px)
-{
-	.fc .fc-header-space {
-    padding-left: 2px;
-}
-	
-	html .fc,
-.fc table {
-	font-size: 1em;
-	}
 
-.fc-button {
-    position: relative;
-    display: inline-block;
-    padding: 0 .4em;
-    overflow: hidden;
-    height: 1.9em;
-    line-height: 1.9em;
-    white-space: nowrap;
-    cursor: pointer;
-}
 
-	.fc-header-title h2 {
-	margin-top: 0px;
-	white-space: nowrap;
-    font-size: 13px;
-    font-weight: 600;
-    color: #555555;
-	}
-}
+
 .fc {
 	direction: ltr;
 	text-align: left;
@@ -47,7 +20,7 @@
 
 html .fc,
 .fc table {
-	font-size: 1em;
+	font-size: 0.9em;
 	}
 
 .fc td,
@@ -88,13 +61,13 @@ html .fc,
 .fc-header-title h2 {
 	margin-top: 0px;
 	white-space: nowrap;
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 600;
     color: #555555;
 	}
 
 .fc .fc-header-space {
-	padding-left: 10px;
+	padding-left: 1px;
 	}
 
 .fc-header .fc-button {
@@ -175,7 +148,7 @@ html .fc,
 .fc-button {
 	position: relative;
 	display: inline-block;
-	padding: 0 .6em;
+	padding: 0 .4em;
 	overflow: hidden;
 	height: 1.9em;
 	line-height: 1.9em;
