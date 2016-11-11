@@ -1262,6 +1262,11 @@ input[type=text], input[type=password], input[type=select] {
 
 }
 
+.nav-pills > li > a, .nav-pills > li > a, .nav-pills > li > a {
+    background-color: #fff;
+}
+
+
 .nav-tabs {
     margin-bottom: 10px
 }

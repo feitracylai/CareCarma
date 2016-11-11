@@ -83,11 +83,10 @@ use humhub\widgets\GridView;
                     'buttons' => [
                         'view' => function($url, $model) use ($user) {
 
-                            return Html::a('<i class="fa fa-eye"></i>', $user->createUrl('edit', ['id' => $model->contact_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View']);
+                            return Html::a('<i class="fa fa-plus"></i>',  $user->createUrl('circle-invite', ['cuid' => $model->contact_user_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Invite in Circles', 'data-target' => '#globalModal']);
                         },
                         'update' => function($url, $model) use ($user) {
-                            return Html::a('<i class="fa fa-plus"></i>',  $user->createUrl('circle-invite', ['cuid' => $model->contact_user_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Invite in Circles', 'data-target' => '#globalModal']);
-//                            return;
+                            return Html::a('<i class="fa fa-pencil"></i>', $user->createUrl('edit', ['id' => $model->contact_id]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'Edit']);
                         },
                         'delete' => function($url, $model) use ($user) {
                             return Html::a('<i class="fa fa-times"></i>',  $user->createUrl('delete', ['id' => $model->contact_id]), ['class' => 'btn btn-danger btn-xs tt', 'title' => 'Delete']);
