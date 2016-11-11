@@ -8,10 +8,11 @@
 
 namespace humhub\modules\user\behaviors;
 
-
+use humhub\modules\user\models\Device;
 use humhub\modules\user\models\Contact;
 use humhub\modules\user\models\User;
 use yii\base\Behavior;
+use humhub\libs\GCM;
 
 class UserModelContact extends Behavior
 {
@@ -22,10 +23,8 @@ class UserModelContact extends Behavior
         $user = $this->owner;
         /**************/
         $contact1 = Contact::findOne(['user_id' => $user->id, 'contact_user_id' => $contactUser->id]);
-        $data1 = 'update';
         if ($contact1 == null){
             $contact1 = new Contact();
-            $data1 = 'add';
             $contact1->user_id = $user->id;
             $contact1->contact_user_id = $contactUser->id;
         }
@@ -40,13 +39,22 @@ class UserModelContact extends Behavior
             $contact1->device_phone = $contactUser->device->phone;
         }
         $contact1->save();
-        $contact1->notifyDevice($data1);
+
+        $gcm = new GCM();
+        $device_id = $user->device_id;
+        $device = Device::findOne(['device_id' => $device_id]);
+        $data = array();
+        $data['type'] = 'contact,updated';
+        if ($device != null) {
+            $gcm_id = $device->gcmId;
+            $gcm->send($gcm_id, $data);
+        }
+
+
         /**************/
         $contact2 = Contact::findOne(['user_id' => $contactUser->id, 'contact_user_id' => $user->id]);
-        $data2 = 'update';
         if ($contact2 == null){
             $contact2 = new Contact();
-            $data2 = 'add';
             $contact2->user_id = $contactUser->id;
             $contact2->contact_user_id = $user->id;
         }
@@ -61,7 +69,17 @@ class UserModelContact extends Behavior
             $contact2->device_phone = $user->device->phone;
         }
         $contact2->save();
-        $contact2->notifyDevice($data2);
 
+        $gcm = new GCM();
+        $device_id = $contactUser->device_id;
+        $device = Device::findOne(['device_id' => $device_id]);
+        $data = array();
+        $data['type'] = 'contact,updated';
+        if ($device != null) {
+            $gcm_id = $device->gcmId;
+            $gcm->send($gcm_id, $data);
+        }
     }
+
+
 }

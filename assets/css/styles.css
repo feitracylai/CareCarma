@@ -162,10 +162,10 @@ select {
   height: 70px;
   margin-top: 15px;
   padding: 7px 16px;
-  border: 2px solid white;
+  border: 2px solid #4cacc6;
   border-radius: 100% !important;
   font-size: 40px;
-  color: white;
+  color: #4cacc6;
   background: transparent;
   -webkit-transition: background 0.3s ease-in-out;
   -moz-transition: background 0.3s ease-in-out;
@@ -174,7 +174,7 @@ select {
 .btn-circle-scroll:hover,
 .btn-circle-scroll:focus {
   outline: none;
-  color: white;
+  color: #4cacc6;
   background: rgba(255, 255, 255, 0.1);
 }
 .btn-circle-scroll i.animation {
@@ -293,36 +293,17 @@ select {
   font-size: 15px;
   float: left;
 }
-.header h1.logo a {
-  color: #fff;
-  padding: 15px 30px;
-  display: inline-block;
-  text-align: center;
-  line-height: 1.4;
-  max-width: 155px;
-  background: #4CACC6;
-  -webkit-border-top-right-radius: 0;
-  -webkit-border-bottom-right-radius: 4px;
-  -webkit-border-bottom-left-radius: 4px;
-  -webkit-border-top-left-radius: 0;
-  -moz-border-radius-topright: 0;
-  -moz-border-radius-bottomright: 4px;
-  -moz-border-radius-bottomleft: 4px;
-  -moz-border-radius-topleft: 0;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
-  border-top-left-radius: 0;
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  -webkit-transition: color 0.4s ease-in-out;
-  -moz-transition: color 0.4s ease-in-out;
-  -ms-transition: color 0.4s ease-in-out;
-  -o-transition: color 0.4s ease-in-out;
-  position: relative;
-  font-size: 20px;
+
+.header h1.logo img{
+  height: 80px;
+  margin: 0;
+  display: none;
 }
+
+.header.scrolled h1.logo img{
+  display: block;
+}
+
 .header h1.logo a:hover {
   text-decoration: none;
 }
@@ -367,7 +348,7 @@ select {
   color: #fff;
   padding: 8px 10px;
   margin-top: 5px;
-  font-size: 16px;
+  font-size: 20px;
 }
 .header .main-nav .nav .nav-item.nav-item-cta a.btn-cta-secondary:hover {
   border: 2px solid #4CACC6;
@@ -375,7 +356,7 @@ select {
 }
 .header .main-nav .nav .nav-item a {
   color: #fff;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
 }
 .header .main-nav .nav .nav-item a:hover {
@@ -581,17 +562,18 @@ select {
   color: #fff;
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 15px;
+  font-size: 25px;
   -webkit-opacity: 1;
   -moz-opacity: 1;
   opacity: 1;
   text-decoration: none;
+  text-shadow: 0 0 2px #777;
 }
 .promo .btn-link:hover {
   -webkit-opacity: 1;
   -moz-opacity: 1;
   opacity: 1;
-  font-size: 15px;
+  font-size: 30px;
   text-decoration: none;
 }
 .promo .btn-link:focus {
@@ -599,7 +581,7 @@ select {
 }
 .promo .btn-link .fa {
   margin-right: 5px;
-  font-size: 18px;
+  font-size: 28px;
   position: relative;
   top: 2px;
 }
@@ -635,8 +617,14 @@ select {
   margin-right:0px;
   width: 100%;
 }
+.why{
+  background: #fff;
+  padding-top: 80px;
+  padding-bottom: 120px;
+}
+
 .why .title {
-  font-size: 36px;
+  font-size: 40px;
   font-weight: 300;
   margin-top: 0;
 }
@@ -646,15 +634,24 @@ select {
   font-size: 18px;
 }
 
+.why .item {
+  padding: 50px 0;
+  border-bottom: 1px solid #eeeeee;
+}
+
 .why .item.last-item {
   border-bottom: none;
 }
 .why .item .title {
-  font-size: 26px;
+  font-size: 30px;
   color: #4a6781;
   margin-top: 0;
   margin-bottom: 15px;
 }
+.why .item p{
+  font-size: 20px;
+}
+
 .why .item .desc {
   margin-bottom: 60px;
 }
@@ -1124,9 +1121,11 @@ select {
 }
 .steps .step .title {
   text-align: center;
-  font-size: 16px;
+  font-size: 26px;
   margin-bottom: 15px;
 }
+
+
 .steps .step .title .number {
   width: 90px;
   height: 90px;
@@ -1153,7 +1152,7 @@ select {
 .steps .step .title .text {
   color: #4CACC6;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 23px;
 }
 .steps .btn-cta-primary {
   margin: 0 auto;
@@ -3564,11 +3563,16 @@ select {
   .header.navbar-fixed-top {
     position: fixed;
   }
-  .header.scrolled {
 
+  .header.scrolled {
+    background: #fff;
     z-index: 1000;
     height: 80px;
     top: 0;
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  }
   }
   .header.scrolled h1.logo a {
     -webkit-border-radius: 0;
@@ -3585,7 +3589,7 @@ select {
     padding-top: 25px;
   }
   .header.scrolled .main-nav .nav .nav-item a {
-
+    color: #4cacc6;
     -webkit-opacity: 1;
     -moz-opacity: 1;
     opacity: 1;
@@ -3782,9 +3786,6 @@ select {
     width: 100%;
 
   }
-}
+
 /* Large devices (large desktops, 1200px and up) */
 
-h2.simonh {
-    color: 4CACC6;
-}

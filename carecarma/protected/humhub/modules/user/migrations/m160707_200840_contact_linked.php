@@ -6,7 +6,7 @@ class m160707_200840_contact_linked extends Migration
 {
     public function up()
     {
-        $this->addColumn('contact', 'linked', 'tinyint(4) DEFAULT 1 AFTER contact_user_id');
+        $this->addColumn('contact', 'linked', 'tinyint(4) DEFAULT 0 AFTER contact_user_id');
     }
 
     public function down()

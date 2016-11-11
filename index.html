@@ -31,10 +31,11 @@
 <body class="home-page hidden-xs hidden-sm">
     <!-- ******HEADER****** --> 
     <header id="header" class="header navbar-fixed-top">  
-        <div class="container">       
-            <!--<h1 class="logo">
-                <a href="index.html"><span class="text">Gen-9</span></a>
-            </h1>--><!--//logo-->
+        <div class="container" style="margin: 0; width: auto">
+            <h1 class="logo">
+                <!--<a href="index.html"><span class="text">Gen-9</span></a>-->
+                <img src="assets/images/carecarma_blue_logo.png" />
+            </h1><!--//logo-->
             <nav class="main-nav navbar-right" role="navigation">
                 <div class="navbar-header">
                     <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
@@ -46,9 +47,9 @@
                 </div><!--//navbar-header-->
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <!--<li class="active nav-item"><a href="index.html">Home</a></li>
-                        <li class="nav-item"><a href="about.html">About Us</a></li>
-                        <li class="nav-item"><a href="contact.html">Contact</a></li>-->
+                        <!--<li class="active nav-item"><a>Home</a></li>-->
+                        <!--<li class="nav-item"><a href="about.html">About Us</a></li>-->
+                        <!--<li class="nav-item"><a href="contact.html">Contact</a></li>-->
                         <li class="nav-item"><a href="carecarma/index.php?r=user%2Fauth%2Flogin">Log in</a></li>
                         <li class="nav-item nav-item-cta last"><a class="btn btn-cta btn-cta-secondary" href="carecarma/index.php?r=user%2Fauth%2Fsignup">Sign up</a></li>
                     </ul><!--//nav-->
@@ -60,6 +61,7 @@
 
     <!--BACKGROUND HOMEPAGE SECTION WITH VIDEO- http://coverr.co/-->
     <div class="homepage-hero-module ">
+
         <div class="video-container ">
             <video autoplay loop class="fillWidth  ">
                 <source src="assets/video/carecarma_cover_v2.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
@@ -69,204 +71,256 @@
                 <div class="container text-center">
                     <img src="assets/images/carecarma_blue_logo.png" style="width: 800px;">
                     <p><a class="btn btn-cta btn-cta-primary" href="carecarma/index.php?r=user%2Fauth%2Fsignup">Try It Now</a></p>
-                    <button type="button" class="play-trigger btn-link " data-toggle="modal" data-target="#modal-video" ><i class="fa fa-youtube-play"></i> Watch the video</button>
-
+                    <button id="introVid" type="button" class="play-trigger btn-link " data-toggle="modal" data-target="#modal-video" >
+                        <i class="fa fa-youtube-play"></i> Watch the video
+                    </button>
+                    <!--<a id="introVid" class="play-trigger btn-link"><i class="fa fa-youtube-play"></i> Watch the video</a>-->
                 </div><!--//container-->
-                <div class="bottom" style="text-align:center;position: absolute; padding-top: 8%;width: 100%;">
-                    <a href="#why" class="btn-scroll btn-circle-scroll page-scroll">
-                        <i class="fa fa-angle-double-down animation"></i> </a>
-                </div>
+
 
             </section><!--//promo-->
+
+
+
+
 
         </div>
 
     </div>
+    <div style="height: 100px; background-color: #fff; padding: 20px">
+        <div class="bottom" style="text-align:center;position: absolute; width: 100%; z-index: 50">
+            <a href="#why" class="btn-scroll btn-circle-scroll page-scroll">
+                <i class="fa fa-angle-double-down animation"></i> </a>
+        </div>
+    </div>
 
 
-    <!--<div class="visible-xs visible-sm">-->
-        <!--<div class="bg-slider-wrapper">-->
-            <!--<div class="flexslider bg-slider">-->
-                <!--<ul class="slides">-->
-                    <!--<li class="slide slide-1"></li>-->
-                    <!--<li class="slide slide-2"></li>-->
-                    <!--<li class="slide slide-3"></li>-->
-                <!--</ul>-->
-            <!--</div>-->
-        <!--</div>&lt;!&ndash;//bg-slider-wrapper&ndash;&gt;-->
-
-        <!--<section class="promo section section-on-bg">-->
-            <!--<div class="container text-center">-->
-                <!--<h2 class="title">CareCarma</h2>-->
-                <!--<p class="intro">It Starts With Family</p>-->
-                <!--<p><a class="btn btn-cta btn-cta-primary" href="carecarma/index.php?r=user%2Fauth%2Fsignup">Try It Now</a></p>-->
-                <!--<button type="button" class="play-trigger btn-link " data-toggle="modal" data-target="#modal-video" ><i class="fa fa-youtube-play"></i> Watch the video</button>-->
-            <!--</div>&lt;!&ndash;//container&ndash;&gt;-->
-        <!--</section>&lt;!&ndash;//promo&ndash;&gt;-->
-    <!--</div>-->
 
 
-    <!--
-
-    <div cclass="sections-wrapper">
-    <!-- ******Why Section****** -->
-        <section id="why" class="why">
-            <div class="container container-custom">
-                <div class="row item" >
-                    <div class="homepage-hero-module cd-scrolling-bg cd-color-simon" >
-                        <div class="cd-container"style="" >
-                            <h2 align="center"><p class="simonh">Circle</p></h2>
-                            <h4 align="center"><p class="simonh">Helping you organize your family into a care team that can bring support to family members.</p></h4>
-                            <div class="cd-container" id="div_simon1">
-                                <ul>
-                                <li class="li_simon"><img class="img_simon" src="assets/images/simon/simon1.jpg"/></li>
-                                <li class="li_simon" id="lichange2"><img class="img_simon" src="assets/images/simon/simon4.jpg"/></li>
-                                <li class="li_simon" id="lichange3"><img class="img_simon" src="assets/images/simon/simon5.jpg"/></li>
-                                </ul>
-                            </div>
-                        </div> <!-- cd-container -->
-                    </div> <!-- cd-scrolling-bg -->
-                </div>
-
-
-                <div class="row item">
-                <div class="homepage-hero-module cd-fixed-bg cd-bg-2">
-                    <h2 style="color:#f5f5f5"><b>COMMUNITIES</b></h2>
-                    <div id="div2_2"><p><b>Bringing CIRCLES together with others that have special expertise or who are local to a family member in need.</b></p></div>
-                    
-
-                </div> <!-- cd-fixed-bg -->
-                </div>
-
-                <div class="row item">
-                <div class="homepage-hero-module cd-scrolling-bg cd-color-simon">
-                    <div class="cd-container">
-                        <h2 align="center"><p class="simonh">Contact</p></h2>
-                            <h4 align="center"><p class="simonh">Providing easier access to other outside resources and services. From finding a home cleaning service to finding a live-in caregiver.</p></h4>
-                            <div class="cd-container" id="div_simon1">
-                                <ul>
-                                <li class="li_simon"><img class="img_simon" src="assets/images/simon/simon10.jpg"/></li>
-                                <li class="li_simon" id="lichange2"><img class="img_simon" src="assets/images/simon/simon8.jpg"/></li>
-                                <li class="li_simon" id="lichange3"><img class="img_simon" src="assets/images/simon/simon9.jpg"/></li>
-                                </ul>
-                            </div>
-
-                    </div> <!-- cd-container -->
-                </div> <!-- cd-scrolling-bg -->
-                </div>
-
-                <div class="row item">
-                <div class="homepage-hero-module cd-fixed-bg cd-bg-3">
-                    <h2 style="color:#f5f5f5"><b>COSMOS</b></h2>
-                    <div id="div2_2"><p><b style="margin:0 auto;">Enabling the meaningful use of integrated technology that can empower family members to interact and communicate more easily, reliably, and productively.</b></p></div>
-                </div> <!-- cd-fixed-bg -->
-                </div>
-            </div><!--//container-->
-        </section><!--//why-->  
         
-        <!-- ******Testimonials Section****** -->
-        <section class="section testimonials">
+    <div class="sections-wrapper">
+        <!--why section-->
+        <section id="why" class="section why">
             <div class="container">
-                <h2 class="title text-center">What are people saying about Velocity?</h2>
-                <div id="testimonials-carousel" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#testimonials-carousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#testimonials-carousel" data-slide-to="1"></li>
-                        <li data-target="#testimonials-carousel" data-slide-to="2"></li>
-                    </ol><!--//carousel-indicators-->
-                    <div class="carousel-inner">
-                        <div class="item active">
-                            <figure class="profile"><img src="assets/images/people/profile-m-1.png" alt="" /></figure>
-                            <div class="content">
-                                <blockquote>
-                                <i class="fa fa-quote-left"></i>
-                                <p>We used Velocity as a front-end design template for our product site. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum elit tortor, consectetur vitae varius at, interdum eget libero. Morbi.</p>
-                                </blockquote>
-                                <p class="source">Kevin Knight<br /><span class="title">Co-Founder, Startup Hub</span></p>
-                            </div><!--//content-->                         
-                        </div><!--//item-->                        
-                        <div class="item">
-                            <figure class="profile"><img src="assets/images/people/profile-m-2.png" alt="" /></figure>
-                            <div class="content">
-                                <blockquote>
-                                <i class="fa fa-quote-left"></i>
-                                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint.</p>
-                                </blockquote>
-                                <p class="source">Diana	Luna<br /><span class="title">Entrepreneur, Maecenas</span></p>
-                            </div><!--//content-->                         
-                        </div><!--//item-->  
-                        <div class="item">
-                            <figure class="profile"><img src="assets/images/people/profile-m-3.png" alt="" /></figure>
-                            <div class="content">
-                                <blockquote>
-                                <i class="fa fa-quote-left"></i>
-                                <p>Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere.</p>
-                                </blockquote>
-                                <p class="source">Tony Lee<br /><span class="title">CTO, Lorem Ipsum</span></p>
-                            </div><!--//content-->                         
-                        </div><!--//item-->                                         
-                    </div><!--//carousel-inner-->
-                    
-                </div><!--//carousel-->
+                <h2 class="title text-center">How Can CarCarma Help You?</h2>
+                <p class="intro text-center">Our mission is to help people build that community, one family at a time</p>
+
+                <!--<div class="row item">-->
+
+                        <!--<img class="img-responsive" src="assets/images/figures/CareCarma_Screen_Shots_1.png" alt="" style="height: 650px"/>-->
+                <!--</div>-->
+
+
+
+                <div class="row item">
+                    <div class="content col-md-4 col-sm-12 col-xs-12">
+                        <h3 class="title">CareCarma Home Page</h3>
+                        <div class="desc">
+                            <p>From here you can access information for all of your activities in all of your circles and communicate with the entire CareCarma community.</p>
+                        </div>
+                        <!--<div class="quote">-->
+                            <!--<div class="quote-profile">-->
+                                <!--<img class="img-responsive img-circle" src="assets/images/people/profile-s-1.png" alt="" />-->
+                            <!--</div>&lt;!&ndash;//profile&ndash;&gt;-->
+                            <!--<div class="quote-content">-->
+                                <!--<blockquote><p><a href="https://twitter.com/3rdwave_themes" target="_blank">@velocity</a> Love it! Thank you for making my life easier and saving me time! I’ll definitely recommend it to my friends. :)</p></blockquote>-->
+                                <!--<p class="source">@LisaW, Bristol</p>-->
+                            <!--</div>&lt;!&ndash;//quote-content&ndash;&gt;-->
+                        <!--</div>&lt;!&ndash;//quote&ndash;&gt;-->
+                    </div><!--//content-->
+                    <figure class="figure col-md-7 col-sm-12 col-xs-12 col-md-offset-1 col-sm-offset-0 col-xs-offset-0">
+                        <img class="img-responsive" src="assets/images/figures/home.png" alt="" />
+                        <!--<figcaption class="figure-caption">(Screenshot: Home page) </figcaption>-->
+                    </figure>
+                </div><!--//item-->
+
+
+                <div class="row item">
+                    <div class="content col-md-6 col-sm-12 col-xs-12 col-md-push-6 col-sm-push-0 col-xs-push-0">
+                        <h3 class="title">CareCarma CareCircle</h3>
+                        <div class="desc">
+                            <p>This is the private section. Only people that have been invited to the Circle have access to it.</p>
+                            <p>You can setup an unlimited number of CareCircles and they can been defined any way you prefer. They can be people, events, groups - anything.</p>
+                            <!--<p><i class="fa fa-download"></i> <a href="download.html">Download mobile versions</a></p>-->
+                        </div>
+
+                        <!--<div class="quote">-->
+                            <!--<div class="quote-profile">-->
+                                <!--<img class="img-responsive img-circle" src="assets/images/people/profile-s-2.png" alt="" />-->
+                            <!--</div>&lt;!&ndash;//profile&ndash;&gt;-->
+                            <!--<div class="quote-content">-->
+                                <!--<blockquote><p>I find the mobile app very useful when I'm on the go. Sed ut perspiciatis unde omnis iste natus error sit voluptatem </p></blockquote>-->
+                                <!--<p class="source">@JackT, San Francisco</p>-->
+                            <!--</div>&lt;!&ndash;//quote-content&ndash;&gt;-->
+                        <!--</div>&lt;!&ndash;//quote&ndash;&gt;-->
+                    </div><!--//content-->
+
+                    <figure class="figure col-md-6 col-sm-12 col-xs-12 col-md-pull-7 col-sm-pull-0 col-xs-pull-0">
+                        <img class="img-responsive" src="assets/images/figures/circle.png" alt="" style="height: 350px"/>
+                        <!--<div class="control text-center">-->
+                            <!--<button type="button" class="play-trigger" data-toggle="modal" data-target="#modal-video"><i class="fa fa-play"></i></button>-->
+                        <!--</div>&lt;!&ndash;//control&ndash;&gt;-->
+                    </figure>
+                </div><!--//item-->
+
+
+                <div class="row item ">
+                    <div class="content col-md-4 col-sm-12 col-xs-12">
+                        <h3 class="title">CareCarma CareCircle Tools</h3>
+                        <div class="desc">
+                            <p>Once you've created a circle, you have access to a large array of tools and functions.</p>
+                            <p>Create and assign tasks, schedule events, upload and manage files and images and setup access to a smart mobile device such as an LG Urbane 2 Watch.</p>
+                        </div>
+                        <!--<div class="quote">-->
+                            <!--<div class="quote-profile">-->
+                                <!--<img class="img-responsive img-circle" src="assets/images/people/profile-s-3.png" alt="" />-->
+                            <!--</div>&lt;!&ndash;//profile&ndash;&gt;-->
+                            <!--<div class="quote-content">-->
+                                <!--<blockquote><p>Nice template! It’s practical and there is no gimmicks. Very easy to customise as well!</p></blockquote>-->
+                                <!--<p class="source"><a>@AlexD</a>, London</p>-->
+                            <!--</div>&lt;!&ndash;//quote-content&ndash;&gt;-->
+                        <!--</div>&lt;!&ndash;//quote&ndash;&gt;-->
+                    </div><!--//content-->
+                    <figure class="figure col-md-7 col-sm-12 col-xs-12 col-md-offset-1 col-sm-offset-0 col-xs-offset-0">
+                        <img class="img-responsive" src="assets/images/figures/circle%20tool.png" alt="" />
+                        <!--<figcaption class="figure-caption">(Screenshot: <a target="_blank">Tempo - Bootstrap template for startups)</a> </figcaption>-->
+
+                    </figure>
+                </div><!--//item-->
+
+                <div class="row item last-item">
+                    <div class="content col-md-4 col-sm-12 col-xs-12 col-md-push-8 col-sm-push-0 col-xs-push-0">
+                        <h3 class="title">Work on different platform</h3>
+                        <div class="desc">
+                            <p>CareCarma is compatible with most browsers, so it will work on Windows, Apple and Linux PCs. A mobile version of CareCarma is available for both Android and iOS devices.</p>
+
+                        </div>
+
+                        <!--<div class="quote">-->
+                            <!--<div class="quote-profile">-->
+                                <!--<img class="img-responsive img-circle" src="assets/images/people/profile-s-4.png" alt="" />-->
+                            <!--</div>&lt;!&ndash;//profile&ndash;&gt;-->
+                            <!--<div class="quote-content">-->
+                                <!--<blockquote><p>I can connect to like-minded people lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p></blockquote>-->
+                                <!--<p class="source">@JackT, San Francisco</p>-->
+                            <!--</div>&lt;!&ndash;//quote-content&ndash;&gt;-->
+                        <!--</div>&lt;!&ndash;//quote&ndash;&gt;-->
+                    </div><!--//content-->
+                    <figure class="figure col-md-7 col-sm-12 col-xs-12 col-md-pull-4 col-sm-pull-0 col-xs-pull-0">
+                        <img class="img-responsive" src="assets/images/figures/All%20Size%20Apple.png" alt="" />
+                    </figure>
+                </div><!--//item-->
+
+
+                <!--<div class="feature-lead text-center">-->
+                    <!--<h4 class="title">Want to discover all the features?</h4>-->
+                    <!--<p><a class="btn btn-cta btn-cta-secondary" href="features.html">Take a Tour</a></p>-->
+                <!--</div>-->
             </div><!--//container-->
-        </section><!--//testimonials-->          
+        </section><!--//why-->
+
+
+        <!-- ******Steps Section****** -->
+        <section class="steps section" style="border: ">
+            <div class="container">
+                <h2 class="title text-center">Coming soon to CareCarma…</h2>
+                <div class="row">
+                    <div class="step  col-md-4 col-sm-4 col-xs-12">
+                        <h3 class="title text-center"><span class="text">CareCarma Communities</span></h3>
+                        <p>It will help you to build a CareCircle team by expanding your access to both paid and volunteer services. </p>
+                        <p>
+                            This will include everything from arranging a ride for your loved ones using Lyft,
+                            to finding a home cleaning service, or locating a volunteer to visit them.
+                            All of these services will be integrated directly into CareCarma’s task management and calendar functions to enable you to easily keep track of everything.
+                            You will also have the ability to order background checks on the individuals providing these services.
+                        </p>
+
+
+                    </div><!--//step-->
+                    <div class="step  col-md-4 col-sm-4 col-xs-12">
+                        <h3 class="title text-center"><span class="text">CareCarma CoSMoS</span></h3>
+                        <p>Expansion of our CareCarma CoSMoS services to further improve your ability you reach out and touch someone you love from thousands of miles away. </p>
+                        <p>
+                            The current version of CoSMoS provides easy and safe communication between CareCircle members and your care receiver.
+                            Our next version will also allow you to collect information about their activities.
+                            You’ll be able to access reports summarizing data from the pulse, accelerometer and gyro sensors.
+                            This will provide a view into their level of day-to-day activities and compare it to their historical patterns.
+                            You will also have remote access to the onboard GPS sensor,
+                            which will permit you to monitor their travel patterns and send you a notice should your loved one travel beyond a certain geographical area.
+                        </p>
+                    </div><!--//step-->
+                    <div class="step  col-md-4 col-sm-4 col-xs-12">
+                        <h3 class="title text-center"><span class="text">CareCarma Cortex </span></h3>
+                        <p>It will provide sophisticated analytics based on machine learning algorithms that we’ve been developing under research grants from the National Institutes of Health and the National Institute on Aging. </p>
+                        <p>
+                            CareCarma Cortex uses state-of-the-art AI that will collect and analyze sensor and other data to provide a clearer picture of your loved one’s wellbeing.
+                            It is being designed to get to know each individual’s patterns and then compare them with those of a larger group or cohort. The ultimate goal of CareCarma Cortex is to predict events, such as falls,
+                            before they occur – thereby helping you to prevent them from happening in the first place.
+                        </p>
+                    </div><!--//step-->
+                </div><!--//row-->
+
+
+            </div><!--//container-->
+        </section><!--//steps-->
+
+
 
 
         
-    </div><!--//section-wrapper-->
-    
+
     <!-- ******FOOTER****** --> 
     <footer class="footer">
         <div class="footer-content">
             <div class="container">
-                <div class="row">                    
+                <div class="row">
                     <div class="footer-col links col-md-2 col-sm-4 col-xs-12">
                         <div class="footer-col-inner">
                             <h3 class="title">About us</h3>
                             <ul class="list-unstyled">
-                                <li><a href="about.html"><i class="fa fa-caret-right"></i>Who we are</a></li>
-                                <li><a href="#"><i class="fa fa-caret-right"></i>Press</a></li>
-                                <li><a href="blog.html"><i class="fa fa-caret-right"></i>Blog</a></li>
-                                <li><a href="#"><i class="fa fa-caret-right"></i>Jobs</a></li>
-                                <li><a href="contact.html"><i class="fa fa-caret-right"></i>Contact us</a></li>
+                                <li><a><i class="fa fa-caret-right"></i>Who we are</a></li>
+                                <li><a><i class="fa fa-caret-right"></i>Press</a></li>
+                                <li><a><i class="fa fa-caret-right"></i>Blog</a></li>
+                                <li><a><i class="fa fa-caret-right"></i>Jobs</a></li>
+                                <li><a><i class="fa fa-caret-right"></i>Contact us</a></li>
                             </ul>
                         </div><!--//footer-col-inner-->
-                    </div><!--//foooter-col-->    
+                    </div><!--//foooter-col-->
                     <div class="footer-col links col-md-2 col-sm-4 col-xs-12">
                         <div class="footer-col-inner">
                             <h3 class="title">Product</h3>
                             <ul class="list-unstyled">
-                                <li><a href="features.html"><i class="fa fa-caret-right"></i>How it works</a></li>
-                                <li><a href="#"><i class="fa fa-caret-right"></i>API</a></li>
-                                <li><a href="download.html"><i class="fa fa-caret-right"></i>Download Apps</a></li>
-                                <li><a href="pricing.html"><i class="fa fa-caret-right"></i>Pricing</a></li>
+                                <li><a><i class="fa fa-caret-right"></i>How it works</a></li>
+                                <li><a><i class="fa fa-caret-right"></i>API</a></li>
+                                <li><a><i class="fa fa-caret-right"></i>Download Apps</a></li>
+                                <li><a><i class="fa fa-caret-right"></i>Pricing</a></li>
                             </ul>
                         </div><!--//footer-col-inner-->
-                    </div><!--//foooter-col-->              
+                    </div><!--//foooter-col-->
                     <div class="footer-col links col-md-2 col-sm-4 col-xs-12 sm-break">
                         <div class="footer-col-inner">
                             <h3 class="title">Support</h3>
                             <ul class="list-unstyled">
-                                <li><a href="#"><i class="fa fa-caret-right"></i>Help</a></li>
-                                <li><a href="#"><i class="fa fa-caret-right"></i>Documentation</a></li>
-                                <li><a href="#"><i class="fa fa-caret-right"></i>Terms</a></li>
-                                <li><a href="#"><i class="fa fa-caret-right"></i>Privacy</a></li>
+                                <li><a><i class="fa fa-caret-right"></i>Help</a></li>
+                                <li><a><i class="fa fa-caret-right"></i>Documentation</a></li>
+                                <li><a><i class="fa fa-caret-right"></i>Terms</a></li>
+                                <li><a><i class="fa fa-caret-right"></i>Privacy</a></li>
                             </ul>
-                        </div><!--//footer-col-inner-->            
-                    </div><!--//foooter-col-->   
+                        </div><!--//footer-col-inner-->
+                    </div><!--//foooter-col-->
                     <div class="footer-col connect col-md-6 col-sm-12 col-xs-12">
                         <div class="footer-col-inner">
                             <ul class="social list-inline">
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>        
-                                <li class="row-end"><a href="#"><i class="fa fa-rss"></i></a></li>             
+                                <li><a><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="https://www.facebook.com/CareCarma-1211045228955220/?skip_nax_wizard=true" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li><a><i class="fa fa-google-plus"></i></a></li>
+                                <li><a><i class="fa fa-instagram"></i></a></li>
+                                <li class="row-end"><a><i class="fa fa-rss"></i></a></li>
                             </ul>
 
                         </div><!--//footer-col-inner-->
                     </div><!--//foooter-col-->
-                    <div class="clearfix"></div> 
+                    <div class="clearfix"></div>
                 </div><!--//row-->
 
                 <hr class="footer-divider">
@@ -285,17 +339,30 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <button id="video-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 id="videoModalLabel" class="modal-title sr-only">Video Tour</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="video-container">
-                        <iframe id="vimeo-video" src="//player.vimeo.com/video/28872840?color=ffffff&amp;wmode=transparent" width="720" height="405" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    <div class="video-container" id="video-container">
+
+                        <!--<iframe id="CareCarma-video" src="video.html" width="750" height="450" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
                     </div><!--//video-container-->
                 </div><!--//modal-body-->
             </div><!--//modal-content-->
         </div><!--//modal-dialog-->
     </div><!--//modal-->
+
+    <!--<div class="modal modal-video" id="modal-video" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">-->
+        <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                <!--</div>-->
+
+                <!--<iframe src="video.html" width="750" height="450"  frameborder="0"></iframe>-->
+            <!--</div>&lt;!&ndash;//modal-content&ndash;&gt;-->
+        <!--</div>&lt;!&ndash;//modal-dialog&ndash;&gt;-->
+    <!--</div>&lt;!&ndash;//modal&ndash;&gt;-->
 
 
  
@@ -336,16 +403,30 @@
             });
         });
 
+        $('#introVid').click(function () {
+            $('#video-container').html('<iframe id="CareCarma-video" src="video.html" width="750" height="450" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>');
+        });
+
+        $('#video-close').click(function () {
+            $('#CareCarma-video').remove();
+        });
+
         function scaleVideoContainer() {
-            var height = $(window).height() + 5;
+            var height = $(window).height() - 100;
+            var width = $(window).width();
+
+            var wantHeight = width * 404 / 720;
+            var heightRate = height / wantHeight;
+
             var unitHeight = parseInt(height) + 'px';
-            $('.homepage-hero-module').css('height',unitHeight);
+            $('.homepage-hero-module').css({'height': unitHeight});
         }
 
         function initBannerVideoSize(element){
             $(element).each(function(){
-                $(this).data('height', $(this).height());
+                $(this).data('height',$(this).height());
                 $(this).data('width', $(this).width());
+
             });
             scaleBannerVideoSize(element);
         }

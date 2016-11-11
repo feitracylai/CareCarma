@@ -66,26 +66,26 @@ class ContactController extends Controller
         ]);
     }
 
-    public function actionView()
-    {
-        $space = $this->getSpace();
-        $Cid = (int) Yii::$app->request->get('Cid');
-        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
-
-        $contact = Contact::findOne(['contact_id' => $Cid, 'user_id' => $user->id]);
-
-        if ($contact == null) {
-            throw new \yii\web\HttpException(404, Yii::t('SpaceModule.controllers_ContactController', 'Contact not found!'));
-        }
-
-
-
-        return $this->render('view', array(
-            'contact' => $contact,
-            'space' => $space,
-            'user' => $user
-        ));
-    }
+//    public function actionView()
+//    {
+//        $space = $this->getSpace();
+//        $Cid = (int) Yii::$app->request->get('Cid');
+//        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
+//
+//        $contact = Contact::findOne(['contact_id' => $Cid, 'user_id' => $user->id]);
+//
+//        if ($contact == null) {
+//            throw new \yii\web\HttpException(404, Yii::t('SpaceModule.controllers_ContactController', 'Contact not found!'));
+//        }
+//
+//
+//
+//        return $this->render('view', array(
+//            'contact' => $contact,
+//            'space' => $space,
+//            'user' => $user
+//        ));
+//    }
 
     public function actionEdit()
     {
@@ -224,49 +224,49 @@ class ContactController extends Controller
     }
 
 
-    public function actionConsole()
-    {
-        $space = $this->getSpace();
+//    public function actionConsole()
+//    {
+//        $space = $this->getSpace();
+//
+//        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
+//
+//        $searchModel = new ContactSearch();
+//        $searchModel->status = 'console';
+//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $user->id);
+//
+//        return $this->render('console', array(
+//            'searchModel' => $searchModel,
+//            'dataProvider' => $dataProvider,
+//            'user' => $user,
+//            'space' => $space,
+//        ));
+//    }
 
-        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
-
-        $searchModel = new ContactSearch();
-        $searchModel->status = 'console';
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $user->id);
-
-        return $this->render('console', array(
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'user' => $user,
-            'space' => $space,
-        ));
-    }
-
-    public function actionLinkAccept ()
-    {
-        $contactUser = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
-
-        $user = User::findOne(['guid' => Yii::$app->request->get('uguid')]);
-        $contact = Contact::findOne(['user_id' => $user->id, 'contact_user_id' => $contactUser->id]);
-
-        if ($contact != null) {
-            $contact->LinkUser($contactUser, $user);
-        }
-
-
-        return $this->redirect(Url::to(['console']));
-    }
-
-    public function actionLinkCancel()
-    {
-        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
-        $contact = Contact::findOne(['contact_id' => Yii::$app->request->get('id')]);
-        if ($contact != null) {
-            $contact->CancelLink($user);
-        }
-
-        return $this->redirect(Url::to(['console']));
-    }
+//    public function actionLinkAccept ()
+//    {
+//        $contactUser = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
+//
+//        $user = User::findOne(['guid' => Yii::$app->request->get('uguid')]);
+//        $contact = Contact::findOne(['user_id' => $user->id, 'contact_user_id' => $contactUser->id]);
+//
+//        if ($contact != null) {
+//            $contact->LinkUser($contactUser, $user);
+//        }
+//
+//
+//        return $this->redirect(Url::to(['console']));
+//    }
+//
+//    public function actionLinkCancel()
+//    {
+//        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
+//        $contact = Contact::findOne(['contact_id' => Yii::$app->request->get('id')]);
+//        if ($contact != null) {
+//            $contact->CancelLink($user);
+//        }
+//
+//        return $this->redirect(Url::to(['console']));
+//    }
 
 
     /**
@@ -298,6 +298,22 @@ class ContactController extends Controller
             if ($device != null) {
                 $gcm_id = $device->gcmId;
                 $gcm->send($gcm_id, $data);
+            }
+
+            $oppContact = Contact::findOne(['user_id' => $contact->contact_user_id, 'contact_user_id' => $contact->user_id]);
+            if ($oppContact != null){
+                $oppContact->delete();
+
+                $gcm = new GCM();
+                $contactUser = User::findOne(['id' => $oppContact->user_id]);
+                $device_id = $contactUser->device_id;
+                $device = Device::findOne(['device_id' => $device_id]);
+                $data = array();
+                $data['type'] = 'contact,updated';
+                if ($device != null) {
+                    $gcm_id = $device->gcmId;
+                    $gcm->send($gcm_id, $data);
+                }
             }
 
 //            $contact->notifyDevice('delete');

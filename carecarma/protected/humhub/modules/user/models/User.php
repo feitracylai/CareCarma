@@ -295,6 +295,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
         Session::deleteAll(['user_id' => $this->id]);
         Setting::deleteAll(['user_id' => $this->id]);
         Contact::deleteAll(['user_id' => $this->id]);
+        Contact::deleteAll(['contact_user_id' => $this->id]);
 
         $asOtherContact = Contact::findAll(['contact_user_id' => $this->id]);
         foreach ($asOtherContact as $contact) {
