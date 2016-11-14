@@ -19,6 +19,8 @@ use humhub\modules\user\models\GroupAdmin;
 use humhub\modules\user\components\ActiveQueryUser;
 use yii\helpers\Url;
 use yii\log\Logger;
+use humhub\libs\GCM;
+use humhub\modules\user\models\Device;
 
 /**
  * This is the model class for table "user".
@@ -399,8 +401,21 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
                 $contact->device_phone = '';
             }
             $contact->save();
-            $contact->notifyDevice('update');
 
+            $gcm = new GCM();
+            $user_id = $contact->user_id;
+            $user = User::findOne(['id' => $user_id]);
+            if ($user != null) {
+                $device_id = $user->device_id;
+                $device = Device::findOne(['device_id' => $device_id]);
+                $data = array();
+                $data['type'] = 'contact,updated';
+                if ($device != null) {
+                    $gcm_id = $device->gcmId;
+                    $gcm->send($gcm_id, $data);
+                }
+            }
+//            $contact->notifyDevice('update');
 
         }
     }
