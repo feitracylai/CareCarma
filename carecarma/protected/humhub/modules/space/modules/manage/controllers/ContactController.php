@@ -131,7 +131,6 @@ class ContactController extends Controller
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 255,
-                    'readonly' => 'true',
                 ),
                 'device_phone' =>array(
                     'type' => 'text',
@@ -143,13 +142,11 @@ class ContactController extends Controller
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 255,
-                    'readonly' => 'true',
                 ),
                 'work_phone' =>array(
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 255,
-                    'readonly' => 'true',
                 ),
                 'contact_email' => array(
                     'type' => 'text',
@@ -172,20 +169,44 @@ class ContactController extends Controller
 
 
         // Get Form Definition
-        $definition['buttons'] = array(
-            'delete' => array(
-                'type' => 'submit',
-                'label' => Yii::t('UserModule.controllers_ContactController', 'Delete'),
-                'class' => 'btn btn-danger ',
-            ),
+        if ($space->isMember($contact->contact_user_id)){
+            $definition['buttons'] = array(
+                'back' => array(
+                    'type' => 'submit',
+                    'label' => Yii::t('UserModule.controllers_ContactController', '<< Back'),
+                    'class' => 'btn  pull-left btn-primary',
+                ),
+                'save' => array(
+                    'type' => 'submit',
+                    'label' => Yii::t('UserModule.controllers_ContactController', 'Save'),
+                    'class' => 'btn btn-primary pull-right',
+                ),
 
-            'save' => array(
-                'type' => 'submit',
-                'label' => Yii::t('UserModule.controllers_ContactController', 'Save'),
-                'class' => 'btn btn-primary pull-right',
-            ),
+            );
+        } else {
+            $definition['buttons'] = array(
+                'back' => array(
+                    'type' => 'submit',
+                    'label' => Yii::t('UserModule.controllers_ContactController', '<< Back'),
+                    'class' => 'btn  pull-left btn-primary',
+                ),
 
-        );
+                'delete' => array(
+                    'type' => 'submit',
+                    'label' => Yii::t('UserModule.controllers_ContactController', 'Delete'),
+                    'class' => 'btn btn-danger ',
+                ),
+
+                'save' => array(
+                    'type' => 'submit',
+                    'label' => Yii::t('UserModule.controllers_ContactController', 'Save'),
+                    'class' => 'btn btn-primary pull-right',
+                ),
+
+
+            );
+        }
+
 
         $form = new HForm($definition);
         $form->models['Contact'] = $contact;
@@ -208,6 +229,10 @@ class ContactController extends Controller
 
                 return $this->redirect($space->createUrl('index', ['rguid' => $user->guid]));
             }
+        }
+
+        if ($form->submitted('back')) {
+            return $this->redirect($space->createUrl('index', ['rguid' => $user->guid]));
         }
 
 
