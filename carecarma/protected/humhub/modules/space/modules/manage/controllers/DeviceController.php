@@ -21,6 +21,7 @@ use humhub\modules\space\modules\manage\models\DeviceUserSearch;
 use humhub\compat\HForm;
 use humhub\modules\content\components\ContentContainerController;
 use humhub\modules\space\modules\manage\components\Controller;
+use \humhub\modules\user\models\Profile;
 /**
  * Member Controller
  *
