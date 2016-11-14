@@ -430,7 +430,7 @@ class DeviceController extends ContentContainerController
                         $gcmOld->send($deviceOld->gcmId, $pushOld->getPush());
                     }
 
-                    $user->updateUserContacts();
+//                    $user->updateUserContacts();
                 }
                 Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
             }

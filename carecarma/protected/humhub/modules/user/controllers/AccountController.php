@@ -107,7 +107,7 @@ class AccountController extends Controller
                 $user->device_id = $model->deviceId;
                 $user->temp_password = $model->currentPassword;
                 $user->save();
-                $user->updateUserContacts();
+//                $user->updateUserContacts();
 
 
                 if ($this->checkDevice($user->device_id)) {
@@ -168,7 +168,7 @@ class AccountController extends Controller
 
             $user->device_id = null;
             $user->save();
-            $user->updateUserContacts();
+//            $user->updateUserContacts();
 
 
 
