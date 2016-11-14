@@ -468,7 +468,7 @@ class DeviceController extends ContentContainerController
                 $gcm_registration_id = $device->gcmId;
                 $gcm->send($gcm_registration_id, $data);
             }
-
+            $device->delete();
 
             $user->device_id = null;
             $user->save();

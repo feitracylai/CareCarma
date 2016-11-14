@@ -164,6 +164,7 @@ class AccountController extends Controller
                 $gcm_registration_id = $device->gcmId;
                 $gcm->send($gcm_registration_id, $data);
             }
+            $device->delete();
 
 
             $user->device_id = null;
@@ -592,9 +593,7 @@ class AccountController extends Controller
     public function actionProfileImageUpload()
     {
         \Yii::$app->response->format = 'json';
-
         $model = new \humhub\models\forms\UploadProfileImage();
-
         $json = array();
 
         $files = \yii\web\UploadedFile::getInstancesByName('profilefiles');
