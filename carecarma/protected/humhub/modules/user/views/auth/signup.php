@@ -11,7 +11,7 @@ $this->pageTitle = Yii::t('UserModule.views_auth_Signup', 'Signup');
 <header class="header">
     <div id="login-logo-container" class="container">
         <h1 class="logo">
-            <a href="../index.html"><span class="logo-icon"></span><span class="text">CareCarma</span></a>
+            <a href="../index.html" target="_blank"><span class="logo-icon"></span><span class="text">CareCarma</span></a>
         </h1><!--//logo-->
 
     </div><!--//container-->
@@ -37,7 +37,19 @@ $this->pageTitle = Yii::t('UserModule.views_auth_Signup', 'Signup');
                 <?php echo $form->field($registerModel, 'email')->textInput(['id' => 'register-email', 'placeholder' => $registerModel->getAttributeLabel('email')])->label(false); ?>
                <div class="register-button">
                    <?php echo CHtml::submitButton(Yii::t('UserModule.views_auth_login', 'Register'), array('class' => 'btn btn-primary')); ?>
+                   <div class="row">
+                       <div class="col-md-12 text-left">
+                           <small>
+                               <?php echo Yii::t('UserModule.views_auth_signup', 'By clicking Sign Up, you agree to our '); ?>
+                               <a href="../license.html" target="_blank"><?php echo Yii::t('UserModule.views_auth_signup', 'User License') ?></a>
+                               <?php echo Yii::t('UserModule.views_auth_signup', ' and '); ?>
+                               <a href="../privacy.html" target="_blank"><?php echo Yii::t('UserModule.views_auth_signup', 'Privacy Statement') ?></a>
+                               .
+                           </small>
+                       </div>
+                   </div>
                </div>
+
 
                 <hr>
                 <div class="row">
@@ -55,8 +67,10 @@ $this->pageTitle = Yii::t('UserModule.views_auth_Signup', 'Signup');
 
     <?php endif; ?>
 
-    <?= humhub\widgets\LanguageChooser::widget(); ?>
+<!--    --><?//= humhub\widgets\LanguageChooser::widget(); ?>
 </div>
+
+
 
 <script type="text/javascript">
     $(function () {
