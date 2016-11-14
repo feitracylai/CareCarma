@@ -442,6 +442,9 @@ class AuthController extends Controller
 //        Yii::getLogger()->log(print_r($phone,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
 
+
+
+
         $device = new Device();
         $device_id = "";
 

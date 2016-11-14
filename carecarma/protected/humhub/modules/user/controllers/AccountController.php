@@ -16,6 +16,7 @@ use \yii\web\HttpException;
 use \humhub\libs\GCM;
 use \humhub\libs\Push;
 use \humhub\modules\user\models\User;
+use \humhub\modules\user\models\Profile;
 use \humhub\modules\user\models\Device;
 use humhub\modules\user\models\Contact;
 use humhub\modules\user\models\forms\SecuritySetting;
@@ -221,8 +222,10 @@ class AccountController extends Controller
         $profileImage = new \humhub\libs\ProfileImage($this->getUser()->guid);
         $pos = strpos($profileImage->getUrl(), "?m=");
         $image = substr($profileImage->getUrl(), 0, $pos);
+        $profile = Profile::findOne(['user_id' => $user->id]);
         return [
             'type' => 'active,login',
+            'fullname' => $profile->firstname . " " . $profile->lastname,
             'username' => $user->username,
             'password' => $user->temp_password,
             'image' => $image,

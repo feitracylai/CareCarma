@@ -328,11 +328,19 @@ class DeviceController extends ContentContainerController
     }
 
     public function getUsernamePassword($user) {
+
+        $profileImage = new \humhub\libs\ProfileImage($user->guid);
+        $pos = strpos($profileImage->getUrl(), "?m=");
+        $image = substr($profileImage->getUrl(), 0, $pos);
+        $profile = Profile::findOne(['user_id' => $user->id]);
         return [
             'type' => 'active,login',
+            'fullname' => $profile->firstname . " " . $profile->lastname,
             'username' => $user->username,
             'password' => $user->temp_password,
+            'image' => $image,
         ];
+
     }
 
 
