@@ -472,7 +472,7 @@ class DeviceController extends ContentContainerController
 
             $user->device_id = null;
             $user->save();
-            $user->updateUserContacts();
+//            $user->updateUserContacts();
 
 
 
