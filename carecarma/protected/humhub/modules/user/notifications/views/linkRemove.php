@@ -8,7 +8,7 @@
 
 use yii\helpers\Html;
 
-echo Yii::t('UserModule.views_notifications_linkRemove', '{userName} remove you in his/her PEOPLE', array(
+echo Yii::t('UserModule.views_notifications_linkRemove', '{userName} remove you in his/her People list', array(
     '{userName}' => '<strong>' . Html::encode($originator->displayName) . '</strong>'
 ));
 ?>
