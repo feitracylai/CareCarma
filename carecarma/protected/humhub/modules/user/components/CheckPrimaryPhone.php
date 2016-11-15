@@ -18,7 +18,7 @@ use humhub\modules\user\models\User;
  *
  * @author luke
  */
-class CheckPrimaryWatch extends Validator
+class CheckPrimaryPhone extends Validator
 {
 
     public function validateAttribute($object, $attribute)
@@ -28,12 +28,12 @@ class CheckPrimaryWatch extends Validator
         $user = Yii::$app->user->getIdentity();
         $count = 0;
         foreach (Contact::find()->where(['user_id' => $user->id])->each() as $contact) {
-            if ($contact->watch_primary_number == 1)
+            if ($contact->phone_primary_number == 1)
                 $count += 1;
         }
         $count = $count + $value;
         if ($count >= 6) {
-            $object->addError($attribute, Yii::t('UserModule.components_CheckPrimaryWatch', "Your have more than 6 Primary Numbers on Cosmos watch app now!"));
+            $object->addError($attribute, Yii::t('UserModule.components_CheckPrimaryPhone', "Your have more than 6 Primary Numbers on Cosmos phone app now!"));
         }
     }
 
