@@ -2431,6 +2431,11 @@ select {
   font-weight: 300;
 }
 
+.portfolio-modal .black-a {
+  color: #444444;
+  font-style: italic;
+}
+
 
 /* ======= Login Page ======= */
 .has-full-screen-bg  .upper-wrapper {
