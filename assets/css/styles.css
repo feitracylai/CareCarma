@@ -3645,6 +3645,12 @@ select {
     -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
   }
+
+  .steps .step {
+    padding: 10px 20px;
+  }
+  
+
   }
   .header.scrolled h1.logo a {
     -webkit-border-radius: 0;
@@ -3759,6 +3765,13 @@ select {
   .why .figure {
     text-align: left;
   }
+
+  @media (min-width: 992px){
+    .why .watch-figure{
+      margin: 100px 0 60px 0;
+    }
+  }
+
   .blog-page .header-blog {
     position: fixed;
   }
