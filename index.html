@@ -642,9 +642,18 @@
             var containerHeight = $('.video-container video').height();
 
             var videoWidth = containerHeight * 720 / 404;
-            var scale = windowWidth/videoWidth;
+            var widthScale = windowWidth/videoWidth;
 
-            $('.video-container video').css('transform', 'scale(' + scale + ', 1)');
+            if (widthScale > 1){
+                $('.video-container video').css('transform', 'scale(' + widthScale + ', 1)');
+            } else {
+                var videoHeight = windowWidth * 404 / 720;
+                var heightScale = containerHeight/videoHeight;
+
+                $('.video-container video').css('transform', 'scale(1, ' + heightScale + ')');
+            }
+
+
 
         }
     </script>
