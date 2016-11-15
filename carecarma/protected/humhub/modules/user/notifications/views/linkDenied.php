@@ -8,7 +8,7 @@
 
 use yii\helpers\Html;
 
-echo Yii::t('UserModule.views_notifications_linkDenied', '{userName} denied your PEOPLE request', array(
+echo Yii::t('UserModule.views_notifications_linkDenied', '{userName} denied your People request', array(
     '{userName}' => '<strong>' . Html::encode($originator->displayName) . '</strong>'
 ));
 ?>

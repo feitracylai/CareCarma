@@ -606,6 +606,38 @@ select {
   color: #fff;
   font-weight: bold;
 }
+/* ======= How ======= */
+#how
+{
+  padding-top: 80px;
+  padding-bottom: 10px;
+  background-color: #f5f5f5;
+}
+
+#how .item
+{
+  padding-top: 10px;
+  border-bottom: none;
+}
+
+#how .intro
+{
+  color: #444444;
+  margin-bottom: 5px;
+}
+
+#how .desc p
+{
+  font-size: 18px;
+}
+
+#how .desc li
+{
+  font-size: 18px;
+  margin-bottom: 5px;
+
+}
+
 /* ======= Why ======= */
 .container-custom{
  width: 100%;
@@ -619,7 +651,7 @@ select {
 }
 .why{
   background: #fff;
-  padding-top: 80px;
+  padding-top: 20px;
   padding-bottom: 120px;
 }
 
@@ -2365,6 +2397,41 @@ select {
   -moz-opacity: 0.9;
   opacity: 0.9;
 }
+/* ======= Portfolio Modal ======= */
+.portfolio-modal
+{
+  width: 750px;
+  /*margin: 50px 100px;*/
+  position: relative;
+  margin: 50px auto;
+  background-color: #f5f5f5;
+}
+
+.portfolio-modal .container
+{
+  position: relative;
+  width: auto;
+  margin: 0 40px 20px;
+}
+
+
+.portfolio-modal .modal-header{
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.portfolio-modal .modal-body{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+
+.portfolio-modal p{
+  font-size: 18px;
+  font-weight: 300;
+}
+
+
 /* ======= Login Page ======= */
 .has-full-screen-bg  .upper-wrapper {
   background: #253340 url('../images/background/bg-screen-1.jpg') no-repeat 50% top;

@@ -8,7 +8,7 @@
 
 use yii\helpers\Html;
 
-echo strip_tags(Yii::t('UserModule.views_notifications_linkRemove', '{userName} remove  you in his/her PEOPLE', array(
+echo strip_tags(Yii::t('UserModule.views_notifications_linkRemove', '{userName} remove  you in his/her People list', array(
     '{userName}' => Html::encode($originator->displayName)
 )));
 ?>

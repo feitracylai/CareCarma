@@ -8,7 +8,7 @@
 
 use yii\helpers\Html;
 
-echo Yii::t('UserModule.views_notifications_link', '{userName} add you to PEOPLE.', array(
+echo Yii::t('UserModule.views_notifications_link', '{userName} add you to People list.', array(
     '{userName}' => '<strong>' . Html::encode($originator->displayName) . '</strong>',
 ));
 ?>

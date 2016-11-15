@@ -23,7 +23,7 @@ use yii\helpers\Html;
 
 
             <?php if (count($spacesInvite) == 0):  ?>
-            <p><?php echo Yii::t('UserModule.views_contact_circleInvite', 'This PEOPLE already in all of your circles.'); ?></p>
+            <p><?php echo Yii::t('UserModule.views_contact_circleInvite', 'This person already in all of your circles. You have no circles setup yet.'); ?></p>
             <?php else: ?>
 
         </div>
