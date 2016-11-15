@@ -32,7 +32,7 @@ class CheckPrimaryWatch extends Validator
                 $count += 1;
         }
         $count = $count + $value;
-        if ($count >= 6) {
+        if ($count > 6) {
             $object->addError($attribute, Yii::t('UserModule.components_CheckPrimaryWatch', "Your have more than 6 Primary Numbers on Cosmos watch app now!"));
         }
     }
