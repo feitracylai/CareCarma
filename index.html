@@ -33,7 +33,6 @@
     <header id="header" class="header navbar-fixed-top">  
         <div class="container" style="margin: 0; width: auto">
             <h1 class="logo">
-                <!--<a href="index.html"><span class="text">Gen-9</span></a>-->
                 <a href="index.html">
                     <img src="assets/images/carecarma_blue_logo_small.png" />
                 </a>
@@ -50,6 +49,9 @@
                 </div><!--//navbar-header-->
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
+                        <!--<li class="active nav-item"><a>Home</a></li>-->
+                        <!--<li class="nav-item"><a href="about.html">About Us</a></li>-->
+                        <!--<li class="nav-item"><a href="contact.html">Contact</a></li>-->
                         <li class="nav-item"><a href="carecarma/index.php?r=user%2Fauth%2Flogin">Log in</a></li>
                         <li class="nav-item nav-item-cta last"><a class="btn btn-cta btn-cta-secondary" href="carecarma/index.php?r=user%2Fauth%2Fsignup">Sign up</a></li>
                     </ul><!--//nav-->
@@ -63,8 +65,12 @@
     <div class="homepage-hero-module ">
 
         <div class="video-container ">
-            <video autoplay loop class="fillWidth  " style="height: inherit">
-                <source src="assets/video/carecarma_cover_v2.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
+            <!--<video id="backgroung-video" autoplay loop class="fillWidth  " poster="./assets/images/background/bg-header-1.jpg" style="transform: translateY(16%)">-->
+                <!--<source src="assets/video/CareCarma_Homepage_Video_41.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.-->
+            <!--</video>-->
+
+            <video id="backgroung-video" autoplay loop class="fillWidth" style="transform: translateY(10%)">
+                <source src="assets/video/CareCarma_Homepage_Video_5.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
             </video>
 
             <section class="promo">
@@ -100,6 +106,7 @@
         <section id="how" class="section why">
             <div class="container">
                 <h2 class="title text-center">How Can CarCarma Help You?</h2>
+                <!--<p class="intro text-center">Our mission is to help people build that community, one family at a time</p>-->
 
                 <div class="row item">
 
@@ -156,7 +163,6 @@
                         <div class="desc">
                             <p>From here you can access information for all of your activities in all of your circles and communicate with the entire CareCarma community.</p>
                         </div>
-             
                     </div><!--//content-->
                     <figure class="figure col-md-7 col-sm-12 col-xs-12 col-md-offset-1 col-sm-offset-0 col-xs-offset-0">
                         <img class="img-responsive" src="assets/images/figures/home.png" alt="" />
@@ -173,6 +179,7 @@
                             <p>You can setup an unlimited number of CareCircles and they can been defined any way you prefer. They can be people, events, groups - anything.</p>
                             <!--<p><i class="fa fa-download"></i> <a href="download.html">Download mobile versions</a></p>-->
                         </div>
+
 
                     </div><!--//content-->
 
@@ -192,11 +199,10 @@
                             <p>Once you've created a circle, you have access to a large array of tools and functions.</p>
                             <p>Create and assign tasks, schedule events, upload and manage files and images and setup access to a smart mobile device such as an LG Urbane 2 Watch.</p>
                         </div>
-              
+
                     </div><!--//content-->
                     <figure class="figure col-md-7 col-sm-12 col-xs-12 col-md-offset-1 col-sm-offset-0 col-xs-offset-0">
                         <img class="img-responsive" src="assets/images/figures/circle_tool.png" alt="" />
-                        <!--<figcaption class="figure-caption">(Screenshot: <a target="_blank">Tempo - Bootstrap template for startups)</a> </figcaption>-->
 
                     </figure>
                 </div><!--//item-->
@@ -209,7 +215,7 @@
 
                         </div>
 
-                 
+
                     </div><!--//content-->
                     <figure class="figure col-md-7 col-sm-12 col-xs-12 col-md-pull-4 col-sm-pull-0 col-xs-pull-0">
                         <img class="img-responsive" src="assets/images/figures/All_Size_Apple.png" alt="" />
@@ -555,15 +561,15 @@
 
             initBannerVideoSize('.video-container .poster img');
             initBannerVideoSize('.video-container .filter');
-//            initBannerVideoSize('.video-container video');
-            scaleVideoSize();
+            initBannerVideoSize('.video-container video');
+//            scaleVideoSize();
 
             $(window).on('resize', function() {
                 scaleVideoContainer();
                 scaleBannerVideoSize('.video-container .poster img');
                 scaleBannerVideoSize('.video-container .filter');
-                scaleVideoSize();
-//                scaleBannerVideoSize('.video-container video');
+//                scaleVideoSize();
+                scaleBannerVideoSize('.video-container video');
             });
         });
 
@@ -598,12 +604,14 @@
                     videoWidth,
                     videoHeight;
 
-        $(element).each(function(){
+//            console.log(windowWidth);
+//            console.log(windowHeight);
+            $(element).each(function(){
                 var videoAspectRatio = $(this).data('height')/$(this).data('width');
 
                 $(this).width(windowWidth);
 
-                if(windowWidth < 1000){
+                if(windowWidth < 1200){
                     videoHeight = windowHeight;
                     videoWidth = videoHeight / videoAspectRatio;
                     $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
@@ -615,25 +623,35 @@
             });
         }
 
-        function scaleVideoSize() {
-            var windowWidth = $(window).width();
-            var containerHeight = $('.video-container video').height();
-
-            var videoWidth = containerHeight * 720 / 404;
-            var widthScale = windowWidth/videoWidth;
-
-            if (widthScale > 1){
-                $('.video-container video').css('transform', 'scale(' + widthScale + ', 1)');
-            } else {
-                var videoHeight = windowWidth * 404 / 720;
-                var heightScale = containerHeight/videoHeight;
-
-                $('.video-container video').css('transform', 'scale(1, ' + heightScale + ')');
-            }
 
 
 
-        }
+//        function scaleVideoSize() {
+//            var windowWidth = $(window).width();
+//            var containerHeight = $('.video-container video').height();
+//
+//            var videoWidth = containerHeight * 720 / 404;
+//            var widthScale = windowWidth/videoWidth;
+//
+//            if (widthScale > 1){
+//                $('.video-container video').css('transform', 'scale(' + widthScale + ', 1)');
+//            } else {
+//                var videoHeight = windowWidth * 404 / 720;
+//                var heightScale = containerHeight/videoHeight;
+//
+//                $('.video-container video').css('transform', 'scale(1, ' + heightScale + ')');
+//            }
+
+//        }
+
+
+//        $('#backgroung-video').on('loadstart', function (event) {
+//            $(this).addClass('loading');
+//        });
+//        $('#backgroung-video').on('canplay', function (event) {
+//            $(this).removeClass('loading');
+//            $(this).attr('poster', '');
+//        });
     </script>
     <!-- jQuery -->
 <!--
