@@ -37,10 +37,7 @@ class NewLike extends BaseNotification
     public function send(User $user)
    {
         $msg =  Html::encode($this->originator->displayName). ' likes ' . parent::getContentInfo($this->source->getSource());
-
-       if ($this->source->getSource() == null){
-           \Yii::getLogger()->log($this->originator->displayName, Logger::LEVEL_INFO, 'MyLog');
-       }
+       
         return parent::send($user, $msg);
     }
 }
