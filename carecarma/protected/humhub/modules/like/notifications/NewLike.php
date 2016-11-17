@@ -11,6 +11,7 @@ namespace humhub\modules\like\notifications;
 use humhub\modules\user\models\User;
 use yii\helpers\Html;
 use humhub\modules\notification\components\BaseNotification;
+use yii\log\Logger;
 
 /**
  * Notifies a user about likes of his objects (posts, comments, tasks & co)
@@ -36,6 +37,10 @@ class NewLike extends BaseNotification
     public function send(User $user)
    {
         $msg =  Html::encode($this->originator->displayName). ' likes ' . parent::getContentInfo($this->source->getSource());
+
+       if ($this->source->getSource() == null){
+           \Yii::getLogger()->log($this->originator->displayName, Logger::LEVEL_INFO, 'MyLog');
+       }
         return parent::send($user, $msg);
     }
 }
