@@ -966,6 +966,7 @@ class ContactController extends Controller
         $contact_list['type'] = 'phone,all';
         $contact_data = array();
         foreach (Contact::find()->where(['user_id' => $user_id])->each() as $contact) {
+            Yii::getLogger()->log(print_r($contact,true),yii\log\Logger::LEVEL_INFO,'MyLog');
             if ($contact->phone_primary_number == 1) {
                 $contactInfo = new ContactInfo();
                 $contactInfo->contact_id = $contact->contact_id;
@@ -991,6 +992,7 @@ class ContactController extends Controller
                 array_push($contact_data, $contactInfo);
             }
         }
+        Yii::getLogger()->log(print_r($contact_data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $contact_list['data'] = $contact_data;
 
         $gcm = new GCM();
