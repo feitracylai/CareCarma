@@ -28,12 +28,11 @@
     <![endif]-->
 </head> 
 
-<body class="home-page hidden-xs hidden-sm">
+<body class="home-page hidden-xs">
     <!-- ******HEADER****** --> 
     <header id="header" class="header navbar-fixed-top">  
         <div class="container" style="margin: 0; width: auto">
             <h1 class="logo">
-                <!--<a href="index.html"><span class="text">Gen-9</span></a>-->
                 <a href="index.html">
                     <img src="assets/images/carecarma_blue_logo_small.png" />
                 </a>
@@ -66,30 +65,31 @@
     <div class="homepage-hero-module ">
 
         <div class="video-container ">
-            <video autoplay loop class="fillWidth  ">
-                <source src="assets/video/carecarma_cover_v2.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
+            <!--<video id="backgroung-video" autoplay loop class="fillWidth  " poster="./assets/images/background/bg-header-1.jpg" style="transform: translateY(16%)">-->
+                <!--<source src="assets/video/CareCarma_Homepage_Video_41.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.-->
+            <!--</video>-->
+
+            <video id="backgroung-video" autoplay loop class="fillWidth" style="transform: translateY(10%)">
+                <source src="assets/video/CareCarma_Homepage_Video_Final.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
             </video>
 
             <section class="promo">
-                <div class="container text-center">
-                    <img src="assets/images/carecarma_blue_logo.png" style="width: 800px;">
+                <div class="container text-center" style="margin-top: 60px">
+                    <img src="assets/images/CareCarma-logo_final.png" style="width: 800px;">
 
                     <p><a class="btn btn-cta btn-cta-primary" href="carecarma/index.php?r=user%2Fauth%2Fsignup">Try It Now</a></p>
                     <button id="introVid" type="button" class="play-trigger btn-link " data-toggle="modal" data-target="#modal-video" >
                         <i class="fa fa-youtube-play"></i> Watch the video
                     </button>
-                    <!--<a id="introVid" class="play-trigger btn-link"><i class="fa fa-youtube-play"></i> Watch the video</a>-->
                 </div><!--//container-->
 
 
             </section><!--//promo-->
 
-
-
-
         </div>
 
     </div>
+
     <div style="height: 100px; background-color: #f5f5f5; padding: 20px">
         <div class="bottom" style="text-align:center;position: absolute; width: 100%; z-index: 50">
             <a href="#how" class="btn-scroll btn-circle-scroll page-scroll">
@@ -99,12 +99,14 @@
 
 
 
-
         
     <div class="sections-wrapper">
+
         <!--How can CareCarma help?-->
         <section id="how" class="section why">
+            <br><br><br><br><br>
             <div class="container">
+
                 <h2 class="title text-center">How Can CarCarma Help You?</h2>
                 <!--<p class="intro text-center">Our mission is to help people build that community, one family at a time</p>-->
 
@@ -113,10 +115,10 @@
                     <div class="desc">
                         <p>
                             Once upon a time, family members all lived in the same small community, sometimes even under the same roof.
-                            If a family member needed support, you could simply reach out and touch them.
-                            This ancient, localize support system has largely disappeared with the emergence of the modern nuclear family that became the norm in the years following WWII.
-                            Today, the family is commonly dispersed across an entire continent, sometimes around the world.
-                            So, how can we provide care to our elders or other members of our family who have had an accident or a sudden illness or even to a new mother and father and their newborn baby?
+                            If someone needed support, you could simply reach out and touch them.
+                            This ancient, localized support system largely disappeared with the emergence of the modern nuclear family.
+                            Today, the family is often dispersed across an entire continent, sometimes around the world.
+                            So, how can we provide care to our elders or other members of our family who have had an accident, a sudden illness or even to a new mother and father with a newborn baby?
                         </p>
                         <p>
                             Suppose there was a way to close the distance between family members by reuniting them in a virtual community.
@@ -126,15 +128,23 @@
                             At CareCarma, our mission is to help people build that community, one family at a time. CareCarma is built upon four pillars:
                         </p>
                         <ol type="1">
-                            <li>Helping you organize your family into a care team that can bring support to family members in need. We call these teams
-                                <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal"><b>CareCarma Circles</b></a>.
+                            <li>
+                                <a href="#portfolioModal-Circles" class="portfolio-link" data-toggle="modal"><b>CareCarma Circles</b></a>
+                                helps you organize your family into a care team that can bring support to family members in need.
                             </li>
-                            <li>Bringing Circles together with others that have special expertise or who are local to a geographically distant family member in need.
-                                We call these <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal"><b>CareCarma Communities</b></a>.</li>
-                            <li>Providing easier access to other, outside resources and services, if and when you need them. From finding a home cleaning service to finding a live-in caregiver.
-                                We deliver this through our <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal"><b>CareCarma Contacts services</b></a>. </li>
-                            <li>Enabling the meaningful use of integrated technology that can empower family members to interact and communicate more easily, reliably, and productively.
-                                We call this interconnected suite of technologies <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal"><b>CareCarma CoSMoS</b></a>. </li>
+                            <li>
+                                <a href="#portfolioModal-CoSMoS" class="portfolio-link" data-toggle="modal"><b>CareCarma CoSMoS</b></a>
+                                helps family members connect, interact and communicate more easily, reliably, and productively.
+                            </li>
+                            <li>
+                                <a href="#portfolioModal-Communities" class="portfolio-link" data-toggle="modal"><b>CareCarma Communities</b></a>
+                                brings Circles together with others that have special expertise and/or who are local to geographically distant family members in need.
+                            </li>
+                            <li>
+                                <a href="#portfolioModal-Contacts" class="portfolio-link" data-toggle="modal"><b>CareCarma Contacts</b></a>
+                                provides easy access to other, outside resources and services, if and when you need them - from finding a home cleaning service to finding a live-in caregiver.
+                            </li>
+
                         </ol>
                     </div>
                 </div>
@@ -155,15 +165,6 @@
                         <div class="desc">
                             <p>From here you can access information for all of your activities in all of your circles and communicate with the entire CareCarma community.</p>
                         </div>
-                        <!--<div class="quote">-->
-                            <!--<div class="quote-profile">-->
-                                <!--<img class="img-responsive img-circle" src="assets/images/people/profile-s-1.png" alt="" />-->
-                            <!--</div>&lt;!&ndash;//profile&ndash;&gt;-->
-                            <!--<div class="quote-content">-->
-                                <!--<blockquote><p><a href="https://twitter.com/3rdwave_themes" target="_blank">@velocity</a> Love it! Thank you for making my life easier and saving me time! I’ll definitely recommend it to my friends. :)</p></blockquote>-->
-                                <!--<p class="source">@LisaW, Bristol</p>-->
-                            <!--</div>&lt;!&ndash;//quote-content&ndash;&gt;-->
-                        <!--</div>&lt;!&ndash;//quote&ndash;&gt;-->
                     </div><!--//content-->
                     <figure class="figure col-md-7 col-sm-12 col-xs-12 col-md-offset-1 col-sm-offset-0 col-xs-offset-0">
                         <img class="img-responsive" src="assets/images/figures/home.png" alt="" />
@@ -181,15 +182,7 @@
                             <!--<p><i class="fa fa-download"></i> <a href="download.html">Download mobile versions</a></p>-->
                         </div>
 
-                        <!--<div class="quote">-->
-                            <!--<div class="quote-profile">-->
-                                <!--<img class="img-responsive img-circle" src="assets/images/people/profile-s-2.png" alt="" />-->
-                            <!--</div>&lt;!&ndash;//profile&ndash;&gt;-->
-                            <!--<div class="quote-content">-->
-                                <!--<blockquote><p>I find the mobile app very useful when I'm on the go. Sed ut perspiciatis unde omnis iste natus error sit voluptatem </p></blockquote>-->
-                                <!--<p class="source">@JackT, San Francisco</p>-->
-                            <!--</div>&lt;!&ndash;//quote-content&ndash;&gt;-->
-                        <!--</div>&lt;!&ndash;//quote&ndash;&gt;-->
+
                     </div><!--//content-->
 
                     <figure class="figure col-md-6 col-sm-12 col-xs-12 col-md-pull-7 col-sm-pull-0 col-xs-pull-0">
@@ -208,51 +201,54 @@
                             <p>Once you've created a circle, you have access to a large array of tools and functions.</p>
                             <p>Create and assign tasks, schedule events, upload and manage files and images and setup access to a smart mobile device such as an LG Urbane 2 Watch.</p>
                         </div>
-                        <!--<div class="quote">-->
-                            <!--<div class="quote-profile">-->
-                                <!--<img class="img-responsive img-circle" src="assets/images/people/profile-s-3.png" alt="" />-->
-                            <!--</div>&lt;!&ndash;//profile&ndash;&gt;-->
-                            <!--<div class="quote-content">-->
-                                <!--<blockquote><p>Nice template! It’s practical and there is no gimmicks. Very easy to customise as well!</p></blockquote>-->
-                                <!--<p class="source"><a>@AlexD</a>, London</p>-->
-                            <!--</div>&lt;!&ndash;//quote-content&ndash;&gt;-->
-                        <!--</div>&lt;!&ndash;//quote&ndash;&gt;-->
+
                     </div><!--//content-->
                     <figure class="figure col-md-7 col-sm-12 col-xs-12 col-md-offset-1 col-sm-offset-0 col-xs-offset-0">
-                        <img class="img-responsive" src="assets/images/figures/circle%20tool.png" alt="" />
-                        <!--<figcaption class="figure-caption">(Screenshot: <a target="_blank">Tempo - Bootstrap template for startups)</a> </figcaption>-->
+                        <img class="img-responsive" src="assets/images/figures/circle_tool.png" alt="" />
 
                     </figure>
                 </div><!--//item-->
 
-                <div class="row item last-item">
+                <div class="row item ">
                     <div class="content col-md-4 col-sm-12 col-xs-12 col-md-push-8 col-sm-push-0 col-xs-push-0">
-                        <h3 class="title">Work on different platform</h3>
+                        <h3 class="title">Work on different platforms</h3>
                         <div class="desc">
-                            <p>CareCarma is compatible with most browsers, so it will work on Windows, Apple and Linux PCs. A mobile version of CareCarma is available for both Android and iOS devices.</p>
+                            <p>CareCarma is compatible with most browsers, so it will work on Windows, Apple and Linux PCs. A mobile version of CareCarma is available for both
+                                <a>Android</a> and <a>iOS</a> devices.
+                            </p>
 
                         </div>
 
-                        <!--<div class="quote">-->
-                            <!--<div class="quote-profile">-->
-                                <!--<img class="img-responsive img-circle" src="assets/images/people/profile-s-4.png" alt="" />-->
-                            <!--</div>&lt;!&ndash;//profile&ndash;&gt;-->
-                            <!--<div class="quote-content">-->
-                                <!--<blockquote><p>I can connect to like-minded people lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p></blockquote>-->
-                                <!--<p class="source">@JackT, San Francisco</p>-->
-                            <!--</div>&lt;!&ndash;//quote-content&ndash;&gt;-->
-                        <!--</div>&lt;!&ndash;//quote&ndash;&gt;-->
+
                     </div><!--//content-->
                     <figure class="figure col-md-7 col-sm-12 col-xs-12 col-md-pull-4 col-sm-pull-0 col-xs-pull-0">
-                        <img class="img-responsive" src="assets/images/figures/All%20Size%20Apple.png" alt="" />
+                        <img class="img-responsive" src="assets/images/figures/All_Size_Apple.png" alt="" />
                     </figure>
                 </div><!--//item-->
 
 
-                <!--<div class="feature-lead text-center">-->
-                    <!--<h4 class="title">Want to discover all the features?</h4>-->
-                    <!--<p><a class="btn btn-cta btn-cta-secondary" href="features.html">Take a Tour</a></p>-->
-                <!--</div>-->
+                <div class="row item last-item">
+                    <div class="content col-md-5 col-sm-12 col-xs-12">
+                        <h3 class="title">CoSMoS watch app</h3>
+                        <div class="desc">
+                            <p>CareCarma CoSMoS provides a simple watch face interface for elderly users (or anyone, for that matter)
+                                that enables them to easily make and receive calls and send and receive text messages without digging through piles of menu layers.
+                                Put your favorite people directly on the watch face, then tap their picture to make a call or send a text.
+                                A tap on the Help Button, automatically notifies a programmed call list and dials 911.
+                                You manage the call list remotely for your elder using CareCarma. </p>
+                            <p>CareCarma CoSMoS is designed to be used on the LG Watch Urbane 2nd Edition. We will be expanding it to other wearables and adding powerful new features in future releases. Stay tuned!</p>
+                            <p><i class="fa fa-download"></i> <a href="https://play.google.com/store/apps/details?id=com.gennine.wearable.cosmos&hl=en" target="_blank">Download the app</a></p>
+                        </div>
+
+                    </div><!--//content-->
+                    <figure class="figure watch-figure col-md-7 col-sm-12 col-xs-12 col-md-offset-1 col-sm-offset-0 col-xs-offset-0">
+                        <img class="img-responsive" src="assets/images/figures/Watch_With_CoSMoS.png" alt="" />
+
+                    </figure>
+
+                </div><!--//item-->
+
+
             </div><!--//container-->
         </section><!--//why-->
 
@@ -264,7 +260,7 @@
                 <div class="row">
                     <div class="step  col-md-4 col-sm-4 col-xs-12">
                         <h3 class="title text-center"><span class="text">CareCarma Communities</span></h3>
-                        <p>It will help you to build a CareCircle team by expanding your access to both paid and volunteer services. </p>
+                        <p>Will help you build a CareCircle team by expanding your access to both paid and volunteer services. </p>
                         <p>
                             This will include everything from arranging a ride for your loved ones using Lyft,
                             to finding a home cleaning service, or locating a volunteer to visit them.
@@ -276,7 +272,7 @@
                     </div><!--//step-->
                     <div class="step  col-md-4 col-sm-4 col-xs-12">
                         <h3 class="title text-center"><span class="text">CareCarma CoSMoS</span></h3>
-                        <p>Expansion of our CareCarma CoSMoS services to further improve your ability you reach out and touch someone you love from thousands of miles away. </p>
+                        <p>Expansion of our CareCarma CoSMoS services will further improve your ability you reach out and touch someone you love from thousands of miles away. </p>
                         <p>
                             The current version of CoSMoS provides easy and safe communication between CareCircle members and your care receiver.
                             Our next version will also allow you to collect information about their activities.
@@ -288,11 +284,11 @@
                     </div><!--//step-->
                     <div class="step  col-md-4 col-sm-4 col-xs-12">
                         <h3 class="title text-center"><span class="text">CareCarma Cortex </span></h3>
-                        <p>It will provide sophisticated analytics based on machine learning algorithms that we’ve been developing under research grants from the National Institutes of Health and the National Institute on Aging. </p>
+                        <p>Will provide sophisticated analytics based on machine learning algorithms that we’ve been developing under research grants from the National Institutes of Health and the National Institute on Aging. </p>
                         <p>
                             CareCarma Cortex uses state-of-the-art AI that will collect and analyze sensor and other data to provide a clearer picture of your loved one’s wellbeing.
-                            It is being designed to get to know each individual’s patterns and then compare them with those of a larger group or cohort. The ultimate goal of CareCarma Cortex is to predict events, such as falls,
-                            before they occur – thereby helping you to prevent them from happening in the first place.
+                            It is being designed to recognize each individual’s pattern and then compare them with those of a larger group or cohort. The ultimate goal of CareCarma Cortex is to predict events, such as falls,
+                            before they occur – thereby helping to prevent them.
                         </p>
                     </div><!--//step-->
                 </div><!--//row-->
@@ -315,7 +311,7 @@
                         <div class="footer-col-inner">
                             <h3 class="title">About us</h3>
                             <ul class="list-unstyled">
-                                <li><a><i class="fa fa-caret-right"></i>Who we are</a></li>
+                                <li><a href="http://www.gen9.com/" target="_blank"><i class="fa fa-caret-right"></i>Who we are</a></li>
                                 <li><a><i class="fa fa-caret-right"></i>Press</a></li>
                                 <li><a><i class="fa fa-caret-right"></i>Blog</a></li>
                                 <li><a><i class="fa fa-caret-right"></i>Jobs</a></li>
@@ -340,8 +336,8 @@
                             <ul class="list-unstyled">
                                 <li><a><i class="fa fa-caret-right"></i>Help</a></li>
                                 <li><a><i class="fa fa-caret-right"></i>Documentation</a></li>
-                                <li><a href="license.html"><i class="fa fa-caret-right"></i>User License</a></li>
-                                <li><a href="privacy.html"><i class="fa fa-caret-right"></i>Privacy</a></li>
+                                <li><a href="license.html" target="_blank"><i class="fa fa-caret-right"></i>User License</a></li>
+                                <li><a href="privacy.html" target="_blank"><i class="fa fa-caret-right"></i>Privacy</a></li>
                             </ul>
                         </div><!--//footer-col-inner-->
                     </div><!--//foooter-col-->
@@ -389,7 +385,7 @@
 
 
     <!--Portfolio Modal-->
-    <div class="modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="portfolioModal-Circles" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content portfolio-modal">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -399,7 +395,7 @@
                 <div class="row">
 
                     <div class="modal-body">
-                        <h2 class="title text-center">Learn More About CareCarma Circles</h2>
+                        <h2 class="title text-center">About CareCarma Circles</h2>
                         <hr class="star-primary">
                     </div>
 
@@ -408,7 +404,7 @@
                             <p>
                                 Most of us know what a social network is and how useful it can be in improving communication between people that are separated by distances.
                                 You may also know about project management systems.
-                                This type of system is used to help companies, big and small, to organize themselves into efficient teams to accomplish just about any task
+                                They're used to help companies, big and small, organize themselves into efficient teams to accomplish just about any task
                                 - from developing new software applications to building a new commercial airliner.
                                 CareCarma Circles brings these two concepts together.
                                 Circles enable families to develop a family team dedicated to a “project” designed to support the needs of a family member.
@@ -429,7 +425,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="portfolioModal-CoSMoS" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content portfolio-modal">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -439,63 +435,7 @@
                 <div class="row">
 
                     <div class="modal-body">
-                        <h2 class="title text-center">Learn More About CareCarma Communities</h2>
-                        <hr class="star-primary">
-                    </div>
-
-                    <div >
-                        <div>
-                            <p>
-                                Coming soon...
-                            </p>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content portfolio-modal">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="container">
-
-                <div class="row">
-
-                    <div class="modal-body">
-                        <h2 class="title text-center">Learn More About CareCarma Contacts</h2>
-                        <hr class="star-primary">
-                    </div>
-
-                    <div >
-                        <div>
-                            <p>
-                                Coming soon...
-                            </p>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content portfolio-modal">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="container">
-
-                <div class="row">
-
-                    <div class="modal-body">
-                        <h2 class="title text-center">Learn More About CareCarma CoSMoS</h2>
+                        <h2 class="title text-center">About CareCarma CoSMoS</h2>
                         <hr class="star-primary">
                     </div>
 
@@ -514,19 +454,18 @@
                                 Technology that’s easy for our elders - who could have imagined that?
                             </p>
                             <p>
-                                Our first product, <b>CareCarma CoSMoS is a free download</b> designed to work on a brilliant product called the <b>LG Watch Urbane 2nd Edition</b>
-                                <a href="http://www.lg.com/us/smart-watches/lg-W200V-lg-watch-urbane-2nd-edition-verizon" target="_blank" style="color: #444444"><i>(http://www.lg.com/us/smart-watches/lg-W200V-lg-watch-urbane-2nd-edition-verizon)</i></a>.
+                                Our first product, <b><a class="black-a" href="https://play.google.com/store/apps/details?id=com.gennine.wearable.cosmos&hl=en" target="_blank">CareCarma CoSMoS</a> is a free download</b> designed to work on a brilliant product called the
+                                <a class="black-a" href="http://www.lg.com/us/smart-watches/lg-W200V-lg-watch-urbane-2nd-edition-verizon" target="_blank"><b>LG Watch Urbane 2nd Edition</b></a>.
                                 You can find this product through your current mobile provider’s store.
                                 This smart watch offers a complete communication solution, including the ability to make and receive calls and messages directly
                                 (i.e. you <u>do not</u> need to connect it to a mobile phone to make or receive a call or message).
                             </p>
                             <p>
-                                We’ve integrated the CoSMoS app <a href="" target="_blank" style="color: #444444"></a> into CareCarma so that a CareCarma Circle administrator can remotely provision and manage the watch from anywhere in the world.
-                                This is the first time such technology has been used to remove this technical burden from the elder using the wearable. Our elders, who are generally intimidated by new technology,
-                                have been largely shutout from the mobile revolution by this complexity and thereby from some of the most valuable technology that can be used to reduce their social isolation and improve their safety and independence.
+                                We’ve integrated the CoSMoS app  into CareCarma so that a CareCarma Circle administrator can remotely provision and manage the watch from anywhere in the world.
+                                This is the first time such technology has been used to remove this technical burden from the elder using the wearable.
                             </p>
                             <p>
-                                Moving forward, we will be adding powerful new features to CareCarma and CareCarma CoSMoS that will expand on these capabilities and extend CoSMoS to other mobile and wearable devices. Stay tuned!
+                                We will be adding powerful new features to CareCarma and CareCarma CoSMoS that will expand on these capabilities and extend CoSMoS to other mobile and wearable devices. Stay tuned!
                             </p>
 
                         </div>
@@ -536,6 +475,64 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="portfolioModal-Communities" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content portfolio-modal">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="modal-body">
+                        <h2 class="title text-center">About CareCarma Communities</h2>
+                        <hr class="star-primary">
+                    </div>
+
+                    <div >
+                        <div>
+                            <p>
+                                Coming soon...
+                            </p>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="portfolioModal-Contacts" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content portfolio-modal">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="modal-body">
+                        <h2 class="title text-center">About CareCarma Contacts</h2>
+                        <hr class="star-primary">
+                    </div>
+
+                    <div >
+                        <div>
+                            <p>
+                                Coming soon...
+                            </p>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
 
@@ -560,7 +557,7 @@
     <script type="text/javascript" >
         $( document ).ready(function() {
 
-            if($(window).width() <= 992) {
+            if($(window).width() <= 768) {
                 window.location = "./carecarma/";
             }
 
@@ -569,11 +566,13 @@
             initBannerVideoSize('.video-container .poster img');
             initBannerVideoSize('.video-container .filter');
             initBannerVideoSize('.video-container video');
+//            scaleVideoSize();
 
             $(window).on('resize', function() {
                 scaleVideoContainer();
                 scaleBannerVideoSize('.video-container .poster img');
                 scaleBannerVideoSize('.video-container .filter');
+//                scaleVideoSize();
                 scaleBannerVideoSize('.video-container video');
             });
         });
@@ -589,9 +588,6 @@
         function scaleVideoContainer() {
             var height = $(window).height() - 100;
             var width = $(window).width();
-
-            var wantHeight = width * 404 / 720;
-            var heightRate = height / wantHeight;
 
             var unitHeight = parseInt(height) + 'px';
             $('.homepage-hero-module').css({'height': unitHeight});
@@ -612,14 +608,14 @@
                     videoWidth,
                     videoHeight;
 
-//            console.log(windowHeight);
 //            console.log(windowWidth);
-        $(element).each(function(){
+//            console.log(windowHeight);
+            $(element).each(function(){
                 var videoAspectRatio = $(this).data('height')/$(this).data('width');
 
                 $(this).width(windowWidth);
 
-                if(windowWidth < 1000){
+                if(windowWidth < 1200){
                     videoHeight = windowHeight;
                     videoWidth = videoHeight / videoAspectRatio;
                     $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
@@ -630,6 +626,36 @@
 
             });
         }
+
+
+
+
+//        function scaleVideoSize() {
+//            var windowWidth = $(window).width();
+//            var containerHeight = $('.video-container video').height();
+//
+//            var videoWidth = containerHeight * 720 / 404;
+//            var widthScale = windowWidth/videoWidth;
+//
+//            if (widthScale > 1){
+//                $('.video-container video').css('transform', 'scale(' + widthScale + ', 1)');
+//            } else {
+//                var videoHeight = windowWidth * 404 / 720;
+//                var heightScale = containerHeight/videoHeight;
+//
+//                $('.video-container video').css('transform', 'scale(1, ' + heightScale + ')');
+//            }
+
+//        }
+
+
+//        $('#backgroung-video').on('loadstart', function (event) {
+//            $(this).addClass('loading');
+//        });
+//        $('#backgroung-video').on('canplay', function (event) {
+//            $(this).removeClass('loading');
+//            $(this).attr('poster', '');
+//        });
     </script>
     <!-- jQuery -->
 <!--
