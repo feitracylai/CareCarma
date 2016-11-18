@@ -167,7 +167,7 @@ class BaseNotification extends \yii\base\Component implements ViewContextInterfa
         }
 
         $users_token = MobileToken::find()->where(['user_id' => $user->id])->all();
-		Yii::getLogger()->log('send notification', Logger::LEVEL_INFO, 'MyLog');
+		//Yii::getLogger()->log('send notification', Logger::LEVEL_INFO, 'MyLog');
         if($users_token != null)
         {
             if($msg == null) $msg = 'New Notification';
