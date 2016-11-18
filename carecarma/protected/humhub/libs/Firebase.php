@@ -2,6 +2,7 @@
 
 namespace humhub\libs;
 use Yii;
+use yii\log\Logger;
 
 
 class Firebase
@@ -9,7 +10,8 @@ class Firebase
 
     public function send($to, $message)
     {
-        $msg = array
+        
+		$msg = array
         (
             'title' => 'CareCarma',
             'body' => $message,
@@ -25,7 +27,7 @@ class Firebase
     }
 
     public function sendPushNotification($fields) {
-
+		Yii::getLogger()->log('sendFcm', Logger::LEVEL_INFO, 'MyLog');
         $api_key = 'AIzaSyBCpL8QgHY-sydrQepDLqma6jnsc_KyopQ';
         $url = 'https://fcm.googleapis.com/fcm/send';
 
@@ -43,7 +45,7 @@ class Firebase
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
 
         $result = curl_exec($ch);
-
+		Yii::getLogger()->log($result, Logger::LEVEL_INFO, 'MyLog');
         curl_close($ch);
 
         return $result;
