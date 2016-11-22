@@ -966,7 +966,6 @@ class ContactController extends Controller
         $contact_list['type'] = 'phone,all';
         $contact_data = array();
         foreach (Contact::find()->where(['user_id' => $user_id])->each() as $contact) {
-            Yii::getLogger()->log(print_r($contact,true),yii\log\Logger::LEVEL_INFO,'MyLog');
             if ($contact->phone_primary_number == 1) {
                 $contactInfo = new ContactInfo();
                 $contactInfo->contact_id = $contact->contact_id;
@@ -992,7 +991,6 @@ class ContactController extends Controller
                 array_push($contact_data, $contactInfo);
             }
         }
-        Yii::getLogger()->log(print_r($contact_data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $contact_list['data'] = $contact_data;
 
         $gcm = new GCM();
@@ -1040,9 +1038,13 @@ class ContactController extends Controller
     {
 
         $accesstoken = '';
-        $client_id = '584594431619-c8gb5m52css0vs8biotp7jcie27h0iff.apps.googleusercontent.com';
-        $client_secret = 'gCqIX4YrqNH-8mYO91O_WBOJ';
-        $redirect_uri = 'http://www.carecarma.tk/carecarma/index.php?r=user/contact/importgoogle';
+//        $client_id = '584594431619-c8gb5m52css0vs8biotp7jcie27h0iff.apps.googleusercontent.com';
+//        $client_secret = 'gCqIX4YrqNH-8mYO91O_WBOJ';
+//        $redirect_uri = 'http://www.carecarma.com/carecarma/index.php?r=user/contact/importgoogle';
+//        $simple_api_key = 'AIzaSyCdNyA6NGy8ie9ZcsSEh3adbdTXxn3LKUY';
+        $client_id = '455820633290-p8i2kjqqtq1h9ve2p1qe63u3ed3ojlb5.apps.googleusercontent.com';
+        $client_secret = 'jcAZIGceSGIMQIdo_pEaKglX';
+        $redirect_uri = 'http://www.carecarma.com/carecarma/index.php?r=user/contact/importgoogle';
         $simple_api_key = 'AIzaSyCdNyA6NGy8ie9ZcsSEh3adbdTXxn3LKUY';
         $max_results = 500;
         $auth_code = $_GET["code"];
