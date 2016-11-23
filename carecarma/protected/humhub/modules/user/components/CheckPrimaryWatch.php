@@ -30,7 +30,7 @@ class CheckPrimaryWatch extends Validator
         foreach (Contact::find()->where(['user_id' => $user->id])->each() as $contact) {
             if ($contact->watch_primary_number == 1){
                 $count += 1;
-                if ($contact->contact_id == $object->contact_id && $object->watch_primary_number == 1)
+                if ($contact->contact_id == $object->contact_id && $object->watch_primary_number == 0)
                     $thisPrimary = true;
             }
 
