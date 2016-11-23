@@ -30,13 +30,18 @@ class CheckPrimaryWatch extends Validator
         foreach (Contact::find()->where(['user_id' => $user->id])->each() as $contact) {
             if ($contact->watch_primary_number == 1){
                 $count += 1;
-                if ($contact->contact_id == $object->contact_id && $object->watch_primary_number == 0)
+                if ($contact->contact_id == $object->contact_id){
                     $thisPrimary = true;
+                }
             }
 
         }
-        $count = $count + $value;
-        if ($count > 6 && !$thisPrimary) {
+
+        if (!$thisPrimary){
+            $count = $count + $value;
+        }
+
+        if ($count > 6 && $value == 1) {
             $object->addError($attribute, Yii::t('UserModule.components_CheckPrimaryWatch', "Your have more than 6 Primary Numbers on Cosmos watch app now!"));
         }
     }
