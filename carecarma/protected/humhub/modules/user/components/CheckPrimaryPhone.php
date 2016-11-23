@@ -31,7 +31,7 @@ class CheckPrimaryPhone extends Validator
         foreach (Contact::find()->where(['user_id' => $user->id])->each() as $contact) {
             if ($contact->phone_primary_number == 1){
                 $count += 1;
-                if ($contact->contact_id == $object->contact_id && $value->phone_primary_number == 1)
+                if ($contact->contact_id == $object->contact_id && $object->phone_primary_number == 1)
                     $thisPrimary = true;
             }
 
