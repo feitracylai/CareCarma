@@ -9,6 +9,7 @@
 namespace humhub\modules\user\components;
 
 use Yii;
+use yii\log\Logger;
 use yii\validators\Validator;
 use humhub\modules\user\models\Contact;
 
@@ -30,7 +31,7 @@ class CheckPrimaryPhone extends Validator
         foreach (Contact::find()->where(['user_id' => $user->id])->each() as $contact) {
             if ($contact->phone_primary_number == 1){
                 $count += 1;
-                if ($contact->contact_id == $object->contact_id)
+                if ($contact->contact_id == $object->contact_id && $value->phone_primary_number == 1)
                     $thisPrimary = true;
             }
 
