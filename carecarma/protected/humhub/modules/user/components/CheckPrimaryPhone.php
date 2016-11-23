@@ -11,7 +11,6 @@ namespace humhub\modules\user\components;
 use Yii;
 use yii\validators\Validator;
 use humhub\modules\user\models\Contact;
-use humhub\modules\user\models\User;
 
 /**
  * CheckPrimaryWatch checks number of currently primary watch in user.
@@ -27,12 +26,17 @@ class CheckPrimaryPhone extends Validator
 
         $user = Yii::$app->user->getIdentity();
         $count = 0;
+        $thisPrimary = false;
         foreach (Contact::find()->where(['user_id' => $user->id])->each() as $contact) {
-            if ($contact->phone_primary_number == 1)
+            if ($contact->phone_primary_number == 1){
                 $count += 1;
+                if ($contact->contact_id == $object->contact_id)
+                    $thisPrimary = true;
+            }
+
         }
         $count = $count + $value;
-        if ($count > 7) {
+        if ($count > 7 && !$thisPrimary) {
             $object->addError($attribute, Yii::t('UserModule.components_CheckPrimaryPhone', "Your have more than 7 Primary Numbers on Cosmos phone app now!"));
         }
     }
