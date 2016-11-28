@@ -40,7 +40,7 @@ class UserModelContact extends Behavior
         if ($contactUser->device_id != null){
             $contact1->device_phone = $contactUser->device->phone;
         }
-        \Yii::getLogger()->log([$contact1->contact_first, $contact1->contact_last, $contact1->contact_email, $contact1->contact_mobile, $contact1->work_phone, $contact1->home_phone], Logger::LEVEL_INFO, 'MyLog');
+        \Yii::getLogger()->log([$contact1->contact_first, $contact1->contact_last, $contact1->contact_id], Logger::LEVEL_INFO, 'MyLog');
         $contact1->save();
 
         $gcm = new GCM();

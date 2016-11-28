@@ -91,7 +91,7 @@ class Contact extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        Yii::getLogger()->log('beforeSave', Logger::LEVEL_INFO, 'MyLog');
+        
         if ($insert) {
 
             if ($this->contact_mobile == null) {
