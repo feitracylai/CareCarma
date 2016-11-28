@@ -182,7 +182,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             'updated_by' => 'Updated By',
             'last_login' => 'Last Login',
             'visibility' => 'Visibility',
-            'device_id' => 'Cosmos Activation Number',
+            'device_id' => 'CoSMoS Activation Number',
             'temp_password' => 'Temp Password',
         ];
     }

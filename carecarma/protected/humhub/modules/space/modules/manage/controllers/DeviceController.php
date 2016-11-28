@@ -87,7 +87,7 @@ class DeviceController extends ContentContainerController
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 45,
-                    'title' => 'Check the Activation # on Cosmos.'
+                    'title' => 'Check the Activation # on CoSMoS.'
                 ),
             ),
         );

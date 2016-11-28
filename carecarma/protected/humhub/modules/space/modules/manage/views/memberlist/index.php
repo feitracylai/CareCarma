@@ -41,7 +41,7 @@ use yii\helpers\Html;
                                         'value' => $user->profile->phone_work,
                                     ],
                                     [
-                                        'label' => Yii::t('SpaceModule.widgets_views_spaceMembers', 'Cosmos Phone'),
+                                        'label' => Yii::t('SpaceModule.widgets_views_spaceMembers', 'CoSMoS Phone'),
                                         'value' => $devicePhone,
                                     ],
                                     [

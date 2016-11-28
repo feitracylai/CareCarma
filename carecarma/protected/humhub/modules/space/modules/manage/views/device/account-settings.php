@@ -48,18 +48,18 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>{first} {last}</strong> Cosmos setting', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
+        <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>{first} {last}</strong> CoSMoS setting', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
     </div>
     <div class="panel-body">
         <p>
-            <?php echo Yii::t('UserModule.views_account_editDevice', 'If {first} {last} got a new Cosmos, please activate it here', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
+            <?php echo Yii::t('UserModule.views_account_editDevice', 'If {first} {last} got a new CoSMoS, please activate it here', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
         </p>
 
         <?php $form = ActiveForm::begin(); ?>
 
         <div class="form-group">
             <?php if($user->device_id != null) : ?>
-                <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Current Cosmos</strong>'); ?>
+                <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Current CoSMoS</strong>'); ?>
                 <div style="margin: 0 20px">
                     Activation #:
                     <?php echo CHtml::encode($user->device_id) ?>

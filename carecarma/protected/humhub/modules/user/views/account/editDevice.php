@@ -8,18 +8,18 @@ use humhub\modules\user\models\Device;
 ?>
 
 <div class="panel-heading">
-    <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Cosmos</strong> setting'); ?>
+    <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>CoSMoS</strong> setting'); ?>
 </div>
 <div class="panel-body">
     <p>
-        <?php echo Yii::t('UserModule.views_account_editDevice', 'If you have bought Cosmos, please input your <strong>Activation Number</strong> to activate your Cosmos.'); ?>
+        <?php echo Yii::t('UserModule.views_account_editDevice', 'If you have bought CoSMoS, please input your <strong>Activation Number</strong> to activate your CoSMoS.'); ?>
     </p>
 
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="form-group">
         <?php if(Yii::$app->user->getIdentity()->device_id != null) : ?>
-        <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Current Cosmos</strong>'); ?>
+        <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Current CoSMoS</strong>'); ?>
             <div style="margin: 0 20px">
                 <p>
                     Activation #:

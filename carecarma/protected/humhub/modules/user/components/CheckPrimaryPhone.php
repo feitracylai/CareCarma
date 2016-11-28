@@ -41,7 +41,7 @@ class CheckPrimaryPhone extends Validator
             $count = $count + $value;
         }
         if ($count > 7 && $value == 1) {
-            $object->addError($attribute, Yii::t('UserModule.components_CheckPrimaryPhone', "Your have more than 7 Primary Numbers on Cosmos phone app now!"));
+            $object->addError($attribute, Yii::t('UserModule.components_CheckPrimaryPhone', "Your have more than 7 Primary Numbers on CoSMoS phone app now!"));
         }
     }
 

@@ -55,7 +55,7 @@ class AccountMenu extends BaseMenu
 //        ));
 
         $this->addItem(array(
-            'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'Cosmos setting'),
+            'label' => Yii::t('UserModule.widgets_AccountMenuWidget', 'CoSMoS setting'),
             'icon' => '<i class="fa fa-headphones"></i>',
             'group' => 'account',
             'url' => Url::toRoute('/user/account/edit-device'),

@@ -69,8 +69,8 @@ class Contact extends \yii\db\ActiveRecord
             'user_id' => Yii::t('UserModule.models_Contact', 'User ID'),
             'relation' => Yii::t('UserModule.models_Contact', 'Relation'),
             'contact_user_id' => Yii::t('UserModule.models_Contact', 'contact ID'),
-            'watch_primary_number' => Yii::t('UserModule.models_Contact', 'Primary Number on Cosmos watch app'),
-            'phone_primary_number' => Yii::t('UserModule.models_Contact', 'Primary Number on Cosmos phone app'),
+            'watch_primary_number' => Yii::t('UserModule.models_Contact', 'Primary Number on CoSMoS watch app'),
+            'phone_primary_number' => Yii::t('UserModule.models_Contact', 'Primary Number on CoSMoS phone app'),
         ];
     }
 

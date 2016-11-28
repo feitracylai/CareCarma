@@ -23,7 +23,7 @@ use humhub\modules\space\modules\manage\widgets\AddCareMenu;
         <p/>
         <p>
             <?php echo Yii::t('SpaceModule.views_admin_receiver_add', 'You can create a new account for a <b>care receiver</b> here. '); ?><br>
-            <?php echo Yii::t('SpaceModule.views_admin_receiver_add', 'He/she can use this account to <b>log in</b> this web and <b>activate</b> his/her Cosmos.'); ?><br>
+            <?php echo Yii::t('SpaceModule.views_admin_receiver_add', 'He/she can use this account to <b>log in</b> this web and <b>activate</b> his/her CoSMoS.'); ?><br>
             <?php echo Yii::t('SpaceModule.views_admin_receiver_add', '* is required.'); ?>
         </p>
         <?php $form = \yii\widgets\ActiveForm::begin(); ?>
