@@ -28,7 +28,7 @@ class SecuritySetting extends Model
                 'range' => array(
                     User::CONTACT_NOTIFY_EVERYONE,
                     User::CONTACT_NOTIFY_NOCIRCLE,
-                    User::CONTACT_NOTIFY_EVERYONE,)
+                    User::CONTACT_NOTIFY_NOONE,)
             ),
             array(['view_about_page'], 'in',
                 'range' => array(
