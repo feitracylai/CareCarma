@@ -11,8 +11,10 @@ namespace humhub\modules\user\behaviors;
 use humhub\modules\user\models\Device;
 use humhub\modules\user\models\Contact;
 use humhub\modules\user\models\User;
+use humhub\modules\user\notifications\Linked;
 use yii\base\Behavior;
 use humhub\libs\GCM;
+use yii\log\Logger;
 
 class UserModelContact extends Behavior
 {
@@ -80,6 +82,36 @@ class UserModelContact extends Behavior
             $gcm->send($gcm_id, $data);
         }
     }
+
+    public function askAddContact(User $contactUser){
+        $user = $this->owner;
+        $contact1 = Contact::findOne(['user_id' => $user->id, 'contact_user_id' => $contactUser->id]);
+        if ($contact1 == null){
+            $contact1 = new Contact();
+            $contact1->user_id = $user->id;
+            $contact1->contact_user_id = $contactUser->id;
+        }
+        $contact1->linked = 0;
+        $contact1->save();
+
+        /**************/
+        $contact2 = Contact::findOne(['user_id' => $contactUser->id, 'contact_user_id' => $user->id]);
+        if ($contact2 == null){
+            $contact2 = new Contact();
+            $contact2->user_id = $contactUser->id;
+            $contact2->contact_user_id = $user->id;
+        }
+        $contact2->linked = 0;
+        $contact2->save();
+
+        //send notification
+        $notification = new Linked();
+        $notification->source = $contact1;
+        $notification->originator = $user;
+        $notification->send($contactUser);
+
+    }
+
 
 
 }

@@ -83,13 +83,6 @@ class Contact extends \yii\db\ActiveRecord
         return $scenarios;
     }
 
-    public function behaviors()
-    {
-        return array(
-            \humhub\modules\user\behaviors\ContactLink::className()
-        );
-
-    }
 
     public function getUser()
     {

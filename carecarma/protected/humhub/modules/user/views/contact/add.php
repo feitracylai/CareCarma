@@ -74,8 +74,10 @@ Url::remember();
                         } elseif ($contact != null && $contact->linked == 0 ) { ?>
 
                         <a class="btn btn-default" disabled><i class="fa fa-plus"></i> Request Sent </a>&nbsp;
-                        <?php echo Html::a(Yii::t('UserModule.views_contact_add', 'Cancel Request'),  Url::toRoute(['/user/contact/link-cancel', 'id' => $contact->contact_id]), array('class' => 'btn btn-danger pull-right'));
-                        } ?>
+                        <?php echo Html::a(Yii::t('UserModule.views_contact_add', 'Cancel Request'),  Url::toRoute(['/user/contact/link-cancel', 'id' => $user->id]), array('class' => 'btn btn-danger pull-right'));
+                        } else { ?>
+                            <a class="btn btn-default" disabled><i class="fa fa-plus"></i> Already in Your List</a>&nbsp;
+                        <?php } ?>
                     </div>
 
 

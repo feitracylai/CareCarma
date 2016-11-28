@@ -9,7 +9,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 ?>
 <div class="panel panel-default">
-    <div class="panel-heading"><?php echo Yii::t('UserModule.views_contact_edit', '<strong>Edit</strong> contact'); ?></div>
+    <div class="panel-heading"><?php echo Yii::t('UserModule.views_contact_edit', '<strong>Edit</strong> PEOPLE'); ?></div>
     <div class="panel-body">
 
 <!--        --><?php //if ($contact->contact_user_id != null && $contact->linked == 1){ ?>
