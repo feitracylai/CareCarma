@@ -167,7 +167,7 @@ class BaseNotification extends \yii\base\Component implements ViewContextInterfa
         }
 
         $users_token = MobileToken::find()->where(['user_id' => $user->id])->all();
-		//Yii::getLogger()->log('send notification', Logger::LEVEL_INFO, 'MyLog');
+
         if($users_token != null)
         {
             if($msg == null) $msg = 'New Notification';
@@ -177,7 +177,7 @@ class BaseNotification extends \yii\base\Component implements ViewContextInterfa
                $firebase = new Firebase();
                $firebase->send($mobile_token,$msg );
             }
-           Yii::getLogger()->log($mobile_token, Logger::LEVEL_INFO, 'MyLog'); //$firebase->send('cM_8bEJHpII:APA91bHyLrPp8hKC2_wCiZHflJxJp5n9dLt5Jy7aWdvV1e-SQToSEI8O8uGNutRouItOcHnbe4QqmlfLUryOGnr5koZ-Q_A_XMcy6-fig80FQYHCsIH3yZbL2eNTaP429Autu-y25CC1', 'App server');
+//            $firebase->send('cwcgLhC5Xsk:APA91bE0F9LUf3vaFqbS5qQYWi4RRg2UkDFxWb1Ah1raYX8nfIjAEFVOC6B43hL9TMEm49itOS8xHVlF_TXguJZXe6tfi3NMdOCDYOhmtVvkA8WAWdJwrHshqconL0dOITBL6PJ0Vnmk', 'App server');
         }
 
         $notification = new Notification;

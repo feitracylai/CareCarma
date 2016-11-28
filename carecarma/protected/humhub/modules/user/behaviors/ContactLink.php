@@ -69,6 +69,7 @@ class ContactLink extends Behavior
         {
             $this->owner->device_phone = $contactUser->device->phone;
         }
+        \Yii::getLogger()->log($this->owner, Logger::LEVEL_INFO, 'MyLog');
         $this->owner->save();
 //        $this->owner->notifyDevice($data);
 

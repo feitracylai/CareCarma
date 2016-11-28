@@ -789,6 +789,7 @@ class ContactController extends Controller
 
 
         if ($contact != null) {
+            Yii::getLogger()->log($contact->contact_id, Logger::LEVEL_INFO, 'MyLog');
             $contact->LinkUser($contactUser, $user);
 
             $gcm = new GCM();
