@@ -18,7 +18,7 @@ use yii\helpers\Html;
 
             <?php if (count($users) == 0){ ?>
 
-                <p><?php echo Yii::t('SpaceModule.views_space_invite', 'No users in your people! Or they already in this circle.'); ?></p>
+                <p><?php echo Yii::t('SpaceModule.views_space_invite', 'In order to invite new members to this Circle, you will need to add them to you contact list in “People”.'); ?></p>
             <?php }else{ ?>
         </div>
 
