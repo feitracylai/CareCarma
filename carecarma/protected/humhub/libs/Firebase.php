@@ -45,7 +45,7 @@ class Firebase
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
 
         $result = curl_exec($ch);
-		//Yii::getLogger()->log($result, Logger::LEVEL_INFO, 'MyLog');
+	Yii::getLogger()->log($result, Logger::LEVEL_INFO, 'MyLog');
         curl_close($ch);
 
         return $result;

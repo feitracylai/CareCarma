@@ -167,13 +167,14 @@ class BaseNotification extends \yii\base\Component implements ViewContextInterfa
         }
 
         $users_token = MobileToken::find()->where(['user_id' => $user->id])->all();
-
+	// Yii::getLogger()->log('sendFCM', Logger::LEVEL_INFO, 'MyLog');
         if($users_token != null)
         {
             if($msg == null) $msg = 'New Notification';
 
             foreach($users_token as $user_token) {
                $mobile_token = $user_token->device_token;
+		// Yii::getLogger()->log($mobile_token, Logger::LEVEL_INFO, 'MyLog');
                $firebase = new Firebase();
                $firebase->send($mobile_token,$msg );
             }
