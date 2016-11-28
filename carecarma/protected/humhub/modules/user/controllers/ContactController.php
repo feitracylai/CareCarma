@@ -249,6 +249,16 @@ class ContactController extends Controller
                     $gcm_id = $device->gcmId;
                     $gcm->send($gcm_id, $data);
                 }
+
+                $gcm2 = new GCM();
+                $data2 = array();
+                $data2['type'] = 'contact,edit';
+                $data2['contact_id'] = $contact->contact_user_id;
+                if ($device != null) {
+                    $gcm_id = $device->gcmId;
+                    $gcm2->send($gcm_id, $data2);
+                }
+
                 return $this->redirect(Url::toRoute('/user/contact'));
             }
         }
@@ -578,6 +588,14 @@ class ContactController extends Controller
                         $gcm_id = $device->gcmId;
                         $gcm->send($gcm_id, $data);
                     }
+                    $gcm2 = new GCM();
+                    $data2 = array();
+                    $data2['type'] = 'contact,delete';
+                    $data2['contact_id'] = $user->id;
+                    if ($device != null) {
+                        $gcm_id = $device->gcmId;
+                        $gcm2->send($gcm_id, $data2);
+                    }
                 }
             }
 
@@ -593,6 +611,14 @@ class ContactController extends Controller
             if ($device != null) {
                 $gcm_id = $device->gcmId;
                 $gcm->send($gcm_id, $data);
+            }
+            $gcm2 = new GCM();
+            $data2 = array();
+            $data2['type'] = 'contact,delete';
+            $data2['delete'] = $contact->contact_user_id;
+            if ($device != null) {
+                $gcm_id = $device->gcmId;
+                $gcm2->send($gcm_id, $data2);
             }
 
             return $this->redirect(Url::toRoute('index'));
