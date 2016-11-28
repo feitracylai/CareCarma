@@ -43,7 +43,6 @@ class Contact extends \yii\db\ActiveRecord
     {
         return [
             [['contact_first', 'contact_last'], 'required', 'on' => 'editContact'],
-            [['contact_mobile','device_phone','home_phone','work_phone'], 'number'],
             [['contact_email'], 'email'],
             [['user_id', 'contact_user_id', 'linked'], 'integer'],
             [['contact_first', 'contact_last', 'contact_mobile', 'nickname', 'relation','device_phone','home_phone','work_phone'], 'string', 'max' => 255],
@@ -91,7 +90,6 @@ class Contact extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        
         if ($insert) {
 
             if ($this->contact_mobile == null) {
