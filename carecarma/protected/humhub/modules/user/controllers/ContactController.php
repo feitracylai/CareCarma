@@ -253,7 +253,20 @@ class ContactController extends Controller
                 $gcm2 = new GCM();
                 $data2 = array();
                 $data2['type'] = 'contact,edit';
-                $data2['contact_id'] = $contact->contact_user_id;
+                $data2['contact_id'] = $contact->contact_id;
+                $data2['contact_user_id'] = $contact->contact_user_id;
+                $data2['contact_first'] = $contact->contact_first;
+                $data2['contact_last'] = $contact->contact_last;
+                $data2['nickname'] = $contact->nickname;
+                $data2['relation'] = $contact->relation;
+                $data2['contact_mobile'] = $contact->contact_mobile;
+                $data2['device_phone'] = $contact->device_phone;
+                $data2['home_phone'] = $contact->home_phone;
+                $data2['work_phone'] = $contact->work_phone;
+                $data2['contact_email'] = $contact->contact_email;
+                $data2['watch_primary_number'] = $contact->watch_primary_number;
+                $data2['phone_primary_number'] = $contact->phone_primary_number;
+
                 if ($device != null) {
                     $gcm_id = $device->gcmId;
                     $gcm2->send($gcm_id, $data2);
@@ -591,7 +604,8 @@ class ContactController extends Controller
                     $gcm2 = new GCM();
                     $data2 = array();
                     $data2['type'] = 'contact,delete';
-                    $data2['contact_id'] = $user->id;
+                    $data2['contact_id'] = $oppContact->contact_id;
+                    $data2['contact_user_id'] = $user->id;
                     if ($device != null) {
                         $gcm_id = $device->gcmId;
                         $gcm2->send($gcm_id, $data2);
@@ -615,7 +629,8 @@ class ContactController extends Controller
             $gcm2 = new GCM();
             $data2 = array();
             $data2['type'] = 'contact,delete';
-            $data2['delete'] = $contact->contact_user_id;
+            $data2['contact_id'] = $contact->contact_id;
+            $data2['contact_user_id'] = $contact->contact_user_id;
             if ($device != null) {
                 $gcm_id = $device->gcmId;
                 $gcm2->send($gcm_id, $data2);
