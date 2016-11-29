@@ -64,7 +64,7 @@ AppAsset::register($this);
     </head>
 
     <body class="login-container">
-
+    <?php include_once(Yii::getAlias("@humhub")."/views/analyticstracking.php") ?>
         <?php $this->beginBody() ?>
 
         <!-- start: show content (and check, if exists a sublayout -->
