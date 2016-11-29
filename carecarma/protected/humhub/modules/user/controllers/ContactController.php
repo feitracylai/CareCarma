@@ -623,7 +623,7 @@ class ContactController extends Controller
                 }
             }
 
-            $contact->delete();
+
            // $user = User::findOne(['id' => $contact->user_id]);
 //            $contact->notifyDevice('delete');
 
@@ -645,6 +645,8 @@ class ContactController extends Controller
                 $gcm_id = $device->gcmId;
                 $gcm2->send($gcm_id, $data2);
             }
+
+            $contact->delete();
 
             return $this->redirect(Url::toRoute('index'));
         }
