@@ -978,11 +978,11 @@ class ContactController extends Controller
         $accesstoken = '';
 //        $client_id = '584594431619-c8gb5m52css0vs8biotp7jcie27h0iff.apps.googleusercontent.com';
 //        $client_secret = 'gCqIX4YrqNH-8mYO91O_WBOJ';
-//        $redirect_uri = 'http://www.carecarma.com/carecarma/index.php?r=user/contact/importgoogle';
+        $redirect_uri = 'http://www.carecarma.com/carecarma/index.php?r=user/contact/importgoogle';
 //        $simple_api_key = 'AIzaSyCdNyA6NGy8ie9ZcsSEh3adbdTXxn3LKUY';
         $client_id = '455820633290-p8i2kjqqtq1h9ve2p1qe63u3ed3ojlb5.apps.googleusercontent.com';
         $client_secret = 'jcAZIGceSGIMQIdo_pEaKglX';
-        $redirect_uri = Yii::$app->request->hostInfo.Url::toRoute('contact/importgoogle');
+//        $redirect_uri = Yii::$app->request->hostInfo.Url::toRoute('contact/importgoogle');
         $simple_api_key = 'AIzaSyCdNyA6NGy8ie9ZcsSEh3adbdTXxn3LKUY';
         $max_results = 500;
         $auth_code = $_GET["code"];
