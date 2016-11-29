@@ -27,7 +27,7 @@ Url::remember();
 <!--            --><?php //echo Html::a('<i class="fa fa-send"></i> '.Yii::t('UserModule.views_contact_add', 'Import from Device'), $thisUser->createUrl('/user/contact/importlocal'), array('class' => 'btn btn-primary')); ?>
 
 <!--        <div class="pull-right">-->
-            <?php echo Html::a('<img src="'.Yii::getAlias("@web").'/img/google.png" style="width:15px; margin-right: 5px">'.Yii::t('UserModule.views_contact_add', 'Import from Google'), "https://accounts.google.com/o/oauth2/auth?client_id=455820633290-p8i2kjqqtq1h9ve2p1qe63u3ed3ojlb5.apps.googleusercontent.com&redirect_uri=http://www.carecarma.com/carecarma/index.php?r=user%2Fcontact%2Fimportgoogle&scope=https://www.google.com/m8/feeds/&response_type=code", array('class' => 'btn btn-primary')); ?>
+            <?php echo Html::a('<img src="'.Yii::getAlias("@web").'/img/google.png" style="width:15px; margin-right: 5px">'.Yii::t('UserModule.views_contact_add', 'Import from Google'), "https://accounts.google.com/o/oauth2/auth?client_id=455820633290-p8i2kjqqtq1h9ve2p1qe63u3ed3ojlb5.apps.googleusercontent.com&redirect_uri=".Yii::$app->request->hostInfo.Url::toRoute('user/contact/importgoogle')."&scope=https://www.google.com/m8/feeds/&response_type=code", array('class' => 'btn btn-primary')); ?>
         </div>
         </br>
 
