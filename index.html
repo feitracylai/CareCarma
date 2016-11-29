@@ -69,7 +69,7 @@
                 <!--<source src="assets/video/CareCarma_Homepage_Video_41.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.-->
             <!--</video>-->
 
-            <video id="backgroung-video" autoplay loop class="fillWidth" style="transform: translateY(10%)">
+            <video id="backgroung-video" autoplay loop class="fillWidth" style="transform: translateY(6%)" >
                 <source src="assets/video/CareCarma_Homepage_Video_Final.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
             </video>
 
@@ -215,7 +215,7 @@
                         <div class="desc">
                             <p>CareCarma is compatible with most browsers, so it will work on Windows, Apple and Linux PCs. A mobile version of CareCarma is available for both
                                 <a href="https://play.google.com/store/apps/details?id=com.gennine.carecarma&hl=en" target="_blank" title="Download in Google Play">Android</a> and
-                                 <a href="https://itunes.apple.com/us/app/carecarma/id1178761291?mt=8" target="_blank" title="Download in App store">iOS</a> devices.
+                                <a href="https://itunes.apple.com/us/app/carecarma/id1178761291?mt=8" target="_blank" title="Download in App store">iOS</a> devices.
                             </p>
 
                         </div>
@@ -570,7 +570,7 @@
 //            scaleVideoSize();
 
             $(window).on('resize', function() {
-                scaleVideoContainer();
+//                scaleVideoContainer();
                 scaleBannerVideoSize('.video-container .poster img');
                 scaleBannerVideoSize('.video-container .filter');
 //                scaleVideoSize();
@@ -596,8 +596,10 @@
 
         function initBannerVideoSize(element){
             $(element).each(function(){
+
                 $(this).data('height',$(this).height());
                 $(this).data('width', $(this).width());
+
 
             });
             scaleBannerVideoSize(element);
@@ -616,9 +618,10 @@
 
                 $(this).width(windowWidth);
 
-                if(windowWidth < 1200){
+                if(windowWidth < 1420){
                     videoHeight = windowHeight;
                     videoWidth = videoHeight / videoAspectRatio;
+
                     $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
 
                     $(this).width(videoWidth).height(videoHeight);
@@ -657,6 +660,17 @@
 //            $(this).removeClass('loading');
 //            $(this).attr('poster', '');
 //        });
+    </script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-88208782-1', 'auto');
+        ga('send', 'pageview');
+
     </script>
     <!-- jQuery -->
 <!--
