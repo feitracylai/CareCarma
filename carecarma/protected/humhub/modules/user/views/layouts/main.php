@@ -64,7 +64,7 @@ AppAsset::register($this);
     </head>
 
     <body class="login-container">
-    <?php include_once("@humhub/view/analyticstracking.php") ?>
+
         <?php $this->beginBody() ?>
 
         <!-- start: show content (and check, if exists a sublayout -->
