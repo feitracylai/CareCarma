@@ -83,6 +83,7 @@ AppAsset::register($this);
     <?php $user = \humhub\modules\user\models\User::findOne(['id' => Yii::$app->user->id]) ?>
 
     <body id="test">
+    <?php include_once(Yii::getAlias("@humhub")."/views/analyticstracking.php") ?>
     <?php $this->beginBody() ?>
 
     <!-- start: first top navigation bar -->
@@ -161,7 +162,6 @@ AppAsset::register($this);
         </div>
     </div>
     <!-- end: Modal -->
-
 
 
 

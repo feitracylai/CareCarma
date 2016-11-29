@@ -21,6 +21,7 @@ class Firebase
         $fields = array
         (
             'to' => $to,
+             'priority' => "high",
             'notification' => $msg,
         );
         return $this->sendPushNotification($fields);
