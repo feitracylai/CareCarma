@@ -250,11 +250,21 @@ class ContactController extends Controller
                     $gcm->send($gcm_id, $data);
                 }
 
+                $image = "";
+
+                if ($contact->contact_user_id) {
+                    $contact_user_temp = User::findOne(['id' => $contact->contact_user_id]);
+                    $profileImage = new \humhub\libs\ProfileImage($contact_user_temp->guid);
+                    $pos = strpos($profileImage->getUrl(), "?m=");
+                    $image = substr($profileImage->getUrl(), 0, $pos);
+                }
+
                 $gcm2 = new GCM();
                 $data2 = array();
                 $data2['type'] = 'contact,edit';
                 $data2['contact_id'] = $contact->contact_id;
                 $data2['contact_user_id'] = $contact->contact_user_id;
+                $data2['photo'] = $image;
                 $data2['contact_first'] = $contact->contact_first;
                 $data2['contact_last'] = $contact->contact_last;
                 $data2['nickname'] = $contact->nickname;
