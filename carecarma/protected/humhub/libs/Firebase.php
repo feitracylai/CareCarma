@@ -16,9 +16,7 @@ class Firebase
             'title' => 'CareCarma',
             'body' => $message,
             'sound' => 'mySound',
-            'icon' => 'img/NotificationIcon.png'
-            //'icon' => 'ic_status_icon'
-            ,
+            'icon' => 'ic_status_icon',
         );
         $fields = array
         (
