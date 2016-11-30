@@ -51,7 +51,7 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'Maxthon')) {
 } else {
     $browser = 'other';
 }
-Yii::getLogger()->log($browser, \yii\log\Logger::LEVEL_INFO, 'MyLog');
+Yii::getLogger()->log([$_SERVER['HTTP_USER_AGENT'], $browser], \yii\log\Logger::LEVEL_INFO, 'MyLog');
 
 ?>
 
