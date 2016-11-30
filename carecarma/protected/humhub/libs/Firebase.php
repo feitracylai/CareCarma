@@ -17,6 +17,7 @@ class Firebase
             'body' => $message,
             'sound' => 'mySound',
             'icon' => 'ic_status_icon',
+            'iconColor' => '#42eef4',
         );
         $fields = array
         (
