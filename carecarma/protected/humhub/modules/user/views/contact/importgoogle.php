@@ -39,7 +39,7 @@ use humhub\modules\user\models\User;
                                 $contact = \humhub\modules\user\models\Contact::findOne(['user_id' => $thisUser->id, 'contact_user_id' => $userAccount->id]);
 
                                 if ($contact == null){
-                                    echo Html::a('<i class="fa fa-plus"></i> '.Yii::t('UserModule.views_contact_add', 'Add in "People" lists'), $thisUser->createUrl('/user/contact/add', ['doit' => 2, 'connect_id' => $userAccount->id]), array('class' => 'btn btn-primary', 'data-method' => 'POST', 'title' => 'Add in "People" list'));
+                                    echo Html::a('<i class="fa fa-plus"></i> '.Yii::t('UserModule.views_contact_add', 'Add in contact list'), $thisUser->createUrl('/user/contact/add', ['doit' => 2, 'connect_id' => $userAccount->id]), array('class' => 'btn btn-primary', 'data-method' => 'POST', 'title' => 'Add in "People" list'));
 
                                 }else {
                                     echo "<a class='btn btn-default' disabled><i class='fa fa-user'></i> User already in CareCarma</a>";
