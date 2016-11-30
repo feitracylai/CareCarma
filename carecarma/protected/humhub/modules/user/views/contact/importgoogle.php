@@ -42,9 +42,9 @@ use humhub\modules\user\models\User;
                                     echo Html::a('<i class="fa fa-plus"></i> '.Yii::t('UserModule.views_contact_add', 'Add in "People" lists'), $thisUser->createUrl('/user/contact/add', ['doit' => 2, 'connect_id' => $userAccount->id]), array('class' => 'btn btn-primary', 'data-method' => 'POST', 'title' => 'Add in "People" list'));
 
                                 }
-//                                echo "<a class='btn btn-default' disabled> User already in CareCarma</a>";
+                                echo "<a class='btn btn-default' disabled><i class='fa fa-user'></i> User already in CareCarma</a>";
 //                                echo Html::a("<i class='fa fa-user'></i>".Yii::t('UserModule.views_contact_add', ' User already in CareCarma'), $userAccount->getUrl(), array('class' => 'btn btn-primary'));
-                                echo Html::a('<i class="fa fa-eye"></i> '.Yii::t('UserModule.views_contact_add', 'View'), $userAccount->getUrl(), array('class' => 'btn btn-primary  pull-right  ', 'title' => 'view'));
+
 
                             }
                             else {
