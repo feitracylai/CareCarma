@@ -24,10 +24,10 @@ class CheckPrimaryWatch extends Validator
     {
         $value = $object->$attribute;
 
-        $user = Yii::$app->user->getIdentity();
+        $userId = $object->user_id;
         $count = 0;
         $thisPrimary = false;
-        foreach (Contact::find()->where(['user_id' => $user->id])->each() as $contact) {
+        foreach (Contact::find()->where(['user_id' => $userId])->each() as $contact) {
             if ($contact->watch_primary_number == 1){
                 $count += 1;
                 if ($contact->contact_id == $object->contact_id){

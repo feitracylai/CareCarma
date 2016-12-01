@@ -43,7 +43,6 @@ class Contact extends \yii\db\ActiveRecord
     {
         return [
             [['contact_first', 'contact_last'], 'required', 'on' => 'editContact'],
-            [['contact_email'], 'email'],
             [['user_id', 'contact_user_id', 'linked'], 'integer'],
             [['contact_first', 'contact_last', 'contact_mobile', 'nickname', 'relation','device_phone','home_phone','work_phone'], 'string', 'max' => 255],
             [['contact_email'], 'string', 'max' => 100],
