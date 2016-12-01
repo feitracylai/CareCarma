@@ -301,8 +301,10 @@ class ContactController extends Controller
 
 //        $users = User::findAll(['status'=> 1]);
         $hideGoogle = false;
-        if (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') && !strpos($_SERVER['HTTP_USER_AGENT'], 'Safari'))
+        if ($this->getBrowserType() == 'iPhone')
             $hideGoogle = true;
+
+
 
         $empty = false;
         $keyword = Yii::$app->request->get('keyword', "");
@@ -1182,6 +1184,51 @@ class ContactController extends Controller
             'thisUser' => $user
         ));
 
+    }
+
+    private function getBrowserType() {
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'Maxthon')) {
+            $browser = 'Maxthon';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 12.0')) {
+            $browser = 'IE12.0';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 11.0')) {
+            $browser = 'IE11.0';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 10.0')) {
+            $browser = 'IE10.0';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 9.0')) {
+            $browser = 'IE9.0';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 8.0')) {
+            $browser = 'IE8.0';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 7.0')) {
+            $browser = 'IE7.0';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6.0')) {
+            $browser = 'IE6.0';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'NetCaptor')) {
+            $browser = 'NetCaptor';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'Netscape')) {
+            $browser = 'Netscape';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'Lynx')) {
+            $browser = 'Lynx';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'Opera')) {
+            $browser = 'Opera';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome')) {
+            $browser = 'Google';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'Firefox')) {
+            $browser = 'Firefox';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'Safari')) {
+            $browser = 'Safari';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') || strpos($_SERVER['HTTP_USER_AGENT'], 'iPod')) {
+            $browser = 'iphone';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'iPad')) {
+            $browser = 'iphone';
+        } elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'Android')) {
+            $browser = 'android';
+        } else {
+            $browser = 'other';
+        }
+
+        Yii::getLogger()->log($browser, Logger::LEVEL_INFO, 'MyLog');
+        return $browser;
     }
 
 }
