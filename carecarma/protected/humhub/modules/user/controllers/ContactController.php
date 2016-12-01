@@ -301,7 +301,7 @@ class ContactController extends Controller
 
 //        $users = User::findAll(['status'=> 1]);
         $hideGoogle = false;
-        if ($this->getBrowserType() == 'iPhone')
+        if ($this->getBrowserType() == 'iphone')
             $hideGoogle = true;
 
 
@@ -1227,7 +1227,7 @@ class ContactController extends Controller
             $browser = 'other';
         }
 
-        Yii::getLogger()->log($browser, Logger::LEVEL_INFO, 'MyLog');
+
         return $browser;
     }
 
