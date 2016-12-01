@@ -300,7 +300,9 @@ class ContactController extends Controller
         $doit = (int) Yii::$app->request->get('doit');
 
 //        $users = User::findAll(['status'=> 1]);
-
+        $hideGoogle = false;
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') && !strpos($_SERVER['HTTP_USER_AGENT'], 'Safari'))
+            $hideGoogle = true;
 
         $empty = false;
         $keyword = Yii::$app->request->get('keyword', "");
@@ -407,7 +409,8 @@ class ContactController extends Controller
             'details' => $spaces,
             'pagination' => $pagination,
             'thisUser' => $thisUser,
-            'empty' => $empty
+            'empty' => $empty,
+            'hideGoogle' => $hideGoogle,
         ));
     }
 

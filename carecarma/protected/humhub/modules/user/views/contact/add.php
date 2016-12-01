@@ -12,46 +12,8 @@ use \humhub\modules\space\models\Space;
 
 Url::remember();
 
-if (strpos($_SERVER['HTTP_USER_AGENT'], 'Maxthon')) {
-    $browser = 'Maxthon';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 12.0')) {
-    $browser = 'IE12.0';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 11.0')) {
-    $browser = 'IE11.0';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 10.0')) {
-    $browser = 'IE10.0';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 9.0')) {
-    $browser = 'IE9.0';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 8.0')) {
-    $browser = 'IE8.0';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 7.0')) {
-    $browser = 'IE7.0';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6.0')) {
-    $browser = 'IE6.0';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'NetCaptor')) {
-    $browser = 'NetCaptor';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'Netscape')) {
-    $browser = 'Netscape';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'Lynx')) {
-    $browser = 'Lynx';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'Opera')) {
-    $browser = 'Opera';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome')) {
-    $browser = 'Google';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'Firefox')) {
-    $browser = 'Firefox';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'Safari')) {
-    $browser = 'Safari';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'iphone') || strpos($_SERVER['HTTP_USER_AGENT'], 'ipod')) {
-    $browser = 'iphone';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'ipad')) {
-    $browser = 'iphone';
-} elseif(strpos($_SERVER['HTTP_USER_AGENT'], 'android')) {
-    $browser = 'android';
-} else {
-    $browser = 'other';
-}
-Yii::getLogger()->log([$_SERVER['HTTP_USER_AGENT'], $browser], \yii\log\Logger::LEVEL_INFO, 'MyLog');
+
+
 
 ?>
 
@@ -69,9 +31,10 @@ Yii::getLogger()->log([$_SERVER['HTTP_USER_AGENT'], $browser], \yii\log\Logger::
 
 <!--        <div class="pull-right">-->
             <?php
-            if (!strpos($_SERVER['HTTP_USER_AGENT'], 'iphone') && !strpos($_SERVER['HTTP_USER_AGENT'], 'ipod') && !strpos($_SERVER['HTTP_USER_AGENT'], 'ipad')){
+            if (!$hideGoogle){
                 echo Html::a('<img src="'.Yii::getAlias("@web").'/img/google.png" style="width:15px; margin-right: 5px">'.Yii::t('UserModule.views_contact_add', 'Import from Google'), "https://accounts.google.com/o/oauth2/auth?client_id=455820633290-p8i2kjqqtq1h9ve2p1qe63u3ed3ojlb5.apps.googleusercontent.com&redirect_uri=http://www.carecarma.com/carecarma/index.php?r=user%2Fcontact%2Fimportgoogle&scope=https://www.google.com/m8/feeds/&response_type=code", array('class' => 'btn btn-primary'));
             }
+
             ?>
         </div>
         </br>
