@@ -25,10 +25,11 @@ class CheckPrimaryPhone extends Validator
     {
         $value = $object->$attribute;
 
-        $user = Yii::$app->user->getIdentity();
+        $userId = $object->user_id;
+
         $count = 0;
         $thisPrimary = false;
-        foreach (Contact::find()->where(['user_id' => $user->id])->each() as $contact) {
+        foreach (Contact::find()->where(['user_id' => $userId])->each() as $contact) {
             if ($contact->phone_primary_number == 1){
                 $count += 1;
                 if ($contact->contact_id == $object->contact_id){
@@ -40,6 +41,8 @@ class CheckPrimaryPhone extends Validator
         if (!$thisPrimary){
             $count = $count + $value;
         }
+
+
         if ($count > 7 && $value == 1) {
             $object->addError($attribute, Yii::t('UserModule.components_CheckPrimaryPhone', "Your have more than 7 Primary Numbers on CoSMoS phone app now!"));
         }
