@@ -355,6 +355,7 @@ class SensorController extends Controller
                         }
                         $model->GyroZ = $gz;
                         $model->time = $shorttime ;
+                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                         $model->save();
 
                     }
@@ -435,6 +436,7 @@ class SensorController extends Controller
                     }
                     $model->accelZ = $az;
                     $model->time = $shorttime ;
+                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $model->save();
                 }
 
@@ -528,6 +530,7 @@ class SensorController extends Controller
                         $model->GyroZ = $gz;
                         $model->time = $shorttime ;
 //                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                         $model->save();
 
                     }
@@ -582,6 +585,7 @@ class SensorController extends Controller
                         }
                         $model->GyroZ = $gz;
                         $model->time = $shorttime ;
+                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                         $model->save();
                     }
 
@@ -596,6 +600,7 @@ class SensorController extends Controller
                         }
                         $model->GyroZ = $gz;
                         $model->time = $shorttime ;
+                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                         $model->save();
                     }
                 }
@@ -610,6 +615,7 @@ class SensorController extends Controller
                     }
                     $model->GyroZ = $gz;
                     $model->time = $shorttime ;
+                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $model->save();
                 }
 
