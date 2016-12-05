@@ -199,17 +199,14 @@ select {
 }
 
 .btn-introduce-device{
-  /*width: 70px;*/
-  /*height: 70px;*/
   margin-top: 15px;
-  /*padding: 7px 5% 7px 0;*/
   font-size: 130px;
   color: #fff;
   opacity: 0.8;
 }
 
 .btn-introduce-device .flexslider {
-  width: 120px;
+  margin-right: 30px;
   background: none;
   border: none;
 

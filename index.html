@@ -92,7 +92,7 @@
                 </div>
             </div>
 
-            <div class="bottom" style="text-align:right; position: absolute; bottom: -80px; width: 100%; z-index: 60">
+            <div class="bottom" style="text-align:right; position: absolute; bottom: -70px; width: 100%; z-index: 60">
 
                 <a href="#CoSMoS_introduce" class="btn-introduce-device page-scroll" >
                     <div class="cosmos-slider-wrapper pull-right">
@@ -577,6 +577,9 @@
             if($(window).width() <= 768) {
                 window.location = "./carecarma/";
             }
+
+            var sliderWidth = $(window).width() * 0.1;
+            $('.btn-introduce-device .flexslider').css('width', sliderWidth + 'px');
 
             scaleVideoContainer();
 
