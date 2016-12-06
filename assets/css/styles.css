@@ -198,11 +198,51 @@ select {
   -moz-animation-timing-function: linear;
 }
 
+.learn-more {
+  -webkit-animation: slidein 20s ease 5s infinite;
+  -moz-animation: slidein 20s ease 5s infinite;
+  animation: slidein 20s ease 5s infinite;
+  width: 35%;
+}
+
+@-webkit-keyframes slidein {
+  0% {
+    left: 50%;
+  }
+
+
+  25% {
+
+    left:68%;
+  }
+
+  100%{
+    left:68%;
+  }
+
+
+}
+
+@-moz-keyframes slidein {
+  0% {
+    left: 50%;
+  }
+
+
+  25% {
+
+    left:65%;
+  }
+
+  100%{
+    left:65%;
+  }
+}
+
 .btn-introduce-device{
   margin-top: 15px;
   font-size: 130px;
   color: #fff;
-  opacity: 0.8;
 }
 
 .btn-introduce-device .flexslider {
