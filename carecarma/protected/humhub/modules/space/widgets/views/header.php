@@ -188,9 +188,9 @@ if ($space->isAdmin()) {
             <!-- start: User statistics -->
             <div class="row">
                 <div class="col-md-12">
-                    <div class="statistics pull-left hidden-xs hidden-sm">
+                    <div class="statistics pull-left ">
                         <a href= <?php echo $space->createUrl();?> >
-                        <div class="pull-left entry">
+                        <div class="pull-left entry hidden-xs hidden-sm">
                             <span class="count"><?php echo $postCount; ?></span>
                             <br>
                             <span
@@ -198,7 +198,7 @@ if ($space->isAdmin()) {
                         </div>
                         </a>
 
-                        <a href= <?php echo $space->createUrl('/space/manage/memberlist');?> >
+                        <a href= <?php echo $space->createUrl('/space/manage/memberlist');?>>
                         <div class="pull-left entry">
                             <span class="count"><?php echo count($space->memberships); ?></span>
                             <br>
