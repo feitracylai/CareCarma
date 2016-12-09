@@ -484,8 +484,6 @@ class ContactController extends Controller
                 } else {
                     array_push($contacts, $user);
                 }
-
-
             }
         }
 
