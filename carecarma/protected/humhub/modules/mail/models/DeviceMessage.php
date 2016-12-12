@@ -90,18 +90,21 @@ class DeviceMessage extends Model
 //        $push->setTitle('message');
 //        $push->setData($this->id);
 //        Yii::getLogger()->log(print_r($this->user_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $user = User::findOne(['id' => $this->user_id]);
+//        $user = User::findOne(['id' => $this->user_id]);
 //        Yii::getLogger()->log(print_r($user->device_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $device = Device::findOne(['device_id' => $user->device_id]);
+        $device_list = Device::findAll(['user_id' => $this->user_id]);
 //        $gcm_id = $device->gcmId;
 //        Yii::getLogger()->log(print_r($this->getData(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
 //        $gcm_registration_id = "eeajUUBkwG0:APA91bGZIyJ0XEO29JnDFhaJWFGLRw8mvJ4foQFfL_vcnQuEqXzaokLZdTeitpi8nvdlpurCIbcryd4AzM1x_FQVgAYbVvNpHOO0wTD4XuYi3OiMOlkVnk8-xcM9lbCbLFQ7qq1GALSs";
 //        Yii::getLogger()->log(print_r($this->getData(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
         
 //        $gcm->send($gcm_id, $this->getData());
-        if ($device != null) {
-            $gcm_id = $device->gcmId;
-            $gcm->send($gcm_id, $this->getData());
+        foreach($device_list as $device) {
+            if ($device != null) {
+                $gcm_id = $device->gcmId;
+                $gcm->send($gcm_id, $this->getData());
+            }
         }
+
     }
 }

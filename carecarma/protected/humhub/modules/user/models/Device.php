@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property string $device_id
+ * @property string $user_id
  * @property string $gcmId
  * @property string $phone
  * @property string $temp_password

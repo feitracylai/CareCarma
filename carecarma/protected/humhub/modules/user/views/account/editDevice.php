@@ -18,24 +18,31 @@ use humhub\modules\user\models\Device;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="form-group">
-        <?php if(Yii::$app->user->getIdentity()->device_id != null) : ?>
+        <?php $device_list = Device::findAll(['user_id' => Yii::$app->user->getIdentity()->getId()]) ?>
+        <?php if($device_list != null) : ?>
         <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Current CoSMoS</strong>'); ?>
-            <div style="margin: 0 20px">
-                <p>
-                    Activation #:
-                    <?php echo CHtml::encode(Yii::$app->user->getIdentity()->device_id) ?>
-                    <br>
-                    Phone #:
-                    <?php echo CHtml::encode(Device::findOne(['device_id' => Yii::$app->user->getIdentity()->device_id])->phone ) ?>
-                    <?php echo Html::a(Yii::t('UserModule.views_account_editDevice', 'Deactivate'), Url::toRoute(['/user/account/delete-device', 'id' => $model->deviceId]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>
+            <?php foreach ($device_list as $device){ ?>
+                <div style="margin: 0 20px">
+                    <p>
+                        Activation #:
+                        <?php echo CHtml::encode($device->device_id) ?>
+                        <br>
+                        Phone #:
+                        <?php echo CHtml::encode($device->phone) ?>
+                        <?php echo Html::a(Yii::t('UserModule.views_account_editDevice', 'Deactivate'), Url::toRoute(['/user/account/delete-device', 'id' => $device->device_id]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>
 
-                </p>
+                    </p>
 
 
-            </div>
+                </div>
+            <?php } ?>
         <?php endif; ?>
     </div>
     <hr>
+
+    <p>
+        <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Connect New Deivce</strong>'); ?>
+    </p>
 
     <?php echo $form->field($model, 'currentPassword')->passwordInput(['maxlength' => 45]); ?>
 

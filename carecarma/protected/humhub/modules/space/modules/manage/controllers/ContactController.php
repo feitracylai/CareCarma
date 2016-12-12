@@ -216,14 +216,25 @@ class ContactController extends Controller
 
             if ($form->save()) {
 
-                $gcm = new GCM();
-                $device_id = $user->device_id;
-                $device = Device::findOne(['device_id' => $device_id]);
+//                $gcm = new GCM();
+//                $device_id = $user->device_id;
+//                $device = Device::findOne(['device_id' => $device_id]);
+//                $data = array();
+//                $data['type'] = 'contact,updated';
+//                if ($device != null) {
+//                    $gcm_id = $device->gcmId;
+//                    $gcm->send($gcm_id, $data);
+//                }
+
+                $device_list = Device::findAll(['user_id' => $user->id]);
                 $data = array();
                 $data['type'] = 'contact,updated';
-                if ($device != null) {
-                    $gcm_id = $device->gcmId;
-                    $gcm->send($gcm_id, $data);
+                if ($device_list != null) {
+                    foreach($device_list as $device) {
+                        $gcm = new GCM();
+                        $gcm_id = $device->gcmId;
+                        $gcm->send($gcm_id, $data);
+                    }
                 }
 
                 $image = "";
@@ -235,7 +246,6 @@ class ContactController extends Controller
                     $image = substr($profileImage->getUrl(), 0, $pos);
                 }
 
-                $gcm2 = new GCM();
                 $data2 = array();
                 $data2['type'] = 'contact,edit';
                 $data2['contact_id'] = $contact->contact_id;
@@ -253,9 +263,17 @@ class ContactController extends Controller
                 $data2['watch_primary_number'] = $contact->watch_primary_number;
                 $data2['phone_primary_number'] = $contact->phone_primary_number;
 
-                if ($device != null) {
-                    $gcm_id = $device->gcmId;
-                    $gcm2->send($gcm_id, $data2);
+//                if ($device != null) {
+//                    $gcm_id = $device->gcmId;
+//                    $gcm2->send($gcm_id, $data2);
+//                }
+
+                if ($device_list != null) {
+                    foreach($device_list as $device) {
+                        $gcm = new GCM();
+                        $gcm_id = $device->gcmId;
+                        $gcm->send($gcm_id, $data2);
+                    }
                 }
 
                 return $this->redirect($space->createUrl('index', ['rguid' => $user->guid]));
@@ -379,24 +397,48 @@ class ContactController extends Controller
                 if ($oppContact != null){
                     $oppContact->delete();
 
-                    $gcm = new GCM();
+//                    $gcm = new GCM();
+//                    $contactUser = User::findOne(['id' => $oppContact->user_id]);
+//                    $device_id = $contactUser->device_id;
+//                    $device = Device::findOne(['device_id' => $device_id]);
+//                    $data = array();
+//                    $data['type'] = 'contact,updated';
+//                    if ($device != null) {
+//                        $gcm_id = $device->gcmId;
+//                        $gcm->send($gcm_id, $data);
+//                    }
                     $contactUser = User::findOne(['id' => $oppContact->user_id]);
-                    $device_id = $contactUser->device_id;
-                    $device = Device::findOne(['device_id' => $device_id]);
+                    $device_list = Device::findAll(['user_id' => $contactUser->id]);
                     $data = array();
                     $data['type'] = 'contact,updated';
-                    if ($device != null) {
-                        $gcm_id = $device->gcmId;
-                        $gcm->send($gcm_id, $data);
+                    if ($device_list != null) {
+                        foreach($device_list as $device) {
+                            $gcm = new GCM();
+                            $gcm_id = $device->gcmId;
+                            $gcm->send($gcm_id, $data);
+                        }
                     }
-                    $gcm2 = new GCM();
+
+//                    $gcm2 = new GCM();
+//                    $data2 = array();
+//                    $data2['type'] = 'contact,delete';
+//                    $data2['contact_id'] = $oppContact->contact_id;
+//                    $data2['contact_user_id'] = $user->id;
+//                    if ($device != null) {
+//                        $gcm_id = $device->gcmId;
+//                        $gcm2->send($gcm_id, $data2);
+//                    }
+
                     $data2 = array();
                     $data2['type'] = 'contact,delete';
                     $data2['contact_id'] = $oppContact->contact_id;
                     $data2['contact_user_id'] = $user->id;
-                    if ($device != null) {
-                        $gcm_id = $device->gcmId;
-                        $gcm2->send($gcm_id, $data2);
+                    if ($device_list != null) {
+                        foreach($device_list as $device) {
+                            $gcm = new GCM();
+                            $gcm_id = $device->gcmId;
+                            $gcm->send($gcm_id, $data2);
+                        }
                     }
                 }
             }
