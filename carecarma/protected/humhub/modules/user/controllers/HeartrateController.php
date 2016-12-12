@@ -216,7 +216,7 @@ class HeartrateController extends Controller
 
 
 //    T0000D000X000  time, device_id, heartrate
-    public function actionCreatenew()
+    public function actionCreateddd()
     {
         ini_set('max_execution_time', 30000);
         date_default_timezone_set('GMT');
@@ -231,17 +231,18 @@ class HeartrateController extends Controller
                 $pos_next_t = strpos($temp_data, "T");
                 if ($pos_next_t == false) $row = $temp_data;
                 else $row = substr($temp_data, 0, $pos_next_t);
-                $pos_d = strpos($row, "D");
                 $pos_h = strpos($row, "H");
-                $time = substr($row, 0, $pos_d);
+                $pos_i = strpos($row, "I");
+                $time = substr($row, 0, $pos_h);
 
                 $t = time();
                 $yearmonthday = date('Y-m-d',$t);
                 $hoursecond = date('H:i:s', substr($time, 0, 5));
                 $realtime = $yearmonthday . " " . $hoursecond;
 
-                $device_id = substr($row, $pos_d + 1, $pos_h - $pos_d - 1);
-                $heartrate = substr($row, $pos_h + 1);
+
+                $heartrate = substr($row, $pos_h + 1, $pos_i - $pos_h - 1);
+                $device_id = substr($row, $pos_i + 1);
 
                 $pure_data = substr($pure_data, strlen($row) + 1);
                 $shorttime = strtotime($realtime) . substr($time, 5,3);
