@@ -569,16 +569,16 @@ class MailController extends Controller
                 $userMessage->user_id = $recipient->id;
                 $userMessage->save();
 
-                if ($recipient->device_id != null){
+//                if ($recipient->device_id != null){
 
-                    $deviceMessage = new DeviceMessage();
-                    $deviceMessage->type = "message,create";
-                    $deviceMessage->message_id = $message->id;
-                    $deviceMessage->user_id = $recipient->id;
-                    $deviceMessage->from_id = Yii::$app->user->id;
-                    $deviceMessage->content = $model->message;
-                    $deviceMessage->notify();
-                }
+                $deviceMessage = new DeviceMessage();
+                $deviceMessage->type = "message,create";
+                $deviceMessage->message_id = $message->id;
+                $deviceMessage->user_id = $recipient->id;
+                $deviceMessage->from_id = Yii::$app->user->id;
+                $deviceMessage->content = $model->message;
+                $deviceMessage->notify();
+//                }
 
             }
 
@@ -642,7 +642,8 @@ class MailController extends Controller
 
         foreach (UserMessage::find()->where(['message_id' => $message_id])->each() as $userM) {
             $user = User::findOne(['id' => $userM->user_id]);
-            if ($user->device_id != null && $user->id != Yii::$app->user->id) {
+//            if ($user->device_id != null && $user->id != Yii::$app->user->id) {
+            if ($user->id != Yii::$app->user->id) {
                 $deviceMessage = new DeviceMessage();
                 $deviceMessage->type = "message,reply";
                 $deviceMessage->message_id = $message_id;
