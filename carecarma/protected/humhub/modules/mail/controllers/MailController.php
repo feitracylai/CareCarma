@@ -3,6 +3,7 @@
 namespace humhub\modules\mail\controllers;
 
 use humhub\modules\user\models\Contact;
+use humhub\modules\user\models\Device;
 use Yii;
 use yii\helpers\Html;
 use yii\log\Logger;
@@ -118,13 +119,13 @@ class MailController extends Controller
 
             //device
             foreach (UserMessage::find()->where(['message_id' => $message->id])->each() as $userMessage) {
-                $user = User::findOne(['id' => $userMessage->user_id]);
+//                $user = User::findOne(['id' => $userMessage->user_id]);
 
-                if ($user->device_id != null && $user->id != Yii::$app->user->id) {
+                if ($userMessage->user_id != Yii::$app->user->id) {
                     $deviceMessage = new DeviceMessage();
                     $deviceMessage->type = "message,reply";
                     $deviceMessage->message_id = $message->id;
-                    $deviceMessage->user_id = $user->id;
+                    $deviceMessage->user_id = $userMessage->user_id;
                     $deviceMessage->from_id = Yii::$app->user->id;
                     $deviceMessage->content = $messageEntry->content;
                     $deviceMessage->notify();
@@ -385,7 +386,8 @@ class MailController extends Controller
 //
 //                    $deviceMessage->notify();
 //                }
-                if ($recipient->device_id != null){
+//                $device = Device::findAll(['user_id' => $recipient->id]);
+//                if ($device != null){
 
                     $deviceMessage = new DeviceMessage();
                     $deviceMessage->type = "message,create";
@@ -394,7 +396,7 @@ class MailController extends Controller
                     $deviceMessage->from_id = Yii::$app->user->id;
                     $deviceMessage->content = $model->message;
                     $deviceMessage->notify();
-                }
+//                }
 
             }
 
