@@ -20,6 +20,7 @@ use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\content\components\ContentAddonActiveRecord;
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\libs\Firebase;
+use humhub\libs\sendNotificationIOS;
 use yii\log\Logger;
 
 /**
@@ -177,6 +178,10 @@ class BaseNotification extends \yii\base\Component implements ViewContextInterfa
 		// Yii::getLogger()->log($mobile_token, Logger::LEVEL_INFO, 'MyLog');
                $firebase = new Firebase();
                $firebase->send($mobile_token,$msg );
+                $sendNot = new sendNotificationIOS();
+                $sendNot ->sendMessage($mobile_token,$msg);
+
+               
             }
 //            $firebase->send('cwcgLhC5Xsk:APA91bE0F9LUf3vaFqbS5qQYWi4RRg2UkDFxWb1Ah1raYX8nfIjAEFVOC6B43hL9TMEm49itOS8xHVlF_TXguJZXe6tfi3NMdOCDYOhmtVvkA8WAWdJwrHshqconL0dOITBL6PJ0Vnmk', 'App server');
         }
