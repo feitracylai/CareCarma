@@ -268,11 +268,11 @@ class BeaconController extends Controller
         $list = array();
         Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         while(strlen($pure_data) != 0) {
-            if($pure_data[0] == "T"){
-                $temp_data = substr($pure_data, 1);
-                $pos_next_t = strpos($temp_data, "T");
-                if ($pos_next_t == false) $row = $temp_data;
-                else $row = substr($temp_data, 0, $pos_next_t);
+            if($pure_data[0] == "B" and $pure_data[1] == "T"){
+                $temp_data = substr($pure_data, 2);
+                $pos_next_b = strpos($temp_data, "B");
+                if ($pos_next_b == false) $row = $temp_data;
+                else $row = substr($temp_data, 0, $pos_next_b);
                 $pos_d = strpos($row, "D");
                 $pos_x = strpos($row, "X");
                 $pos_i = strpos($row, "I");

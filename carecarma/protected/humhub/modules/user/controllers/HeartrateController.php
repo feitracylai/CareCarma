@@ -226,14 +226,14 @@ class HeartrateController extends Controller
         $list = array();
         Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         while(strlen($pure_data) != 0) {
-            if($pure_data[0] == "T"){
-                $temp_data = substr($pure_data, 1);
-                $pos_next_t = strpos($temp_data, "T");
-                if ($pos_next_t == false) $row = $temp_data;
-                else $row = substr($temp_data, 0, $pos_next_t);
-                $pos_h = strpos($row, "H");
+            if($pure_data[0] == "H" and $pure_data[1] == "T"){
+                $temp_data = substr($pure_data, 2);
+                $pos_next_h = strpos($temp_data, "H");
+                if ($pos_next_h == false) $row = $temp_data;
+                else $row = substr($temp_data, 0, $pos_next_h);
+                $pos_r = strpos($row, "R");
                 $pos_i = strpos($row, "I");
-                $time = substr($row, 0, $pos_h);
+                $time = substr($row, 0, $pos_r);
 
                 $t = time();
                 $yearmonthday = date('Y-m-d',$t);
@@ -241,7 +241,7 @@ class HeartrateController extends Controller
                 $realtime = $yearmonthday . " " . $hoursecond;
 
 
-                $heartrate = substr($row, $pos_h + 1, $pos_i - $pos_h - 1);
+                $heartrate = substr($row, $pos_r + 1, $pos_i - $pos_r - 1);
                 $device_id = substr($row, $pos_i + 1);
 
                 $pure_data = substr($pure_data, strlen($row) + 1);

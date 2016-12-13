@@ -20,6 +20,7 @@ use \humhub\modules\user\models\Profile;
 use \humhub\modules\user\models\Device;
 use humhub\modules\user\models\Contact;
 use humhub\modules\user\models\forms\SecuritySetting;
+use \humhub\modules\user\models\MobileToken;
 
 
 /**
@@ -801,6 +802,17 @@ class AccountController extends Controller
         return $this->render('privacy', array(
             'model' => $model
         ));
+    }
+
+    public function actionDeleteToken()
+    {
+        $data = Yii::$app->request->post();
+        $token = $data["token"];
+        $mt = MobileToken::findOne(['device_token' => $token]);
+        if ($mt != null) {
+            $mt->delete();
+        }
+
     }
 }
 
