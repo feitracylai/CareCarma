@@ -97,6 +97,8 @@ class DeviceMessage extends Model
 //        Yii::getLogger()->log(print_r($this->getData(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
 //        $gcm_registration_id = "eeajUUBkwG0:APA91bGZIyJ0XEO29JnDFhaJWFGLRw8mvJ4foQFfL_vcnQuEqXzaokLZdTeitpi8nvdlpurCIbcryd4AzM1x_FQVgAYbVvNpHOO0wTD4XuYi3OiMOlkVnk8-xcM9lbCbLFQ7qq1GALSs";
         Yii::getLogger()->log(print_r($this->getData(),true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log($this->user_id, Logger::LEVEL_INFO, 'MyLog');
+        Yii::getLogger()->log($device_list, Logger::LEVEL_INFO, 'MyLog');
         
 //        $gcm->send($gcm_id, $this->getData());
         foreach($device_list as $device) {
