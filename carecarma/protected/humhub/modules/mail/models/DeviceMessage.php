@@ -8,7 +8,7 @@ use humhub\modules\user\models\Device;
 use Yii;
 use humhub\libs\GCM;
 use yii\base\Model;
-
+use yii\log\Logger;
 
 
 /**
@@ -100,7 +100,9 @@ class DeviceMessage extends Model
         
 //        $gcm->send($gcm_id, $this->getData());
         foreach($device_list as $device) {
+            Yii::getLogger()->log($device, Logger::LEVEL_INFO, 'MyLog');
             if ($device != null) {
+                Yii::getLogger()->log($device->device_id, Logger::LEVEL_INFO, 'MyLog');
                 $gcm_id = $device->gcmId;
                 $gcm->send($gcm_id, $this->getData());
             }
