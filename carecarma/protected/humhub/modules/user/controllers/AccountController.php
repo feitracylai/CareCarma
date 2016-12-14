@@ -797,6 +797,17 @@ class AccountController extends Controller
             'model' => $model
         ));
     }
+
+    public function actionDeleteToken()
+    {
+        $data = Yii::$app->request->post();
+        $token = $data["token"];
+        $mt = MobileToken::findOne(['device_token' => $token]);
+        if ($mt != null) {
+            $mt->delete();
+        }
+
+    }
 }
 
 ?>
