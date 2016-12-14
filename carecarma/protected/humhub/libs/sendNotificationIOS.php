@@ -27,13 +27,10 @@ class sendNotificationIOS
         );
 
         $fields = json_encode($fields);
-       // print("\nJSON sent:\n");
-       // print($fields);
-
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json',
-            'Authorization: Basic YTk4ZTVjNjAtZTRhMS00ZmJlLWJlZWYtYzUyZjhkMTZjOTMx'));
+            'Authorization: Basic MGJlNDllYzMtNDAwOS00ZGY1LTkwYmItZDBiYjUyMmVkY2U4'));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
         curl_setopt($ch, CURLOPT_POST, TRUE);
