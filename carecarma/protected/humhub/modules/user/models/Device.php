@@ -33,6 +33,7 @@ class Device extends \yii\db\ActiveRecord
             [['device_id'], 'unique'],
             [['device_id'], 'string', 'max' => 45],
             [['gcmId', 'phone'], 'string', 'max' => 255],
+            [['user_id'], 'integer'],
         ];
     }
 
@@ -45,13 +46,14 @@ class Device extends \yii\db\ActiveRecord
             'device_id' => 'CoSMoS Activation#',
             'gcmId' => 'Gcm ID',
             'phone' => 'CoSMoS Phone#',
-            'temp_password' => 'Temp Password'
+            'temp_password' => 'Temp Password',
+            'user_id' => 'user ID'
         ];
     }
 
     public function getUser()
     {
-        return $this->hasOne(\humhub\modules\user\models\User::className(), ['device_id' => 'device_id']);
+        return $this->hasOne(\humhub\modules\user\models\User::className(), ['id' => 'user_id']);
     }
 
 
