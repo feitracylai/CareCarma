@@ -94,18 +94,19 @@ class AccountController extends Controller
     public function actionEditDevice()
     {
         $user = Yii::$app->user->getIdentity();
-        $deviceOld = Device::findOne(['device_id' => $user->device_id]);
         $model = new \humhub\modules\user\models\forms\AccountDevice();
         $model->scenario = 'userDevice';
-
+        $device_list = Device::findAll(['user_id' => $user->id]);
 
         if ($model->load(Yii::$app->request->post())&& $model->validate()) {
 
             $device = Device::find()->where(['device_id' => $model->deviceId])->one();
-
-            if ($device!=null) {
-
-//                $user->device_id = $model->deviceId;
+            if ($device==null){
+                $model->addError('deviceId', Yii::t('UserModule.controllers_AccountController', "Activation ID is incorrect!"));
+            } elseif ($device->user_id != 0) {
+                $model->addError('deviceId', Yii::t('UserModule.controllers_AccountController', 'This Activation ID is already in use!'));
+            } else {
+                $user->device_id = $model->deviceId;
                 $device->user_id = $user->getId();
                 $user->temp_password = $model->currentPassword;
                 $user->save();
@@ -117,34 +118,15 @@ class AccountController extends Controller
                     $this->activationA($device->device_id);
                 }
 
-//                if ($device->gcmId != null ) {
-//
-//                    $gcm = new GCM();
-//                    $push = new Push();
-//
-//                    $push->setTitle('binding');
-////                    $push->setData(Yii::t('UserModule.controllers_AccountController', '{user_id = {id}}', array('{id}' => $user->getId())));
-//                    $push->setData($user->getId());
-//
-//                    $gcm_registration_id = $device->gcmId;
-//                    $gcm->send($gcm_registration_id, $push->getPush());
-//                }
-//                if($deviceOld != null && $deviceOld->gcmId != null) {
-//                    $gcmOld = new GCM();
-//                    $pushOld = new Push();
-//                    $pushOld->setTitle('binding delete');
-//                    $gcmOld->send($deviceOld->gcmId, $pushOld->getPush());
-//                }
 
                 Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
             }
-            else {
-                $model->addError('deviceId', 'Invalid input! Please make sure that you entered the correct device ID.');
-            }
+
+
 
         }
 
-        return $this->render('editDevice', array('model' => $model, 'user' => $user));
+        return $this->render('editDevice', array('model' => $model, 'user' => $user, 'device_list' => $device_list));
 
     }
 
@@ -152,14 +134,10 @@ class AccountController extends Controller
     {
         $todo = (int)Yii::$app->request->get('todo');
         $device_id = Yii::$app->request->get('id');
-        Yii::getLogger()->log(print_r($device_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $user = Yii::$app->user->getIdentity();
 
-        $model = new \humhub\modules\user\models\forms\AccountDevice();
 
 
         if ($todo == 2) {
-            Yii::getLogger()->log(print_r("BBB",true),yii\log\Logger::LEVEL_INFO,'MyLog');
             $device = Device::findOne(['device_id' => $device_id]);
             if ($device->gcmId != null) {
 
@@ -171,6 +149,11 @@ class AccountController extends Controller
             }
             $device->delete();
 
+            /***test***/
+//            $device->user_id = 0;
+//            $device->save();
+            /**********/
+
 //            $user->updateUserContacts();
 
 
@@ -179,7 +162,7 @@ class AccountController extends Controller
         }
 
 
-        return $this->render('deleteDevice', array('model' => $model, 'device_id' => $device_id));
+        return $this->render('deleteDevice', array( 'device_id' => $device_id));
     }
 
 
@@ -282,7 +265,6 @@ class AccountController extends Controller
 
 //        Yii::getLogger()->log(print_r($contact_list),true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
-        Yii::getLogger()->log(print_r($this->getUsernamePassword($user),true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
         if ($device != null) {
             $gcm_id = $device->gcmId;

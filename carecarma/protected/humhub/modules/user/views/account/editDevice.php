@@ -12,13 +12,12 @@ use humhub\modules\user\models\Device;
 </div>
 <div class="panel-body">
     <p>
-        <?php echo Yii::t('UserModule.views_account_editDevice', 'If you have bought CoSMoS, please input your <strong>Activation Number</strong> to activate your CoSMoS.'); ?>
+        <?php echo Yii::t('UserModule.views_account_editDevice', 'If you have got an CoSMoS device use CoSMoS App, please input your <strong>Activation ID</strong> to activate it here.'); ?>
     </p>
 
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="form-group">
-        <?php $device_list = Device::findAll(['user_id' => Yii::$app->user->getIdentity()->getId()]) ?>
         <?php if($device_list != null) : ?>
         <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Current CoSMoS</strong>'); ?>
             <?php foreach ($device_list as $device){ ?>

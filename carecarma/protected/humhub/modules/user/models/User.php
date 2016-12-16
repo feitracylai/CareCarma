@@ -244,9 +244,6 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
         return $this->hasOne(Profile::className(), ['user_id' => 'id']);
     }
 
-    public function getDevice() {
-        return $this->hasOne(Device::className(), ['device_id' => 'device_id']);
-    }
 
     public function getGroup()
     {
@@ -394,6 +391,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             $contact->contact_mobile = $this->profile->mobile;
             $contact->home_phone = $this->profile->phone_private;
             $contact->work_phone = $this->profile->phone_work;
+
             if ($this->device_id != null)
             {
                 $contact->device_phone = $this->device->phone;

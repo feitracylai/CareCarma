@@ -14,7 +14,7 @@ use yii\helpers\Url;
     <div class="panel-body">
         <p>
             <?php $data = Yii::$app->request->post(); ?>
-            <?php echo Yii::t('UserModule.views_account_deleteDevice', 'Are you sure you want to deactivate your CoSMoS <strong>{device Id}</strong>?', array('{device Id}' => CHtml::encode($device_id))); ?>
+            <?php echo Yii::t('UserModule.views_account_deleteDevice', 'Are you sure you want to deactivate this CoSMoS device (<strong>{device Id}</strong>)?', array('{device Id}' => CHtml::encode($device_id))); ?>
         </p>
         <br>
         <?php $form = ActiveForm::begin(); ?>
