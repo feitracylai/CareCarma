@@ -7,6 +7,7 @@ namespace humhub\modules\user\controllers;
 use Yii;
 use humhub\modules\user\models\Sensor;
 use yii\data\ActiveDataProvider;
+use yii\log\Logger;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -689,7 +690,7 @@ class SensorController extends Controller
                 $ax = substr($row, $pos_x+1, $pos_y-$pos_x-1);
                 $ay = substr($row, $pos_y+1, $pos_z-$pos_y-1);
                 $az = substr($row, $pos_z+1, $pos_i-$pos_z-1);
-                $device_id = substr($row, $pos_i);
+                $device_id = substr($row, $pos_i + 1);
                 // remove last row
                 $pure_data = substr($pure_data, strlen($row)+1);
 
@@ -831,7 +832,7 @@ class SensorController extends Controller
                     }
                     $model->accelZ = $az;
                     $model->time = $shorttime ;
-                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $model->save();
                 }
 
@@ -959,7 +960,7 @@ class SensorController extends Controller
 
                         $ax = substr($row, $pos_x+1, $pos_y-$pos_x-1);
                         $ay = substr($row, $pos_y+1, $pos_z-$pos_y-1);
-                        $az = substr($row, $pos_z+1, $pos_i-$pos_y-z);
+                        $az = substr($row, $pos_z+1, $pos_i-$pos_y-1);
                         $device_id2 = substr($row, $pos_i+1);
                         $pure_data = substr($pure_data, strlen($row)+1);
                         $shorttime2 = strtotime($realtime2) . substr($time2, 5,3);
