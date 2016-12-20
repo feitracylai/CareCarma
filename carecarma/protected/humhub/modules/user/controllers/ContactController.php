@@ -561,21 +561,26 @@ class ContactController extends Controller
 
 
         if ($contact != null) {
+            if ($contact->linked == 1)
+            {
+                $device_list = Device::findAll(['user_id' => $user->id]);
+                $data = array();
+                $data['type'] = 'contact,updated';
+                if ($device_list != null) {
+                    foreach($device_list as $device) {
+                        $gcm = new GCM();
+                        $gcm_id = $device->gcmId;
+                        $gcm->send($gcm_id, $data);
+                    }
+                }
+            }
             $contact->delete();
 
 
 //            $device_id = $user->device_id;
 //            $device = Device::findOne(['device_id' => $device_id]);
-            $device_list = Device::findAll(['user_id' => $user->id]);
-            $data = array();
-            $data['type'] = 'contact,updated';
-            if ($device_list != null) {
-                foreach($device_list as $device) {
-                    $gcm = new GCM();
-                    $gcm_id = $device->gcmId;
-                    $gcm->send($gcm_id, $data);
-                }
-            }
+
+
 
             $contactUser = User::findOne(['id' => $contact->contact_user_id]);
             //Delete link notification for this user
@@ -585,6 +590,20 @@ class ContactController extends Controller
 
             $contact2 = Contact::findOne(['user_id' => $contact->contact_user_id, 'contact_user_id' => $contact->user_id]);
             if ($contact2 != null) {
+                if ($contact2->linked == 1) {
+                    $contactUser = User::findOne(['id' => $contact2->user_id]);
+                    $device_list = Device::findAll(['user_id' => $contactUser->id]);
+                    $data = array();
+                    $data['type'] = 'contact,updated';
+                    if ($device_list != null) {
+                        foreach($device_list as $device) {
+                            $gcm = new GCM();
+                            $gcm_id = $device->gcmId;
+                            $gcm->send($gcm_id, $data);
+                        }
+                    }
+                }
+
                 $contact2->delete();
 
 //                $gcm = new GCM();
@@ -597,17 +616,7 @@ class ContactController extends Controller
 //                    $gcm_id = $device->gcmId;
 //                    $gcm->send($gcm_id, $data);
 //                }
-                $contactUser = User::findOne(['id' => $contact2->user_id]);
-                $device_list = Device::findAll(['user_id' => $contactUser->id]);
-                $data = array();
-                $data['type'] = 'contact,updated';
-                if ($device_list != null) {
-                    foreach($device_list as $device) {
-                        $gcm = new GCM();
-                        $gcm_id = $device->gcmId;
-                        $gcm->send($gcm_id, $data);
-                    }
-                }
+
 
             }
         }
@@ -1045,34 +1054,7 @@ class ContactController extends Controller
     }
 
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-    public function actionDevice ()
-    {
-        $data = Yii::$app->request->post();
-        $device_data = $data['DeviceInfo'];
-        $device_id = $device_data['device_id'];
-        $token = $device_data['token'];
-        $tel_number = $device_data['tel_number'];
-        $device = Device::findOne(['device_id' => $device_id]);
-        $device->device_id = $device_id;
-        $device->gcmId = $token;
-        $device->phone = $tel_number;
-        $device->save();
-        if ($this->checkDevice($device_id)) {
-            $this->activation($device_id);
-        }
-    }
-    public function checkDevice ($device_id) {
-        $user = User::findOne(['device_id' => $device_id]);
-        $device = Device::findOne(['device_id' => $device_id]);
-        $gcmId = $device->gcmId;
-        if ($user != null and $gcmId != null) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+
 
 
     public function actionImportgoogle ()

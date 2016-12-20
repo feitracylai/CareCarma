@@ -37,20 +37,21 @@ class UserModelContact extends Behavior
         $contact1->contact_mobile = $contactUser->profile->mobile;
         $contact1->work_phone = $contactUser->profile->phone_work;
         $contact1->home_phone = $contactUser->profile->phone_private;
-        if ($contactUser->device_id != null){
-            $contact1->device_phone = $contactUser->device->phone;
-        }
-        \Yii::getLogger()->log([$contact1->contact_first, $contact1->contact_last, $contact1->contact_id], Logger::LEVEL_INFO, 'MyLog');
+
         $contact1->save();
 
-        $gcm = new GCM();
-        $device_id = $user->device_id;
-        $device = Device::findOne(['device_id' => $device_id]);
+
         $data = array();
         $data['type'] = 'contact,updated';
-        if ($device != null) {
-            $gcm_id = $device->gcmId;
-            $gcm->send($gcm_id, $data);
+
+
+        $device_list = Device::findAll(['user_id' => $user->id]);
+        foreach($device_list as $device) {
+            if ($device != null) {
+                $gcm = new GCM();
+                $gcm_id = $device->gcmId;
+                $gcm->send($gcm_id, $data);
+            }
         }
 
 
@@ -73,14 +74,18 @@ class UserModelContact extends Behavior
         }
         $contact2->save();
 
-        $gcm = new GCM();
-        $device_id = $contactUser->device_id;
-        $device = Device::findOne(['device_id' => $device_id]);
-        $data = array();
-        $data['type'] = 'contact,updated';
-        if ($device != null) {
-            $gcm_id = $device->gcmId;
-            $gcm->send($gcm_id, $data);
+
+        $data2 = array();
+        $data2['type'] = 'contact,updated';
+
+
+        $device_list = Device::findAll(['user_id' => $contactUser->id]);
+        foreach($device_list as $device) {
+            if ($device != null) {
+                $gcm = new GCM();
+                $gcm_id = $device->gcmId;
+                $gcm->send($gcm_id, $data2);
+            }
         }
     }
 
