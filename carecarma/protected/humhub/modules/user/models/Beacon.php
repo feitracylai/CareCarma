@@ -10,6 +10,7 @@ use Yii;
  * @property integer $id
  * @property integer $user_id
  * @property integer $beacon_id
+ * @property string $device_id
  * @property string $distance
  * @property string $datetime
  * @property string $time

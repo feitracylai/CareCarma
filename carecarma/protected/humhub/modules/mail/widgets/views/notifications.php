@@ -9,11 +9,11 @@ $this->registerjsVar('mail_viewMessageUrl', Url::to(['/mail/mail/index', 'id' =>
 
 Assets::register($this);
 ?>
-<div class="btn-group" style="display: none">
+<div class="btn-group">
     <a href="#" id="icon-messages" class="dropdown-toggle" data-toggle="dropdown"><i
             class="fa fa-envelope"></i></a>
-<!--    <span id="badge-messages" style="display:none;"-->
-<!--          class="label label-danger label-notification">1</span>-->
+    <span id="badge-messages" style="display:none;"
+          class="label label-danger label-notification">1</span>
     <ul id="dropdown-messages" class="dropdown-menu">
     </ul>
 </div>
@@ -30,22 +30,22 @@ Assets::register($this);
         });
     }, reloadMessageCountInterval);
 
-//    setMailMessageCount(<?php //echo $newMailMessageCount; ?>//);
-//
-//
-//    /**
-//     * Sets current message count
-//     */
-//    function setMailMessageCount(count) {
-//        // show or hide the badge for new messages
-//        if (count == 0) {
-//            $('#badge-messages').css('display', 'none');
-//        } else {
-//            $('#badge-messages').empty();
-//            $('#badge-messages').append(count);
-//            $('#badge-messages').fadeIn('fast');
-//        }
-//    }
+    setMailMessageCount(<?php echo $newMailMessageCount; ?>);
+
+
+    /**
+     * Sets current message count
+     */
+    function setMailMessageCount(count) {
+        // show or hide the badge for new messages
+        if (count == 0) {
+            $('#badge-messages').css('display', 'none');
+        } else {
+            $('#badge-messages').empty();
+            $('#badge-messages').append(count);
+            $('#badge-messages').fadeIn('fast');
+        }
+    }
 
 
 

@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $sensor_id
  * @property string $user_id
+ * @property string $device_id
  * @property string $datetime
  * @property string $accelX
  * @property string $accelY

@@ -66,26 +66,7 @@ class ContactController extends Controller
         ]);
     }
 
-//    public function actionView()
-//    {
-//        $space = $this->getSpace();
-//        $Cid = (int) Yii::$app->request->get('Cid');
-//        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
-//
-//        $contact = Contact::findOne(['contact_id' => $Cid, 'user_id' => $user->id]);
-//
-//        if ($contact == null) {
-//            throw new \yii\web\HttpException(404, Yii::t('SpaceModule.controllers_ContactController', 'Contact not found!'));
-//        }
-//
-//
-//
-//        return $this->render('view', array(
-//            'contact' => $contact,
-//            'space' => $space,
-//            'user' => $user
-//        ));
-//    }
+
 
     public function actionEdit()
     {
@@ -216,14 +197,17 @@ class ContactController extends Controller
 
             if ($form->save()) {
 
-                $gcm = new GCM();
-                $device_id = $user->device_id;
-                $device = Device::findOne(['device_id' => $device_id]);
+
+
+                $device_list = Device::findAll(['user_id' => $user->id]);
                 $data = array();
                 $data['type'] = 'contact,updated';
-                if ($device != null) {
-                    $gcm_id = $device->gcmId;
-                    $gcm->send($gcm_id, $data);
+                if ($device_list != null) {
+                    foreach($device_list as $device) {
+                        $gcm = new GCM();
+                        $gcm_id = $device->gcmId;
+                        $gcm->send($gcm_id, $data);
+                    }
                 }
 
                 $image = "";
@@ -235,7 +219,6 @@ class ContactController extends Controller
                     $image = substr($profileImage->getUrl(), 0, $pos);
                 }
 
-                $gcm2 = new GCM();
                 $data2 = array();
                 $data2['type'] = 'contact,edit';
                 $data2['contact_id'] = $contact->contact_id;
@@ -253,9 +236,17 @@ class ContactController extends Controller
                 $data2['watch_primary_number'] = $contact->watch_primary_number;
                 $data2['phone_primary_number'] = $contact->phone_primary_number;
 
-                if ($device != null) {
-                    $gcm_id = $device->gcmId;
-                    $gcm2->send($gcm_id, $data2);
+//                if ($device != null) {
+//                    $gcm_id = $device->gcmId;
+//                    $gcm2->send($gcm_id, $data2);
+//                }
+
+                if ($device_list != null) {
+                    foreach($device_list as $device) {
+                        $gcm = new GCM();
+                        $gcm_id = $device->gcmId;
+                        $gcm->send($gcm_id, $data2);
+                    }
                 }
 
                 return $this->redirect($space->createUrl('index', ['rguid' => $user->guid]));
@@ -379,24 +370,48 @@ class ContactController extends Controller
                 if ($oppContact != null){
                     $oppContact->delete();
 
-                    $gcm = new GCM();
+//                    $gcm = new GCM();
+//                    $contactUser = User::findOne(['id' => $oppContact->user_id]);
+//                    $device_id = $contactUser->device_id;
+//                    $device = Device::findOne(['device_id' => $device_id]);
+//                    $data = array();
+//                    $data['type'] = 'contact,updated';
+//                    if ($device != null) {
+//                        $gcm_id = $device->gcmId;
+//                        $gcm->send($gcm_id, $data);
+//                    }
                     $contactUser = User::findOne(['id' => $oppContact->user_id]);
-                    $device_id = $contactUser->device_id;
-                    $device = Device::findOne(['device_id' => $device_id]);
+                    $device_list = Device::findAll(['user_id' => $contactUser->id]);
                     $data = array();
                     $data['type'] = 'contact,updated';
-                    if ($device != null) {
-                        $gcm_id = $device->gcmId;
-                        $gcm->send($gcm_id, $data);
+                    if ($device_list != null) {
+                        foreach($device_list as $device) {
+                            $gcm = new GCM();
+                            $gcm_id = $device->gcmId;
+                            $gcm->send($gcm_id, $data);
+                        }
                     }
-                    $gcm2 = new GCM();
+
+//                    $gcm2 = new GCM();
+//                    $data2 = array();
+//                    $data2['type'] = 'contact,delete';
+//                    $data2['contact_id'] = $oppContact->contact_id;
+//                    $data2['contact_user_id'] = $user->id;
+//                    if ($device != null) {
+//                        $gcm_id = $device->gcmId;
+//                        $gcm2->send($gcm_id, $data2);
+//                    }
+
                     $data2 = array();
                     $data2['type'] = 'contact,delete';
                     $data2['contact_id'] = $oppContact->contact_id;
                     $data2['contact_user_id'] = $user->id;
-                    if ($device != null) {
-                        $gcm_id = $device->gcmId;
-                        $gcm2->send($gcm_id, $data2);
+                    if ($device_list != null) {
+                        foreach($device_list as $device) {
+                            $gcm = new GCM();
+                            $gcm_id = $device->gcmId;
+                            $gcm->send($gcm_id, $data2);
+                        }
                     }
                 }
             }
@@ -436,210 +451,98 @@ class ContactController extends Controller
             ));
     }
 
-    public function actionAdd()
-    {
-        $thisSpace = $this->getSpace();
-        $Ruser = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
-        $doit = (int) Yii::$app->request->get('doit');
-
-
-        $empty = false;
-        $keyword = Yii::$app->request->get('keyword', "");
-        if ($keyword == "")
-            $empty = true;
-
-        $page = (int) Yii::$app->request->get('page', 1);
-
-        $searchOptions = [
-            'model' => \humhub\modules\user\models\User::className(),
-            'page' => $page,
-            'pageSize' => Setting::Get('paginationSize'),
-        ];
-
-        $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
-
-        $users = $searchResultSet->getResultInstances();
-        $RMember = Membership::findAll(['user_id' => $Ruser->id]);
-        $contacts = array();
-        $spaces = array();
-        foreach ($users as $user){
-            $existContact = Contact::findAll(['user_id' => $Ruser->id, 'contact_user_id' => $user->id, 'linked' => 1]);
-            if ($user->id != $Ruser->id && !$existContact){
-                if ($RMember != null){
-                    $isSameSpace = false;
-                    foreach ($RMember as $s){
-                        $m = Membership::findOne(['space_id' => $s->space_id, 'user_id' => $user->id]);
-                        if ($m != null){
-                            $isSameSpace = true;
-                            $spaces[$user->id] = Space::findOne(['id' => $s->space_id]);
-                            break;
-                        }
-                    }
-                    if ($isSameSpace){
-                        array_unshift($contacts, $user);
-                    } else {
-                        array_push($contacts, $user);
-                    }
-
-                } else {
-                    array_push($contacts, $user);
-                }
-
-
-            }
-        }
-
-
-
-        $pagination = new \yii\data\Pagination(['totalCount' => count($contacts)]);
-
-        if ($doit == 2) {
-            $contactUser = User::findOne(['id' => Yii::$app->request->get('connect_id')]);
-            $contact = new Contact();
-
-            if ($contactUser->guid == Yii::$app->user->guid)
-            {
-                $contact->contact_user_id = $contactUser->id;
-                $contact->contact_first = $contactUser->profile->firstname;
-                $contact->contact_last = $contactUser->profile->lastname;
-                $contact->contact_mobile = $contactUser->profile->mobile;
-                $contact->home_phone = $contactUser->profile->phone_private;
-                $contact->work_phone = $contactUser->profile->phone_work;
-                $contact->contact_email = $contactUser->email;
-                $contact->linked = 1;
-                if ($contactUser->device_id != null)
-                {
-                    $contact->device_phone = $contactUser->device->phone;
-                }
-                $contact->save();
-            } else {
-                $contact->sendLink($contactUser, $user);
-            }
-
-            return $this->redirect($thisSpace->createUrl('add', ['rguid' => $user->guid]));
-        }
-
-        return $this->render('add', array(
-            'space' => $thisSpace,
-            'receiver' => $Ruser,
-            'keyword' => $keyword,
-            'users' => $contacts,
-            'details' => $spaces,
-            'pagination' => $pagination,
-            'empty' => $empty,
-
-        ));
-    }
-
-
-    public function actionConnect()
-    {
-        $thisSpace = $this->getSpace();
-        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
-
-        $doit = (int) Yii::$app->request->get('doit');
-        $Cid = (int) Yii::$app->request->get('Cid');
-        $contact = Contact::findOne(['contact_id' => $Cid, 'user_id' => $user->id]);
-        if ($contact == null) {
-            throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'Contact not found!'));
-        }
-        $limitUsers = array();
-        $spaces = array();
-        foreach (Profile::findAll(['mobile' => $contact->contact_mobile]) as $userProfile) {
-            $userId =  $userProfile->user_id;
-            $limitUsers[] = User::findOne(['id' => $userId]);
-            $spaces[$userId] = 0;
-        }
-        $userSpaces = Membership::findAll(['user_id' => $user->id]);
-
-        foreach ($userSpaces as $space){
-            if ($space !== null)
-            {
-                $spaceId = $space->space_id;
-                foreach (Membership::findAll(['space_id' => $spaceId, 'status' => 3]) as $spaceContact){
-                    $userId = $spaceContact->user_id;
-                    $existContact = Contact::findOne(['user_id' => $user->id, 'contact_user_id' => $userId]);
-                    if ($userId != $user->id && !$existContact){
-                        $limitUsers[] = User::findOne(['id' => $userId]);
-                        $spaces[$userId] = $spaceId;
-                    }
-                }
-            }
-        }
-
-
-
-        $keyword = Yii::$app->request->get('keyword', "");
-        $page = (int) Yii::$app->request->get('page', 1);
-
-        $searchOptions = [
-            'model' => \humhub\modules\user\models\User::className(),
-            'page' => $page,
-            'limitUsers' => $limitUsers,
-        ];
-
-
-        $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
-        $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
-
-
-        $connect_user_id = (int) Yii::$app->request->get('connect_id');
-        if ($doit == 2) {
-            $contact_user = User::findOne(['id' => $connect_user_id]);
-
-            if ($contact_user->guid == Yii::$app->user->guid)
-            {
-                $contact->contact_user_id = $contact_user->id;
-                $contact->contact_first = $contact_user->profile->firstname;
-                $contact->contact_last = $contact_user->profile->lastname;
-                $contact->contact_mobile = $contact_user->profile->mobile;
-                $contact->home_phone = $contact_user->profile->phone_private;
-                $contact->work_phone = $contact_user->profile->phone_work;
-                $contact->contact_email = $contact_user->email;
-                $contact->linked = 1;
-                if ($contact_user->device_id != null)
-                {
-                    $contact->device_phone = $contact_user->device->phone;
-                }
-                $contact->save();
-            } else {
-                $contact->sendLink($contact_user, $user);
-            }
-
-
-            return $this->redirect($thisSpace->createUrl('edit', ['Cid' => $contact->contact_id,'rguid' => $user->guid]));
-        }
-
-        return $this->render('connect', array(
-            'space' => $thisSpace,
-            'keyword' => $keyword,
-            'users' => $searchResultSet->getResultInstances(),
-            'pagination' => $pagination,
-            'contact' => $contact,
-            'details' => $spaces,
-            'connnect_id' => $connect_user_id,
-            'receiver' => $user
-        ));
-    }
+//    public function actionAdd()
+//    {
+//        $thisSpace = $this->getSpace();
+//        $Ruser = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
+//        $doit = (int) Yii::$app->request->get('doit');
+//
+//
+//        $empty = false;
+//        $keyword = Yii::$app->request->get('keyword', "");
+//        if ($keyword == "")
+//            $empty = true;
+//
+//        $page = (int) Yii::$app->request->get('page', 1);
+//
+//        $searchOptions = [
+//            'model' => \humhub\modules\user\models\User::className(),
+//            'page' => $page,
+//            'pageSize' => Setting::Get('paginationSize'),
+//        ];
+//
+//        $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
+//
+//        $users = $searchResultSet->getResultInstances();
+//        $RMember = Membership::findAll(['user_id' => $Ruser->id]);
+//        $contacts = array();
+//        $spaces = array();
+//        foreach ($users as $user){
+//            $existContact = Contact::findAll(['user_id' => $Ruser->id, 'contact_user_id' => $user->id, 'linked' => 1]);
+//            if ($user->id != $Ruser->id && !$existContact){
+//                if ($RMember != null){
+//                    $isSameSpace = false;
+//                    foreach ($RMember as $s){
+//                        $m = Membership::findOne(['space_id' => $s->space_id, 'user_id' => $user->id]);
+//                        if ($m != null){
+//                            $isSameSpace = true;
+//                            $spaces[$user->id] = Space::findOne(['id' => $s->space_id]);
+//                            break;
+//                        }
+//                    }
+//                    if ($isSameSpace){
+//                        array_unshift($contacts, $user);
+//                    } else {
+//                        array_push($contacts, $user);
+//                    }
+//
+//                } else {
+//                    array_push($contacts, $user);
+//                }
+//            }
+//        }
+//
+//
+//
+//        $pagination = new \yii\data\Pagination(['totalCount' => count($contacts)]);
+//
+//        if ($doit == 2) {
+//            $contactUser = User::findOne(['id' => Yii::$app->request->get('connect_id')]);
+//            $contact = new Contact();
+//
+//            if ($contactUser->guid == Yii::$app->user->guid)
+//            {
+//                $contact->contact_user_id = $contactUser->id;
+//                $contact->contact_first = $contactUser->profile->firstname;
+//                $contact->contact_last = $contactUser->profile->lastname;
+//                $contact->contact_mobile = $contactUser->profile->mobile;
+//                $contact->home_phone = $contactUser->profile->phone_private;
+//                $contact->work_phone = $contactUser->profile->phone_work;
+//                $contact->contact_email = $contactUser->email;
+//                $contact->linked = 1;
+//                $contact->save();
+//            } else {
+//                $contact->sendLink($contactUser, $user);
+//            }
+//
+//            return $this->redirect($thisSpace->createUrl('add', ['rguid' => $user->guid]));
+//        }
+//
+//        return $this->render('add', array(
+//            'space' => $thisSpace,
+//            'receiver' => $Ruser,
+//            'keyword' => $keyword,
+//            'users' => $contacts,
+//            'details' => $spaces,
+//            'pagination' => $pagination,
+//            'empty' => $empty,
+//
+//        ));
+//    }
 
 
 
 
-    public function actionDisconnect ()
-    {
-        $thisSpace = $this->getSpace();
-        $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
 
-        $Cid = (int) Yii::$app->request->get('Cid');
-        $contact = Contact::findOne(['contact_id' => $Cid, 'user_id' => $user->id]);
-        if ($contact != null) {
-            $contact->contact_user_id = null;
-            $contact->save();
-            $contact->notifyDevice('update');
-        }
-
-
-        return $this->redirect($thisSpace->createUrl('edit', ['Cid' => $Cid,'rguid' => $user->guid]));
-    }
 
 }
