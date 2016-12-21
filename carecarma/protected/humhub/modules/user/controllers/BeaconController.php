@@ -18,10 +18,10 @@ use Aws\DynamoDb\Marshaler;
  */
 class BeaconController extends Controller
 {
-//    public function beforeAction($action) {
-//        $this->enableCsrfValidation = false;
-//        return parent::beforeAction($action);
-//    }
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
     /**
      * @inheritdoc
      */
