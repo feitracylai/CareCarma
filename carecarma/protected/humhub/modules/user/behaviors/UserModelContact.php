@@ -69,9 +69,6 @@ class UserModelContact extends Behavior
         $contact2->contact_mobile = $user->profile->mobile;
         $contact2->work_phone = $user->profile->phone_work;
         $contact2->home_phone = $user->profile->phone_private;
-        if ($user->device_id != null){
-            $contact2->device_phone = $user->device->phone;
-        }
         $contact2->save();
 
 

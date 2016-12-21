@@ -13,8 +13,8 @@ use yii\helpers\Url;
 <div class="panel panel-default">
     <div class="panel-heading"><?php echo Yii::t('AdminModule.views_device_delete', 'Delete device'); ?></div>
     <div class="panel-body">
-        <?php $deviceUser = \humhub\modules\user\models\User::findOne(['device_id' => $model->device_id]) ?>
-        <?php if($deviceUser == null){ ?>
+        
+        <?php if($model->user_id == 0){ ?>
 
         <p>
             <?php echo Yii::t('AdminModule.views_device_delete', 'Are you sure you want to delete this device? '); ?>
