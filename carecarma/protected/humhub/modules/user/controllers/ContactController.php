@@ -451,107 +451,6 @@ class ContactController extends Controller
 //        ));
 //    }
 
-    public function actionCreate()
-    {
-        $contactModel = new Contact();
-        $contactModel->scenario = 'editContact';
-        $contactModel->user_id = Yii::$app->user->id;
-        $page = (int) Yii::$app->request->get('page', 1);
-        $keyword = Yii::$app->request->get('keyword', "");
-        $searchOptions = [
-            'model' => \humhub\modules\user\models\User::className(),
-            'page' => $page,
-        ];
-        $searchResultSet = Yii::$app->search->find($keyword, $searchOptions);
-        $pagination = new \yii\data\Pagination(['totalCount' => $searchResultSet->total, 'pageSize' => $searchResultSet->pageSize]);
-        // Build Form Definition
-        $definition = array();
-        $definition['elements'] = array();
-        // Add User Form
-        $definition['elements']['Contact'] = array(
-            'type' => 'form',
-            'title' => Yii::t('UserModule.controllers_ContactController', 'New Contact'),
-            'elements' => array(
-                'contact_first' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'contact_last' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'nickname' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'relation' => array(
-                    'type' => 'dropdownlist',
-                    'class' => 'form-control',
-                    'items' => Yii::$app->params['availableRelationship'],
-                ),
-                'contact_mobile' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'home_phone' =>array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'work_phone' =>array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 255,
-                ),
-                'contact_email' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 100,
-                ),
-                'watch_primary_number' => array(
-                    'type' => 'checkbox',
-                    'class' => 'form-control',
-                    'maxlength' => 100,
-                ),
-                'phone_primary_number' => array(
-                    'type' => 'checkbox',
-                    'class' => 'form-control',
-                    'maxlength' => 100,
-                ),
-            ),
-        );
-        // Get Form Definition
-        $definition['buttons'] = array(
-            'save' => array(
-                'type' => 'submit',
-                'class' => 'btn btn-primary',
-                'label' => Yii::t('UserModule.controllers_ContactController', 'Add'),
-            ),
-        );
-        $form = new HForm($definition);
-//        $contactModel->relation = " ";
-        $form->models['Contact'] = $contactModel;
-        if ($form->submitted('save') && $form->validate()) {
-//            $this->forcePostRequest();
-//            $form->models['Contact']->status = User::STATUS_ENABLED;
-            if ($form->models['Contact']->save()) {
-
-                $contactModel->notifyDevice('add');
-
-                return $this->redirect(Url::to(['index']));
-            }
-        }
-        return $this->render('create', array(
-            'hForm' => $form,
-            'keyword' => $keyword,
-            'users' => $searchResultSet->getResultInstances(),
-            'pagination' => $pagination
-        ));
-    }
 
     public function actionLinkCancel()
     {
@@ -880,22 +779,7 @@ class ContactController extends Controller
         return $this->redirect(Url::home());
     }
 
-    public function actionDisconnect ()
-    {
-        $user = User::findOne(['guid' => Yii::$app->user->guid]);
-        $id = (int) Yii::$app->request->get('id');
-        $contact = Contact::findOne(['contact_id' => $id, 'user_id' => $user->id]);
-        if ($contact != null) {
-            $contact->contact_user_id = null;
-            $contact->save();
 
-            $contact->notifyDevice('update');
-
-
-
-        }
-        return $this->redirect($user->createUrl('edit', ['id' => $id]));
-    }
 
     public function actionDeviceallcontact ()
     {

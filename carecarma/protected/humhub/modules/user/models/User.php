@@ -391,13 +391,6 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             $contact->contact_mobile = $this->profile->mobile;
             $contact->home_phone = $this->profile->phone_private;
             $contact->work_phone = $this->profile->phone_work;
-
-            if ($this->device_id != null)
-            {
-                $contact->device_phone = $this->device->phone;
-            }else {
-                $contact->device_phone = '';
-            }
             $contact->save();
 
 //            $gcm = new GCM();
@@ -456,7 +449,17 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
                     $contact->contact_user_id = $this->id;
                     $contact->linked = 1;
                     $contact->save();
-                    $contact->notifyDevice('add');
+
+                    $data = array();
+                    $data['type'] = 'contact,updated';
+                    $device_list = Device::findAll(['user_id' => $this->id]);
+                    foreach($device_list as $device) {
+                        if ($device != null) {
+                            $gcm = new GCM();
+                            $gcm_id = $device->gcmId;
+                            $gcm->send($gcm_id, $data);
+                        }
+                    }
 
                     $notification = new LinkAccepted();
                     $notification->source = $contact;
@@ -474,10 +477,6 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
                     $newContact->linked = 1;
                     $newContact->home_phone = $senderUser->profile->phone_private;
                     $newContact->work_phone = $senderUser->profile->phone_work;
-                    if ($senderUser->device_id != null)
-                    {
-                        $newContact->device_phone = $senderUser->device->phone;
-                    }
                     $newContact->save();
 
 
