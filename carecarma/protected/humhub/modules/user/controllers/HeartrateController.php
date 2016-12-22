@@ -218,6 +218,7 @@ class HeartrateController extends Controller
 //    T0000D000X000  time, device_id, heartrate
     public function actionCreateddd()
     {
+
         ini_set('max_execution_time', 30000);
         date_default_timezone_set('GMT');
         $data = Yii::$app->request->post();
@@ -227,13 +228,17 @@ class HeartrateController extends Controller
         Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         while(strlen($pure_data) != 0) {
             if($pure_data[0] == "H" and $pure_data[1] == "T"){
-                $temp_data = substr($pure_data, 2);
+
+                $temp_data = substr($pure_data, 1);
                 $pos_next_h = strpos($temp_data, "H");
-                if ($pos_next_h == false) $row = $temp_data;
+
+                if ($pos_next_h == false) {
+                    $row = $temp_data;
+                }
                 else $row = substr($temp_data, 0, $pos_next_h);
                 $pos_r = strpos($row, "R");
                 $pos_i = strpos($row, "I");
-                $time = substr($row, 0, $pos_r);
+                $time = substr($row, 1, $pos_r);
 
                 $t = time();
                 $yearmonthday = date('Y-m-d',$t);
@@ -244,6 +249,8 @@ class HeartrateController extends Controller
                 $heartrate = substr($row, $pos_r + 1, $pos_i - $pos_r - 1);
                 $device_id = substr($row, $pos_i + 1);
 
+
+
                 $pure_data = substr($pure_data, strlen($row) + 1);
                 $shorttime = strtotime($realtime) . substr($time, 5,3);
 
@@ -253,7 +260,10 @@ class HeartrateController extends Controller
                 $model->device_id = $device_id;
                 $model->heartrate = $heartrate;
                 $model->time = $shorttime;
+                Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                 $model->save();
+
+
             }
         }
         Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');

@@ -33,7 +33,7 @@ class Heartrate extends \yii\db\ActiveRecord
             [['user_id'], 'required'],
             [['user_id'], 'integer'],
             [['device_id'], 'required'],
-            [['device_id'], 'integer'],
+            [['device_id'], 'string', 'max' => 11],
             [['heartrate'], 'safe'],
             [['heartrate'], 'string', 'max' => 100],
             [['time'], 'string', 'max' => 100],
