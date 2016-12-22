@@ -1,7 +1,8 @@
 <?php
 
 namespace humhub\modules\mail\controllers;
-
+use humhub\modules\dashboard\models\MobileToken;
+use humhub\modules\dashboard\models\MobileTokenQuery;
 use humhub\modules\user\models\Contact;
 use Yii;
 use yii\helpers\Html;
@@ -22,6 +23,8 @@ use humhub\modules\mail\models\forms\CreateMessage;
 use humhub\modules\mail\permissions\SendMail;
 use humhub\modules\user\widgets\UserPicker;
 use humhub\modules\space\models\Membership;
+use humhub\libs\Firebase;
+use humhub\libs\sendNotificationIOS;
 
 /**
  * MailController provides messaging actions.
@@ -112,9 +115,57 @@ class MailController extends Controller
             $messageEntry->user_id = Yii::$app->user->id;
             $messageEntry->content = $replyForm->message;
             $messageEntry->save();
-//            $messageEntry->notify();
+            $messageEntry->notify();
 
 //            File::attachPrecreated($messageEntry, Yii::$app->request->post('fileUploaderHiddenGuidField'));
+
+//                $txt1 =  print_r ($user,true);
+//                fwrite($myfile, $txt1);
+            $txt1 = print_r( $messageEntry->content,true);
+            $SenderUserid = print_r( $messageEntry->user_id,true);
+           // Yii::getLogger()->log( $SenderUserid , Logger::LEVEL_INFO, 'MyLog');
+            $MessageID =  print_r($messageEntry->message_id,true);
+           $AllUserid = UserMessage::findAll(['message_id' => $messageEntry->message_id]);
+            //['message_id' => $messageEntry->message_id],
+            $Allreceipt = array();
+            foreach ( $AllUserid  as  $test ){
+                if ($test->user_id != $SenderUserid){
+                    $Allreceipt[] = $test->user_id;
+                  //  Yii::getLogger()->log($test->user_id , Logger::LEVEL_INFO, 'MyLog');
+                    //Yii::getLogger()->log($test->message_id , Logger::LEVEL_INFO, 'MyLog');
+                    $users_tokenT = MobileToken::find()->where(['user_id' =>$test->user_id ])->all();
+                    //Yii::getLogger()->log($users_tokenT , Logger::LEVEL_INFO, 'MyLog');
+                    if($users_tokenT != null)
+            {
+                foreach($users_tokenT as $userToken) {
+                    $mobile_token = $userToken->device_token;
+                  //  Yii::getLogger()->log($mobile_token, Logger::LEVEL_INFO, 'MyLog');
+                    $sendNot = new sendNotificationIOS();
+                  //  Yii::getLogger()->log($txt1, Logger::LEVEL_INFO, 'MyLog');
+                    $sendNot ->sendMessage($mobile_token,$txt1);
+                //    Yii::getLogger()->log($messageEntry->message_id , Logger::LEVEL_INFO, 'MyLog');
+                    $firebase = new Firebase();
+                    $firebase->send($mobile_token,$txt1 );
+                }
+            }
+                }
+            }
+
+//            $users_tokenT = MobileToken::find()->where(['user_id' =>$SenderUserid])->all();
+//           if($users_tokenT != null)
+//            {
+//                foreach($users_tokenT as $users_tokenT) {
+//                    $mobile_token = $users_tokenT->device_token;
+//                  //  Yii::getLogger()->log($mobile_token, Logger::LEVEL_INFO, 'MyLog');
+//                    $sendNot = new sendNotificationIOS();
+//                  //  Yii::getLogger()->log($txt1, Logger::LEVEL_INFO, 'MyLog');
+//                    $sendNot ->sendMessage($mobile_token,$txt1);
+//                //    Yii::getLogger()->log($messageEntry->message_id , Logger::LEVEL_INFO, 'MyLog');
+//
+//                }
+//            }
+
+
 
             //device
             foreach (UserMessage::find()->where(['message_id' => $message->id])->each() as $userMessage) {
@@ -128,9 +179,11 @@ class MailController extends Controller
                     $deviceMessage->from_id = Yii::$app->user->id;
                     $deviceMessage->content = $messageEntry->content;
                     $deviceMessage->notify();
+
                 }
 
             }
+
             return $this->htmlRedirect(['index', 'id' => $message->id]);
         }
         // Marks message as seen
@@ -359,7 +412,16 @@ class MailController extends Controller
             $messageEntry->user_id = Yii::$app->user->id;
             $messageEntry->content = $model->message;
             $messageEntry->save();
+            $messageEntry->notify();
             File::attachPrecreated($messageEntry, Yii::$app->request->post('fileUploaderHiddenGuidField'));
+
+
+
+            Yii::getLogger()->log($messageEntry->message_id, Logger::LEVEL_INFO, 'MyLog');
+            Yii::getLogger()->log($messageEntry->user_id, Logger::LEVEL_INFO, 'MyLog');
+            Yii::getLogger()->log($messageEntry->content, Logger::LEVEL_INFO, 'MyLog');
+            sleep(1);
+
 
             // Attach also Recipients, send message to each recipient
             // 1.add data into database "user_message"
@@ -370,21 +432,28 @@ class MailController extends Controller
                 $userMessage->user_id = $recipient->id;
                 $userMessage->save();
 
-//                // get info of each recipient and use notify() to send the message through GCM
-//                if ($recipient->gcmId != null){
-//                    $deviceMessage = new DeviceMessage();
-//                    $deviceMessage->message_id = $message->id;
-//                    //send to one of the recipient, and the recipient ony need to reply to the message sender
-//                    $deviceMessage->user_id = $recipient->id;
-//                    $deviceMessage->from_id = Yii::$app->user->id;
-//                    $deviceMessage->content = $model->message;
-//                    // I dont think we need updated_at
-//                    //$deviceMessage->updated_at = new \yii\db\Expression('NOW()');
-//                    //$deviceMessage->save();
-//                    //Yii::getLogger()->log(print_r($deviceMessage,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+                $AllUserid = UserMessage::findAll(['message_id' =>$messageEntry->message_id]);
+                foreach ($AllUserid as $test2)
+                {
+                    if ($test2->user_id != $messageEntry->user_id){
+                        $users_tokenT = MobileToken::find()->where(['user_id' =>$test2->user_id ])->all();
+                        if($users_tokenT != null)
+                        {
+                            foreach($users_tokenT as $users_tokenT) {
+                                $mobile_token = $users_tokenT->device_token;
+                                $sendNot = new sendNotificationIOS();
+                                $sendNot ->sendMessage($mobile_token,$messageEntry->content);
+                                $firebase = new Firebase();
+                                $firebase->send($mobile_token,$messageEntry->content);
+                            }
+                        }
+
+                        Yii::getLogger()->log($test2->user_id, Logger::LEVEL_INFO, 'MyLog');
+                    }
+                }
+
 //
-//                    $deviceMessage->notify();
-//                }
                 if ($recipient->device_id != null){
 
                     $deviceMessage = new DeviceMessage();
@@ -529,10 +598,11 @@ class MailController extends Controller
                 'message_id' => $message->id
             ]);
             if ($userMessage != null) {
+
                 return $message;
             }
         }
-
+      
         return null;
     }
 
@@ -561,6 +631,7 @@ class MailController extends Controller
             $messageEntry->user_id = Yii::$app->user->id;
             $messageEntry->content = $model->message;
             $messageEntry->save();
+            $messageEntry->notify();
             File::attachPrecreated($messageEntry, Yii::$app->request->post('fileUploaderHiddenGuidField'));
 
             foreach ($model->getRecipients() as $recipient) {
@@ -578,6 +649,9 @@ class MailController extends Controller
                     $deviceMessage->from_id = Yii::$app->user->id;
                     $deviceMessage->content = $model->message;
                     $deviceMessage->notify();
+
+                    //echo "<script>console.log('". $deviceMessage ."');</script>";
+                    //echo $deviceMessage->user_id;
                 }
 
             }
@@ -628,6 +702,7 @@ class MailController extends Controller
         $messageEntry->updated_at = new \yii\db\Expression('NOW()');
         $messageEntry->updated_by = Yii::$app->user->id;
         $messageEntry->save();
+        $messageEntry->notify();
         
         $message = Message::findOne(['id' => $message_id]);
         $message->updated_at = new \yii\db\Expression('NOW()');
