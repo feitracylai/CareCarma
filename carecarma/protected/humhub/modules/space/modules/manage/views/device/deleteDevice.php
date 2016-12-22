@@ -15,12 +15,12 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
     </div>
     <div class="panel-body">
         <p>
-            <?php echo Yii::t('SpaceModule.views_admin_receiver_deleteDevice', 'Are you sure to deactivate this CoSMoS <strong>{device Id}</strong>?', array('{device Id}' => $user->device_id)); ?>
+            <?php echo Yii::t('SpaceModule.views_admin_receiver_deleteDevice', 'Are you sure to deactivate this CoSMoS device (<strong>{device Id}</strong>)?', array('{device Id}' => $device->device_id)); ?>
         </p>
         <br>
-            <?php echo Html::a(Yii::t('SpaceModule.views_admin_receiver_deleteDevice', 'Deactivate CoSMoS'), $space->createUrl('delete-device', ['id' => $user->device_id, 'doit' => 2, 'rguid' => $user->guid]), array('class' => 'btn btn-danger', 'data-method' => 'POST')); ?>
+            <?php echo Html::a(Yii::t('SpaceModule.views_admin_receiver_deleteDevice', 'Deactivate CoSMoS'), $space->createUrl('delete-device', ['id' => $device->device_id, 'doit' => 2, 'rguid' => $user->guid]), array('class' => 'btn btn-danger', 'data-method' => 'POST')); ?>
             &nbsp;
-            <?php echo Html::a(Yii::t('SpaceModule.views_admin_receiver_deleteDevice', 'Back'), $space->createUrl('device', ['id' => $user->device_id, 'rguid' => $user->guid]), array('class' => 'btn btn-primary')); ?>
+            <?php echo Html::a(Yii::t('SpaceModule.views_admin_receiver_deleteDevice', 'Back'), $space->createUrl('device', ['rguid' => $user->guid]), array('class' => 'btn btn-primary')); ?>
 
 
     </div>

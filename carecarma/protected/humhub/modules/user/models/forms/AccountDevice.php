@@ -14,9 +14,8 @@ class AccountDevice extends \yii\base\Model
     {
         return array(
             array('deviceId', 'required'),
-            array('currentPassword', 'required', 'on' => 'userDevice'),
-            array('currentPassword', \humhub\modules\user\components\CheckPasswordValidator::className()),
-            array('deviceId', 'unique', 'targetAttribute' => 'device_id', 'targetClass' => \humhub\modules\user\models\User::className(), 'message' => '{attribute} "{value}" is already in use!'),
+            array('currentPassword', 'required'),
+            array('currentPassword', \humhub\modules\user\components\CheckPasswordValidator::className(), 'on' => 'userDevice'),
 
         );
     }

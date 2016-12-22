@@ -34,11 +34,7 @@ use yii\helpers\Html;
                     ],
                     'device_id',
                     'phone',
-                    [
-                        'label' => Yii::t('AdminModule.views_device_index', 'User ID'),
-                        'format' => 'raw',
-                        'attribute' => 'user.id',
-                    ],
+                    'user_id',
 
                     'user.username',
 

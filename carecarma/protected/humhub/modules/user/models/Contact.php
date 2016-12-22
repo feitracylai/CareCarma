@@ -156,67 +156,71 @@ class Contact extends \yii\db\ActiveRecord
     }
 
 
-    public function notifyDevice($data) {
-
-        if ($data == 'add') {
-            $user = User::findOne(['id' => $this->user_id]);
-            if ($user->device_id != null){
-                $device = Device::findOne(['device_id' => $user->device_id]);
-                if ($device->gcmId != null){
-                    $gcm = new GCM();
-                    $gcm_registration_id = $device->gcmId;
-                    $gcm->send($gcm_registration_id, $this->getAddPush());
-
-                }
-            }
-        }
-
-        if ($data == 'delete') {
-            $user = User::findOne(['id' => $this->user_id]);
-            if ($user->device_id != null){
-                $device = Device::findOne(['device_id' => $user->device_id]);
-                if ($device->gcmId != null){
-                    $gcm = new GCM();
-                    $gcm_registration_id = $device->gcmId;
-                    $gcm->send($gcm_registration_id, $this->getDeletePush());
-
-                }
-            }
-        }
-
-
-        if ($data == 'update') {
-            $user = User::findOne(['id' => $this->user_id]);
-            if ($user->device_id != null){
-                $device = Device::findOne(['device_id' => $user->device_id]);
-                if ($device->gcmId != null){
-                    $gcm = new GCM();
-                    $gcm_registration_id = $device->gcmId;
-                    $gcm->send($gcm_registration_id, $this->getUpdatePush());
-
-                }
-            }
-        }
-
-
-
-//        $user = User::findOne(['id' => $this->user_id]);
-//        if ($user->device_id != null){
-//            $device = Device::findOne(['device_id' => $user->device_id]);
-//            if ($device->gcmId != null){
-//                $gcm = new GCM();
-////                $push = new Push();
+//    public function notifyDevice($data) {
 //
-//                $push->setTitle('contact');
-//                $push->setData($data);
 //
-//                $gcm_registration_id = $device->gcmId;
 //
-//                $gcm->send($gcm_registration_id, $push->getPush());
+//        if ($data == 'add') {
+//            $user = User::findOne(['id' => $this->user_id]);
+//            if ($user->device_id != null){
+//                $device = Device::findOne(['device_id' => $user->device_id]);
+//                if ($device->gcmId != null){
+//                    $gcm = new GCM();
+//                    $gcm_registration_id = $device->gcmId;
+//                    $gcm->send($gcm_registration_id, $this->getAddPush());
 //
+//                }
+//            }
+//
+//
+//        }
+//
+//        if ($data == 'delete') {
+//            $user = User::findOne(['id' => $this->user_id]);
+//            if ($user->device_id != null){
+//                $device = Device::findOne(['device_id' => $user->device_id]);
+//                if ($device->gcmId != null){
+//                    $gcm = new GCM();
+//                    $gcm_registration_id = $device->gcmId;
+//                    $gcm->send($gcm_registration_id, $this->getDeletePush());
+//
+//                }
 //            }
 //        }
-    }
+//
+//
+//        if ($data == 'update') {
+//            $user = User::findOne(['id' => $this->user_id]);
+//            if ($user->device_id != null){
+//                $device = Device::findOne(['device_id' => $user->device_id]);
+//                if ($device->gcmId != null){
+//                    $gcm = new GCM();
+//                    $gcm_registration_id = $device->gcmId;
+//                    $gcm->send($gcm_registration_id, $this->getUpdatePush());
+//
+//                }
+//            }
+//        }
+//
+//
+//
+////        $user = User::findOne(['id' => $this->user_id]);
+////        if ($user->device_id != null){
+////            $device = Device::findOne(['device_id' => $user->device_id]);
+////            if ($device->gcmId != null){
+////                $gcm = new GCM();
+//////                $push = new Push();
+////
+////                $push->setTitle('contact');
+////                $push->setData($data);
+////
+////                $gcm_registration_id = $device->gcmId;
+////
+////                $gcm->send($gcm_registration_id, $push->getPush());
+////
+////            }
+////        }
+//    }
 
 //    public static function notify($contact_list)
 //    {

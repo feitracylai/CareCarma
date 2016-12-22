@@ -294,38 +294,30 @@ class DeviceController extends ContentContainerController
     }
 
     public function checkDevice ($device_id) {
-        $user = User::findOne(['device_id' => $device_id]);
         $device = Device::findOne(['device_id' => $device_id]);
-        if ($device != null){
-            $gcmId = $device->gcmId;
-            if ($user != null and $gcmId != null) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        } else {
+        $user = $device->user_id;
+        $gcmId = $device->gcmId;
+        if ($user != null and $gcmId != null) {
+            return true;
+        }
+        else {
             return false;
         }
 
     }
 
     public function activation ($device_id) {
-        $user = User::findOne(['device_id' => $device_id]);
-        $device = Device::findOne(['device_id' => $device_id]);
-        foreach (Contact::find()->where(['contact_user_id' => $user->id])->each() as $contact) {
-            $contact->device_phone = $device->phone;
-            $contact->save();
-        }
-        $gcm = new GCM();
 
+        $device = Device::findOne(['device_id' => $device_id]);
+        $user = User::findOne(['id' => $device->user_id]);
+
+        $gcm = new GCM();
         if ($device != null) {
             $gcm_id = $device->gcmId;
             $gcm->send($gcm_id, $this->getUsernamePassword($user));
         }
-        $user_new = User::findOne(['device_id' => $device_id]);
-        $user_new->temp_password = null;
-        $user_new->save();
+        $user->temp_password = null;
+        $user->save();
     }
 
     public function getUsernamePassword($user) {
@@ -401,47 +393,60 @@ class DeviceController extends ContentContainerController
         ));
     }
 
+    private function checkReceiverDevice($model, $receiver){
+        $check = true;
+        $device = Device::find()->where(['device_id' => $model->deviceId])->one();
+        if ($receiver->currentPassword !== null && !$receiver->currentPassword->validatePassword($model->currentPassword)) {
+            $model->addError('currentPassword', Yii::t('SpaceModule.controllers_DeviceController', "Your password is incorrect!"));
+            $check = false;
+        }
+        if ($device == null){
+            $model->addError('deviceId',  Yii::t('SpaceModule.controllers_DeviceController', "Activation ID is incorrect!"));
+            $check = false;
+        } elseif ($device->user_id != 0){
+            $model->addError('deviceId', Yii::t('SpaceModule.controllers_DeviceController', 'This Activation ID is already in use!'));
+            $check = false;
+        }
+        return $check;
+    }
+
     public function actionDevice(){
         $space = $this->getSpace();
         if (!$space->isAdmin())
             throw new HttpException(403, 'Access denied - Circle Administrator only!');
 
         $user =  $this->getCare();
-        $deviceOld = Device::findOne(['device_id' => $user->device_id]);
+        $device_list = Device::findAll(['user_id' => $user->id]);
+
         $deviceModel = new \humhub\modules\user\models\forms\AccountDevice();
-//        bug here!!!! it doesn't check if the password is correct.
-        if ($deviceModel->load(Yii::$app->request->post())) {
+
+
+        if ($deviceModel->load(Yii::$app->request->post())&& $deviceModel->validate() && $this->checkReceiverDevice($deviceModel, $user)) {
             $device = Device::find()->where(['device_id' => $deviceModel->deviceId])->one();
-            if ($device!=null) {
-                if ($device != $deviceOld) {
-                    $user->temp_password = $deviceModel->currentPassword;
-                    $user->device_id = $deviceModel->deviceId;
-                    $user->save();
+
+
+                $device->user_id = $user->id;
+                $user->temp_password = $deviceModel->currentPassword;
+                $device->save();
+                $user->save();
 
                     // check if device fulfill all the rule of activation, if yes, activation
-                    if ($this->checkDevice($deviceModel->deviceId)) {
-                        $this->activation($deviceModel->deviceId);
-                    }
-                    if($deviceOld != null) {
-                        $gcmOld = new GCM();
-                        $pushOld = new Push();
-                        $pushOld->setTitle('user');
-                        $pushOld->setData('delete device');
-                        $gcmOld->send($deviceOld->gcmId, $pushOld->getPush());
-                    }
+                if ($this->checkDevice($deviceModel->deviceId)) {
+                    $this->activation($deviceModel->deviceId);
+                }
+
 
 //                    $user->updateUserContacts();
-                }
+
                 Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
-            }
-            else {
-                $deviceModel->addError('deviceId', 'Invalid input! Please make sure that you entered the correct device ID.');
-            }
+
+            return $this->redirect($space->createUrl('device',['rguid' => $user->guid]));
         }
         return $this->render('device', array(
             'model' => $deviceModel,
             'user' => $user,
             'space' => $space,
+            'device_list' => $device_list,
         ));
     }
 
@@ -453,13 +458,13 @@ class DeviceController extends ContentContainerController
             throw new HttpException(403, 'Access denied - Circle Administrator only!');
 
         $user = $this->getCare();
+        $device = Device::findOne(['device_id' => Yii::$app->request->get('id')]);
         $doit = (int) Yii::$app->request->get('doit');
-        $model = new \humhub\modules\user\models\forms\AccountDevice();
 
 
         if ($doit == 2) {
 
-            $device = Device::findOne(['device_id' => $user->device_id]);
+
             if ($device->gcmId != null) {
 
                 $gcm = new GCM();
@@ -468,10 +473,13 @@ class DeviceController extends ContentContainerController
                 $gcm_registration_id = $device->gcmId;
                 $gcm->send($gcm_registration_id, $data);
             }
-            $device->delete();
 
-            $user->device_id = null;
-            $user->save();
+
+            $device->delete();
+            /***test***/
+//            $device->user_id = 0;
+//            $device->save();
+            /**********/
 //            $user->updateUserContacts();
 
 
@@ -480,7 +488,7 @@ class DeviceController extends ContentContainerController
         }
 
 
-        return $this->render('deleteDevice', array('model' => $model, 'user' => $user, 'space' => $space));
+        return $this->render('deleteDevice', array('device' => $device, 'user' => $user, 'space' => $space));
     }
 
 //    public function actionAccountSettings()
@@ -626,8 +634,15 @@ class DeviceController extends ContentContainerController
         // Redirect  back to Administration page
         return $this->htmlRedirect($space->createUrl('/space/manage/device', ['sguid' => $space->guid]));
     }
-    public function getCare(){
+    public function getCare()
+    {
         return User::findOne(['guid' => Yii::$app->request->get('rguid')]);
+    }
+
+
+    public function actionImage()
+    {
+
     }
 }
 ?>

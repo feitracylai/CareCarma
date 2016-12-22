@@ -20,8 +20,9 @@ use yii\helpers\Url;
             if ($item['label'] == Yii::t('MailModule.base', 'Messages')){ ?>
                 <span id="badge-messages" style="display:none;"
                       class="label label-danger label-notification">1</span>
-            <?php }
-             ?>
+            <?php } elseif ($item['label'] == Yii::t('DashboardModule.base', '&nbsp&nbsp&nbsp&nbspHome&nbsp&nbsp&nbsp')){ ?>
+                <span id="badge-notifications" style="display:none;" class="label label-danger label-notification visible-lg visible-md">1</span>
+            <?php } ?>
     </li>
 <?php endforeach; ?>
 
@@ -33,10 +34,7 @@ use yii\helpers\Url;
     ?>">
     <?php
     echo Html::a($item['icon'] . "<br />" , $item['url'], $item['htmlOptions']);
-    if ($item['label'] == Yii::t('MailModule.base', 'Messages')){ ?>
-        <span id="badge-messages-mobile" style="display:none;"
-              class="label label-danger label-notification">1</span>
-    <?php } ?>
+ ?>
 
 
 
@@ -59,31 +57,3 @@ use yii\helpers\Url;
     </ul>
 </li>-->
 
-<script type="text/javascript">
-
-
-    setMailMessageCount(<?php echo \humhub\modules\mail\models\UserMessage::getNewMessageCount(); ?>);
-
-
-    /**
-     * Sets current message count
-     */
-    function setMailMessageCount(count) {
-        // show or hide the badge for new messages
-        if (count == 0) {
-            $('#badge-messages').css('display', 'none');
-            $('#badge-messages-mobile').css('display', 'none');
-        } else {
-            $('#badge-messages').empty();
-            $('#badge-messages').append(count);
-            $('#badge-messages').fadeIn('fast');
-
-            $('#badge-messages-mobile').empty();
-            $('#badge-messages-mobile').append(count);
-            $('#badge-messages-mobile').fadeIn('fast');
-        }
-    }
-
-
-
-</script>

@@ -257,6 +257,52 @@ class BeaconController extends Controller
         Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
     }
 
+
+    public function actionCreateddd()
+    {
+        ini_set('max_execution_time', 30000);
+        date_default_timezone_set('GMT');
+        $data = Yii::$app->request->post();
+        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $pure_data = $data['Beacon'];
+        $list = array();
+        Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        while(strlen($pure_data) != 0) {
+            if($pure_data[0] == "B" and $pure_data[1] == "T"){
+                $temp_data = substr($pure_data, 2);
+                $pos_next_b = strpos($temp_data, "B");
+                if ($pos_next_b == false) $row = $temp_data;
+                else $row = substr($temp_data, 0, $pos_next_b);
+                $pos_d = strpos($row, "D");
+                $pos_x = strpos($row, "X");
+                $pos_i = strpos($row, "I");
+                $time = substr($row, 0, $pos_d);
+
+                $t = time();
+                $yearmonthday = date('Y-m-d',$t);
+                $hoursecond = date('H:i:s', substr($time, 0, 5));
+                $realtime = $yearmonthday . " " . $hoursecond;
+
+                $distance = substr($row, $pos_d + 1, $pos_x - $pos_d - 1);
+                $beacon_id = substr($row, $pos_x + 1, $pos_i - $pos_x - 1);
+                $device_id = substr($row, $pos_i + 1);
+
+                $pure_data = substr($pure_data, strlen($row) + 1);
+                $shorttime = strtotime($realtime) . substr($time, 5,3);
+
+                $model = new Beacon();
+                $model->user_id = Yii::$app->user->id;
+                $model->device_id = $device_id;
+                $model->datetime = $realtime;
+                $model->distance = $distance;
+                $model->beacon_id = $beacon_id;
+                $model->time = $shorttime;
+                $model->save();
+            }
+        }
+        Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+    }
+
     public function actionCreatenewforjoe()
     {
         ini_set('max_execution_time', 30000);

@@ -9,6 +9,10 @@ use humhub\components\ActiveRecord;
 use humhub\modules\user\models\User;
 use humhub\models\Setting;
 use humhub\modules\mail\models\Message;
+use humhub\modules\mail\models\UserMessage;
+use humhub\modules\mail\models\DeviceMessage;
+use yii\log\Logger;
+
 
 /**
  * This is the model class for table "message_entry".
@@ -107,8 +111,8 @@ class MessageEntry extends ActiveRecord
 
         $senderName = $this->user->displayName;
         $senderGuid = $this->user->guid;
-
         foreach ($this->message->users as $user) {
+
 
             if ($user->id == $this->user_id)
                 continue;
@@ -146,7 +150,10 @@ class MessageEntry extends ActiveRecord
             $mail->setTo($user->email);
             $mail->setSubject(Yii::t('MailModule.models_MessageEntry', 'New message in discussion from %displayName%', array('%displayName%' => $senderName)));
             $mail->send();
+
+
         }
+
     }
 
 }
