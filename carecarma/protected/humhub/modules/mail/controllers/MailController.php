@@ -35,7 +35,8 @@ use humhub\libs\sendNotificationIOS;
  */
 class MailController extends Controller
 {
-    public function beforeAction($action) {
+    public function beforeAction($action)
+    {
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
     }
@@ -55,7 +56,7 @@ class MailController extends Controller
     public function actionIndex()
     {
         // Initially displayed message
-        $messageId = (int) Yii::$app->request->get('id');
+        $messageId = (int)Yii::$app->request->get('id');
 
         $query = UserMessage::find();
         $query->joinWith('message');
@@ -102,7 +103,7 @@ class MailController extends Controller
     public function actionShow()
     {
         // Load Message
-        $id = (int) Yii::$app->request->get('id');
+        $id = (int)Yii::$app->request->get('id');
         $message = $this->getMessage($id);
 
         $this->checkMessagePermissions($message);
@@ -122,33 +123,32 @@ class MailController extends Controller
 
 //                $txt1 =  print_r ($user,true);
 //                fwrite($myfile, $txt1);
-            $txt1 = print_r( $messageEntry->content,true);
-            $SenderUserid = print_r( $messageEntry->user_id,true);
-           // Yii::getLogger()->log( $SenderUserid , Logger::LEVEL_INFO, 'MyLog');
-            $MessageID =  print_r($messageEntry->message_id,true);
-           $AllUserid = UserMessage::findAll(['message_id' => $messageEntry->message_id]);
+            $txt1 = print_r($messageEntry->content, true);
+            $SenderUserid = print_r($messageEntry->user_id, true);
+            // Yii::getLogger()->log( $SenderUserid , Logger::LEVEL_INFO, 'MyLog');
+            $MessageID = print_r($messageEntry->message_id, true);
+            $AllUserid = UserMessage::findAll(['message_id' => $messageEntry->message_id]);
             //['message_id' => $messageEntry->message_id],
             $Allreceipt = array();
-            foreach ( $AllUserid  as  $test ){
-                if ($test->user_id != $SenderUserid){
+            foreach ($AllUserid as $test) {
+                if ($test->user_id != $SenderUserid) {
                     $Allreceipt[] = $test->user_id;
-                  //  Yii::getLogger()->log($test->user_id , Logger::LEVEL_INFO, 'MyLog');
+                    //  Yii::getLogger()->log($test->user_id , Logger::LEVEL_INFO, 'MyLog');
                     //Yii::getLogger()->log($test->message_id , Logger::LEVEL_INFO, 'MyLog');
-                    $users_tokenT = MobileToken::find()->where(['user_id' =>$test->user_id ])->all();
+                    $users_tokenT = MobileToken::find()->where(['user_id' => $test->user_id])->all();
                     //Yii::getLogger()->log($users_tokenT , Logger::LEVEL_INFO, 'MyLog');
-                    if($users_tokenT != null)
-            {
-                foreach($users_tokenT as $userToken) {
-                    $mobile_token = $userToken->device_token;
-                  //  Yii::getLogger()->log($mobile_token, Logger::LEVEL_INFO, 'MyLog');
-                    $sendNot = new sendNotificationIOS();
-                  //  Yii::getLogger()->log($txt1, Logger::LEVEL_INFO, 'MyLog');
-                    $sendNot ->sendMessage($mobile_token,$txt1);
-                //    Yii::getLogger()->log($messageEntry->message_id , Logger::LEVEL_INFO, 'MyLog');
-                    $firebase = new Firebase();
-                    $firebase->send($mobile_token,$txt1 );
-                }
-            }
+                    if ($users_tokenT != null) {
+                        foreach ($users_tokenT as $userToken) {
+                            $mobile_token = $userToken->device_token;
+                            //  Yii::getLogger()->log($mobile_token, Logger::LEVEL_INFO, 'MyLog');
+                            $sendNot = new sendNotificationIOS();
+                            //  Yii::getLogger()->log($txt1, Logger::LEVEL_INFO, 'MyLog');
+                            $sendNot->sendMessage($mobile_token, $txt1);
+                            //    Yii::getLogger()->log($messageEntry->message_id , Logger::LEVEL_INFO, 'MyLog');
+                            $firebase = new Firebase();
+                            $firebase->send($mobile_token, $txt1);
+                        }
+                    }
                 }
             }
 
@@ -167,14 +167,13 @@ class MailController extends Controller
 //            }
 
 
-
             //device
 
             foreach (UserMessage::find()->where(['message_id' => $message->id])->each() as $userMessage) {
 //                $user = User::findOne(['id' => $userMessage->user_id]);
 //                Yii::getLogger()->log($userMessage->user_id, Logger::LEVEL_INFO, 'MyLog');
                 if ($userMessage->user_id != Yii::$app->user->id) {
-//                    Yii::getLogger()->log($userMessage->user_id, Logger::LEVEL_INFO, 'MyLog');
+                    Yii::getLogger()->log($userMessage->user_id, Logger::LEVEL_INFO, 'MyLog');
                     $deviceMessage = new DeviceMessage();
                     $deviceMessage->type = "message,reply";
                     $deviceMessage->message_id = $message->id;
@@ -199,18 +198,13 @@ class MailController extends Controller
     }
 
 
-
-
-
-
-
     private function checkMessagePermissions($message)
     {
         if ($message == null) {
             throw new HttpException(404, 'Could not find message!');
         }
 
-        if(!$message->isParticipant(Yii::$app->user->getIdentity())) {
+        if (!$message->isParticipant(Yii::$app->user->getIdentity())) {
             throw new HttpException(403, 'Access denied!');
         }
     }
@@ -261,10 +255,11 @@ class MailController extends Controller
         return $this->getUserPickerResult(Yii::$app->request->get('keyword'));
     }
 
-    private function getUserPickerResult($keyword) {
+    private function getUserPickerResult($keyword)
+    {
         if (version_compare(Yii::$app->version, '1.1', 'lt')) {
             return $this->findUserByFilter($keyword, 10);
-        } else if(Yii::$app->getModule('friendship')->getIsEnabled()) {
+        } else if (Yii::$app->getModule('friendship')->getIsEnabled()) {
             return UserPicker::filter([
                 'keyword' => $keyword,
                 'permission' => new SendMail(),
@@ -297,8 +292,8 @@ class MailController extends Controller
         $result = $this->getUserPickerResult(Yii::$app->request->get('keyword'));
 
         //Disable already participating users
-        foreach($result as $i=>$user) {
-            if($this->isParticipant($message, $user)) {
+        foreach ($result as $i => $user) {
+            if ($this->isParticipant($message, $user)) {
                 $result[$i++]['disabled'] = true;
             }
         }
@@ -314,9 +309,10 @@ class MailController extends Controller
      * @param type $user
      * @return boolean
      */
-    private function isParticipant($message, $user) {
-        foreach($message->users as $participant) {
-            if($participant->guid === $user['guid']) {
+    private function isParticipant($message, $user)
+    {
+        foreach ($message->users as $participant) {
+            if ($participant->guid === $user['guid']) {
                 return true;
             }
         }
@@ -346,7 +342,7 @@ class MailController extends Controller
             if ($user != null) {
                 //check contact user
                 $contactUser = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $user->id]);
-                if ($contactUser != null){
+                if ($contactUser != null) {
                     $userInfo = array();
                     $userInfo['guid'] = $user->guid;
                     $userInfo['displayName'] = Html::encode($user->displayName);
@@ -361,7 +357,7 @@ class MailController extends Controller
                 foreach ($spaces as $memberSpace) {
                     $spaceId = $memberSpace->space_id;
                     $spaceUser = Membership::findAll(['space_id' => $spaceId, 'user_id' => Yii::$app->user->id, 'status' => 3]);
-                    if ($spaceUser != null && $user->id != Yii::$app->user->id ){
+                    if ($spaceUser != null && $user->id != Yii::$app->user->id) {
 //                        Yii::getLogger()->log($user->getUserGroup(), Logger::LEVEL_INFO, 'MyLog');
                         $userInfo = array();
                         $userInfo['guid'] = $user->guid;
@@ -457,14 +453,7 @@ class MailController extends Controller
                 }
 
 //
-<<<<<<< HEAD
                 if ($recipient->device_id != null){
-=======
-//                    $deviceMessage->notify();
-//                }
-//                $device = Device::findAll(['user_id' => $recipient->id]);
-//                if ($device != null){
->>>>>>> 0c45d1529560aadd8b672cdbd57d3a67f3008ffb
 
                     $deviceMessage = new DeviceMessage();
                     $deviceMessage->type = "message,create";
@@ -473,7 +462,7 @@ class MailController extends Controller
                     $deviceMessage->from_id = Yii::$app->user->id;
                     $deviceMessage->content = $model->message;
                     $deviceMessage->notify();
-//                }
+                }
 
             }
 
@@ -531,7 +520,7 @@ class MailController extends Controller
      */
     public function actionEditEntry()
     {
-        $messageEntryId = (int) Yii::$app->request->get('messageEntryId');
+        $messageEntryId = (int)Yii::$app->request->get('messageEntryId');
         $entry = MessageEntry::findOne(['id' => $messageEntryId]);
 
         // Check if message entry exists and it´s by this user
@@ -559,7 +548,7 @@ class MailController extends Controller
     {
         $this->forcePostRequest();
 
-        $messageEntryId = (int) Yii::$app->request->get('messageEntryId');
+        $messageEntryId = (int)Yii::$app->request->get('messageEntryId');
         $entry = MessageEntry::findOne(['id' => $messageEntryId]);
 
         // Check if message entry exists and it´s by this user
@@ -612,7 +601,7 @@ class MailController extends Controller
                 return $message;
             }
         }
-      
+
         return null;
     }
 
@@ -652,19 +641,7 @@ class MailController extends Controller
 
 //                if ($recipient->device_id != null){
 
-<<<<<<< HEAD
-                    $deviceMessage = new DeviceMessage();
-                    $deviceMessage->type = "message,create";
-                    $deviceMessage->message_id = $message->id;
-                    $deviceMessage->user_id = $recipient->id;
-                    $deviceMessage->from_id = Yii::$app->user->id;
-                    $deviceMessage->content = $model->message;
-                    $deviceMessage->notify();
 
-                    //echo "<script>console.log('". $deviceMessage ."');</script>";
-                    //echo $deviceMessage->user_id;
-                }
-=======
                 $deviceMessage = new DeviceMessage();
                 $deviceMessage->type = "message,create";
                 $deviceMessage->message_id = $message->id;
@@ -672,26 +649,37 @@ class MailController extends Controller
                 $deviceMessage->from_id = Yii::$app->user->id;
                 $deviceMessage->content = $model->message;
                 $deviceMessage->notify();
+
+                //echo "<script>console.log('". $deviceMessage ."');</script>";
+                //echo $deviceMessage->user_id;
+            }
+
+            $deviceMessage = new DeviceMessage();
+            $deviceMessage->type = "message,create";
+            $deviceMessage->message_id = $message->id;
+            $deviceMessage->user_id = $recipient->id;
+            $deviceMessage->from_id = Yii::$app->user->id;
+            $deviceMessage->content = $model->message;
+            $deviceMessage->notify();
 //                }
->>>>>>> 0c45d1529560aadd8b672cdbd57d3a67f3008ffb
 
-            }
 
-            foreach ($model->getRecipients() as $recipient) {
-                try {
-                    $message->notify($recipient);
-                } catch(\Exception $e) {
-                    Yii::error('Could not send notification e-mail to: '. $recipient->username.". Error:". $e->getMessage());
-                }
-            }
-
-            $userMessage = new UserMessage();
-            $userMessage->message_id = $message->id;
-            $userMessage->user_id = Yii::$app->user->id;
-            $userMessage->is_originator = 1;
-            $userMessage->last_viewed = new \yii\db\Expression('NOW()');
-            $userMessage->save();
         }
+
+        foreach ($model->getRecipients() as $recipient) {
+            try {
+                $message->notify($recipient);
+            } catch (\Exception $e) {
+                Yii::error('Could not send notification e-mail to: ' . $recipient->username . ". Error:" . $e->getMessage());
+            }
+        }
+
+        $userMessage = new UserMessage();
+        $userMessage->message_id = $message->id;
+        $userMessage->user_id = Yii::$app->user->id;
+        $userMessage->is_originator = 1;
+        $userMessage->last_viewed = new \yii\db\Expression('NOW()');
+        $userMessage->save();
     }
 
     public function actionDeviceread() {
@@ -751,4 +739,5 @@ class MailController extends Controller
         }
 
     }
+
 }
