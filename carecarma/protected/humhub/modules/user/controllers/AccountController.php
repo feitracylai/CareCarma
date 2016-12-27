@@ -278,7 +278,8 @@ class AccountController extends Controller
     }
 
     public static function randString($length, $specialChars = false) {
-        $chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789';
+//        $chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789';
+        $chars = 'abcdefghijkmnopqrstuvwxyzCDEFJKLMNOPQRSTUVWXYZ023456789';
         if ($specialChars) {
             $chars .= '!@#$%^&*()';
         }
