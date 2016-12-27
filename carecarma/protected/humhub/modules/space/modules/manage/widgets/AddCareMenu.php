@@ -23,7 +23,7 @@ class AddCareMenu  extends \humhub\widgets\BaseMenu
 
 
             $this->addItem(array(
-                'label' => Yii::t('SpaceModule.widgets_AddCareMenu', 'Care Memebers'),
+                'label' => Yii::t('SpaceModule.widgets_AddCareMenu', 'Care Members'),
                 'url' => $this->space->createUrl('/space/manage/device/add-care'),
                 'sortOrder' => 100,
                 'isActive' => (Yii::$app->controller->action->id == 'add-care' && Yii::$app->controller->id === 'device'),
