@@ -148,7 +148,7 @@ class MailController extends Controller
 //                $user = User::findOne(['id' => $userMessage->user_id]);
 //               Yii::getLogger()->log($userMessage->user_id, Logger::LEVEL_INFO, 'MyLog');
                 if ($userMessage->user_id != Yii::$app->user->id) {
-                    Yii::getLogger()->log($userMessage->user_id, Logger::LEVEL_INFO, 'MyLog');
+                  //  Yii::getLogger()->log($userMessage->user_id, Logger::LEVEL_INFO, 'MyLog');
                     $deviceMessage = new DeviceMessage();
                     $deviceMessage->type = "message,reply";
                     $deviceMessage->message_id = $message->id;
@@ -442,12 +442,11 @@ class MailController extends Controller
                             }
                         }
 
-                        Yii::getLogger()->log($test2->user_id, Logger::LEVEL_INFO, 'MyLog');
                     }
                 }
 
-//
-                if ($recipient->device_id != null){
+
+//                if ($recipient->device_id != null){
 
                     $deviceMessage = new DeviceMessage();
                     $deviceMessage->type = "message,create";
@@ -456,7 +455,7 @@ class MailController extends Controller
                     $deviceMessage->from_id = Yii::$app->user->id;
                     $deviceMessage->content = $model->message;
                     $deviceMessage->notify();
-                }
+//                }
 
             }
 
