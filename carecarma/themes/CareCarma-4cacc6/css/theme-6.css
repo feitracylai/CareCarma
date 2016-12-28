@@ -2459,7 +2459,8 @@ ul.tag_input.focus {
 }
 
 .wallFilterPanel li a {
-    color: #555
+    color: #555;
+    background: white;
 }
 
 .wallFilterPanel .dropdown-menu li {
@@ -3246,3 +3247,6 @@ img.bounceIn {
     border-top: none;
 }
 
+#linklist-empty-txt label{
+    background: white;
+}
