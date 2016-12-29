@@ -156,26 +156,7 @@ class MailController extends Controller
                     $deviceMessage->from_id = Yii::$app->user->id;
                     $deviceMessage->content = $messageEntry->content;
                     $deviceMessage->notify();
-                    Yii::getLogger()->log($deviceMessage->message_id , Logger::LEVEL_INFO, 'MyLog');
-                    Yii::getLogger()->log($deviceMessage->user_id , Logger::LEVEL_INFO, 'MyLog');
-                    Yii::getLogger()->log($deviceMessage->content , Logger::LEVEL_INFO, 'MyLog');
-                    $AllUserid = UserMessage::findAll(['message_id' => $deviceMessage->message_id]);
-                    $Allreceipt = array();
-                    foreach ($AllUserid as $test) {
-                        if ($test->user_id != $deviceMessage->user_id) {
-                            $Allreceipt[] = $test->user_id;
-                            $users_tokenT = MobileToken::find()->where(['user_id' => $test->user_id])->all();
-                            if ($users_tokenT != null) {
-                                foreach ($users_tokenT as $userToken) {
-                                    $mobile_token = $userToken->device_token;
-                                    $sendNot = new sendNotificationIOS();
-                                    $sendNot->sendMessage($mobile_token, $deviceMessage->content);
-                                    $firebase = new Firebase();
-                                    $firebase->send($mobile_token, $deviceMessage->content);
-                                }
-                            }
-                        }
-                    }
+
                 }
 
             }
@@ -654,6 +635,28 @@ class MailController extends Controller
             $deviceMessage->from_id = Yii::$app->user->id;
             $deviceMessage->content = $model->message;
             $deviceMessage->notify();
+            Yii::getLogger()->log($deviceMessage->message_id , Logger::LEVEL_INFO, 'MyLog');
+            Yii::getLogger()->log($deviceMessage->user_id , Logger::LEVEL_INFO, 'MyLog');
+            Yii::getLogger()->log($deviceMessage->from_id , Logger::LEVEL_INFO, 'MyLog');
+            Yii::getLogger()->log($deviceMessage->content , Logger::LEVEL_INFO, 'MyLog');
+
+            $AllUserid = UserMessage::findAll(['message_id' => $deviceMessage->message_id]);
+            $Allreceipt = array();
+            foreach ($AllUserid as $test) {
+                if ($test->user_id != $deviceMessage->from_id) {
+                    $Allreceipt[] = $test->user_id;
+                    $users_tokenT = MobileToken::find()->where(['user_id' => $test->user_id])->all();
+                    if ($users_tokenT != null) {
+                        foreach ($users_tokenT as $userToken) {
+                            $mobile_token = $userToken->device_token;
+                            $sendNot = new sendNotificationIOS();
+                            $sendNot->sendMessage($mobile_token, $deviceMessage->content);
+                            $firebase = new Firebase();
+                            $firebase->send($mobile_token, $deviceMessage->content);
+                        }
+                    }
+                }
+            }
 //                }
 
 
@@ -728,6 +731,24 @@ class MailController extends Controller
                 $deviceMessage->from_id = Yii::$app->user->id;
                 $deviceMessage->content = $content;
                 $deviceMessage->notify();
+
+                $AllUserid = UserMessage::findAll(['message_id' => $deviceMessage->message_id]);
+                $Allreceipt = array();
+                foreach ($AllUserid as $test) {
+                    if ($test->user_id != $deviceMessage->from_id) {
+                        $Allreceipt[] = $test->user_id;
+                        $users_tokenT = MobileToken::find()->where(['user_id' => $test->user_id])->all();
+                        if ($users_tokenT != null) {
+                            foreach ($users_tokenT as $userToken) {
+                                $mobile_token = $userToken->device_token;
+                                $sendNot = new sendNotificationIOS();
+                                $sendNot->sendMessage($mobile_token, $deviceMessage->content);
+                                $firebase = new Firebase();
+                                $firebase->send($mobile_token, $deviceMessage->content);
+                            }
+                        }
+                    }
+                }
             }
         }
 
