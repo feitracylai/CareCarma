@@ -32,7 +32,12 @@
 .colorInfo {
     color: #65BB53 !important
 }
-
+@media (max-width: 568px)
+{
+    .notifications .dropdown-menu .arrow {
+        margin-left: -120px !important
+    }
+}
 .backgroundInfo {
     background: #65BB53 !important
 }

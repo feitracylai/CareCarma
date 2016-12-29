@@ -2802,6 +2802,7 @@ img.bounceIn {
         padding-right: 0
     }
 
+
     #topbar-second .nav > li > a i {
         font-size: 25px;
         padding-top: 5px;
@@ -2840,6 +2841,13 @@ img.bounceIn {
         margin-left: -142px !important
     }
 
+
+    @media (max-width: 568px)
+    {
+        .notifications .dropdown-menu .arrow {
+            margin-left: -120px !important
+        }
+    }
     .panel-profile .panel-profile-header .img-profile-data h1 {
         font-size: 20px !important
     }

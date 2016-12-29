@@ -41,6 +41,13 @@
     border-color: #43516C !important
 }
 
+@media (max-width: 568px)
+{
+    .notifications .dropdown-menu .arrow {
+        margin-left: -120px !important
+    }
+}
+
 .colorSuccess {
     color: #6fdbe8 !important
 }

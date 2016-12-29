@@ -33,6 +33,13 @@
     color: #b195e2 !important
 }
 
+@media (max-width: 568px)
+{
+    .notifications .dropdown-menu .arrow {
+        margin-left: -120px !important
+    }
+}
+
 .backgroundInfo {
     background: #b195e2 !important
 }

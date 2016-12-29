@@ -37,6 +37,13 @@
     background: #82B2F4 !important
 }
 
+@media (max-width: 568px)
+{
+    .notifications .dropdown-menu .arrow {
+        margin-left: -120px !important
+    }
+}
+
 .borderInfo {
     border-color: #82B2F4 !important
 }

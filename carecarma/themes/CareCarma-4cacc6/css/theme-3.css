@@ -27,7 +27,12 @@
 .borderPrimary {
     border-color: #f89d29 !important
 }
-
+@media (max-width: 568px)
+{
+    .notifications .dropdown-menu .arrow {
+        margin-left: -120px !important
+    }
+}
 .colorInfo {
     color: #f8c041 !important
 }

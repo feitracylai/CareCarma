@@ -25,3 +25,17 @@
         margin-left: -101px !important;
     }
 }
+
+
+
+
+@media (max-width: 568px) {
+
+    #dropdown-messages {
+        width: 260px !important;
+    }
+
+    .arrow {
+        margin-left: -101px !important;
+    }
+}
