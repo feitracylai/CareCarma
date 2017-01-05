@@ -65,9 +65,9 @@ use humhub\modules\space\modules\manage\widgets\DeviceMenu;
                             'class' => 'yii\grid\ActionColumn',
                             'buttons' => [
                                 'view' => function($url,$model) use ($space) {
-//                                    return Html::a('<i class="fa fa-eye"></i>', Url::toRoute(['report', 'sguid' => $space->guid, 'rguid' => $model->user->guid
-//                                    ]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View his/her health report']);
-                                    return;
+                                    return Html::a('<i class="fa fa-eye"></i>', Url::toRoute(['report', 'sguid' => $space->guid, 'rguid' => $model->user->guid
+                                    ]), ['class' => 'btn btn-primary btn-xs tt', 'title' => 'View his/her health report']);
+//                                    return;
                                 },
                                 'delete' => function ($url,$model) use ($space) {
                                     if ($space->isAdmin()){
