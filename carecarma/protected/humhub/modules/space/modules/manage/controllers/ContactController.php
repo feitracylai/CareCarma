@@ -145,6 +145,11 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 100,
                 ),
+                'carecarma_watch_number' => array(
+                    'type' => 'checkbox',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
             ),
         );
 
@@ -235,6 +240,7 @@ class ContactController extends Controller
                 $data2['contact_email'] = $contact->contact_email;
                 $data2['watch_primary_number'] = $contact->watch_primary_number;
                 $data2['phone_primary_number'] = $contact->phone_primary_number;
+                $data2['carecarma_watch_number'] = $contact->carecarma_watch_number;
 
 //                if ($device != null) {
 //                    $gcm_id = $device->gcmId;

@@ -218,6 +218,11 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 100,
                 ),
+                'carecarma_watch_number' => array(
+                    'type' => 'checkbox',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
             ),
         );
         // Get Form Definition
@@ -287,6 +292,7 @@ class ContactController extends Controller
                 $data2['contact_email'] = $contact->contact_email;
                 $data2['watch_primary_number'] = $contact->watch_primary_number;
                 $data2['phone_primary_number'] = $contact->phone_primary_number;
+                $data2['carecarma_watch_number'] = $contact->carecarma_watch_number;
 
 //                if ($device != null) {
 //                    $gcm_id = $device->gcmId;
@@ -851,7 +857,6 @@ class ContactController extends Controller
         $contact_data = array();
 
         foreach (Contact::find()->where(['user_id' => $user_id])->each() as $contact) {
-            Yii::getLogger()->log(print_r($contact,true),yii\log\Logger::LEVEL_INFO,'MyLog');
             if ($contact->watch_primary_number == 1) {
                 $contactInfo = new ContactInfo();
                 $contactInfo->contact_id = $contact->contact_id;
@@ -938,7 +943,54 @@ class ContactController extends Controller
     }
 
 
+    public function actionCwatchallcontact ()
+    {
 
+        $data = Yii::$app->request->post();
+        $device_id = $data['device_id'];
+        $user = User::findOne(['username' => $data['username']]);
+        $user_id = $user->id;
+
+        $contact_list = array();
+        $contact_list['type'] = 'Cwatch,all';
+        $contact_data = array();
+
+        foreach (Contact::find()->where(['user_id' => $user_id])->each() as $contact) {
+            if ($contact->carecarma_watch_number == 1) {
+                $contactInfo = new ContactInfo();
+                $contactInfo->contact_id = $contact->contact_id;
+                $contactInfo->user_id = $user_id;
+                $contactInfo->contact_user_id = $contact->contact_user_id;
+                $contactInfo->contact_first = $contact->contact_first;
+                $contactInfo->contact_last = $contact->contact_last;
+                $contactInfo->nickname = $contact->nickname;
+                $contactInfo->relation = $contact->relation;
+                $contactInfo->contact_mobile = $contact->contact_mobile;
+                $contactInfo->contact_email = $contact->contact_email;
+                $contactInfo->home_phone = $contact->home_phone;
+                $contactInfo->work_phone = $contact->work_phone;
+
+                $contact_user = User::findOne(['id' => $contact->contact_user_id]);
+                if ($contact_user) {
+                    $profileImage = new \humhub\libs\ProfileImage($contact_user->guid);
+                    $pos = strpos($profileImage->getUrl(), "?m=");
+                    $image = substr($profileImage->getUrl(), 0, $pos);
+                    $contactInfo->photo = $image;
+                }
+
+                array_push($contact_data, $contactInfo);
+            }
+        }
+        $contact_list['data'] = $contact_data;
+
+        $gcm = new GCM();
+        $device = Device::findOne(['device_id' => $device_id]);
+
+        if ($device != null) {
+            $gcm_id = $device->gcmId;
+            $gcm->send($gcm_id, $contact_list);
+        }
+    }
 
 
     public function actionImportgoogle ()
