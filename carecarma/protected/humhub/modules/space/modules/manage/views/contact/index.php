@@ -41,8 +41,11 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
                             return Yii::t('UserModule.views_contact_index', '{firstname} {lastname}', ['{firstname}' => $data->contact_first, '{lastname}' => $data->contact_last]);
                         },
 
+
                 ],
                 'nickname',
+
+
                 [
                     'label' => Yii::t('UserModule.views_contact_index', 'Relationship to {first} {last}', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)),
                     'class' => 'humhub\libs\DropDownGridColumn',
@@ -57,6 +60,31 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
 
 
                 ],
+
+                [
+                    'label' => Yii::t('UserModule.views_contact_index', 'CoSMoS Phone'),
+                    'class' => 'humhub\libs\CheckGridColumn',
+                    'attribute' => 'phone_primary_number',
+                    'submitAttributes' => ['contact_id'],
+                ],
+
+                [
+                    'label' => Yii::t('UserModule.views_contact_index', 'CoSMoS Watch'),
+                    'class' => 'humhub\libs\CheckGridColumn',
+                    'attribute' => 'watch_primary_number',
+                    'submitAttributes' => ['contact_id'],
+                ],
+
+                [
+                    'label' => Yii::t('UserModule.views_contact_index', 'CareCarma Phone'),
+                    'class' => 'humhub\libs\CheckGridColumn',
+                    'attribute' => 'carecarma_watch_number',
+                    'submitAttributes' => ['contact_id'],
+                ],
+
+
+
+
                 [
                     'header' => 'Actions',
                     'class' => 'yii\grid\ActionColumn',

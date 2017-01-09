@@ -43,9 +43,9 @@ class ContactController extends Controller
 
         $searchModel = new ContactSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $user->id);
-
+        
         // Relationship Change
-        if (Yii::$app->request->post('dropDownColumnSubmit')) {
+        if (Yii::$app->request->post('dropDownColumnSubmit') || Yii::$app->request->post('checkSubmit')) {
             Yii::$app->response->format = 'json';
             $contact = Contact::findOne(['contact_id' => Yii::$app->request->post('contact_id')]);
             if ($contact === null) {
