@@ -39,7 +39,7 @@ class CheckGridColumn extends DataColumn
 
         $this->grid->view->registerJs("$('.checkCell').click(function() {
                 data = {};
-                data[$(this).attr('name')] = ($(this).val() == 1)? 0 : 1;
+                data[$(this).attr('name')] = $(this).val();
                 submitAttributes = $(this).data('submit-attributes').split(',');
                
                 for (var i in submitAttributes) {
