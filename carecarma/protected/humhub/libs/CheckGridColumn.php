@@ -29,6 +29,8 @@ class CheckGridColumn extends DataColumn
      */
     public $ajaxOptions = array();
 
+    public $limitCheck;
+
     public function init()
     {
 
@@ -37,9 +39,15 @@ class CheckGridColumn extends DataColumn
         }
         $this->ajaxOptions['data'] = new \yii\web\JsExpression('data');
 
-        $this->grid->view->registerJs("$('.checkCell').click(function() {
+
+        $this->grid->view->registerJs("
+
+        
+        $('.checkCell').change(function() {
                 data = {};
-                data[$(this).attr('name')] = $(this).val();
+                //alert($(this).is(':checked'));
+                data[$(this).attr('name')] = ($(this).is(':checked') == true)? 1: 0;
+                            
                 submitAttributes = $(this).data('submit-attributes').split(',');
                
                 for (var i in submitAttributes) {
@@ -47,6 +55,8 @@ class CheckGridColumn extends DataColumn
                 }
                 data['checkSubmit'] = true;
                 $.ajax(" . \yii\helpers\Json::encode($this->ajaxOptions) . ");
+                
+                
         });");
 
         return parent::init();
@@ -56,9 +66,9 @@ class CheckGridColumn extends DataColumn
     {
 
         if (isset($this->htmlOptions['class'])) {
-            $this->htmlOptions['class'] .= 'checkCell';
+            $this->htmlOptions['class'] .= ' checkCell';
         } else {
-            $this->htmlOptions['class'] = 'checkCell';
+            $this->htmlOptions['class'] = ' checkCell';
         }
 
         $this->htmlOptions['data-submit-attributes'] = implode(',', $this->submitAttributes);
