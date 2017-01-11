@@ -54,10 +54,30 @@ class DeviceController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 255,
                 ),
+                'hardware_id' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 15,
+                ),
                 'phone' => array(
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 255,
+                ),
+                'type' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'model' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'user_id' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 11,
                 ),
             ),
         );
@@ -112,10 +132,33 @@ class DeviceController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 255,
                 ),
+                'hardware_id' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 15,
+                ),
                 'phone' => array(
                     'type' => 'text',
                     'class' => 'form-control',
                     'maxlength' => 255,
+                ),
+                'type' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'model' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                ),
+                'user_id' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'maxlength' => 11,
+                ),
+                'activate' => array(
+                    'type' => 'checkbox',
                 ),
             )
         );

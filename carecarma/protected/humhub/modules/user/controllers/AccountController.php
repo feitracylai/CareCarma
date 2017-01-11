@@ -98,30 +98,46 @@ class AccountController extends Controller
         $model->scenario = 'userDevice';
         $device_list = Device::findAll(['user_id' => $user->id]);
 
-        if ($model->load(Yii::$app->request->post())&& $model->validate()) {
 
+
+        if ($model->load(Yii::$app->request->post())&& $model->validate()) {
             $device = Device::find()->where(['device_id' => $model->deviceId])->one();
-            if ($device==null){
+            if ($device==null || $device->activate == 1){
                 $model->addError('deviceId', Yii::t('UserModule.controllers_AccountController', "Activation ID is incorrect!"));
-            } elseif ($device->user_id != 0) {
-                $model->addError('deviceId', Yii::t('UserModule.controllers_AccountController', 'This Activation ID is already in use!'));
             } else {
                 $user->device_id = $model->deviceId;
-                $device->user_id = $user->getId();
                 $user->temp_password = $model->currentPassword;
                 $user->save();
-                $device->save();
+
+                /****if it is the previous same device, replace the older row.****/
+                $same_device = Device::findOne(['hardware_id' => $device->hardware_id, 'user_id' => $user->getId()]);
+                if (!empty($device->hardware_id) && !empty($same_device) && $same_device->id != $device->id){
+                    $same_device->device_id = $device->device_id;
+                    $same_device->gcmId = $device->gcmId;
+                    $same_device->phone = $device->phone;
+                    $same_device->type = $device->type;
+                    $same_device->model = $device->model;
+                    $device->delete();
+                    $same_device->save();
+
+                } else {
+                    $device->user_id = $user->getId();
+                    $device->save();
+
+                }
+
+
+
 //                $user->updateUserContacts();
-
-
-                if ($this->checkDevice($device->device_id)) {
-                    $this->activationA($device->device_id);
+                if ($this->checkDevice($model->deviceId)) {
+                    $this->activationA($model->deviceId);
                 }
 
 
                 Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
             }
 
+            return $this->redirect(Url::to(['edit-device']));
 
 
         }
@@ -147,7 +163,8 @@ class AccountController extends Controller
                 $gcm_registration_id = $device->gcmId;
                 $gcm->send($gcm_registration_id, $data);
             }
-            $device->delete();
+            $device->activate = 0;
+            $device->save();
 
             /***test***/
 //            $device->user_id = 0;
@@ -284,6 +301,9 @@ class AccountController extends Controller
 //        $user_new->save();
           $user->temp_password = null;
           $user->save();
+
+        $device->activate = 1;
+        $device->save();
     }
 
     public static function randString($length, $specialChars = false) {

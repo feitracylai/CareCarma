@@ -33,7 +33,16 @@ use yii\helpers\Html;
                         },
                     ],
                     'device_id',
-                    'phone',
+                    'hardware_id',
+                    [
+                        'attribute' => 'activate',
+                        'label' => 'Activated',
+                        'filter' => \yii\helpers\Html::activeDropDownList($searchModel, 'activate', array('' => 'All', '0' => 'N', '1' => 'Y')),
+                        'value' =>
+                            function($data) {
+                                return ($data->activate == 1) ? 'Y' : 'N';
+                            }
+                    ],
                     'user_id',
 
                     'user.username',

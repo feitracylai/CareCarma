@@ -25,7 +25,7 @@ class DeviceSearch extends Device
     public function rules()
     {
         return [
-            [['device_id', 'phone', 'user_id', 'user.username'], 'safe'],
+            [['device_id', 'hardware_id', 'activate', 'user_id', 'user.username'], 'safe'],
         ];
     }
 
@@ -47,7 +47,8 @@ class DeviceSearch extends Device
             'attributes' => [
                 'id',
                 'device_id',
-                'phone',
+                'hardware_id',
+                'activate',
                 'user_id',
                 'user.username'
             ]

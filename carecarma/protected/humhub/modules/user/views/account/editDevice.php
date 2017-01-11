@@ -20,21 +20,25 @@ use humhub\modules\user\models\Device;
     <div class="form-group">
         <?php if($device_list != null) : ?>
         <?php echo Yii::t('UserModule.views_account_editDevice', '<strong>Current CoSMoS</strong>'); ?>
-            <?php foreach ($device_list as $device){ ?>
-                <div style="margin: 0 20px">
-                    <p>
-                        Activation #:
-                        <?php echo CHtml::encode($device->device_id) ?>
-                        <br>
-                        Phone #:
-                        <?php echo CHtml::encode($device->phone) ?>
-                        <?php echo Html::a(Yii::t('UserModule.views_account_editDevice', 'Deactivate'), Url::toRoute(['/user/account/delete-device', 'id' => $device->device_id]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>
+            <?php foreach ($device_list as $device){
+                if ($device->activate == 1) {
+                    ?>
+                    <div style="margin: 0 20px">
+                        <p>
+                            Activation #:
+                            <?php echo CHtml::encode($device->device_id) ?>
+                            <br>
+                            Phone #:
+                            <?php echo CHtml::encode($device->phone) ?>
+                            <?php echo Html::a(Yii::t('UserModule.views_account_editDevice', 'Deactivate'), Url::toRoute(['/user/account/delete-device', 'id' => $device->device_id]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>
 
-                    </p>
+                        </p>
 
 
-                </div>
-            <?php } ?>
+                    </div>
+            <?php
+             }
+                } ?>
         <?php endif; ?>
     </div>
     <hr>

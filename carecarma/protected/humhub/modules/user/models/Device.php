@@ -36,8 +36,9 @@ class Device extends \yii\db\ActiveRecord
         return [
             [['device_id'], 'unique'],
             [['device_id'], 'string', 'max' => 45],
-            [['gcmId', 'phone'], 'string', 'max' => 255],
-            [['user_id'], 'integer'],
+            [['hardware_id'], 'string', 'max' => 15],
+            [['gcmId', 'phone', 'type', 'model'], 'string', 'max' => 255],
+            [['user_id', 'activate'], 'integer'],
         ];
     }
 
