@@ -9,7 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property integer $user_id
- * @property integer $device_id
+ * @property integer $hardware_id
  * @property string $heartrate
  * @property string $datetime
  * @property string $time
@@ -32,8 +32,8 @@ class Heartrate extends \yii\db\ActiveRecord
         return [
             [['user_id'], 'required'],
             [['user_id'], 'integer'],
-            [['device_id'], 'required'],
-            [['device_id'], 'string', 'max' => 11],
+            [['hardware_id'], 'required'],
+            [['hardware_id'], 'string', 'max' => 15],
             [['heartrate'], 'safe'],
             [['heartrate'], 'string', 'max' => 100],
             [['time'], 'string', 'max' => 100],
@@ -48,7 +48,7 @@ class Heartrate extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'device_id' => 'Device ID',
+            'hardware_id' => 'IMEI #',
             'heartrate' => 'Heartrate',
             'datetime' => 'Datetime',
             'time' => 'Time'

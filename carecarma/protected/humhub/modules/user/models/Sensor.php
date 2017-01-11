@@ -9,7 +9,7 @@ use Yii;
  *
  * @property integer $sensor_id
  * @property string $user_id
- * @property string $device_id
+ * @property string $hardware_id
  * @property string $datetime
  * @property string $accelX
  * @property string $accelY
@@ -39,6 +39,8 @@ class Sensor extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'required'],
+            [['hardware_id'], 'required'],
+            [['hardware_id'], 'string', 'max' => 15],
             [['accelX', 'accelY', 'accelZ', 'GyroX', 'GyroY', 'GyroZ', 'CompX', 'CompY', 'CompZ', 'time'], 'string', 'max' => 100],
         ];
     }
@@ -62,6 +64,7 @@ class Sensor extends \yii\db\ActiveRecord
             'CompY' => 'Comp Y',
             'CompZ' => 'Comp Z',
             'time' => 'Time',
+            'hardware_id' => 'IMEI #',
         ];
     }
 }
