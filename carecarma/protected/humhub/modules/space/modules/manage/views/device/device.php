@@ -23,17 +23,21 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
         <div class="form-group">
             <?php if($device_list != null) : ?>
                 <?php echo Yii::t('SpaceModule.views_admin_receiver_editDevice', '<strong>Current CoSMoS</strong>'); ?>
-                <?php foreach ($device_list as $device){ ?>
-                    <div style="margin: 0 20px">
-                        Activation #:
-                        <?php echo CHtml::encode($device->device_id) ?>
-                        <br>
-                        Phone #:
-                        <?php echo CHtml::encode($device->phone) ?>
-                        <?php echo Html::a(Yii::t('SpaceModule.views_admin_receiver_editDevice', 'Deactivate'), $space->createUrl('delete-device', ['id' => $device->device_id, 'rguid' => $user->guid]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>
+                <?php foreach ($device_list as $device){
+                    if ($device->activate == 1) {
+                        ?>
+                        <div style="margin: 0 20px">
+                            Activation #:
+                            <?php echo CHtml::encode($device->device_id) ?>
+                            <br>
+                            Phone #:
+                            <?php echo CHtml::encode($device->phone) ?>
+                            <?php echo Html::a(Yii::t('SpaceModule.views_admin_receiver_editDevice', 'Deactivate'), $space->createUrl('delete-device', ['id' => $device->device_id, 'rguid' => $user->guid]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>
 
-                    </div>
-                <?php } ?>
+                        </div>
+                <?php
+                    } 
+                } ?>
             <?php endif; ?>
         </div>
 

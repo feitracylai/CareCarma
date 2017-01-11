@@ -2,6 +2,7 @@
 namespace humhub\modules\space\modules\manage\controllers;
 use humhub\modules\admin\models\Log;
 use humhub\modules\space\modules\manage\models\MembershipSearch;
+use humhub\modules\user\models\Classlabels;
 use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
@@ -318,6 +319,9 @@ class DeviceController extends ContentContainerController
         }
         $user->temp_password = null;
         $user->save();
+
+        $device->activate = 1;
+        $device->save();
     }
 
     public function getUsernamePassword($user) {
@@ -423,12 +427,27 @@ class DeviceController extends ContentContainerController
 
         if ($deviceModel->load(Yii::$app->request->post())&& $deviceModel->validate() && $this->checkReceiverDevice($deviceModel, $user)) {
             $device = Device::find()->where(['device_id' => $deviceModel->deviceId])->one();
+            $user->temp_password = $deviceModel->currentPassword;
+            $user->save();
 
+            /****if it is the previous same device, replace the older row.****/
+            $same_device = Device::findOne(['hardware_id' => $device->hardware_id, 'user_id' => $user->getId()]);
+            if (!empty($device->hardware_id) && !empty($same_device) && $same_device->id != $device->id){
+                $same_device->device_id = $device->device_id;
+                $same_device->gcmId = $device->gcmId;
+                $same_device->phone = $device->phone;
+                $same_device->type = $device->type;
+                $same_device->model = $device->model;
+                $device->delete();
+                $same_device->save();
 
-                $device->user_id = $user->id;
-                $user->temp_password = $deviceModel->currentPassword;
+            } else {
+                $device->user_id = $user->getId();
                 $device->save();
-                $user->save();
+
+            }
+
+
 
                     // check if device fulfill all the rule of activation, if yes, activation
                 if ($this->checkDevice($deviceModel->deviceId)) {
@@ -473,9 +492,10 @@ class DeviceController extends ContentContainerController
                 $gcm_registration_id = $device->gcmId;
                 $gcm->send($gcm_registration_id, $data);
             }
+            $device->activate = 0;
+            $device->save();
 
 
-            $device->delete();
             /***test***/
 //            $device->user_id = 0;
 //            $device->save();
@@ -614,11 +634,108 @@ class DeviceController extends ContentContainerController
     public function actionReport() {
         $space = $this->getSpace();
         $user = $this->getCare();
+
+//        Yii::getLogger()->log(strtotime('now'), Logger::LEVEL_INFO, 'MyLog');
+//        $classLabels = Classlabels::find()->where(['user_id' => 100])->orderBy(['time' => SORT_ASC])->all();
+//        $yesterday = strtotime('yesterday');
+        $yesterday = 1477972800;
+
+//        Yii::getLogger()->log(strtotime('now'), Logger::LEVEL_INFO, 'MyLog');
+
+        $query = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+
+//        foreach ($classLabels as $classLabel){
+//            $time = $classLabel->time;
+//            $step = $classLabel->stepsLabel;
+//
+//            if ($time < $yesterday+3600){
+//                $query[0] = $query[0] + $step;
+//            } elseif ($time < $yesterday+3600*2){
+//                $query[1] = $query[1] + $step;
+//            } elseif ($time < $yesterday+3600*3){
+//                $query[2] = $query[2] + $step;
+//            } elseif ($time < $yesterday+3600*4){
+//                $query[3] = $query[3] + $step;
+//            } elseif ($time < $yesterday+3600*5){
+//                $query[4] = $query[4] + $step;
+//            } elseif ($time < $yesterday+3600*6){
+//                $query[5] = $query[5] + $step;
+//            } elseif ($time < $yesterday+3600*7){
+//                $query[6] = $query[6] + $step;
+//            } elseif ($time < $yesterday+3600*8){
+//                $query[7] = $query[7] + $step;
+//            } elseif ($time < $yesterday+3600*9){
+//                $query[8] = $query[8] + $step;
+//            } elseif ($time < $yesterday+3600*10){
+//                $query[9] = $query[9] + $step;
+//            } elseif ($time < $yesterday+3600*11){
+//                $query[10] = $query[10] + $step;
+//            } elseif ($time < $yesterday+3600*12){
+//                $query[11] = $query[11] + $step;
+//            } elseif ($time < $yesterday+3600*13){
+//                $query[12] = $query[12] + $step;
+//            } elseif ($time < $yesterday+3600*14){
+//                $query[13] = $query[13] + $step;
+//            } elseif ($time < $yesterday+3600*15){
+//                $query[14] = $query[14] + $step;
+//            } elseif ($time < $yesterday+3600*16){
+//                $query[15] = $query[15] + $step;
+//            } elseif ($time < $yesterday+3600*17){
+//                $query[16] = $query[16] + $step;
+//            } elseif ($time < $yesterday+3600*18){
+//                $query[17] = $query[17] + $step;
+//            } elseif ($time < $yesterday+3600*19){
+//                $query[18] = $query[18] + $step;
+//            } elseif ($time < $yesterday+3600*20){
+//                $query[19] = $query[19] + $step;
+//            } elseif ($time < $yesterday+3600*21){
+//                $query[20] = $query[20] + $step;
+//            } elseif ($time < $yesterday+3600*22){
+//                $query[21] = $query[21] + $step;
+//            } elseif ($time < $yesterday+3600*23){
+//                $query[22] = $query[22] + $step;
+//            } elseif ($time < $yesterday+3600*24){
+//                $query[23] = $query[23] + $step;
+//            }
+//
+//
+//
+//        }
+
+        array_unshift($query, date("M d", $yesterday));
+        $query[] = '';
+        $data = [
+            ['Date', '1st Hour', '2nd Hour', '3rd Hour', '4th Hour','5th Hour', '6th Hour',
+                '7th Hour', '8th Hour', '9th Hour', '10th Hour', '11th Hour', '12th Hour',
+                '13th Hour', '14th Hour', '15th Hour', '16th Hour', '17th Hour', '18th Hour',
+                '19th Hour', '20th Hour','21st Hour', '22nd Hour', '23rd Hour', '24th Hour',
+                ['role' => 'annotation'] ],
+            $query,
+        ];
+
+//        Yii::getLogger()->log($data, Logger::LEVEL_INFO, 'MyLog');
+//        Yii::getLogger()->log(strtotime('now'), Logger::LEVEL_INFO, 'MyLog');
+
+
         return $this->render('report', array(
             'space' => $space,
-            'user' => $user
+            'user' => $user,
+            'data' => $data,
         ));
     }
+
+
+    public function actionReportTest()
+    {
+        $space = $this->getSpace();
+        $user = $this->getCare();
+
+        return $this->render('report-test', array(
+            'space' => $space,
+            'user' => $user,
+        ));
+    }
+
     public function actionRemove()
     {
 //        $this->forcePostRequest();
