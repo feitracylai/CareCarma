@@ -303,6 +303,15 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             $contact->save();
         }
 
+        $device_list = Device::findAll(['user_id' => $this->id, 'activate' => 1]);
+        if (!empty($device_list)){
+            foreach ($device_list as $device){
+                $device->user_id = 0;
+                $device->activate = 0;
+                $device->save();
+            }
+        }
+
         return parent::beforeDelete();
     }
 

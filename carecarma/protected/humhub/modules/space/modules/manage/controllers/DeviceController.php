@@ -149,19 +149,7 @@ class DeviceController extends ContentContainerController
                             $contact_user = User::findOne(['id' => $memeber->user_id]);
                             $user = User::findOne(['id' => $form->models['User']->id]);
                             $user->addContact($contact_user);
-//                            $contact = new Contact();
-//                            $contact->contact_user_id = $contact_user->id;
-//                            $contact->contact_first = $contact_user->profile->firstname;
-//                            $contact->contact_last = $contact_user->profile->lastname;
-//                            $contact->contact_mobile = $contact_user->profile->mobile;
-//                            $contact->contact_email = $contact_user->email;
-//                            $contact->home_phone = $contact_user->profile->phone_private;
-//                            $contact->work_phone = $contact_user->profile->phone_work;
-//                            if ($contact_user->device_id != null) {
-//                                $contact->device_phone = $contact_user->device->phone;
-//                            }
-//                            $contact->user_id = $form->models['User']->id;
-//                            $contact->save();
+
 
                         }
                     }
@@ -169,9 +157,15 @@ class DeviceController extends ContentContainerController
                     $space->addMember($form->models['User']->id);
                     $space->setCareReceiver($form->models['User']->id);
                     // check if device fulfill all the rule of activation, if yes, activation
-                    if ($this->checkDevice($form->models['User']->device_id)) {
-                        $this->activation($form->models['User']->device_id);
+                    if (!empty($form->models['User']->device_id)){
+                        if ($this->checkDevice($form->models['User']->device_id)) {
+                            $device = Device::findOne(['device_id' => $form->models['User']->device_id]);
+                            $device->user_id = $user->id;
+                            $device->save();
+                            $this->activation($form->models['User']->device_id);
+                        }
                     }
+
                     return $this->redirect($space->createUrl('/space/manage/device'));
                 }
             }
@@ -404,11 +398,8 @@ class DeviceController extends ContentContainerController
             $model->addError('currentPassword', Yii::t('SpaceModule.controllers_DeviceController', "Your password is incorrect!"));
             $check = false;
         }
-        if ($device == null){
+        if ($device == null || $device->activate == 1){
             $model->addError('deviceId',  Yii::t('SpaceModule.controllers_DeviceController', "Activation ID is incorrect!"));
-            $check = false;
-        } elseif ($device->user_id != 0){
-            $model->addError('deviceId', Yii::t('SpaceModule.controllers_DeviceController', 'This Activation ID is already in use!'));
             $check = false;
         }
         return $check;

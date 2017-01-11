@@ -9,6 +9,7 @@
 namespace humhub\modules\user\controllers;
 
 use Yii;
+use yii\log\Logger;
 use yii\web\HttpException;
 use yii\helpers\Url;
 use humhub\components\Controller;
@@ -456,6 +457,15 @@ class AuthController extends Controller
         $new_device->device_id = $device_id;
         $new_device->gcmId = $gcm_id;
         $new_device->phone = $phone;
+        if (isset($data['IMEI'])){
+            $new_device->hardware_id = $data['IMEI'];
+        }
+        if (isset($data['type'])){
+            $new_device->type = $data['type'];
+        }
+        if (isset($data['model'])){
+            $new_device->model = $data['model'];
+        }
         $new_device->save();
 
         $gcm = new GCM();
