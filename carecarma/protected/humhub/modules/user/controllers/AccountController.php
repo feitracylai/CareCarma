@@ -225,6 +225,7 @@ class AccountController extends Controller
 //        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm_id = $data['gcm_id'];
         $phone = $data['phone'];
+
 //        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 //        Yii::getLogger()->log(print_r($phone,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
@@ -240,13 +241,21 @@ class AccountController extends Controller
         $new_device->device_id = $device_id;
         $new_device->gcmId = $gcm_id;
         $new_device->phone = $phone;
+        if (isset($data['IMEI'])){
+            $new_device->hardware_id = $data['IMEI'];
+        }
+        if (isset($data['type'])){
+            $new_device->type = $data['type'];
+        }
+        if (isset($data['model'])){
+            $new_device->model = $data['model'];
+        }
         $new_device->save();
-
+//
         $gcm = new GCM();
         $data2 = array();
         $data2['type'] = "active,device_id";
         $data2['device_id'] = $device_id;
-//        Yii::getLogger()->log(print_r($data2,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm->send($gcm_id, $data2);
     }
 
@@ -279,7 +288,7 @@ class AccountController extends Controller
 
     public static function randString($length, $specialChars = false) {
 //        $chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789';
-        $chars = 'abcdefghijkmnopqrstuvwxyzCDEFJKLMNOPQRSTUVWXYZ023456789';
+        $chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789';
         if ($specialChars) {
             $chars .= '!@#$%^&*()';
         }

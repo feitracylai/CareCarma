@@ -285,14 +285,14 @@ class BeaconController extends Controller
 
                 $distance = substr($row, $pos_d + 1, $pos_x - $pos_d - 1);
                 $beacon_id = substr($row, $pos_x + 1, $pos_i - $pos_x - 1);
-                $device_id = substr($row, $pos_i + 1);
+                $hardware_id = substr($row, $pos_i + 1);
 
                 $pure_data = substr($pure_data, strlen($row) + 1);
                 $shorttime = strtotime($realtime) . substr($time, 5,3);
 
                 $model = new Beacon();
                 $model->user_id = Yii::$app->user->id;
-                $model->device_id = $device_id;
+                $model->hardware_id = $hardware_id;
                 $model->datetime = $realtime;
                 $model->distance = $distance;
                 $model->beacon_id = $beacon_id;

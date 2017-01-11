@@ -215,7 +215,7 @@ class HeartrateController extends Controller
 
 
 
-//    T0000D000X000  time, device_id, heartrate
+//    T0000D000X000  time, hardware_id, heartrate
     public function actionCreateddd()
     {
 
@@ -247,7 +247,7 @@ class HeartrateController extends Controller
 
 
                 $heartrate = substr($row, $pos_r + 1, $pos_i - $pos_r - 1);
-                $device_id = substr($row, $pos_i + 1);
+                $hardware_id = substr($row, $pos_i + 1);
 
 
 
@@ -257,7 +257,7 @@ class HeartrateController extends Controller
                 $model = new Heartrate();
                 $model->user_id = Yii::$app->user->id;
                 $model->datetime = $realtime;
-                $model->device_id = $device_id;
+                $model->hardware_id = $hardware_id;
                 $model->heartrate = $heartrate;
                 $model->time = $shorttime;
                 Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');

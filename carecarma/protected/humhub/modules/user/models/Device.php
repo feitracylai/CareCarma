@@ -13,6 +13,10 @@ use Yii;
  * @property string $gcmId
  * @property string $phone
  * @property string $temp_password
+ * @property string $hardware_id
+ * @property string $type
+ * @property string $model
+ * @property integer $activate
  */
 class Device extends \yii\db\ActiveRecord
 {
@@ -47,7 +51,11 @@ class Device extends \yii\db\ActiveRecord
             'gcmId' => 'Gcm ID',
             'phone' => 'CoSMoS Phone#',
             'temp_password' => 'Temp Password',
-            'user_id' => 'user ID'
+            'user_id' => 'user ID',
+            'hardware_id' => 'Hardware ID',
+            'type' => 'Device Type',
+            'model' => 'Device Model',
+            'activate' => 'Is it activated?'
         ];
     }
 
