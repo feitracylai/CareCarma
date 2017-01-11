@@ -82,7 +82,7 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
                 ],
 
                 [
-                    'label' => Yii::t('UserModule.views_contact_index', 'CareCarma Phone (max: 5)'),
+                    'label' => Yii::t('UserModule.views_contact_index', 'CareCarma Watch (max: 5)'),
                     'class' => 'humhub\libs\CheckGridColumn',
                     'attribute' => 'carecarma_watch_number',
                     'submitAttributes' => ['contact_id'],
