@@ -402,6 +402,12 @@ class DeviceController extends ContentContainerController
             $model->addError('deviceId',  Yii::t('SpaceModule.controllers_DeviceController', "Activation ID is incorrect!"));
             $check = false;
         }
+        /****if someone use the same device now****/
+        $same_device_other_user = Device::find()->where(['hardware_id' => $device->hardware_id, 'activate' => 1])->andWhere(['<>','user_id', $receiver->getId()])->one();
+        if($same_device_other_user != null){
+            $model->addError('deviceId', Yii::t('SpaceModule.controllers_DeviceController', "Activation ID is incorrect!"));
+            $check = false;
+        }
         return $check;
     }
 
@@ -411,13 +417,15 @@ class DeviceController extends ContentContainerController
             throw new HttpException(403, 'Access denied - Circle Administrator only!');
 
         $user =  $this->getCare();
-        $device_list = Device::findAll(['user_id' => $user->id]);
+        $device_list = Device::findAll(['user_id' => $user->id, 'activate' => 1]);
 
         $deviceModel = new \humhub\modules\user\models\forms\AccountDevice();
 
 
         if ($deviceModel->load(Yii::$app->request->post())&& $deviceModel->validate() && $this->checkReceiverDevice($deviceModel, $user)) {
             $device = Device::find()->where(['device_id' => $deviceModel->deviceId])->one();
+
+
             $user->temp_password = $deviceModel->currentPassword;
             $user->save();
 
@@ -448,7 +456,7 @@ class DeviceController extends ContentContainerController
 
 //                    $user->updateUserContacts();
 
-                Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
+            Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
 
             return $this->redirect($space->createUrl('device',['rguid' => $user->guid]));
         }

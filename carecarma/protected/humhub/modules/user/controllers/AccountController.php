@@ -90,52 +90,66 @@ class AccountController extends Controller
         return $this->render('edit', array('hForm' => $form));
     }
 
+    public function checkUserDevice($model, $user){
+        $check = true;
+        $device = Device::find()->where(['device_id' => $model->deviceId])->one();
+        if ($device==null || $device->activate == 1){
+            $model->addError('deviceId', Yii::t('UserModule.controllers_AccountController', "Activation ID is incorrect!"));
+            $check = false;
+        }
+        /****if someone use the same device now****/
+        $same_device_other_user = Device::find()->where(['hardware_id' => $device->hardware_id, 'activate' => 1])->andWhere(['<>','user_id', $user->getId()])->one();
+        if(!empty($same_device_other_user)){
+            $model->addError('deviceId', Yii::t('UserModule.controllers_AccountController', "Activation ID is incorrect!"));
+            $check = false;
+        }
+
+        return $check;
+
+    }
+
 
     public function actionEditDevice()
     {
         $user = Yii::$app->user->getIdentity();
         $model = new \humhub\modules\user\models\forms\AccountDevice();
         $model->scenario = 'userDevice';
-        $device_list = Device::findAll(['user_id' => $user->id]);
+        $device_list = Device::findAll(['user_id' => $user->id, 'activate' => 1]);
 
 
 
-        if ($model->load(Yii::$app->request->post())&& $model->validate()) {
+        if ($model->load(Yii::$app->request->post())&& $model->validate() && $this->checkUserDevice($model, $user)) {
             $device = Device::find()->where(['device_id' => $model->deviceId])->one();
-            if ($device==null || $device->activate == 1){
-                $model->addError('deviceId', Yii::t('UserModule.controllers_AccountController', "Activation ID is incorrect!"));
+
+            $user->temp_password = $model->currentPassword;
+            $user->save();
+            /****if it is the previous same device, replace the older row.****/
+            $same_device = Device::findOne(['hardware_id' => $device->hardware_id, 'user_id' => $user->getId()]);
+            if (!empty($device->hardware_id) && !empty($same_device) && $same_device->id != $device->id){
+                $same_device->device_id = $device->device_id;
+                $same_device->gcmId = $device->gcmId;
+                $same_device->phone = $device->phone;
+                $same_device->type = $device->type;
+                $same_device->model = $device->model;
+                $device->delete();
+                $same_device->save();
+
             } else {
-                $user->device_id = $model->deviceId;
-                $user->temp_password = $model->currentPassword;
-                $user->save();
+                $device->user_id = $user->getId();
+                $device->save();
 
-                /****if it is the previous same device, replace the older row.****/
-                $same_device = Device::findOne(['hardware_id' => $device->hardware_id, 'user_id' => $user->getId()]);
-                if (!empty($device->hardware_id) && !empty($same_device) && $same_device->id != $device->id){
-                    $same_device->device_id = $device->device_id;
-                    $same_device->gcmId = $device->gcmId;
-                    $same_device->phone = $device->phone;
-                    $same_device->type = $device->type;
-                    $same_device->model = $device->model;
-                    $device->delete();
-                    $same_device->save();
-
-                } else {
-                    $device->user_id = $user->getId();
-                    $device->save();
-
-                }
+            }
 
 
 
 //                $user->updateUserContacts();
-                if ($this->checkDevice($model->deviceId)) {
-                    $this->activationA($model->deviceId);
-                }
-
-
-                Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
+            if ($this->checkDevice($model->deviceId)) {
+                $this->activationA($model->deviceId);
             }
+
+
+            Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
+
 
             return $this->redirect(Url::to(['edit-device']));
 
