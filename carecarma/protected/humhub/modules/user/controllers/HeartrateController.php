@@ -238,7 +238,7 @@ class HeartrateController extends Controller
                 else $row = substr($temp_data, 0, $pos_next_h);
                 $pos_r = strpos($row, "R");
                 $pos_i = strpos($row, "I");
-                $time = substr($row, 1, $pos_r);
+                $time = substr($row, 1, $pos_r-1);
 
                 $t = time();
                 $yearmonthday = date('Y-m-d',$t);
