@@ -1,1 +1,1 @@
-<strong><?php echo Yii::t('AdminModule.views_notifications_newUpdate', "There is a new HumHub Version (%version%) available.", array('%version%' => $this->context->getLatestHumHubVersion())); ?></strong>
+<strong><?php echo Yii::t('AdminModule.views_notifications_newUpdate', "There is a new CareCarma Version (%version%) available.", array('%version%' => $this->context->getLatestHumHubVersion())); ?></strong>

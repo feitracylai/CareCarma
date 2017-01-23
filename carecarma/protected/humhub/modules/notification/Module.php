@@ -7,6 +7,8 @@ use humhub\modules\notification\models\Notification;
 use humhub\modules\notification\components\BaseNotification;
 use humhub\models\Setting;
 use humhub\commands\CronController;
+use Yii;
+use yii\log\Logger;
 
 /**
  * NotificationModule
@@ -21,7 +23,6 @@ class Module extends \humhub\components\Module
     {
         $output = ['html' => '', 'plaintext' => ''];
 
-        
         $receive_email_notifications = $user->getSetting("receive_email_notifications", 'core', Setting::Get('receive_email_notifications', 'mailing'));
 
         // Never receive notifications
@@ -42,7 +43,16 @@ class Module extends \humhub\components\Module
 
         // User wants only when offline and is online
         if ($interval == CronController::EVENT_ON_HOURLY_RUN) {
-            $isOnline = (count($user->httpSessions) > 0);
+            $isOnline  = false;
+            if (count($user->httpSessions) > 0){
+                $expire = time();
+                foreach ($user->httpSessions as $httpSession){
+                    $expire = ($expire > $httpSession->expire)? $expire : $httpSession->expire;
+                }
+                $isOnline = ($expire > time());
+            }
+
+//            $isOnline = (count($user->httpSessions) > 0);
             if ($receive_email_notifications == User::RECEIVE_EMAIL_WHEN_OFFLINE && $isOnline) {
                 return "";
             }

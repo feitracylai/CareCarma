@@ -9,10 +9,6 @@ use humhub\components\ActiveRecord;
 use humhub\modules\user\models\User;
 use humhub\models\Setting;
 use humhub\modules\mail\models\Message;
-use humhub\modules\mail\models\UserMessage;
-use humhub\modules\mail\models\DeviceMessage;
-use yii\log\Logger;
-
 
 /**
  * This is the model class for table "message_entry".
@@ -111,14 +107,21 @@ class MessageEntry extends ActiveRecord
 
         $senderName = $this->user->displayName;
         $senderGuid = $this->user->guid;
-        foreach ($this->message->users as $user) {
 
+        foreach ($this->message->users as $user) {
 
             if ($user->id == $this->user_id)
                 continue;
 
             $receive_email_messages = $user->getSetting("receive_email_messages", 'message', Setting::Get('receive_email_notifications', 'mailing'));
-            $isOnline = (count($user->httpSessions) > 0);
+            $isOnline  = false;
+            if (count($user->httpSessions) > 0){
+                $expire = time();
+                foreach ($user->httpSessions as $httpSession){
+                    $expire = ($expire > $httpSession->expire)? $expire : $httpSession->expire;
+                }
+                $isOnline = ($expire > time());
+            }
             $willSend = false;
 
 
@@ -150,10 +153,7 @@ class MessageEntry extends ActiveRecord
             $mail->setTo($user->email);
             $mail->setSubject(Yii::t('MailModule.models_MessageEntry', 'New message in discussion from %displayName%', array('%displayName%' => $senderName)));
             $mail->send();
-
-
         }
-
     }
 
 }

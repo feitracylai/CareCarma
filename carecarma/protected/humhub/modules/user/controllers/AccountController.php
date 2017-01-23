@@ -113,7 +113,7 @@ class AccountController extends Controller
     {
         $user = Yii::$app->user->getIdentity();
         $model = new \humhub\modules\user\models\forms\AccountDevice();
-        $model->scenario = 'userDevice';
+        $model->scenario = 'editDevice';
         $device_list = Device::findAll(['user_id' => $user->id, 'activate' => 1]);
 
 
@@ -478,8 +478,8 @@ class AccountController extends Controller
         $model->enable_html5_desktop_notifications = $user->getSetting("enable_html5_desktop_notifications", 'core', \humhub\models\Setting::Get('enable_html5_desktop_notifications', 'notification'));
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-//            $user->setSetting("receive_email_activities", $model->receive_email_activities);
-//            $user->setSetting("receive_email_notifications", $model->receive_email_notifications);
+            $user->setSetting("receive_email_activities", $model->receive_email_activities);
+            $user->setSetting("receive_email_notifications", $model->receive_email_notifications);
             $user->setSetting("receive_email_messages", $model->receive_email_messages);
             $user->setSetting('enable_html5_desktop_notifications', $model->enable_html5_desktop_notifications);
 

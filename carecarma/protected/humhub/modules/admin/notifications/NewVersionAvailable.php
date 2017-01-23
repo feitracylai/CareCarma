@@ -34,7 +34,7 @@ class NewVersionAvailable extends BaseNotification
 
     public function renderText()
     {
-        return Yii::t('AdminModule.views_notifications_newUpdate', "There is a new HumHub Version (%version%) available.", ['%version%' => $notification->getLatestHumHubVersion()]);
+        return Yii::t('AdminModule.views_notifications_newUpdate', "There is a new CareCarma Version (%version%) available.", ['%version%' => $notification->getLatestHumHubVersion()]);
     }
 
     public function getUrl()
