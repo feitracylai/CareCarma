@@ -1387,7 +1387,10 @@ class SensorController extends Controller
         $val |= $bytes[$position] & 0xff;
         return $val;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
     public static function bytesToShort($bytes, $position) {
         $val = 0;
         $val = $bytes[$position + 1] & 0xFF;
@@ -1395,7 +1398,10 @@ class SensorController extends Controller
         $val |= $bytes[$position] & 0xFF;
         return $val;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
     public static function bytesTo6Long($bytes, $position) {
         $val = 0;
         $val = $bytes[$position + 5] & 0xff;
@@ -1411,7 +1417,10 @@ class SensorController extends Controller
         $val |= $bytes[$position] & 0xff;
         return $val;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
     public static function bytesTo8Long($bytes, $position) {
         $val = 0;
         $val = $bytes[$position + 7] & 0xff;
@@ -1431,12 +1440,19 @@ class SensorController extends Controller
         $val |= $bytes[$position] & 0xff;
         return $val;
     }
+<<<<<<< HEAD
 
     public static function bytesToChar($bytes, $position) {
         $result = chr($bytes[$position+1]);
         return $result;
     }
 
+=======
+    public static function bytesToChar($bytes, $position) {
+        $result = chr($bytes[$position]);
+        return $result;
+    }
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
     public static function bytesToFloat($bytes, $position) {
         $list = array();
         $list[0] = $bytes[$position];
@@ -1445,7 +1461,10 @@ class SensorController extends Controller
         $list[3] = $bytes[$position + 3];
         return unpack('f', pack('c*', $list));
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
     public function actionTestbytes()
     {
         $data = Yii::$app->request->post();
@@ -1471,7 +1490,10 @@ class SensorController extends Controller
         $imei = bytesTo8Long($pure_data, $current);
         Yii::getLogger()->log(print_r($imei,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 8;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
         $t = time();
         $yearmonthday = date('Y-m-d',$t);
         $hoursecond = date('H:i:s', substr(sprintf('%.0f', $time), 0, 5));
@@ -1480,7 +1502,10 @@ class SensorController extends Controller
         $ay = $y;
         $az = $z;
         $shorttime = strtotime($realtime) . substr(sprintf('%.0f', $time), 5,3);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
         $model = new Sensor();
         $model->user_id = Yii::$app->user->id;
         $model->datetime = sprintf('%.0f', $realtime);
@@ -1492,9 +1517,12 @@ class SensorController extends Controller
         $model->save();
         Yii::getLogger()->log(print_r("end",true),yii\log\Logger::LEVEL_INFO,'MyLog');
     }
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
     public function actionCreatebytes()
     {
         ini_set('max_execution_time', 30000);
@@ -1506,6 +1534,10 @@ class SensorController extends Controller
         $current = 0;
         Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         while($current != $length) {
+<<<<<<< HEAD
+=======
+            $current += 1;
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
             $aorg = bytesToChar($pure_data, $current);
             $current += 1;
             $time = bytesTo6Long($pure_data, $current);
@@ -1527,7 +1559,10 @@ class SensorController extends Controller
                 $ay = $y;
                 $az = $z;
                 $shorttime = strtotime($realtime) . substr(sprintf('%.0f', $time), 5,3);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
                 if ($current == $length) {
                     $model = new Sensor();
                     $model->user_id = Yii::$app->user->id;
@@ -1554,7 +1589,11 @@ class SensorController extends Controller
                     $newimei = bytesTo8Long($pure_data, $current);
                     $current += 8;
                     if ($aorg == "A") {
+<<<<<<< HEAD
                         $current -= 27;
+=======
+                        $current -= 28;
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
                         continue;
                     }
                     else {
@@ -1573,7 +1612,11 @@ class SensorController extends Controller
                             $model->save();
                         }
                         else {
+<<<<<<< HEAD
                             $current -= 27;
+=======
+                            $current -= 28;
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
                             continue;
                         }
                     }
@@ -1588,7 +1631,10 @@ class SensorController extends Controller
                 $gy = $y;
                 $gz = $z;
                 $shorttime = strtotime($realtime) . substr(sprintf('%.0f', $time), 5,3);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
                 if ($current == $length) {
                     $model = new Sensor();
                     $model->user_id = Yii::$app->user->id;
@@ -1602,6 +1648,10 @@ class SensorController extends Controller
                     continue;
                 }
                 else {
+<<<<<<< HEAD
+=======
+                    $current += 1;
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
                     $newaorg = bytesToChar($pure_data, $current);
                     $current += 1;
                     $newtime = bytesTo6Long($pure_data, $current);
@@ -1615,7 +1665,11 @@ class SensorController extends Controller
                     $newimei = bytesTo8Long($pure_data, $current);
                     $current += 8;
                     if ($aorg == "G") {
+<<<<<<< HEAD
                         $current -= 27;
+=======
+                        $current -= 28;
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
                         continue;
                     }
                     else {
@@ -1634,7 +1688,11 @@ class SensorController extends Controller
                             $model->save();
                         }
                         else {
+<<<<<<< HEAD
                             $current -= 27;
+=======
+                            $current -= 28;
+>>>>>>> 7edff6fcb3d8278d3702beed7a6db8ed304da391
                             continue;
                         }
                     }
