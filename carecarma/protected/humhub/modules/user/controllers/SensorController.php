@@ -1444,6 +1444,7 @@ class SensorController extends Controller
     {
         ini_set('max_execution_time', 30000);
         $data = Yii::$app->request->post();
+        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $pure_data = $data['Sensor'];
         $length = count($pure_data);
         $current = 0;
@@ -1461,6 +1462,7 @@ class SensorController extends Controller
             $imei = bytesTo8Long($pure_data, $current);
             $current += 8;
         }
+        Yii::getLogger()->log(print_r("test end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
     }
     public function actionCreatebytes()
     {
