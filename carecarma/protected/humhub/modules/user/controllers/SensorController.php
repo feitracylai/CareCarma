@@ -1442,27 +1442,47 @@ class SensorController extends Controller
     }
     public function actionTestbytes()
     {
-        ini_set('max_execution_time', 30000);
         $data = Yii::$app->request->post();
-        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $pure_data = $data['Sensor'];
         $length = count($pure_data);
         $current = 0;
-        while ($current != $length) {
-            $aorg = bytesToChar($pure_data, $current);
-            $current += 1;
-            $time = bytesTo6Long($pure_data, $current);
-            $current += 6;
-            $x = bytesToFloat($pure_data, $current);
-            $current += 4;
-            $y = bytesToFloat($pure_data, $current);
-            $current += 4;
-            $z = bytesToFloat($pure_data, $current);
-            $current += 4;
-            $imei = bytesTo8Long($pure_data, $current);
-            $current += 8;
-        }
-        Yii::getLogger()->log(print_r("test end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r("beginning",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $aorg = bytesToChar($pure_data, $current);
+        Yii::getLogger()->log(print_r($aorg,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $current += 2;
+        $time = bytesTo6Long($pure_data, $current);
+        Yii::getLogger()->log(print_r($aorg,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $current += 6;
+        $x = bytesToFloat($pure_data, $current);
+        Yii::getLogger()->log(print_r($x,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $current += 4;
+        $y = bytesToFloat($pure_data, $current);
+        Yii::getLogger()->log(print_r($y,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $current += 4;
+        $z = bytesToFloat($pure_data, $current);
+        Yii::getLogger()->log(print_r($z,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $current += 4;
+        $imei = bytesTo8Long($pure_data, $current);
+        Yii::getLogger()->log(print_r($imei,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $current += 8;
+        $t = time();
+        $yearmonthday = date('Y-m-d',$t);
+        $hoursecond = date('H:i:s', substr(sprintf('%.0f', $time), 0, 5));
+        $realtime = $yearmonthday . " " . $hoursecond;
+        $ax = $x;
+        $ay = $y;
+        $az = $z;
+        $shorttime = strtotime($realtime) . substr(sprintf('%.0f', $time), 5,3);
+        $model = new Sensor();
+        $model->user_id = Yii::$app->user->id;
+        $model->datetime = sprintf('%.0f', $realtime);
+        $model->accelX = sprintf('%.0f', $ax);
+        $model->accelY = sprintf('%.0f', $ay);
+        $model->accelZ = sprintf('%.0f', $az);
+        $model->time = $shorttime ;
+        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $model->save();
+        Yii::getLogger()->log(print_r("end",true),yii\log\Logger::LEVEL_INFO,'MyLog');
     }
     public function actionCreatebytes()
     {
