@@ -1446,7 +1446,7 @@ class SensorController extends Controller
         return unpack('f', pack('c*', $list));
     }
 
-    public function actionTestBytes()
+    public function actionTestbytes()
     {
         ini_set('max_execution_time', 30000);
         $data = Yii::$app->request->post();
@@ -1471,7 +1471,7 @@ class SensorController extends Controller
 
 
 
-    public function actionCreatebyte()
+    public function actionCreatebytes()
     {
         ini_set('max_execution_time', 30000);
         date_default_timezone_set('GMT');
