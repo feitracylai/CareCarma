@@ -1475,6 +1475,7 @@ class SensorController extends Controller
         $current = 0;
         Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         while($current != $length) {
+            $current += 1;
             $aorg = bytesToChar($pure_data, $current);
             $current += 1;
             $time = bytesTo6Long($pure_data, $current);
@@ -1522,7 +1523,7 @@ class SensorController extends Controller
                     $newimei = bytesTo8Long($pure_data, $current);
                     $current += 8;
                     if ($aorg == "A") {
-                        $current -= 27;
+                        $current -= 28;
                         continue;
                     }
                     else {
@@ -1541,7 +1542,7 @@ class SensorController extends Controller
                             $model->save();
                         }
                         else {
-                            $current -= 27;
+                            $current -= 28;
                             continue;
                         }
                     }
@@ -1569,6 +1570,7 @@ class SensorController extends Controller
                     continue;
                 }
                 else {
+                    $current += 1;
                     $newaorg = bytesToChar($pure_data, $current);
                     $current += 1;
                     $newtime = bytesTo6Long($pure_data, $current);
@@ -1582,7 +1584,7 @@ class SensorController extends Controller
                     $newimei = bytesTo8Long($pure_data, $current);
                     $current += 8;
                     if ($aorg == "G") {
-                        $current -= 27;
+                        $current -= 28;
                         continue;
                     }
                     else {
@@ -1601,7 +1603,7 @@ class SensorController extends Controller
                             $model->save();
                         }
                         else {
-                            $current -= 27;
+                            $current -= 28;
                             continue;
                         }
                     }
