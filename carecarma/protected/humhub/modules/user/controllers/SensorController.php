@@ -1448,7 +1448,9 @@ class SensorController extends Controller
 
     public function actionTestbytes()
     {
+        Yii::getLogger()->log(print_r("",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $data = Yii::$app->request->post();
+        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $pure_data = $data['Sensor'];
         $length = count($pure_data);
         $current = 0;
