@@ -1452,7 +1452,9 @@ class SensorController extends Controller
         Yii::getLogger()->log(print_r(gettype($pure_data),true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
         $length = count($pure_data);
-        Yii::getLogger()->log(print_r($length,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $byte_array = unpack('C*', $pure_data);
+        Yii::getLogger()->log(print_r($byte_array,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
         $current = 0;
         Yii::getLogger()->log(print_r("beginning",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $aorg = bytesToChar($pure_data, $current);
