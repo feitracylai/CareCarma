@@ -1434,7 +1434,6 @@ class SensorController extends Controller
     }
 
     public function bytesToChar($byte_array, $position) {
-        Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         Yii::getLogger()->log(print_r($byte_array[$position+1],true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $val = chr($byte_array[$position+1]);
         Yii::getLogger()->log(print_r($val,true),yii\log\Logger::LEVEL_INFO,'MyLog');
@@ -1458,22 +1457,22 @@ class SensorController extends Controller
 
         $current = 1;
         Yii::getLogger()->log(print_r("beginning",true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $aorg = bytesToChar($byte_array, $current);
+        $aorg = $this->bytesToChar($byte_array, $current);
         Yii::getLogger()->log(print_r($aorg,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 2;
-        $time = bytesTo6Long($byte_array, $current);
+        $time = $this->bytesTo6Long($byte_array, $current);
         Yii::getLogger()->log(print_r($time,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 6;
-        $x = bytesToFloat($byte_array, $current);
+        $x = $this->bytesToFloat($byte_array, $current);
         Yii::getLogger()->log(print_r($x,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 4;
-        $y = bytesToFloat($byte_array, $current);
+        $y = $this->bytesToFloat($byte_array, $current);
         Yii::getLogger()->log(print_r($y,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 4;
-        $z = bytesToFloat($byte_array, $current);
+        $z = $this->bytesToFloat($byte_array, $current);
         Yii::getLogger()->log(print_r($z,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 4;
-        $imei = bytesTo8Long($byte_array, $current);
+        $imei = $this->bytesTo8Long($byte_array, $current);
         Yii::getLogger()->log(print_r($imei,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 8;
 
