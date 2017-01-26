@@ -1377,6 +1377,7 @@ class SensorController extends Controller
 
 
     public static function bytesToInteger($bytes, $position) {
+//        $i = unpack("L",pack("C*",$ar[1],$ar[2],$ar[3],$ar[4]));
         $val = 0;
         $val = $bytes[$position + 3] & 0xff;
         $val <<= 8;
@@ -1433,26 +1434,20 @@ class SensorController extends Controller
     }
 
     public static function bytesToChar($bytes, $position) {
-        $result = chr($bytes[$position+1]);
-        return $result;
+        $char = chr($bytes[$position+1]);
+        return $char;
     }
 
     public static function bytesToFloat($bytes, $position) {
-        $list = array();
-        $list[0] = $bytes[$position];
-        $list[1] = $bytes[$position + 1];
-        $list[2] = $bytes[$position + 2];
-        $list[3] = $bytes[$position + 3];
-        return unpack('f', pack('c*', $list));
+        $float = unpack('f', pack('c*', $bytes[$position], $bytes[$position+1], $bytes[$position+2], $bytes[$position+3]));
+        $float_str = sprintf('%f', $float[0]);
+        return $float_str;
     }
 
     public function actionTestbytes()
     {
         Yii::getLogger()->log(print_r("data",true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        Yii::getLogger()->log(print_r($_POST,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $data = Yii::$app->request->post();
-        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $pure_data = $data['Sensor'];
+        $pure_data = file_get_contents('php://input');
         $length = count($pure_data);
         $current = 0;
         Yii::getLogger()->log(print_r("beginning",true),yii\log\Logger::LEVEL_INFO,'MyLog');
@@ -1502,15 +1497,13 @@ class SensorController extends Controller
     {
         ini_set('max_execution_time', 30000);
         date_default_timezone_set('GMT');
-        $data = Yii::$app->request->post();
-        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $pure_data = $data['Sensor'];
+        $pure_data = file_get_contents('php://input');
         $length = count($pure_data);
         $current = 0;
         Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         while($current != $length) {
             $aorg = bytesToChar($pure_data, $current);
-            $current += 1;
+            $current += 2;
             $time = bytesTo6Long($pure_data, $current);
             $current += 6;
             $x = bytesToFloat($pure_data, $current);
@@ -1557,7 +1550,7 @@ class SensorController extends Controller
                     $newimei = bytesTo8Long($pure_data, $current);
                     $current += 8;
                     if ($aorg == "A") {
-                        $current -= 27;
+                        $current -= 28;
                         continue;
                     }
                     else {
@@ -1576,7 +1569,7 @@ class SensorController extends Controller
                             $model->save();
                         }
                         else {
-                            $current -= 27;
+                            $current -= 28;
                             continue;
                         }
                     }
@@ -1618,7 +1611,7 @@ class SensorController extends Controller
                     $newimei = bytesTo8Long($pure_data, $current);
                     $current += 8;
                     if ($aorg == "G") {
-                        $current -= 27;
+                        $current -= 28;
                         continue;
                     }
                     else {
@@ -1637,7 +1630,7 @@ class SensorController extends Controller
                             $model->save();
                         }
                         else {
-                            $current -= 27;
+                            $current -= 28;
                             continue;
                         }
                     }
