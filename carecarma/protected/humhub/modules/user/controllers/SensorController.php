@@ -1433,9 +1433,10 @@ class SensorController extends Controller
         return $val;
     }
 
-    public static function bytesToChar($bytes, $position) {
-        $char = chr($bytes[$position+1]);
-        return $char;
+    public static function bytesToChar($byte_array, $position) {
+        $val = chr($byte_array[$position+1]);
+        Yii::getLogger()->log(print_r($val,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        return $val;
     }
 
     public static function bytesToFloat($bytes, $position) {
@@ -1448,14 +1449,13 @@ class SensorController extends Controller
     {
         Yii::getLogger()->log(print_r("data",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $pure_data = file_get_contents('php://input');
-        Yii::getLogger()->log(print_r($pure_data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         Yii::getLogger()->log(print_r(gettype($pure_data),true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
         $length = count($pure_data);
         $byte_array = unpack('C*', $pure_data);
         Yii::getLogger()->log(print_r($byte_array,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
-        $current = 0;
+        $current = 1;
         Yii::getLogger()->log(print_r("beginning",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $aorg = bytesToChar($byte_array, $current);
         Yii::getLogger()->log(print_r($aorg,true),yii\log\Logger::LEVEL_INFO,'MyLog');
