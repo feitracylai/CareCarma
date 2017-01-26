@@ -1434,6 +1434,7 @@ class SensorController extends Controller
     }
 
     public static function bytesToChar($byte_array, $position) {
+        Yii::getLogger()->log(print_r($byte_array[$position+1],true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $val = chr($byte_array[$position+1]);
         Yii::getLogger()->log(print_r($val,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         return $val;
@@ -1449,7 +1450,6 @@ class SensorController extends Controller
     {
         Yii::getLogger()->log(print_r("data",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $pure_data = file_get_contents('php://input');
-        Yii::getLogger()->log(print_r(gettype($pure_data),true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
         $length = count($pure_data);
         $byte_array = unpack('C*', $pure_data);
