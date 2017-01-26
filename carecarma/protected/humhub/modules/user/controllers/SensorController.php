@@ -1376,7 +1376,7 @@ class SensorController extends Controller
     }
 
 
-    public static function bytesToInteger($bytes, $position) {
+    public function bytesToInteger($bytes, $position) {
 //        $i = unpack("L",pack("C*",$ar[1],$ar[2],$ar[3],$ar[4]));
         $val = 0;
         $val = $bytes[$position + 3] & 0xff;
@@ -1389,7 +1389,7 @@ class SensorController extends Controller
         return $val;
     }
 
-    public static function bytesToShort($bytes, $position) {
+    public function bytesToShort($bytes, $position) {
         $val = 0;
         $val = $bytes[$position + 1] & 0xFF;
         $val = $val << 8;
@@ -1397,7 +1397,7 @@ class SensorController extends Controller
         return $val;
     }
 
-    public static function bytesTo6Long($bytes, $position) {
+    public function bytesTo6Long($bytes, $position) {
         $val = 0;
         $val = $bytes[$position + 5] & 0xff;
         $val <<= 8;
@@ -1413,7 +1413,7 @@ class SensorController extends Controller
         return $val;
     }
 
-    public static function bytesTo8Long($bytes, $position) {
+    public function bytesTo8Long($bytes, $position) {
         $val = 0;
         $val = $bytes[$position + 7] & 0xff;
         $val <<= 8;
@@ -1433,14 +1433,15 @@ class SensorController extends Controller
         return $val;
     }
 
-    public static function bytesToChar($byte_array, $position) {
+    public function bytesToChar($byte_array, $position) {
+        Yii::getLogger()->log(print_r("AAA",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         Yii::getLogger()->log(print_r($byte_array[$position+1],true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $val = chr($byte_array[$position+1]);
         Yii::getLogger()->log(print_r($val,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         return $val;
     }
 
-    public static function bytesToFloat($bytes, $position) {
+    public function bytesToFloat($bytes, $position) {
         $float = unpack('f', pack('c*', $bytes[$position], $bytes[$position+1], $bytes[$position+2], $bytes[$position+3]));
         $float_str = sprintf('%f', $float[0]);
         return $float_str;
@@ -1461,7 +1462,7 @@ class SensorController extends Controller
         Yii::getLogger()->log(print_r($aorg,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 2;
         $time = bytesTo6Long($byte_array, $current);
-        Yii::getLogger()->log(print_r($aorg,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r($time,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 6;
         $x = bytesToFloat($byte_array, $current);
         Yii::getLogger()->log(print_r($x,true),yii\log\Logger::LEVEL_INFO,'MyLog');
