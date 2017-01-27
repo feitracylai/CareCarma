@@ -5,7 +5,7 @@ namespace humhub\modules\devices\models;
 use Yii;
 
 /**
- * This is the model class for table "classlabelshoursteps".
+ * This is the model class for table "ClassLabelsHourSteps".
  *
  * @property integer $id
  * @property string $time
@@ -22,7 +22,7 @@ class Classlabelshoursteps extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'classlabelshoursteps';
+        return 'ClassLabelsHourSteps';
     }
 
     /**
