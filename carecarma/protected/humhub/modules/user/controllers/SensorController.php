@@ -1486,9 +1486,10 @@ class SensorController extends Controller
         $current += 8;
 
         $pre_time = (int)substr($time, 0,10);
-        $dt = new DateTime("@$pre_time");  // convert UNIX timestamp to PHP DateTime
+        $dt = new \DateTime("@$pre_time");  // convert UNIX timestamp to PHP DateTime
         $ymd =  $dt->format('Y-m-d H:i:s'); // output = 2017-01-01 00:00:00
         $realtime = $ymd . "." . substr($time, 10,3);
+        Yii::getLogger()->log(print_r($realtime,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
         $model = new Sensor();
         $model->user_id = Yii::$app->user->id;
@@ -1530,7 +1531,7 @@ class SensorController extends Controller
             $current += 8;
             if($aorg == "A"){
                 $pre_time = (int)substr($time, 0,10);
-                $dt = new DateTime("@$pre_time");
+                $dt = new \DateTime("@$pre_time");
                 $ymd =  $dt->format('Y-m-d H:i:s');
                 $realtime = $ymd . "." . substr($time, 10,3);
 
@@ -1610,7 +1611,7 @@ class SensorController extends Controller
             }
             else if($aorg == "G"){
                 $pre_time = (int)substr($time, 0,10);
-                $dt = new DateTime("@$pre_time");
+                $dt = new \DateTime("@$pre_time");
                 $ymd =  $dt->format('Y-m-d H:i:s');
                 $realtime = $ymd . "." . substr($time, 10,3);
 
