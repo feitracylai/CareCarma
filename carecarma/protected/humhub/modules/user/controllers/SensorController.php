@@ -1398,39 +1398,44 @@ class SensorController extends Controller
     }
 
     public function bytesTo6Long($bytes, $position) {
-        $val = 0;
-        $val = $bytes[$position + 5] & 0xff;
-        $val <<= 8;
-        $val = $bytes[$position + 4] & 0xff;
-        $val <<= 8;
-        $val = $bytes[$position + 3] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position + 2] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position + 1] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position] & 0xff;
-        return $val;
+        $long = unpack("Q",pack("C*",$bytes[$position+5],$bytes[$position+4],$bytes[$position+3],$bytes[$position+2],$bytes[$position+1],$bytes[$position],0,0));
+        $long_str = sprintf('%.0f', $long[1]);
+//        $val = 0;
+//        $val = $bytes[$position + 5] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 4] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 3] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position + 2] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position + 1] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position] & 0xff;
+//        return $val;
+        return $long_str;
     }
 
     public function bytesTo8Long($bytes, $position) {
-        $val = 0;
-        $val = $bytes[$position + 7] & 0xff;
-        $val <<= 8;
-        $val = $bytes[$position + 6] & 0xff;
-        $val <<= 8;
-        $val = $bytes[$position + 5] & 0xff;
-        $val <<= 8;
-        $val = $bytes[$position + 4] & 0xff;
-        $val <<= 8;
-        $val = $bytes[$position + 3] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position + 2] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position + 1] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position] & 0xff;
-        return $val;
+        $long = unpack("Q",pack("C*",$bytes[$position+7],$bytes[$position+6],$bytes[$position+5],$bytes[$position+4],$bytes[$position+3],$bytes[$position+2],$bytes[$position+1],$bytes[$position]));
+        $long_str = sprintf('%.0f', $long[1]);
+//        $val = 0;
+//        $val = $bytes[$position + 7] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 6] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 5] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 4] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 3] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position + 2] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position + 1] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position] & 0xff;
+        return $long_str;
     }
 
     public function bytesToChar($byte_array, $position) {
@@ -1441,8 +1446,8 @@ class SensorController extends Controller
     }
 
     public function bytesToFloat($bytes, $position) {
-        $float = unpack('f', pack('c*', $bytes[$position], $bytes[$position+1], $bytes[$position+2], $bytes[$position+3]));
-        $float_str = sprintf('%f', $float[0]);
+        $float = unpack('f', pack('c*', $bytes[$position+3], $bytes[$position+2], $bytes[$position+1], $bytes[$position]));
+        $float_str = sprintf('%f', $float[1]);
         return $float_str;
     }
 
@@ -1458,11 +1463,15 @@ class SensorController extends Controller
         $current = 1;
         Yii::getLogger()->log(print_r("beginning",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $aorg = $this->bytesToChar($byte_array, $current);
+
         Yii::getLogger()->log(print_r($aorg,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 2;
+
+
         $time = $this->bytesTo6Long($byte_array, $current);
         Yii::getLogger()->log(print_r($time,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 6;
+
         $x = $this->bytesToFloat($byte_array, $current);
         Yii::getLogger()->log(print_r($x,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 4;
@@ -1476,22 +1485,18 @@ class SensorController extends Controller
         Yii::getLogger()->log(print_r($imei,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 8;
 
-        $t = time();
-        $yearmonthday = date('Y-m-d',$t);
-        $hoursecond = date('H:i:s', substr(sprintf('%.0f', $time), 0, 5));
-        $realtime = $yearmonthday . " " . $hoursecond;
-        $ax = $x;
-        $ay = $y;
-        $az = $z;
-        $shorttime = strtotime($realtime) . substr(sprintf('%.0f', $time), 5,3);
+        $pre_time = (int)substr($time, 0,10);
+        $dt = new DateTime("@$pre_time");  // convert UNIX timestamp to PHP DateTime
+        $ymd =  $dt->format('Y-m-d H:i:s'); // output = 2017-01-01 00:00:00
+        $realtime = $ymd . "." . substr($time, 10,3);
 
         $model = new Sensor();
         $model->user_id = Yii::$app->user->id;
-        $model->datetime = sprintf('%.0f', $realtime);
-        $model->accelX = sprintf('%.0f', $ax);
-        $model->accelY = sprintf('%.0f', $ay);
-        $model->accelZ = sprintf('%.0f', $az);
-        $model->time = $shorttime ;
+        $model->datetime = $realtime;
+        $model->accelX = $x;
+        $model->accelY = $y;
+        $model->accelZ = $z;
+        $model->time = $time ;
         Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $model->save();
         Yii::getLogger()->log(print_r("end",true),yii\log\Logger::LEVEL_INFO,'MyLog');
@@ -1502,60 +1507,67 @@ class SensorController extends Controller
     public function actionCreatebytes()
     {
         ini_set('max_execution_time', 30000);
-        date_default_timezone_set('GMT');
         $pure_data = file_get_contents('php://input');
-        $length = count($pure_data);
-        $current = 0;
+        $byte_array = unpack('C*', $pure_data);
+        $length = count($byte_array);
+        $current = 1;
+
         Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        while($current != $length) {
-            $aorg = bytesToChar($pure_data, $current);
+
+        while($current < $length) {
+            $aorg = $this->bytesToChar($byte_array, $current);
             $current += 2;
-            $time = bytesTo6Long($pure_data, $current);
+            $time = $this->bytesTo6Long($byte_array, $current);
             $current += 6;
-            $x = bytesToFloat($pure_data, $current);
+            $x = $this->bytesToFloat($byte_array, $current);
             $current += 4;
-            $y = bytesToFloat($pure_data, $current);
+            $y = $this->bytesToFloat($byte_array, $current);
             $current += 4;
-            $z = bytesToFloat($pure_data, $current);
+            $z = $this->bytesToFloat($byte_array, $current); 
             $current += 4;
-            $imei = bytesTo8Long($pure_data, $current);
+            $imei = $this->bytesTo8Long($byte_array, $current);
             $current += 8;
             if($aorg == "A"){
-                $t = time();
-                $yearmonthday = date('Y-m-d',$t);
-                $hoursecond = date('H:i:s', substr(sprintf('%.0f', $time), 0, 5));
-                $realtime = $yearmonthday . " " . $hoursecond;
-                $ax = $x;
-                $ay = $y;
-                $az = $z;
-                $shorttime = strtotime($realtime) . substr(sprintf('%.0f', $time), 5,3);
+                $pre_time = (int)substr($time, 0,10);
+                $dt = new DateTime("@$pre_time");
+                $ymd =  $dt->format('Y-m-d H:i:s');
+                $realtime = $ymd . "." . substr($time, 10,3);
 
-                if ($current == $length) {
+                if ($current > $length) {
                     $model = new Sensor();
                     $model->user_id = Yii::$app->user->id;
-                    $model->datetime = sprintf('%.0f', $realtime);
-                    $model->accelX = sprintf('%.0f', $ax);
-                    $model->accelY = sprintf('%.0f', $ay);
-                    $model->accelZ = sprintf('%.0f', $az);
-                    $model->time = $shorttime ;
+                    $model->datetime = $realtime;
+                    $model->accelX = $x;
+                    $model->accelY = $y;
+                    $model->accelZ = $z;
+                    $model->time = $time;
                     Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $model->save();
-                    continue;
+                    break;
                 }
                 else {
-                    $newaorg = bytesToChar($pure_data, $current);
-                    $current += 1;
-                    $newtime = bytesTo6Long($pure_data, $current);
+                    $newaorg = $this->bytesToChar($byte_array, $current);
+                    $current += 2;
+                    $newtime = $this->bytesTo6Long($byte_array, $current);
                     $current += 6;
-                    $newx = bytesToFloat($pure_data, $current);
+                    $newx = $this->bytesToFloat($byte_array, $current);
                     $current += 4;
-                    $newy = bytesToFloat($pure_data, $current);
+                    $newy = $this->bytesToFloat($byte_array, $current);
                     $current += 4;
-                    $newz = bytesToFloat($pure_data, $current);
+                    $newz = $this->bytesToFloat($byte_array, $current); 
                     $current += 4;
-                    $newimei = bytesTo8Long($pure_data, $current);
+                    $newimei = $this->bytesTo8Long($byte_array, $current);
                     $current += 8;
-                    if ($aorg == "A") {
+                    if ($newaorg == "A") {
+                        $model = new Sensor();
+                        $model->user_id = Yii::$app->user->id;
+                        $model->datetime = $realtime;
+                        $model->accelX = $x;
+                        $model->accelY = $y;
+                        $model->accelZ = $z;
+                        $model->time = $time;
+                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                        $model->save();
                         $current -= 28;
                         continue;
                     }
@@ -1563,18 +1575,28 @@ class SensorController extends Controller
                         if ($time == $newtime) {
                             $model = new Sensor();
                             $model->user_id = Yii::$app->user->id;
-                            $model->datetime = sprintf('%.0f', $realtime);
-                            $model->accelX = sprintf('%.0f', $ax);
-                            $model->accelY = sprintf('%.0f', $ay);
-                            $model->accelZ = sprintf('%.0f', $az);
-                            $model->accelX = sprintf('%.0f', $newx);
-                            $model->accelY = sprintf('%.0f', $newy);
-                            $model->accelZ = sprintf('%.0f', $newz);
-                            $model->time = $shorttime ;
+                            $model->datetime = $realtime;
+                            $model->accelX = $x;
+                            $model->accelY = $y;
+                            $model->accelZ = $z;
+                            $model->GyroX = $newx;
+                            $model->GyroY = $newy;
+                            $model->GyroZ = $newz;
+                            $model->time = $time;
                             Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                             $model->save();
+                            continue;
                         }
                         else {
+                            $model = new Sensor();
+                            $model->user_id = Yii::$app->user->id;
+                            $model->datetime = $realtime;
+                            $model->accelX = $x;
+                            $model->accelY = $y;
+                            $model->accelZ = $z;
+                            $model->time = $time;
+                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                            $model->save();
                             $current -= 28;
                             continue;
                         }
@@ -1582,41 +1604,46 @@ class SensorController extends Controller
                 }
             }
             else if($aorg == "G"){
-                $t = time();
-                $yearmonthday = date('Y-m-d',$t);
-                $hoursecond = date('H:i:s', substr(sprintf('%.0f', $time), 0, 5));
-                $realtime = $yearmonthday . " " . $hoursecond;
-                $gx = $x;
-                $gy = $y;
-                $gz = $z;
-                $shorttime = strtotime($realtime) . substr(sprintf('%.0f', $time), 5,3);
+                $pre_time = (int)substr($time, 0,10);
+                $dt = new DateTime("@$pre_time");
+                $ymd =  $dt->format('Y-m-d H:i:s');
+                $realtime = $ymd . "." . substr($time, 10,3);
 
-                if ($current == $length) {
+                if ($current > $length) {
                     $model = new Sensor();
                     $model->user_id = Yii::$app->user->id;
-                    $model->datetime = sprintf('%.0f', $realtime);
-                    $model->accelX = sprintf('%.0f', $gx);
-                    $model->accelY = sprintf('%.0f', $gy);
-                    $model->accelZ = sprintf('%.0f', $gz);
-                    $model->time = $shorttime ;
+                    $model->datetime = $realtime;
+                    $model->GyroX = $x;
+                    $model->GyroY = $y;
+                    $model->GyroZ = $z;
+                    $model->time = $time;
                     Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $model->save();
-                    continue;
+                    break;
                 }
                 else {
-                    $newaorg = bytesToChar($pure_data, $current);
-                    $current += 1;
-                    $newtime = bytesTo6Long($pure_data, $current);
+                    $newaorg = $this->bytesToChar($byte_array, $current);
+                    $current += 2;
+                    $newtime = $this->bytesTo6Long($byte_array, $current);
                     $current += 6;
-                    $newx = bytesToFloat($pure_data, $current);
+                    $newx = $this->bytesToFloat($byte_array, $current);
                     $current += 4;
-                    $newy = bytesToFloat($pure_data, $current);
+                    $newy = $this->bytesToFloat($byte_array, $current);
                     $current += 4;
-                    $newz = bytesToFloat($pure_data, $current);
+                    $newz = $this->bytesToFloat($byte_array, $current); 
                     $current += 4;
-                    $newimei = bytesTo8Long($pure_data, $current);
+                    $newimei = $this->bytesTo8Long($byte_array, $current);
                     $current += 8;
-                    if ($aorg == "G") {
+                    if ($newaorg == "G") {
+                        $model = new Sensor();
+                        $model->user_id = Yii::$app->user->id;
+                        $model->datetime = $realtime;
+                        $model->GyroX = $x;
+                        $model->GyroY = $y;
+                        $model->GyroZ = $z;
+                        $model->time = $time;
+                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                        $model->save();
                         $current -= 28;
                         continue;
                     }
@@ -1624,18 +1651,28 @@ class SensorController extends Controller
                         if ($time == $newtime) {
                             $model = new Sensor();
                             $model->user_id = Yii::$app->user->id;
-                            $model->datetime = sprintf('%.0f', $realtime);
-                            $model->accelX = sprintf('%.0f', $newx);
-                            $model->accelY = sprintf('%.0f', $newy);
-                            $model->accelZ = sprintf('%.0f', $newz);
-                            $model->accelX = sprintf('%.0f', $gx);
-                            $model->accelY = sprintf('%.0f', $gy);
-                            $model->accelZ = sprintf('%.0f', $gz);
-                            $model->time = $shorttime ;
+                            $model->datetime = $realtime;
+                            $model->accelX = $newx;
+                            $model->accelY = $newy;
+                            $model->accelZ = $newz;
+                            $model->GyroX = $x;
+                            $model->GyroY = $y;
+                            $model->GyroZ = $z;
+                            $model->time = $time;
                             Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                             $model->save();
+                            continue;
                         }
                         else {
+                            $model = new Sensor();
+                            $model->user_id = Yii::$app->user->id;
+                            $model->datetime = $realtime;
+                            $model->GyroX = $x;
+                            $model->GyroY = $y;
+                            $model->GyroZ = $z;
+                            $model->time = $time;
+                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                            $model->save();
                             $current -= 28;
                             continue;
                         }

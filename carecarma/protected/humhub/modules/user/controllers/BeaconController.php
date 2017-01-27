@@ -395,4 +395,167 @@ class BeaconController extends Controller
         }
         Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
     }
+
+
+    public function bytesToInteger($bytes, $position) {
+//        $i = unpack("L",pack("C*",$ar[1],$ar[2],$ar[3],$ar[4]));
+//        $val = 0;
+//        $val = $bytes[$position + 3] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position + 2] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position + 1] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position] & 0xff;
+//        return $val;
+        $int = unpack('I', pack('c*', $bytes[$position+3], $bytes[$position+2], $bytes[$position+1], $bytes[$position]));
+        $int_str = (string)$int[1];
+        return $int_str;
+    }
+
+    public function bytesToShort($bytes, $position) {
+        $val = 0;
+        $val = $bytes[$position + 1] & 0xFF;
+        $val = $val << 8;
+        $val |= $bytes[$position] & 0xFF;
+        return $val;
+    }
+
+    public function bytesTo6Long($bytes, $position) {
+        $long = unpack("Q",pack("C*",$bytes[$position+5],$bytes[$position+4],$bytes[$position+3],$bytes[$position+2],$bytes[$position+1],$bytes[$position],0,0));
+        $long_str = sprintf('%.0f', $long[1]);
+//        $val = 0;
+//        $val = $bytes[$position + 5] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 4] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 3] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position + 2] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position + 1] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position] & 0xff;
+//        return $val;
+        return $long_str;
+    }
+
+    public function bytesTo8Long($bytes, $position) {
+        $long = unpack("Q",pack("C*",$bytes[$position+7],$bytes[$position+6],$bytes[$position+5],$bytes[$position+4],$bytes[$position+3],$bytes[$position+2],$bytes[$position+1],$bytes[$position]));
+        $long_str = sprintf('%.0f', $long[1]);
+//        $val = 0;
+//        $val = $bytes[$position + 7] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 6] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 5] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 4] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 3] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position + 2] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position + 1] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position] & 0xff;
+        return $long_str;
+    }
+
+    public function bytesToChar($byte_array, $position) {
+        Yii::getLogger()->log(print_r($byte_array[$position+1],true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $val = chr($byte_array[$position+1]);
+        Yii::getLogger()->log(print_r($val,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        return $val;
+    }
+
+    public function bytesToFloat($bytes, $position) {
+        $float = unpack('f', pack('c*', $bytes[$position+3], $bytes[$position+2], $bytes[$position+1], $bytes[$position]));
+        $float_str = sprintf('%f', $float[1]);
+        return $float_str;
+    }
+
+    public function actionTestbytes()
+    {
+        Yii::getLogger()->log(print_r("data",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $pure_data = file_get_contents('php://input');
+
+        $length = count($pure_data);
+        $byte_array = unpack('C*', $pure_data);
+        Yii::getLogger()->log(print_r($byte_array,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $current = 1;
+        Yii::getLogger()->log(print_r("beginning",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+        $aorg = $this->bytesToChar($byte_array, $current);
+        Yii::getLogger()->log(print_r($aorg,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $current += 2;
+
+        $time = $this->bytesTo6Long($byte_array, $current);
+        Yii::getLogger()->log(print_r($time,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $current += 6;
+
+        $distance = $this->bytesToFloat($byte_array, $current);
+        Yii::getLogger()->log(print_r($distance,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $current += 4;
+
+        $beacon_id = $this->bytesToInteger($byte_array, $current);
+        Yii::getLogger()->log(print_r($beacon_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $current += 4;
+
+        $imei = $this->bytesTo8Long($byte_array, $current);
+        Yii::getLogger()->log(print_r($imei,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $current += 8;
+
+        $pre_time = (int)substr($time, 0,10);
+        $dt = new DateTime("@$pre_time");  // convert UNIX timestamp to PHP DateTime
+        $ymd =  $dt->format('Y-m-d H:i:s'); // output = 2017-01-01 00:00:00
+        $realtime = $ymd . "." . substr($time, 10,3);
+
+        $model = new Beacon();
+        $model->user_id = Yii::$app->user->id;
+        $model->hardware_id = $imei;
+        $model->datetime = $realtime;
+        $model->distance = $distance;
+        $model->beacon_id = $beacon_id;
+        $model->time = $time;
+        $model->save();
+    }
+
+    public function actionCreatebytes()
+    {
+        ini_set('max_execution_time', 30000);
+        $pure_data = file_get_contents('php://input');
+        $byte_array = unpack('C*', $pure_data);
+        $length = count($byte_array);
+        $current = 1;
+        Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        while($current < $length) {
+            $aorg = $this->bytesToChar($byte_array, $current);
+            $current += 2;
+            $time = $this->bytesTo6Long($byte_array, $current);
+            $current += 6;
+            $distance = $this->bytesToFloat($byte_array, $current);
+            $current += 4;
+            $beacon_id = $this->bytesToInteger($byte_array, $current);
+            $current += 4;
+            $imei = $this->bytesTo8Long($byte_array, $current);
+            $current += 8;
+            if($aorg == "B"){
+                $pre_time = (int)substr($time, 0,10);
+                $dt = new DateTime("@$pre_time");  // convert UNIX timestamp to PHP DateTime
+                $ymd =  $dt->format('Y-m-d H:i:s'); // output = 2017-01-01 00:00:00
+                $realtime = $ymd . "." . substr($time, 10,3);
+
+                $model = new Beacon();
+                $model->user_id = Yii::$app->user->id;
+                $model->hardware_id = $imei;
+                $model->datetime = $realtime;
+                $model->distance = $distance;
+                $model->beacon_id = $beacon_id;
+                $model->time = $time;
+                $model->save();
+            }
+        }
+        Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+    }
 }
