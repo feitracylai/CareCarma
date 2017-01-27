@@ -677,7 +677,7 @@ class DeviceController extends ContentContainerController
         foreach ($dataDevices as $dataDevice){
             $deviceReportData = $basicData;
             $steps_data = Classlabelshoursteps::find()->where(['hardware_id' => $dataDevice->hardware_id])
-                ->andWhere(['>=', 'time', $start])->andWhere(['<=', 'time', $end])->all();
+                ->andWhere(['>=', 'time', $start])->andWhere(['<', 'time', $end])->all();
             if ($steps_data){
                 foreach ($steps_data as $hourlyrow){
                     $hourlystep = $hourlyrow->stepsLabel;
@@ -687,7 +687,7 @@ class DeviceController extends ContentContainerController
                     $row = (int)($intervaltime/86400) + 1; //which day
                     $remainder = $intervaltime - ($row - 1) * 86400;
                     $column = (int)($remainder/14400) + 1; //which hour section
-
+		   // Yii::getLogger()->log([$hourlyrow->time], Logger::LEVEL_INFO, 'MyLog');
                     $deviceReportData[$row][$column] = $deviceReportData[$row][$column] + $hourlystep;
                     $deviceReportData[$row][7] = $deviceReportData[$row][7] + $hourlystep;
                 }
