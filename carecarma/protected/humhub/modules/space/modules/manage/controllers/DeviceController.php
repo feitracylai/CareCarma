@@ -644,7 +644,7 @@ class DeviceController extends ContentContainerController
         $space = $this->getSpace();
         $user = $this->getCare();
 
-        $dataDevices = Device::find()->where(['user_id' => 32, 'activate' => 1])->andWhere(['<>','type', 'phone'])->all();
+        $dataDevices = Device::find()->where(['user_id' => $user->id, 'activate' => 1])->andWhere(['<>','type', 'phone'])->all();
         if (!$dataDevices){
             return $this->render('report-none', array(
                 'space' => $space,
