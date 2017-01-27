@@ -1556,7 +1556,7 @@ class SensorController extends Controller
                     $current += 4;
                     $newy = $this->bytesToFloat($byte_array, $current);
                     $current += 4;
-                    $newz = $this->bytesToFloat($byte_array, $current); 
+                    $newz = $this->bytesToFloat($byte_array, $current);
                     $current += 4;
                     $newimei = $this->bytesTo8Long($byte_array, $current);
                     $current += 8;
@@ -1636,7 +1636,7 @@ class SensorController extends Controller
                     $current += 4;
                     $newy = $this->bytesToFloat($byte_array, $current);
                     $current += 4;
-                    $newz = $this->bytesToFloat($byte_array, $current); 
+                    $newz = $this->bytesToFloat($byte_array, $current);
                     $current += 4;
                     $newimei = $this->bytesTo8Long($byte_array, $current);
                     $current += 8;
