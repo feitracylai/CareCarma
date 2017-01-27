@@ -62,6 +62,7 @@ class DeviceController extends ContentContainerController
         $userModel = new User();
         $userModel->scenario = 'editCare';
         $deviceModel = new AccountDevice();
+        $deviceModel->scenario = 'editDevice';
         $userPasswordModel = new Password();
         $userPasswordModel->scenario = 'registration';
         $profileModel = $userModel->profile;
@@ -107,18 +108,18 @@ class DeviceController extends ContentContainerController
                 ),
             ),
         );
-        //Activate the device
-        $definition['elements']['Device'] = array(
-            'type' => 'form',
-            'elements' => array(
-                'deviceId' => array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'maxlength' => 45,
-                    'title' => 'Activate CoSMoS device or CoSMoS app.'
-                )
-            ),
-        );
+//        //Activate the device
+//        $definition['elements']['Device'] = array(
+//            'type' => 'form',
+//            'elements' => array(
+//                'deviceId' => array(
+//                    'type' => 'text',
+//                    'class' => 'form-control',
+//                    'maxlength' => 45,
+//                    'title' => 'Activate CoSMoS device or CoSMoS app.'
+//                )
+//            ),
+//        );
         // Add Profile Form
         $definition['elements']['Profile'] = array_merge(array('type' => 'form'), $profileModel->getFormDefinition());
         // Get Form Definition
@@ -132,55 +133,55 @@ class DeviceController extends ContentContainerController
         $form = new HForm($definition);
         $form->models['User'] = $userModel;
         $form->models['UserPassword'] = $userPasswordModel;
-        $form->models['Device'] = $deviceModel;
+//        $form->models['Device'] = $deviceModel;
         $form->models['Profile'] = $profileModel;
 
         if ($form->submitted('save') && $form->validate()) {
             $this->forcePostRequest();
             $form->models['User']->status = User::STATUS_ENABLED;
-            $device = Device::find()->where(['device_id' => $form->models['User']->device_id])->one();
+//            $device = Device::find()->where(['device_id' => $form->models['User']->device_id])->one();
 //            if ($device != null || $form->models['User']->device_id == '') {
-//                if ($form->models['User']->save()) {
-//
-//                    // save the temp_password
-//                    $user_current = User::findOne(['id' => $userModel->id]);
-//                    $user_current->temp_password = $userPasswordModel->newPassword;
-//                    $user_current->save();
-//                    $form->models['Profile']->user_id = $form->models['User']->id;
-//                    $form->models['Profile']->save();
-//                    // Save User Password
-//                    $form->models['UserPassword']->user_id = $form->models['User']->id;
-//                    $form->models['UserPassword']->setPassword($form->models['UserPassword']->newPassword);
-//                    $form->models['UserPassword']->save();
-//                    // Add memeber's infomation in his/her Contacts
-//                    $memebers = Membership::findAll(['space_id' => $space->id]);
-//                    foreach ($memebers as $memeber) {
-//                        if ($memeber->user_id != $form->models['User']->id && $memeber->status == 3) {
-//                            $contact_user = User::findOne(['id' => $memeber->user_id]);
-//                            $user = User::findOne(['id' => $form->models['User']->id]);
-//                            $user->addContact($contact_user);
-//
-//
-//                        }
-//                    }
-//                    // Become Care Receiver in this space
-//                    $space->addMember($form->models['User']->id);
-//                    $space->setCareReceiver($form->models['User']->id);
-//                    // check if device fulfill all the rule of activation, if yes, activation
-//                    if (!empty($form->models['User']->device_id)){
-//                        if ($this->checkDevice($form->models['User']->device_id)) {
-//                            $device = Device::findOne(['device_id' => $form->models['User']->device_id]);
-//                            $device->user_id = $user->id;
-//                            $device->save();
-//                            $this->activation($form->models['User']->device_id);
-//                        }
-//                    }
-//
-//                    return $this->redirect($space->createUrl('/space/manage/device'));
-//                }
+                if ($form->models['User']->save()) {
+
+                    // save the temp_password
+                    $user_current = User::findOne(['id' => $userModel->id]);
+                    $user_current->temp_password = $userPasswordModel->newPassword;
+                    $user_current->save();
+                    $form->models['Profile']->user_id = $form->models['User']->id;
+                    $form->models['Profile']->save();
+                    // Save User Password
+                    $form->models['UserPassword']->user_id = $form->models['User']->id;
+                    $form->models['UserPassword']->setPassword($form->models['UserPassword']->newPassword);
+                    $form->models['UserPassword']->save();
+                    // Add memeber's infomation in his/her Contacts
+                    $memebers = Membership::findAll(['space_id' => $space->id]);
+                    foreach ($memebers as $memeber) {
+                        if ($memeber->user_id != $form->models['User']->id && $memeber->status == 3) {
+                            $contact_user = User::findOne(['id' => $memeber->user_id]);
+                            $user = User::findOne(['id' => $form->models['User']->id]);
+                            $user->addContact($contact_user);
+
+
+                        }
+                    }
+                    // Become Care Receiver in this space
+                    $space->addMember($form->models['User']->id);
+                    $space->setCareReceiver($form->models['User']->id);
+                    // check if device fulfill all the rule of activation, if yes, activation
+                    if (!empty($form->models['User']->device_id)){
+                        if ($this->checkDevice($form->models['User']->device_id)) {
+                            $device = Device::findOne(['device_id' => $form->models['User']->device_id]);
+                            $device->user_id = $user->id;
+                            $device->save();
+                            $this->activation($form->models['User']->device_id);
+                        }
+                    }
+
+                    return $this->redirect($space->createUrl('/space/manage/device'));
+                }
 //            }
 //            else {
-                $form->models['User']->addError('device_id', 'Invalid input! Please make sure that you entered the correct device ID.');
+//                $form->models['User']->addError('device_id', 'Invalid input! Please make sure that you entered the correct device ID.');
 //            }
         }
         return $this->render('add', array(
@@ -644,7 +645,7 @@ class DeviceController extends ContentContainerController
         $space = $this->getSpace();
         $user = $this->getCare();
 
-        $dataDevices = Device::find()->where(['user_id' => $user->id, 'activate' => 1])->andWhere(['<>','type', 'phone'])->all();
+        $dataDevices = Device::find()->where(['user_id' => 32, 'activate' => 1])->andWhere(['<>','type', 'phone'])->all();
         if (!$dataDevices){
             return $this->render('report-none', array(
                 'space' => $space,
@@ -659,8 +660,11 @@ class DeviceController extends ContentContainerController
         $start = $unixlastweek."000";
         $end = $unixtoday. "000";
 
-        $basicData = array_fill(0, 7, array_fill(0, 8, 0));
-        $basicData0 = ['Month', '0:00 -- 4:00', '4:00 -- 8:00', '8:00 -- 12:00', '12:00 -- 16:00', '16:00 -- 20:00', '20:00 -- 24:00', ['role' => 'annotation']];
+//        $basicData = array_fill(0, 7, array_fill(0, 8, 0));
+//        $basicData0 = ['Month', '0:00 -- 4:00', '4:00 -- 8:00', '8:00 -- 12:00', '12:00 -- 16:00', '16:00 -- 20:00', '20:00 -- 24:00', ['role' => 'annotation']];
+        $basicData = array_fill(0, 7, array_fill(0, 14, 0));
+        $basicData0 = ['Month', '0:00', '2:00', '4:00', '6:00',  '8:00', '10:00',
+            '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', ['role' => 'annotation']];
         array_unshift($basicData, $basicData0);
 
         $time = $unixlastweek;
@@ -683,23 +687,32 @@ class DeviceController extends ContentContainerController
                     $hourlystep = $hourlyrow->stepsLabel;
                     $hourlytime = substr($hourlyrow->time, 0, 10) + 1; //division will have remainder
 
+//                    $intervaltime = $hourlytime - $unixlastweek;
+//                    $row = (int)($intervaltime/86400) + 1; //which day
+//                    $remainder = $intervaltime - ($row - 1) * 86400;
+//                    $column = (int)($remainder/14400) + 1; //which hour section
+//
+//                    $deviceReportData[$row][$column] = $deviceReportData[$row][$column] + $hourlystep;
+//                    $deviceReportData[$row][7] = $deviceReportData[$row][7] + $hourlystep;
+
                     $intervaltime = $hourlytime - $unixlastweek;
                     $row = (int)($intervaltime/86400) + 1; //which day
                     $remainder = $intervaltime - ($row - 1) * 86400;
-                    $column = (int)($remainder/14400) + 1; //which hour section
-		   // Yii::getLogger()->log([$hourlyrow->time], Logger::LEVEL_INFO, 'MyLog');
+                    $column = (int)($remainder/7200) + 1; //which hour section
+
                     $deviceReportData[$row][$column] = $deviceReportData[$row][$column] + $hourlystep;
-                    $deviceReportData[$row][7] = $deviceReportData[$row][7] + $hourlystep;
+                    $deviceReportData[$row][13] = $deviceReportData[$row][13] + $hourlystep;
                 }
             }
 
-            $yesterday_step = $yesterday_step + $deviceReportData[7][7];
+//            $yesterday_step = $yesterday_step + $deviceReportData[7][7];
+            $yesterday_step = $yesterday_step + $deviceReportData[7][13];
             $DATA[$count] = $deviceReportData;
             $devices[$count] = $dataDevice;
             $count++;
         }
 
-//        Yii::getLogger()->log($DATA, Logger::LEVEL_INFO, 'MyLog');
+        Yii::getLogger()->log($DATA, Logger::LEVEL_INFO, 'MyLog');
 
 
         return $this->render('report', array(
