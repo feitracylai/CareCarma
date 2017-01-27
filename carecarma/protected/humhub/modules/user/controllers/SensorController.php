@@ -1524,8 +1524,7 @@ class SensorController extends Controller
             $current += 4;
             $y = $this->bytesToFloat($byte_array, $current);
             $current += 4;
-            $z = $this->bytesToFloat($byte_array, $current); 
-            $current += 4;
+            $z = $this->bytesToFloat($byte_array, $current); $current += 4;
             $imei = $this->bytesTo8Long($byte_array, $current);
             $current += 8;
             if($aorg == "A"){
