@@ -13,8 +13,7 @@ class AccountDevice extends \yii\base\Model
     public function rules()
     {
         return array(
-            array('deviceId', 'required'),
-            array('currentPassword', 'required'),
+            array(['deviceId', 'currentPassword'], 'required',  'on' => 'editDevice'),
             array('currentPassword', \humhub\modules\user\components\CheckPasswordValidator::className(), 'on' => 'userDevice'),
 
         );
@@ -28,5 +27,13 @@ class AccountDevice extends \yii\base\Model
         );
     }
 
+
+    public function scenarios()
+    {
+
+        $scenarios = parent::scenarios();
+        $scenarios['editDevice'] = ['deviceId', 'currentPassword'];
+        return $scenarios;
+    }
 
 }
