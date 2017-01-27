@@ -1492,7 +1492,7 @@ class SensorController extends Controller
         Yii::getLogger()->log(print_r($realtime,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
         $model = new Sensor();
-        $model->user_id = Yii::$app->user->id;
+        $model->user_id = 1;
         $model->datetime = $realtime;
         $model->accelX = $x;
         $model->accelY = $y;
