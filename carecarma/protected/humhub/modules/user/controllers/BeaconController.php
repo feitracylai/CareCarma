@@ -507,7 +507,7 @@ class BeaconController extends Controller
         $current += 8;
 
         $pre_time = (int)substr($time, 0,10);
-        $dt = new DateTime("@$pre_time");  // convert UNIX timestamp to PHP DateTime
+        $dt = new \DateTime("@$pre_time");  // convert UNIX timestamp to PHP DateTime
         $ymd =  $dt->format('Y-m-d H:i:s'); // output = 2017-01-01 00:00:00
         $realtime = $ymd . "." . substr($time, 10,3);
 
@@ -542,7 +542,7 @@ class BeaconController extends Controller
             $current += 8;
             if($aorg == "B"){
                 $pre_time = (int)substr($time, 0,10);
-                $dt = new DateTime("@$pre_time");  // convert UNIX timestamp to PHP DateTime
+                $dt = new \DateTime("@$pre_time");  // convert UNIX timestamp to PHP DateTime
                 $ymd =  $dt->format('Y-m-d H:i:s'); // output = 2017-01-01 00:00:00
                 $realtime = $ymd . "." . substr($time, 10,3);
 
