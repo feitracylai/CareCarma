@@ -3,6 +3,7 @@
 
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\models\Space;
+use humhub\modules\user\models\Device;
 
 $hasCR = false;
 ?>
@@ -15,9 +16,13 @@ $hasCR = false;
         if (count($space_members) != 0){
             foreach ($space_members as $space_member){
 //                if ($space_member->user_id == )
-                $hasCR = true;
-                $isNew = false;
-                echo $this->render('_receiverPreview', array('userId' => $space_member->user_id, 'spaceId' => $space_member->space_id, 'isNew' => $isNew));
+                $dataDevices = Device::find()->where(['user_id' => $space_member->user_id, 'activate' => 1])->andWhere(['<>','type', 'phone'])->all();
+                if ($dataDevices){
+                    $hasCR = true;
+                    $isNew = false;
+                    echo $this->render('_receiverPreview', array('userId' => $space_member->user_id, 'spaceId' => $space_member->space_id, 'isNew' => $isNew, 'devices' => $dataDevices));
+                }
+
             }
         }
 

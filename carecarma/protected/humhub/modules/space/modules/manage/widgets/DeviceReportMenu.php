@@ -28,11 +28,13 @@ class DeviceReportMenu extends \humhub\widgets\BaseMenu
         ));
 
         $this->addItem(array(
-            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Report1'),
+            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Steps'),
             'url' => $this->space->createUrl('/space/manage/device/report', ['rguid' => $rguid]),
             'sortOrder' => 200,
             'isActive' => (Yii::$app->controller->action->id == 'report' && Yii::$app->controller->id === 'device'),
         ));
+
+
 
         parent::init();
 
