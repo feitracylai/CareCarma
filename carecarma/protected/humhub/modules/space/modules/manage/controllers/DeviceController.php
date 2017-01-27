@@ -430,7 +430,6 @@ class DeviceController extends ContentContainerController
         $device_list = Device::findAll(['user_id' => $user->id, 'activate' => 1]);
 
         $deviceModel = new \humhub\modules\user\models\forms\AccountDevice();
-        $deviceModel->scenario = 'editDevice';
 
         if ($deviceModel->load(Yii::$app->request->post())&& $deviceModel->validate() && $this->checkReceiverDevice($deviceModel, $user)) {
             $device = Device::find()->where(['device_id' => $deviceModel->deviceId])->one();
