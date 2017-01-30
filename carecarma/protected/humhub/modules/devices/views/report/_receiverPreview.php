@@ -46,7 +46,10 @@ foreach ($devices as $device){
                     </small>
                 </h4>
 <!--                --><?php //echo Yii::t('DevicesModule.views_report_index', '3304 steps'); ?>
-                <br><?php echo TimeAgo::widget(['timestamp' => $lastReport->updated_at]); ?>
+                <?php if($lastReport){
+					echo TimeAgo::widget(['timestamp' => $lastReport->updated_at]);
+				}
+				 ?>
             </div>
 
         </div>
