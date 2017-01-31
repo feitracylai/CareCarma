@@ -15,13 +15,12 @@ $space = Space::findOne(['id' => $spaceId]);
 $user = User::findOne(['id' => $userId]);
 
 
-//use notification created_at time to test Time Show
-$testNotification = \humhub\modules\notification\models\Notification::find()->orderBy('notification.created_at DESC')->limit(1)->one();
-
+$reportTime = array();
 foreach ($devices as $device){
     $lastReport = \humhub\modules\devices\models\Classlabelshoursteps::find()->where(['hardware_id' => $device->hardware_id])->orderBy('updated_at DESC')->one();
+    $reportTime[] = $lastReport->updated_at;
 }
-
+$lastReportTime = max($reportTime);
 
 ?>
 
@@ -46,10 +45,8 @@ foreach ($devices as $device){
                     </small>
                 </h4>
 <!--                --><?php //echo Yii::t('DevicesModule.views_report_index', '3304 steps'); ?>
-                <?php if($lastReport){
-					echo TimeAgo::widget(['timestamp' => $lastReport->updated_at]);
-				}
-				 ?>
+
+                <?php echo TimeAgo::widget(['timestamp' => $lastReportTime]); ?>
             </div>
 
         </div>
