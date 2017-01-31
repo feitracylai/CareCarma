@@ -18,7 +18,8 @@ $user = User::findOne(['id' => $userId]);
 $reportTime = array();
 foreach ($devices as $device){
     $lastReport = \humhub\modules\devices\models\Classlabelshoursteps::find()->where(['hardware_id' => $device->hardware_id])->orderBy('updated_at DESC')->one();
-    $reportTime[] = $lastReport->updated_at;
+    if ($lastReport)
+        $reportTime[] = $lastReport->updated_at;
 }
 $lastReportTime = max($reportTime);
 
@@ -46,7 +47,7 @@ $lastReportTime = max($reportTime);
                 </h4>
 <!--                --><?php //echo Yii::t('DevicesModule.views_report_index', '3304 steps'); ?>
 
-                <?php echo TimeAgo::widget(['timestamp' => $lastReportTime]); ?>
+                <?php if (!empty($lastReport)) echo TimeAgo::widget(['timestamp' => $lastReportTime]); ?>
             </div>
 
         </div>
