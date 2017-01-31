@@ -21,7 +21,8 @@ foreach ($devices as $device){
     if ($lastReport)
         $reportTime[] = $lastReport->updated_at;
 }
-$lastReportTime = max($reportTime);
+if (!empty($lastReport))
+    $lastReportTime = max($reportTime);
 
 ?>
 
