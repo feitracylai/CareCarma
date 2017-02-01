@@ -34,6 +34,12 @@ class DeviceReportMenu extends \humhub\widgets\BaseMenu
             'isActive' => (Yii::$app->controller->action->id == 'report' && Yii::$app->controller->id === 'device'),
         ));
 
+        $this->addItem(array(
+            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Heart Rate'),
+            'url' => $this->space->createUrl('/space/manage/device/report-heartrate', ['rguid' => $rguid]),
+            'sortOrder' => 300,
+            'isActive' => (Yii::$app->controller->action->id == 'report-heartrate' && Yii::$app->controller->id === 'device'),
+        ));
 
 
         parent::init();

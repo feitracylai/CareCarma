@@ -15,6 +15,7 @@ use yii\web\JsExpression;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\View;
+use Yii;
 
 
 
@@ -25,6 +26,8 @@ class GoogleChart extends Widget
      * @var string $containerId the container Id to render the visualization to
      */
     public $containerId;
+    public $dashboardId;
+    public $filterId;
 
     /**
      * @var string $visualization the type of visualization -ie PieChart
@@ -62,6 +65,11 @@ class GoogleChart extends Widget
      */
     public $htmlOptions = array();
 
+    public $ControlType = '';
+    public $ControlOptions = array();
+
+    public $addColumn = '';
+
     public function init()
     {
         parent::init();
@@ -79,7 +87,12 @@ class GoogleChart extends Widget
         if ($this->containerId == null) {
             $this->htmlOptions['id'] = 'div-chart' . $id;
             $this->containerId = $this->htmlOptions['id'];
-            echo '<div ' . Html::renderTagAttributes($this->htmlOptions) . '></div>';
+            $this->dashboardId = 'div-dashboard' . $id;
+            $this->filterId = 'div-filter' . $id;
+            echo '<div id = ' . $this->dashboardId . '>
+                    <div id = ' . $this->filterId . '></div>
+                    <div ' . Html::renderTagAttributes($this->htmlOptions) . '></div>
+                </div>';
         }
         $this->registerClientScript($id);
         //return Html::encode($this->message);
@@ -99,20 +112,100 @@ class GoogleChart extends Widget
 //        \Yii::getLogger()->log(print_r($this->packages, true), Logger::LEVEL_INFO, 'MyLog');
 //        \Yii::getLogger()->log(print_r($jsOptions, true), Logger::LEVEL_INFO, 'MyLog');
 
-        $script = '
-			google.charts.setOnLoadCallback(drawChart' . $id . ');
-			var ' . $id . '=null;
-			function drawChart' . $id . '() {
-				var data = google.visualization.arrayToDataTable(' . $jsData . ');
+//        $script = '
+//			google.charts.setOnLoadCallback(drawChart' . $id . ');
+//			var ' . $id . '=null;
+//			function drawChart' . $id . '() {
+//				var data = google.visualization.arrayToDataTable(' . $jsData . ');
+//
+//				' . $this->scriptAfterArrayToDataTable . '
+//
+//				var options = ' . $jsOptions . ';
+//
+//				' . $id . ' = new google.visualization.' . $this->visualization . '(document.getElementById("' . $this->containerId . '"));
+//				' . $id . '.draw(data, options);
+//			}';
+        if ($this->ControlType != ''){
+            $jsControl = Json::encode($this->ControlOptions);
+            $script = '
+            google.charts.setOnLoadCallback(drawChart' . $id . ');
+            function drawChart' . $id . '() {
 
-				' . $this->scriptAfterArrayToDataTable . '
+                var data = google.visualization.arrayToDataTable(' . $jsData . ');
 
-				var options = ' . $jsOptions . ';
+                var dashboard = new google.visualization.Dashboard(document.getElementById("'.$this->dashboardId.'"));
 
-				' . $id . ' = new google.visualization.' . $this->visualization . '(document.getElementById("' . $this->containerId . '"));
-				' . $id . '.draw(data, options);
-			}';
+                var wrapper = new google.visualization.ChartWrapper({
+                    chartType: "'. $this->visualization. '",
+                    options: '.$jsOptions.',
+                    containerId: "'.$this->containerId.'",
+                });
 
+                var control = new google.visualization.ControlWrapper({
+                    controlType: '. $this->ControlType .',
+                    options: '.$jsControl.',
+                    containerId: "'.$this->filterId.'",
+                });
+
+                dashboard.bind(control, wrapper);
+                dashboard.draw(data);
+
+            }';
+
+
+        } elseif ($this->addColumn == '') {
+            $script = '
+            google.charts.setOnLoadCallback(drawChart' . $id . ');
+            function drawChart' . $id . '() {                
+            
+                var wrapper = new google.visualization.ChartWrapper({
+                    chartType: "'. $this->visualization. '",
+                    dataTable: ' .$jsData. ',
+                    options: '.$jsOptions.',
+                    containerId: "'.$this->containerId.'",
+                });
+
+                wrapper.draw();
+
+            }';
+        } else {
+
+            $script = '
+            var column = '.Json::encode($this->addColumn).';
+            var dataRow = '.$jsData.';
+            
+            google.charts.setOnLoadCallback(drawChart' . $id . ');
+            function drawChart' . $id . '() {                
+                
+                var data = new google.visualization.DataTable();
+                for (var i = 0, len = column.length; i < len; i++){
+      	            data.addColumn(column[i][0], column[i][1]);
+                }
+                
+                for (var j = 0, rlen = dataRow.length; j < rlen; j++){
+                    data.addRow([new Date(dataRow[j][0]), dataRow[j][1]]);
+                    
+                }
+                
+                var formatter = new google.visualization.DateFormat({timeZone: 0});
+                formatter.format(data, 0);
+                
+                var options = '.$jsOptions.';
+                
+                var chart = new google.visualization.'.$this->visualization.'(
+                    document.getElementById("' . $this->containerId . '"));
+
+                chart.draw(data, options);
+                
+            }';
+        }
+
+
+
+//        if ($this->scriptAfterArrayToDataTable != ''){
+//            Yii::getLogger()->log($this->scriptAfterArrayToDataTable, Logger::LEVEL_INFO, 'MyLog');
+//        }
+//        Yii::getLogger()->log($script, Logger::LEVEL_INFO, 'MyLog');
         $view = $this->getView();
         $view->registerJsFile('https://www.gstatic.com/charts/loader.js',['position' => View::POS_HEAD]);
         $view->registerJs('google.charts.load("current", {packages:[' . $this->packages . ']});', View::POS_HEAD, __CLASS__ . '#' . $id);
