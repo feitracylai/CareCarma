@@ -9,12 +9,13 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-
+$user = \humhub\modules\user\models\User::findOne(['id' => Yii::$app->user->id]);
+$devices = \humhub\modules\user\models\Device::find()->where(['user_id' => $user->id, 'activate' => 1])->andWhere(['<>','type', 'phone'])->one();
 ?>
 
 <div class="btn-group">
     <a href="#" id="icon-report" class="dropdown-toggle" data-toggle="dropdown"><i
-            class="fa fa-file"></i></a>
+            class="fa fa-bar-chart"></i></a>
     <span id="badge-report" style="display:none;"
           class="label label-danger label-notification">1</span>
     <ul id="dropdown-report" class="dropdown-menu">
@@ -30,7 +31,7 @@ use yii\helpers\Url;
         $('#dropdown-report').find('ul').remove();
 
         // append title and loader to dropdown
-        $('#dropdown-report').append('<li class="dropdown-header"><div class="arrow"></div><?php echo Yii::t('DevicesModule.widgets_views_mailNotification', 'Report Lists'); ?></li><ul class="media-list"><li id="loader_reports"><div class="loader"></div></li></ul>');
+        $('#dropdown-report').append('<li class="dropdown-header"><div class="arrow"></div><?php echo Yii::t('DevicesModule.widgets_views_mailNotification', 'Report Lists'); ?> <?php if ($devices) echo Html::a(Yii::t('MailModule.widgets_views_mailNotification', 'My Report'), $user->createUrl('/devices/view/index'), array('class' => 'btn btn-info btn-xs', 'id' => 'create-message-button')); ?></li><ul class="media-list"><li id="loader_reports"><div class="loader"></div></li></ul>');
 
 
         $.ajax({
