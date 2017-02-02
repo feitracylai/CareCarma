@@ -20,9 +20,14 @@ foreach ($devices as $device){
     $lastReport = \humhub\modules\devices\models\Classlabelshoursteps::find()->where(['hardware_id' => $device->hardware_id])->orderBy('updated_at DESC')->one();
     if ($lastReport)
         $reportTime[] = $lastReport->updated_at;
+
+    $lastHeartrate = \humhub\modules\devices\models\Classlabelshourheart::find()->where(['hardware_id' => $device->hardware_id])->orderBy('updated_at DESC')->one();
+    if ($lastHeartrate)
+        $reportTime[] = $lastHeartrate->updated_at;
 }
 if (!empty($lastReport))
     $lastReportTime = max($reportTime);
+
 
 ?>
 

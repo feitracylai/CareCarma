@@ -7,7 +7,7 @@
  */
 
 use humhub\widgets\NotificationArea;
-
+use humhub\modules\user\widgets\ProfileMenu;
 
 return [
     'id' => 'devices',
@@ -15,6 +15,7 @@ return [
     'namespace' => 'humhub\modules\devices',
     'events' => [
         array('class' => NotificationArea::className(), 'event' => NotificationArea::EVENT_INIT, 'callback' => array('humhub\modules\devices\Events', 'onNotificationAddonInit')),
+        array('class' => ProfileMenu::className(), 'event' => ProfileMenu::EVENT_INIT, 'callback' => array('humhub\modules\devices\Events', 'onProfileMenuInit')),
     ]
 ];
 
