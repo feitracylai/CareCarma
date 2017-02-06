@@ -23,6 +23,34 @@ $devices = \humhub\modules\user\models\Device::find()->where(['user_id' => $user
 </div>
 
 <script type="text/javascript">
+
+    /**
+     * Refresh New Report Count (Badge)
+     */
+    reloadReportCountInterval = 60000;
+    setInterval(function () {
+        jQuery.getJSON("<?php echo Url::to(['/devices/report/get-new-report-count-json']); ?>", function (json) {
+            setNewReportCount(parseInt(json.newReport));
+        });
+    }, reloadReportCountInterval);
+
+    setNewReportCount(<?php echo $newReportCount; ?>);
+
+
+    /**
+     * Sets current message count
+     */
+    function setNewReportCount(count) {
+        // show or hide the badge for new messages
+        if (count == 0) {
+            $('#badge-report').css('display', 'none');
+        } else {
+            $('#badge-report').empty();
+            $('#badge-report').append(count);
+            $('#badge-report').fadeIn('fast');
+        }
+    }
+
     // open the report menu
     $('#icon-report').click(function () {
 
@@ -45,16 +73,7 @@ $devices = \humhub\modules\user\models\Device::find()->where(['user_id' => $user
     })
 </script>
 
-<!--<li class="dropdown-header">-->
-<!--    <div class="arrow"></div>-->
-<!--    --><?php //echo Yii::t('DevicesModule.widgets_views_mailNotification', 'Report Lists'); ?>
-<!--    --><?php //echo Html::a(Yii::t('DevicesModule.widgets_views_mailNotification', 'Show my report'), Url::to(['/mail/mail/create', 'ajax' => 1]), array('class' => 'btn btn-info btn-xs', 'id' => 'create-message-button', 'data-target' => '#globalModal')); ?>
-<!--</li>-->
-<!--<ul class="media-list">-->
-<!--    <li id="loader_messages">-->
-<!--        <div class="loader"></div>-->
-<!--    </li>-->
-<!--</ul>-->
+
 
 
 

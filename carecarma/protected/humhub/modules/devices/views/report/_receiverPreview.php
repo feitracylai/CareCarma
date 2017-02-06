@@ -15,18 +15,28 @@ $space = Space::findOne(['id' => $spaceId]);
 $user = User::findOne(['id' => $userId]);
 
 
+
 $reportTime = array();
+$stepNew = false;
+$heartrateNew = false;
 foreach ($devices as $device){
     $lastReport = \humhub\modules\devices\models\Classlabelshoursteps::find()->where(['hardware_id' => $device->hardware_id])->orderBy('updated_at DESC')->one();
-    if ($lastReport)
+    if ($lastReport){
         $reportTime[] = $lastReport->updated_at;
+        if ($lastReport->seen == 0)$stepNew = true;
+    }
+
 
     $lastHeartrate = \humhub\modules\devices\models\Classlabelshourheart::find()->where(['hardware_id' => $device->hardware_id])->orderBy('updated_at DESC')->one();
-    if ($lastHeartrate)
+    if ($lastHeartrate){
         $reportTime[] = $lastHeartrate->updated_at;
+        if ($lastHeartrate->seen == 0)$heartrateNew = true;
+    }
+
 }
 if (!empty($lastReport))
     $lastReportTime = max($reportTime);
+
 
 
 ?>
@@ -54,6 +64,12 @@ if (!empty($lastReport))
 <!--                --><?php //echo Yii::t('DevicesModule.views_report_index', '3304 steps'); ?>
 
                 <?php if (!empty($lastReport)) echo TimeAgo::widget(['timestamp' => $lastReportTime]); ?>
+                <?php
+                // show the new badge, if this report is still unread
+                if ($heartrateNew || $stepNew) {
+                    echo '<span class="label label-danger">' . Yii::t('DevicesModule.views_report_index', 'New') . '</span>';
+                }
+                ?>
             </div>
 
         </div>
