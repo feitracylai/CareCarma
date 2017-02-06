@@ -46,8 +46,12 @@ class ReportController extends Controller
                         foreach ($dataDevices as $dataDevice){
                             $last_steps_row = Classlabelshoursteps::find()->where(['hardware_id' => $dataDevice->hardware_id])->orderBy('updated_at DESC')->one();
                             $last_heartrate_row = Classlabelshourheart::find()->where(['hardware_id' => $dataDevice->hardware_id])->orderBy('updated_at DESC')->one();
-                            if ($last_heartrate_row->seen == 0 || $last_steps_row->seen == 0)
+                            if ($last_heartrate_row != null && $last_heartrate_row->seen == 0){
                                 $hasNew = true;
+                            } elseif ($last_steps_row != null && $last_steps_row->seen == 0){
+                                $hasNew = true;
+                            }
+
                         }
                         if ($hasNew)$count++;
                     }
@@ -63,8 +67,11 @@ class ReportController extends Controller
             foreach ($userDataDevices as $userDataDevice){
                 $last_steps_row = Classlabelshoursteps::find()->where(['hardware_id' => $userDataDevice->hardware_id])->orderBy('updated_at DESC')->one();
                 $last_heartrate_row = Classlabelshourheart::find()->where(['hardware_id' => $userDataDevice->hardware_id])->orderBy('updated_at DESC')->one();
-                if ($last_heartrate_row->seen == 0 || $last_steps_row->seen == 0)
+                if ($last_heartrate_row != null && $last_heartrate_row->seen == 0){
                     $user_hasNew = true;
+                } elseif ($last_steps_row != null && $last_steps_row->seen == 0){
+                    $user_hasNew = true;
+                }
             }
             if ($user_hasNew)$count++;
         }
