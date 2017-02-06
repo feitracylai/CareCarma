@@ -1514,7 +1514,7 @@ class SensorController extends Controller
         $length = count($byte_array);
         $current = 1;
 
-        Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
         while($current < $length) {
             $aorg = $this->bytesToChar($byte_array, $current);
@@ -1544,7 +1544,7 @@ class SensorController extends Controller
                     $model->accelZ = $z;
                     $model->time = $time;
                     $model->hardware_id = $imei;
-                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $model->save();
                     break;
                 }
@@ -1570,7 +1570,7 @@ class SensorController extends Controller
                         $model->accelZ = $z;
                         $model->time = $time;
                         $model->hardware_id = $imei;
-                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                         $model->save();
                         $current -= 28;
                         continue;
@@ -1588,7 +1588,7 @@ class SensorController extends Controller
                             $model->GyroZ = $newz;
                             $model->time = $time;
                             $model->hardware_id = $imei;
-                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                             $model->save();
                             continue;
                         }
@@ -1601,7 +1601,7 @@ class SensorController extends Controller
                             $model->accelZ = $z;
                             $model->time = $time;
                             $model->hardware_id = $imei;
-                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                             $model->save();
                             $current -= 28;
                             continue;
@@ -1624,7 +1624,7 @@ class SensorController extends Controller
                     $model->GyroZ = $z;
                     $model->time = $time;
                     $model->hardware_id = $imei;
-                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $model->save();
                     break;
                 }
@@ -1650,7 +1650,7 @@ class SensorController extends Controller
                         $model->GyroZ = $z;
                         $model->time = $time;
                         $model->hardware_id = $imei;
-                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                         $model->save();
                         $current -= 28;
                         continue;
@@ -1668,7 +1668,7 @@ class SensorController extends Controller
                             $model->GyroZ = $z;
                             $model->time = $time;
                             $model->hardware_id = $imei;
-                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                             $model->save();
                             continue;
                         }
@@ -1681,7 +1681,7 @@ class SensorController extends Controller
                             $model->GyroZ = $z;
                             $model->time = $time;
                             $model->hardware_id = $imei;
-                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                             $model->save();
                             $current -= 28;
                             continue;
@@ -1690,6 +1690,6 @@ class SensorController extends Controller
                 }
             }
         }
-        Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
     }
 }
