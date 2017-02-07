@@ -713,8 +713,10 @@ class DeviceController extends ContentContainerController
             $count++;
 
             $lastData = Classlabelshoursteps::find()->where(['hardware_id' => $dataDevice->hardware_id])->andWhere(['>=', 'time', $start])->orderBy('updated_at DESC')->one();
-            $lastData->seen = 1;
-            $lastData->save();
+            if (!is_null($lastData)){
+                $lastData->seen = 1;
+                $lastData->save();
+            }
         }
 
 
@@ -779,8 +781,11 @@ class DeviceController extends ContentContainerController
             $count++;
 
             $lastData = Classlabelshourheart::find()->where(['hardware_id' => $dataDevice->hardware_id])->andWhere(['>=', 'time', $start])->orderBy('updated_at DESC')->one();
-            $lastData->seen = 1;
-            $lastData->save();
+            if (!is_null($lastData)){
+                $lastData->seen = 1;
+                $lastData->save();
+            }
+
         }
 
 //        Yii::getLogger()->log($basicData, Logger::LEVEL_INFO, 'MyLog');
