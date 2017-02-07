@@ -18,8 +18,7 @@ $hasCR = false;
                 $dataDevices = Device::find()->where(['user_id' => $space_member->user_id, 'activate' => 1])->andWhere(['<>','type', 'phone'])->all();
                 if ($dataDevices){
                     $hasCR = true;
-                    $isNew = false;
-                    echo $this->render('_receiverPreview', array('userId' => $space_member->user_id, 'spaceId' => $space_member->space_id, 'isNew' => $isNew, 'devices' => $dataDevices));
+                    echo $this->render('_receiverPreview', array('userId' => $space_member->user_id, 'spaceId' => $space_member->space_id, 'start_time' => $start_time, 'devices' => $dataDevices));
                 }
 
             }

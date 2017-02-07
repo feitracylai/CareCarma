@@ -25,6 +25,12 @@ class Notifications extends Widget
      */
     public function run()
     {
+        $today = date("Y-m-d");
+        date_default_timezone_set("GMT");
+        $unixtoday = strtotime($today);
+        $unixlastweek = strtotime('-1 week', $unixtoday);
+        $start = $unixlastweek."000";
+
         $count = 0;
         //CR's
         foreach (Membership::GetUserSpaces() as $space) {
@@ -36,8 +42,8 @@ class Notifications extends Widget
                     $hasNew = false;
                     if (count($dataDevices) != 0){
                         foreach ($dataDevices as $dataDevice){
-                            $last_steps_row = Classlabelshoursteps::find()->where(['hardware_id' => $dataDevice->hardware_id])->orderBy('updated_at DESC')->one();
-                            $last_heartrate_row = Classlabelshourheart::find()->where(['hardware_id' => $dataDevice->hardware_id])->orderBy('updated_at DESC')->one();
+                            $last_steps_row = Classlabelshoursteps::find()->where(['hardware_id' => $dataDevice->hardware_id])->andWhere(['>=', 'time', $start])->orderBy('updated_at DESC')->one();
+                            $last_heartrate_row = Classlabelshourheart::find()->where(['hardware_id' => $dataDevice->hardware_id])->andWhere(['>=', 'time', $start])->orderBy('updated_at DESC')->one();
                             if ($last_heartrate_row != null && $last_heartrate_row->seen == 0){
                                 $hasNew = true;
                             } elseif ($last_steps_row != null && $last_steps_row->seen == 0){
@@ -57,8 +63,8 @@ class Notifications extends Widget
         $user_hasNew = false;
         if (count($userDataDevices) != 0){
             foreach ($userDataDevices as $userDataDevice){
-                $last_steps_row = Classlabelshoursteps::find()->where(['hardware_id' => $userDataDevice->hardware_id])->orderBy('updated_at DESC')->one();
-                $last_heartrate_row = Classlabelshourheart::find()->where(['hardware_id' => $userDataDevice->hardware_id])->orderBy('updated_at DESC')->one();
+                $last_steps_row = Classlabelshoursteps::find()->where(['hardware_id' => $userDataDevice->hardware_id])->andWhere(['>=', 'time', $start])->orderBy('updated_at DESC')->one();
+                $last_heartrate_row = Classlabelshourheart::find()->where(['hardware_id' => $userDataDevice->hardware_id])->andWhere(['>=', 'time', $start])->orderBy('updated_at DESC')->one();
                 if ($last_heartrate_row != null && $last_heartrate_row->seen == 0){
                     $user_hasNew = true;
                 } elseif ($last_steps_row != null && $last_steps_row->seen == 0){

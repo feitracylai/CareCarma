@@ -14,8 +14,6 @@ use humhub\widgets\TimeAgo;
 $space = Space::findOne(['id' => $spaceId]);
 $user = User::findOne(['id' => $userId]);
 
-
-
 $reportTime = array();
 $stepNew = false;
 $heartrateNew = false;
@@ -23,14 +21,15 @@ foreach ($devices as $device){
     $lastReport = \humhub\modules\devices\models\Classlabelshoursteps::find()->where(['hardware_id' => $device->hardware_id])->orderBy('updated_at DESC')->one();
     if ($lastReport){
         $reportTime[] = $lastReport->updated_at;
-        if ($lastReport->seen == 0)$stepNew = true;
+        //the report just show one week data
+        if ($lastReport->time > $start_time && $lastReport->seen == 0)$stepNew = true;
     }
 
 
     $lastHeartrate = \humhub\modules\devices\models\Classlabelshourheart::find()->where(['hardware_id' => $device->hardware_id])->orderBy('updated_at DESC')->one();
     if ($lastHeartrate){
         $reportTime[] = $lastHeartrate->updated_at;
-        if ($lastHeartrate->seen == 0)$heartrateNew = true;
+        if ($lastHeartrate->time > $start_time && $lastHeartrate->seen == 0)$heartrateNew = true;
     }
 
 }
@@ -41,7 +40,7 @@ if (!empty($lastReport))
 
 ?>
 
-<li class="userPreviewEntry_<?php echo $user->id; ?> userPreviewEntry entry <?php if ($isNew) : ?>new<?php endif; ?>" >
+<li class="userPreviewEntry_<?php echo $user->id; ?> userPreviewEntry entry <?php if ($heartrateNew || $stepNew) : ?>new<?php endif; ?>" >
     <a href="<?php echo $space->createUrl('/space/manage/device/report',['rguid' => $user->guid]) ?>">
         <div class="media">
 

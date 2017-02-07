@@ -79,6 +79,10 @@ class ViewController extends ContentContainerController
             $DATA[$count] = $deviceReportData;
             $devices[$count] = $dataDevice;
             $count++;
+
+            $lastData = Classlabelshoursteps::find()->where(['hardware_id' => $dataDevice->hardware_id])->andWhere(['>=', 'time', $start])->orderBy('updated_at DESC')->one();
+            $lastData->seen = 1;
+            $lastData->save();
         }
 
         return $this->render('index', array(
@@ -137,6 +141,10 @@ class ViewController extends ContentContainerController
             $DATA[$count] = $deviceReportData;
             $devices[$count] = $dataDevice;
             $count++;
+
+            $lastData = Classlabelshourheart::find()->where(['hardware_id' => $dataDevice->hardware_id])->andWhere(['>=', 'time', $start])->orderBy('updated_at DESC')->one();
+            $lastData->seen = 1;
+            $lastData->save();
         }
         return $this->render('heartrate', array(
             'user' => $user,

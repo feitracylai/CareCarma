@@ -146,7 +146,7 @@ class MailController extends Controller
 
             foreach (UserMessage::find()->where(['message_id' => $message->id])->each() as $userMessage) {
 //                $user = User::findOne(['id' => $userMessage->user_id]);
-               Yii::getLogger()->log($userMessage->user_id, Logger::LEVEL_INFO, 'MyLog');
+//               Yii::getLogger()->log($userMessage->user_id, Logger::LEVEL_INFO, 'MyLog');
                 if ($userMessage->user_id != Yii::$app->user->id) {
                    //Yii::getLogger()->log($userMessage->user_id, Logger::LEVEL_INFO, 'MyLog');
                     $deviceMessage = new DeviceMessage();
