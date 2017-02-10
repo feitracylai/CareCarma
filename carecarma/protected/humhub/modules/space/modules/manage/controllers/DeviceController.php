@@ -662,7 +662,8 @@ class DeviceController extends ContentContainerController
             $devices[$count] = $dataDevice;
             $count++;
 
-            $lastData = Classlabelshoursteps::find()->where(['hardware_id' => $dataDevice->hardware_id])->andWhere(['>=', 'time', $start])->orderBy('updated_at DESC')->one();
+            $lastData = Classlabelshoursteps::find()->where(['hardware_id' => $dataDevice->hardware_id])
+                ->andWhere(['>=', 'time', $start])->andWhere(['<', 'time', $end])->orderBy('updated_at DESC')->one();
             if (!is_null($lastData)){
                 $lastData->seen = 1;
                 $lastData->save();
@@ -730,7 +731,8 @@ class DeviceController extends ContentContainerController
             $devices[$count] = $dataDevice;
             $count++;
 
-            $lastData = Classlabelshourheart::find()->where(['hardware_id' => $dataDevice->hardware_id])->andWhere(['>=', 'time', $start])->orderBy('updated_at DESC')->one();
+            $lastData = Classlabelshourheart::find()->where(['hardware_id' => $dataDevice->hardware_id])
+                ->andWhere(['>=', 'time', $start])->andWhere(['<', 'time', $end])->orderBy('updated_at DESC')->one();
             if (!is_null($lastData)){
                 $lastData->seen = 1;
                 $lastData->save();

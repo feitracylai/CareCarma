@@ -32,7 +32,7 @@ class ViewController extends ContentContainerController
         }
 
         $today = date("Y-m-d");
-        date_default_timezone_set("GMT");
+//        date_default_timezone_set("GMT");
         $unixtoday = strtotime($today);
         $unixlastweek = strtotime('-1 week', $unixtoday);
         $start = $unixlastweek."000";
@@ -80,7 +80,7 @@ class ViewController extends ContentContainerController
             $devices[$count] = $dataDevice;
             $count++;
 
-            $lastData = Classlabelshoursteps::find()->where(['hardware_id' => $dataDevice->hardware_id])->andWhere(['>=', 'time', $start])->orderBy('updated_at DESC')->one();
+            $lastData = Classlabelshoursteps::find()->where(['hardware_id' => $dataDevice->hardware_id])->andWhere(['>=', 'time', $start])->andWhere(['<', 'time', $end])->orderBy('updated_at DESC')->one();
             if (!is_null($lastData)){
                 $lastData->seen = 1;
                 $lastData->save();
@@ -107,7 +107,7 @@ class ViewController extends ContentContainerController
         }
 
         $today = date("Y-m-d");
-        date_default_timezone_set("GMT");
+//        date_default_timezone_set("GMT");
         $unixtoday = strtotime($today);
         $unixlastweek = strtotime('-1 week', $unixtoday);
         $start = $unixlastweek*1000;
@@ -144,7 +144,7 @@ class ViewController extends ContentContainerController
             $devices[$count] = $dataDevice;
             $count++;
 
-            $lastData = Classlabelshourheart::find()->where(['hardware_id' => $dataDevice->hardware_id])->andWhere(['>=', 'time', $start])->orderBy('updated_at DESC')->one();
+            $lastData = Classlabelshourheart::find()->where(['hardware_id' => $dataDevice->hardware_id])->andWhere(['>=', 'time', $start])->andWhere(['<', 'time', $end])->orderBy('updated_at DESC')->one();
             if (!is_null($lastData)){
                 $lastData->seen = 1;
                 $lastData->save();
