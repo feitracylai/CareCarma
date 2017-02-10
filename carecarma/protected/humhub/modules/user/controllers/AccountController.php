@@ -90,22 +90,14 @@ class AccountController extends Controller
         return $this->render('edit', array('hForm' => $form));
     }
 
-    public function checkUserDevice($model, $user){
-        $check = true;
-        $device = Device::find()->where(['device_id' => $model->deviceId])->one();
-        if ($device==null || $device->activate == 1){
-            $model->addError('deviceId', Yii::t('UserModule.controllers_AccountController', "Activation ID is incorrect!"));
-            $check = false;
-        }
-        /****if someone use the same device now****/
-        $same_device_other_user = Device::find()->where(['hardware_id' => $device->hardware_id, 'activate' => 1])->andWhere(['<>','user_id', $user->getId()])->one();
-        if(!empty($same_device_other_user)){
-            $model->addError('deviceId', Yii::t('UserModule.controllers_AccountController', "Activation ID is incorrect!"));
-            $check = false;
+    public function checkPassword($model, $user){
+
+        if ($user->currentPassword !== null && !$user->currentPassword->validatePassword($model->currentPassword)) {
+            $model->addError('currentPassword', Yii::t('SpaceModule.controllers_DeviceController', "Password is incorrect!"));
+            return false;
         }
 
-        return $check;
-
+        return true;
     }
 
 
@@ -118,7 +110,7 @@ class AccountController extends Controller
 
 
 
-        if ($model->load(Yii::$app->request->post())&& $model->validate() && $this->checkUserDevice($model, $user)) {
+        if ($model->load(Yii::$app->request->post())&& $model->validate() && $this->checkPassword($model, $user)) {
             $device = Device::find()->where(['device_id' => $model->deviceId])->one();
 
             $user->temp_password = $model->currentPassword;

@@ -20,7 +20,7 @@ class CheckActivateValidator extends Validator
     {
         $value = $object->$attribute;
 
-        Yii::getLogger()->log($value, Logger::LEVEL_INFO, 'MyLog');
+//        Yii::getLogger()->log($value, Logger::LEVEL_INFO, 'MyLog');
         if (!$this->checkDevice($value)) {
             $object->addError($attribute, Yii::t('UserModule.components_CheckPasswordValidator', "Activation ID is incorrect!"));
         }
@@ -30,13 +30,13 @@ class CheckActivateValidator extends Validator
     {
         $check = true;
         if ($value == ''){
-            Yii::getLogger()->log('deviceId=nothing', Logger::LEVEL_INFO, 'MyLog');
+//            Yii::getLogger()->log('deviceId=nothing', Logger::LEVEL_INFO, 'MyLog');
             return true;
         }
         $device = Device::find()->where(['device_id' => $value])->one();
 
         if ($device == null || $device->activate == 1){
-            Yii::getLogger()->log('device=null', Logger::LEVEL_INFO, 'MyLog');
+//            Yii::getLogger()->log('device=null', Logger::LEVEL_INFO, 'MyLog');
             return false;
         }
 
