@@ -26,7 +26,7 @@ class Notifications extends Widget
     public function run()
     {
         $today = date("Y-m-d");
-        date_default_timezone_set("GMT");
+//        date_default_timezone_set("GMT");
         $unixtoday = strtotime($today);
         $unixlastweek = strtotime('-1 week', $unixtoday);
         $start = $unixlastweek."000";

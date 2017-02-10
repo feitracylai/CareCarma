@@ -25,7 +25,7 @@ class ReportController extends Controller
     public function actionReportList()
     {
         $today = date("Y-m-d");
-        date_default_timezone_set("GMT");
+//        date_default_timezone_set("GMT");
         $unixtoday = strtotime($today);
         $unixlastweek = strtotime('-1 week', $unixtoday);
         $start = $unixlastweek."000";
@@ -39,7 +39,7 @@ class ReportController extends Controller
         Yii::$app->response->format = 'json';
 
         $today = date("Y-m-d");
-        date_default_timezone_set("GMT");
+//        date_default_timezone_set("GMT");
         $unixtoday = strtotime($today);
         $unixlastweek = strtotime('-1 week', $unixtoday);
         $start = $unixlastweek."000";

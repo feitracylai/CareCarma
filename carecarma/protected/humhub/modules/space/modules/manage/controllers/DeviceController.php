@@ -62,10 +62,11 @@ class DeviceController extends ContentContainerController
 
         $userModel = new User();
         $userModel->scenario = 'editCare';
-        $deviceModel = new AccountDevice();
-        $deviceModel->scenario = 'editDevice';
         $userPasswordModel = new Password();
         $userPasswordModel->scenario = 'registration';
+        //device
+        $deviceModel = new AccountDevice();
+
         $profileModel = $userModel->profile;
         $profileModel->scenario = 'registration';
         // Build Form Definition
@@ -93,7 +94,6 @@ class DeviceController extends ContentContainerController
         // Add User Password Form
         $definition['elements']['UserPassword'] = array(
             'type' => 'form',
-            #'title' => 'Password',
             'elements' => array(
                 'newPassword' => array(
                     'type' => 'password',
@@ -109,18 +109,17 @@ class DeviceController extends ContentContainerController
                 ),
             ),
         );
-//        //Activate the device
-//        $definition['elements']['Device'] = array(
-//            'type' => 'form',
-//            'elements' => array(
-//                'deviceId' => array(
-//                    'type' => 'text',
-//                    'class' => 'form-control',
-//                    'maxlength' => 45,
-//                    'title' => 'Activate CoSMoS device or CoSMoS app.'
-//                )
-//            ),
-//        );
+        //Activate the device
+        $definition['elements']['Device'] = array(
+            'type' => 'form',
+            'elements' => array(
+                'deviceId' => array(
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'title' => 'Activate CoSMoS device or CoSMoS app.'
+                )
+            ),
+        );
         // Add Profile Form
         $definition['elements']['Profile'] = array_merge(array('type' => 'form'), $profileModel->getFormDefinition());
         // Get Form Definition
@@ -134,56 +133,61 @@ class DeviceController extends ContentContainerController
         $form = new HForm($definition);
         $form->models['User'] = $userModel;
         $form->models['UserPassword'] = $userPasswordModel;
-//        $form->models['Device'] = $deviceModel;
+
+        $form->models['Device'] = $deviceModel;
+
         $form->models['Profile'] = $profileModel;
 
         if ($form->submitted('save') && $form->validate()) {
             $this->forcePostRequest();
             $form->models['User']->status = User::STATUS_ENABLED;
-//            $device = Device::find()->where(['device_id' => $form->models['User']->device_id])->one();
-//            if ($device != null || $form->models['User']->device_id == '') {
-                if ($form->models['User']->save()) {
+            Yii::getLogger()->log($form->models['Device']->deviceId, Logger::LEVEL_INFO, 'MyLog');
 
-                    // save the temp_password
-                    $user_current = User::findOne(['id' => $userModel->id]);
-                    $user_current->temp_password = $userPasswordModel->newPassword;
-                    $user_current->save();
-                    $form->models['Profile']->user_id = $form->models['User']->id;
-                    $form->models['Profile']->save();
-                    // Save User Password
-                    $form->models['UserPassword']->user_id = $form->models['User']->id;
-                    $form->models['UserPassword']->setPassword($form->models['UserPassword']->newPassword);
-                    $form->models['UserPassword']->save();
-                    // Add memeber's infomation in his/her Contacts
-                    $memebers = Membership::findAll(['space_id' => $space->id]);
-                    foreach ($memebers as $memeber) {
-                        if ($memeber->user_id != $form->models['User']->id && $memeber->status == 3) {
-                            $contact_user = User::findOne(['id' => $memeber->user_id]);
-                            $user = User::findOne(['id' => $form->models['User']->id]);
-                            $user->addContact($contact_user);
+            if ($form->models['User']->save()) {
+
+                // save the temp_password
+                $user_current = User::findOne(['id' => $userModel->id]);
+                $user_current->temp_password = $userPasswordModel->newPassword;
+                $user_current->save();
+
+                $form->models['Profile']->user_id = $form->models['User']->id;
+                $form->models['Profile']->save();
+                // Save User Password
+                $form->models['UserPassword']->user_id = $form->models['User']->id;
+                $form->models['UserPassword']->setPassword($form->models['UserPassword']->newPassword);
+                $form->models['UserPassword']->save();
+
+                // Add memeber's infomation in his/her Contacts
+                $memebers = Membership::findAll(['space_id' => $space->id]);
+                foreach ($memebers as $memeber) {
+                    if ($memeber->user_id != $form->models['User']->id && $memeber->status == 3) {
+                        $contact_user = User::findOne(['id' => $memeber->user_id]);
+                        $user = User::findOne(['id' => $form->models['User']->id]);
+                        $user->addContact($contact_user);
 
 
-                        }
                     }
-                    // Become Care Receiver in this space
-                    $space->addMember($form->models['User']->id);
-                    $space->setCareReceiver($form->models['User']->id);
-                    // check if device fulfill all the rule of activation, if yes, activation
-                    if (!empty($form->models['User']->device_id)){
-                        if ($this->checkDevice($form->models['User']->device_id)) {
-                            $device = Device::findOne(['device_id' => $form->models['User']->device_id]);
-                            $device->user_id = $user->id;
-                            $device->save();
-                            $this->activation($form->models['User']->device_id);
-                        }
-                    }
-
-                    return $this->redirect($space->createUrl('/space/manage/device'));
                 }
-//            }
-//            else {
-//                $form->models['User']->addError('device_id', 'Invalid input! Please make sure that you entered the correct device ID.');
-//            }
+                // Become Care Receiver in this space
+                $space->addMember($form->models['User']->id);
+                $space->setCareReceiver($form->models['User']->id);
+
+                // check if device fulfill all the rule of activation, if yes, activation
+                if (!is_null($form->models['Device']->deviceId)){
+                    $device = Device::findOne(['device_id' => $form->models['Device']->deviceId]);
+                    $device->user_id = $form->models['User']->id;
+                    $device->save();
+                    if ($this->checkDevice($form->models['Device']->deviceId)) {
+
+                        $this->activation($form->models['Device']->deviceId);
+                    }
+                }
+
+
+                return $this->redirect($space->createUrl('/space/manage/device'));
+            }
+
+
         }
         return $this->render('add', array(
             'hForm' => $form,
@@ -191,6 +195,7 @@ class DeviceController extends ContentContainerController
 
         ));
     }
+
 
     public function actionAddCare()
     {
@@ -403,23 +408,20 @@ class DeviceController extends ContentContainerController
         ));
     }
 
-    private function checkReceiverDevice($model, $receiver){
+    private function checkPassword($model, $receiver){
         $check = true;
-        $device = Device::find()->where(['device_id' => $model->deviceId])->one();
+//        $device = Device::find()->where(['device_id' => $model->deviceId])->one();
+        if (empty($model->currentPassword)){
+            $model->addError('currentPassword', Yii::t('SpaceModule.controllers_DeviceController', "Password can not be blank."));
+            return false;
+        }
+
+
         if ($receiver->currentPassword !== null && !$receiver->currentPassword->validatePassword($model->currentPassword)) {
-            $model->addError('currentPassword', Yii::t('SpaceModule.controllers_DeviceController', "Your password is incorrect!"));
-            $check = false;
+            $model->addError('currentPassword', Yii::t('SpaceModule.controllers_DeviceController', "Password is incorrect!"));
+            return false;
         }
-        if ($device == null || $device->activate == 1){
-            $model->addError('deviceId',  Yii::t('SpaceModule.controllers_DeviceController', "Activation ID is incorrect!"));
-            $check = false;
-        }
-        /****if someone use the same device now****/
-        $same_device_other_user = Device::find()->where(['hardware_id' => $device->hardware_id, 'activate' => 1])->andWhere(['<>','user_id', $receiver->getId()])->one();
-        if($same_device_other_user != null){
-            $model->addError('deviceId', Yii::t('SpaceModule.controllers_DeviceController', "Activation ID is incorrect!"));
-            $check = false;
-        }
+
         return $check;
     }
 
@@ -434,7 +436,7 @@ class DeviceController extends ContentContainerController
         $deviceModel = new \humhub\modules\user\models\forms\AccountDevice();
         $deviceModel->scenario = 'editDevice';
 
-        if ($deviceModel->load(Yii::$app->request->post())&& $deviceModel->validate() && $this->checkReceiverDevice($deviceModel, $user)) {
+        if ($deviceModel->load(Yii::$app->request->post())&& $deviceModel->validate() && $this->checkPassword($deviceModel, $user)) {
             $device = Device::find()->where(['device_id' => $deviceModel->deviceId])->one();
 
 
@@ -522,59 +524,7 @@ class DeviceController extends ContentContainerController
         return $this->render('deleteDevice', array('device' => $device, 'user' => $user, 'space' => $space));
     }
 
-//    public function actionAccountSettings()
-//    {
-//        $space = $this->getSpace();
-//        if (!$space->isAdmin())
-//            throw new HttpException(403, 'Access denied - Circle Administrator only!');
-//
-//        $user =  $this->getCare();
-//        $emailModel = new \humhub\modules\user\models\forms\AccountChangeEmail;
-//        if ($emailModel->load(Yii::$app->request->post()) && $emailModel->validate() && $emailModel->sendChangeEmail()) {
-//            $user->email = $emailModel->newEmail;
-//            $user->save();
-//            $community_user = Users::findOne(['id' => $user->id]);
-//            $community_user->email = $user->email;
-//            $community_user->save();
-//            Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
-//        }
-//
-//        $deviceOld = Device::findOne(['device_id' => $user->device_id]);
-//        $deviceModel = new \humhub\modules\user\models\forms\AccountDevice();
-//        if ($deviceModel->load(Yii::$app->request->post())&& $deviceModel->validate()) {
-//            $device = Device::find()->where(['device_id' => $deviceModel->deviceId])->one();
-//            if ($device!=null) {
-//                if ($device != $deviceOld) {
-//                    $user->device_id = $deviceModel->deviceId;
-//                    $user->save();
-//
-//                    // check if device fulfill all the rule of activation, if yes, activation
-//                    if ($this->checkDevice($deviceModel->deviceId)) {
-//                        $this->activation($deviceModel->deviceId);
-//                    }
-//                    if($deviceOld != null) {
-//                        $gcmOld = new GCM();
-//                        $pushOld = new Push();
-//                        $pushOld->setTitle('user');
-//                        $pushOld->setData('delete device');
-//                        $gcmOld->send($deviceOld->gcmId, $pushOld->getPush());
-//                    }
-//
-//                    $user->updateUserContacts();
-//                }
-//                Yii::$app->getSession()->setFlash('data-saved', Yii::t('SpaceModule.controllers_DeviceController', 'Saved'));
-//            }
-//            else {
-//                $deviceModel->addError('deviceId', 'Invalid input! Please make sure that you entered the correct device ID.');
-//            }
-//        }
-//        return $this->render('account-settings', array(
-//            'model' => $deviceModel,
-//            'emailModel' => $emailModel,
-//            'user' => $user,
-//            'space' => $space,
-//        ));
-//    }
+
 
     public function actionSettings() {
         $space = $this->getSpace();
@@ -628,7 +578,7 @@ class DeviceController extends ContentContainerController
             }
         }
         $model = new \humhub\modules\user\models\forms\AccountDelete;
-        if (!$isSpaceOwner && $model->load(Yii::$app->request->post()) && $model->validate()) {
+        if (!$isSpaceOwner && $model->load(Yii::$app->request->post()) && $this->checkPassword($model, $user) ) {
             $user->delete();
             $this->redirect($space->createUrl('/space/manage/device/index'));
         }
@@ -655,7 +605,7 @@ class DeviceController extends ContentContainerController
         }
 
         $today = date("Y-m-d");
-        date_default_timezone_set("GMT");
+//        date_default_timezone_set("GMT");
         $unixtoday = strtotime($today);
         $unixlastweek = strtotime('-1 week', $unixtoday);
         $start = $unixlastweek."000";
@@ -743,7 +693,7 @@ class DeviceController extends ContentContainerController
         }
 
         $today = date("Y-m-d");
-        date_default_timezone_set("GMT");
+//        date_default_timezone_set("GMT");
         $unixtoday = strtotime($today);
         $unixlastweek = strtotime('-1 week', $unixtoday);
         $start = $unixlastweek*1000;
