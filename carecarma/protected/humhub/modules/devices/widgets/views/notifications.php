@@ -59,7 +59,7 @@ $devices = \humhub\modules\user\models\Device::find()->where(['user_id' => $user
         $('#dropdown-report').find('ul').remove();
 
         // append title and loader to dropdown
-        $('#dropdown-report').append('<li class="dropdown-header"><div class="arrow"></div><?php echo Yii::t('DevicesModule.widgets_views_mailNotification', 'Report Lists'); ?> <?php if ($devices) echo Html::a(Yii::t('MailModule.widgets_views_mailNotification', 'My Report'), $user->createUrl('/devices/view/index'), array('class' => 'btn btn-info btn-xs', 'id' => 'create-message-button')); ?></li><ul class="media-list"><li id="loader_reports"><div class="loader"></div></li></ul>');
+        $('#dropdown-report').append('<li class="dropdown-header"><div class="arrow"></div><?php echo Yii::t('DevicesModule.widgets_views_mailNotification', 'Report Lists'); ?> <?php if ($devices) echo Html::a(Yii::t('MailModule.widgets_views_mailNotification', 'My Report'), $user->createUrl('/devices/view/index'), array('class' => 'btn btn-info btn-xs', 'id' => 'create-message-button')); ?></li><ul class="media-list"><li id="loader_reports"><div class="loader"><div class="sk-spinner sk-spinner-three-bounce"><div class="sk-bounce1"></div><div class="sk-bounce2"></div><div class="sk-bounce3"></div></div></div></li></ul>');
 
 
         $.ajax({
