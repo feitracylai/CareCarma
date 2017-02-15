@@ -27,14 +27,14 @@ $devices = \humhub\modules\user\models\Device::find()->where(['user_id' => $user
     /**
      * Refresh New Report Count (Badge)
      */
-    reloadReportCountInterval = 60000;
-    setInterval(function () {
-        jQuery.getJSON("<?php echo Url::to(['/devices/report/get-new-report-count-json']); ?>", function (json) {
-            setNewReportCount(parseInt(json.newReport));
-        });
-    }, reloadReportCountInterval);
-
-    setNewReportCount(<?php echo $newReportCount; ?>);
+//    reloadReportCountInterval = 60000;
+//    setInterval(function () {
+//        jQuery.getJSON("<?php //echo Url::to(['/devices/report/get-new-report-count-json']); ?>//", function (json) {
+//            setNewReportCount(parseInt(json.newReport));
+//        });
+//    }, reloadReportCountInterval);
+//
+//    setNewReportCount(<?php //echo $newReportCount; ?>//);
 
 
     /**

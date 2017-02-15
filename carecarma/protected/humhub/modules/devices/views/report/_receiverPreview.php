@@ -37,10 +37,9 @@ if (!empty($lastReport))
     $lastReportTime = max($reportTime);
 
 
-
 ?>
-
-<li class="userPreviewEntry_<?php echo $user->id; ?> userPreviewEntry entry <?php if ($heartrateNew || $stepNew) : ?>new<?php endif; ?>" >
+<!--<li class="userPreviewEntry_--><?php //echo $user->id; ?><!-- userPreviewEntry entry --><?php //if ($heartrateNew || $stepNew) : ?><!--new--><?php //endif; ?><!--" >-->
+<li class="userPreviewEntry_<?php echo $user->id; ?> userPreviewEntry entry " >
     <a href="<?php echo $space->createUrl('/space/manage/device/report',['rguid' => $user->guid]) ?>">
         <div class="media">
 
@@ -63,12 +62,12 @@ if (!empty($lastReport))
 <!--                --><?php //echo Yii::t('DevicesModule.views_report_index', '3304 steps'); ?>
 
                 <?php if (!empty($lastReport)) echo TimeAgo::widget(['timestamp' => $lastReportTime]); ?>
-                <?php
-                // show the new badge, if this report is still unread
-                if ($heartrateNew || $stepNew) {
-                    echo '<span class="label label-danger">' . Yii::t('DevicesModule.views_report_index', 'New') . '</span>';
-                }
-                ?>
+<!--                --><?php
+//                // show the new badge, if this report is still unread
+//                if ($heartrateNew || $stepNew) {
+//                    echo '<span class="label label-danger">' . Yii::t('DevicesModule.views_report_index', 'New') . '</span>';
+//                }
+//                ?>
             </div>
 
         </div>

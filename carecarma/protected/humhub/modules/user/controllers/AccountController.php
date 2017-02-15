@@ -466,7 +466,7 @@ class AccountController extends Controller
 
         $model->receive_email_activities = $user->getSetting("receive_email_activities", 'core', \humhub\models\Setting::Get('receive_email_activities', 'mailing'));
         $model->receive_email_notifications = $user->getSetting("receive_email_notifications", 'core', \humhub\models\Setting::Get('receive_email_notifications', 'mailing'));
-        $model->receive_email_messages = $user->getSetting('receive_email_messages', 'message', \humhub\models\Setting::Get('receive_email_messages', 'mailing'));
+        $model->receive_email_messages = $user->getSetting('receive_email_messages', 'core', \humhub\models\Setting::Get('receive_email_messages', 'mailing'));
         $model->enable_html5_desktop_notifications = $user->getSetting("enable_html5_desktop_notifications", 'core', \humhub\models\Setting::Get('enable_html5_desktop_notifications', 'notification'));
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {

@@ -15,6 +15,7 @@ use humhub\models\Setting;
 use humhub\models\UrlOembed;
 use humhub\modules\admin\components\Controller;
 use humhub\modules\user\libs\Ldap;
+use yii\log\Logger;
 
 /**
  * SettingController 
@@ -272,11 +273,13 @@ class SettingController extends Controller
 
         $model->receive_email_activities = Setting::Get("receive_email_activities", 'mailing');
         $model->receive_email_notifications = Setting::Get("receive_email_notifications", 'mailing');
+        $model->receive_email_messages = Setting::Get("receive_email_notifications", 'mailing');
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
             Setting::Set('receive_email_activities', $model->receive_email_activities, 'mailing');
             Setting::Set('receive_email_notifications', $model->receive_email_notifications, 'mailing');
+            Setting::Set('receive_email_messages', $model->receive_email_messages, 'mailing');
 
             Yii::$app->getSession()->setFlash('data-saved', Yii::t('AdminModule.controllers_SettingController', 'Saved'));
         }

@@ -9,6 +9,7 @@ use humhub\components\ActiveRecord;
 use humhub\modules\user\models\User;
 use humhub\models\Setting;
 use humhub\modules\mail\models\Message;
+use yii\log\Logger;
 
 /**
  * This is the model class for table "message_entry".
@@ -113,7 +114,8 @@ class MessageEntry extends ActiveRecord
             if ($user->id == $this->user_id)
                 continue;
 
-            $receive_email_messages = $user->getSetting("receive_email_messages", 'message', Setting::Get('receive_email_notifications', 'mailing'));
+            $receive_email_messages = $user->getSetting("receive_email_messages", 'core', Setting::Get('receive_email_messages', 'mailing'));
+            
             $isOnline  = false;
             if (count($user->httpSessions) > 0){
                 $expire = time();
