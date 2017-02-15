@@ -22,18 +22,20 @@ class DeviceController extends Controller
 
     public function actionTimezone()
     {
-        date_default_timezone_set('GMT');
+//        date_default_timezone_set('GMT');
         $data = Yii::$app->request->post();
 
         $hardware_id = $data['IMEI'];
         $timezone = $data['timezone'];
+        $time = $data['time'];
 
         $model = new DeviceTimezone();
         $model->user_id = Yii::$app->user->id;
         $model->hardware_id = $hardware_id;
         $model->timezone = $timezone;
-        $model->updated_time = $this->getMillisecond(microtime());
-        Yii::getLogger()->log(print_r($model, true), Logger::LEVEL_INFO, 'MyLog');
+//        $model->updated_time = $this->getMillisecond(microtime());
+        $model->updated_time = $time;
+            Yii::getLogger()->log(print_r($model, true), Logger::LEVEL_INFO, 'MyLog');
         $model->save();
 
     }
