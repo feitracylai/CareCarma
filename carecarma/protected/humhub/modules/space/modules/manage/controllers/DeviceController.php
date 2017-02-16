@@ -173,7 +173,7 @@ class DeviceController extends ContentContainerController
                 $space->setCareReceiver($form->models['User']->id);
 
                 // check if device fulfill all the rule of activation, if yes, activation
-                if (!is_null($form->models['Device']->deviceId)){
+                if (!empty($form->models['Device']->deviceId)){
                     $device = Device::findOne(['device_id' => $form->models['Device']->deviceId]);
                     $device->user_id = $form->models['User']->id;
                     $device->save();
@@ -181,6 +181,7 @@ class DeviceController extends ContentContainerController
 
                         $this->activation($form->models['Device']->deviceId);
                     }
+
                 }
 
 

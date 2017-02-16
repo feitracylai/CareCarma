@@ -273,7 +273,7 @@ class SettingController extends Controller
 
         $model->receive_email_activities = Setting::Get("receive_email_activities", 'mailing');
         $model->receive_email_notifications = Setting::Get("receive_email_notifications", 'mailing');
-        $model->receive_email_messages = Setting::Get("receive_email_notifications", 'mailing');
+        $model->receive_email_messages = Setting::Get("receive_email_messages", 'mailing');
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
