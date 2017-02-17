@@ -392,9 +392,9 @@ class MailController extends Controller
 
 
 
-            Yii::getLogger()->log($messageEntry->message_id, Logger::LEVEL_INFO, 'MyLog');
-            Yii::getLogger()->log($messageEntry->user_id, Logger::LEVEL_INFO, 'MyLog');
-            Yii::getLogger()->log($messageEntry->content, Logger::LEVEL_INFO, 'MyLog');
+//            Yii::getLogger()->log($messageEntry->message_id, Logger::LEVEL_INFO, 'MyLog');
+//            Yii::getLogger()->log($messageEntry->user_id, Logger::LEVEL_INFO, 'MyLog');
+//            Yii::getLogger()->log($messageEntry->content, Logger::LEVEL_INFO, 'MyLog');
             sleep(1);
 
 
