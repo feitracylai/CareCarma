@@ -1514,7 +1514,7 @@ class SensorController extends Controller
         $length = count($byte_array);
         $current = 1;
 
-//        Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
         while($current < $length) {
             $aorg = $this->bytesToChar($byte_array, $current);
@@ -1689,7 +1689,8 @@ class SensorController extends Controller
                     }
                 }
             }
+            Yii::getLogger()->log(print_r($imei,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         }
-//        Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
     }
 }

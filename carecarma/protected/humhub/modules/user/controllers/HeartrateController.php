@@ -491,7 +491,7 @@ class HeartrateController extends Controller
         $byte_array = unpack('C*', $pure_data);
         $length = count($byte_array);
         $current = 1;
-//        Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         while($current < $length) {
             $aorg = $this->bytesToChar($byte_array, $current);
             $current += 2;
@@ -515,8 +515,9 @@ class HeartrateController extends Controller
                 $model->time = $time;
                 $model->save();
             }
+            Yii::getLogger()->log(print_r($imei,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         }
-//        Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
     }
 
 }

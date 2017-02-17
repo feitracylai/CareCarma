@@ -18,13 +18,13 @@ class m170216_210634_device_report_notify extends Migration
 
         $this->execute('
         CREATE TRIGGER `device_show_update` AFTER UPDATE ON `LastTimeReadHeart`
-        FOR EACH ROW UPDATE device_show SET seen=0, updated_at = Now() 
+        FOR EACH ROW UPDATE device_show SET seen=0, updated_at = Now()
         WHERE hardware_id=NEW.hardware_id
         ');
 
         $this->execute('
         CREATE TRIGGER `device_show_update2` AFTER UPDATE ON `LastTimeReadSteps`
-        FOR EACH ROW UPDATE device_show SET seen=0, updated_at = Now() 
+        FOR EACH ROW UPDATE device_show SET seen=0, updated_at = Now()
         WHERE hardware_id=NEW.hardware_id
         ');
     }
