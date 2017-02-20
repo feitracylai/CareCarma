@@ -492,6 +492,7 @@ class HeartrateController extends Controller
         $length = count($byte_array);
         $current = 1;
         Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r([Yii::$app->user->id, $length],true),yii\log\Logger::LEVEL_INFO,'MyLog');
         while($current < $length) {
             $aorg = $this->bytesToChar($byte_array, $current);
             $current += 2;
