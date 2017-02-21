@@ -82,7 +82,7 @@ class ViewController extends ContentContainerController
             $devices[$count] = $dataDevice;
             $count++;
 
-            $device_show = DeviceShow::findOne(['report_user_id' => $user->id, 'user_id' => Yii::$app->user->id, 'hardware_id' => $dataDevice->hareware_id]);
+            $device_show = DeviceShow::findOne(['report_user_id' => $user->id, 'user_id' => Yii::$app->user->id, 'hardware_id' => $dataDevice->hardware_id]);
             $device_show->seen = 1;
             $device_show->save();
         }
@@ -147,7 +147,7 @@ class ViewController extends ContentContainerController
             $devices[$count] = $dataDevice;
             $count++;
 
-            $device_show = DeviceShow::findOne(['report_user_id' => $user->id, 'user_id' => Yii::$app->user->id, 'hardware_id' => $dataDevice->hareware_id]);
+            $device_show = DeviceShow::findOne(['report_user_id' => $user->id, 'user_id' => Yii::$app->user->id, 'hardware_id' => $dataDevice->hardware_id]);
             $device_show->seen = 1;
             $device_show->save();
         }
