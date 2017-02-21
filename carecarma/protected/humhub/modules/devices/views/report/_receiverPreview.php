@@ -36,7 +36,6 @@ foreach ($devices as $device){
 if (!empty($lastReport))
     $lastReportTime = max($reportTime);
 
-
 ?>
 <!--<li class="userPreviewEntry_--><?php //echo $user->id; ?><!-- userPreviewEntry entry --><?php //if ($heartrateNew || $stepNew) : ?><!--new--><?php //endif; ?><!--" >-->
 <li class="userPreviewEntry_<?php echo $user->id; ?> userPreviewEntry entry " >
