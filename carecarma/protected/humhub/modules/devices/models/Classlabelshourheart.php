@@ -11,8 +11,6 @@ use Yii;
  * @property string $time
  * @property integer $heartrateLabel
  * @property string $hardware_id
- * @property string $updated_at
- * @property integer $seen
  */
 class Classlabelshourheart extends \yii\db\ActiveRecord
 {
@@ -30,8 +28,7 @@ class Classlabelshourheart extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['heartrateLabel', 'seen'], 'integer'],
-            [['updated_at'], 'safe'],
+            [['heartrateLabel'], 'integer'],
             [['time'], 'string', 'max' => 255],
             [['hardware_id'], 'string', 'max' => 15],
         ];
@@ -47,8 +44,6 @@ class Classlabelshourheart extends \yii\db\ActiveRecord
             'time' => 'Time',
             'heartrateLabel' => 'Heartrate Label',
             'hardware_id' => 'Hardware ID',
-            'updated_at' => 'Updated At',
-            'seen' => 'Seen',
         ];
     }
 }

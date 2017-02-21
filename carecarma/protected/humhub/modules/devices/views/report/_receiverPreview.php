@@ -1,4 +1,4 @@
-<?php
+; <?php
 /**
  * Created by PhpStorm.
  * User: wufei
@@ -11,38 +11,16 @@ use humhub\modules\space\models\Space;
 use yii\helpers\Html;
 use humhub\widgets\TimeAgo;
 
-$space = Space::findOne(['id' => $spaceId]);
-$user = User::findOne(['id' => $userId]);
-
-$reportTime = array();
-$stepNew = false;
-$heartrateNew = false;
-foreach ($devices as $device){
-    $lastReport = \humhub\modules\devices\models\Classlabelshoursteps::find()->where(['hardware_id' => $device->hardware_id])->orderBy('updated_at DESC')->one();
-    if ($lastReport){
-        $reportTime[] = $lastReport->updated_at;
-        //the report just show one week data
-        if ($lastReport->time > $start_time && $lastReport->seen == 0)$stepNew = true;
-    }
-
-
-    $lastHeartrate = \humhub\modules\devices\models\Classlabelshourheart::find()->where(['hardware_id' => $device->hardware_id])->orderBy('updated_at DESC')->one();
-    if ($lastHeartrate){
-        $reportTime[] = $lastHeartrate->updated_at;
-        if ($lastHeartrate->time > $start_time && $lastHeartrate->seen == 0)$heartrateNew = true;
-    }
-
-}
-if (!empty($lastReport))
-    $lastReportTime = max($reportTime);
-
+//Yii::getLogger()->log(print_r($device_show->seen, true), \yii\log\Logger::LEVEL_INFO, 'MyLog');
+$user = User::findOne(['id' =>  $device_show->report_user_id]);
+$space = Space::findOne(['id' => $device_show->space_id]);
 ?>
-<!--<li class="userPreviewEntry_--><?php //echo $user->id; ?><!-- userPreviewEntry entry --><?php //if ($heartrateNew || $stepNew) : ?><!--new--><?php //endif; ?><!--" >-->
-<li class="userPreviewEntry_<?php echo $user->id; ?> userPreviewEntry entry " >
+<li class="userPreviewEntry_<?php echo $user->id; ?> userPreviewEntry entry <?php if ($device_show->seen == 0): ?>new<?php endif; ?>" >
     <a href="<?php echo $space->createUrl('/space/manage/device/report',['rguid' => $user->guid]) ?>">
         <div class="media">
 
-            <img class="media-object img-rounded pull-left" data-src="holder.js/32x32" alt="32x32" style="width: 32px; height: 32px;" src="<?php echo $user->getProfileImage()->getUrl(); ?>">
+            <img class="media-object img-rounded pull-left" data-src="holder.js/32x32" alt="32x32" style="
+            width: 32px; height: 32px;" src="<?php echo $user->getProfileImage()->getUrl(); ?>">
             <?php echo \humhub\modules\space\widgets\Image::widget([
                 'space' => $space,
                 'width' => 20,
@@ -60,13 +38,13 @@ if (!empty($lastReport))
                 </h4>
 <!--                --><?php //echo Yii::t('DevicesModule.views_report_index', '3304 steps'); ?>
 
-                <?php if (!empty($lastReport)) echo TimeAgo::widget(['timestamp' => $lastReportTime]); ?>
-<!--                --><?php
-//                // show the new badge, if this report is still unread
-//                if ($heartrateNew || $stepNew) {
-//                    echo '<span class="label label-danger">' . Yii::t('DevicesModule.views_report_index', 'New') . '</span>';
-//                }
-//                ?>
+                <?php echo TimeAgo::widget(['timestamp' => $device_show->updated_at]); ?>
+                <?php
+                // show the new badge, if this report is still unread
+                if ($device_show->seen == 0) {
+                    echo '<span class="label label-danger">' . Yii::t('DevicesModule.views_report_index', 'New') . '</span>';
+                }
+                ?>
             </div>
 
         </div>
