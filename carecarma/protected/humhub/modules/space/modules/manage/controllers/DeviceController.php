@@ -666,8 +666,10 @@ class DeviceController extends ContentContainerController
             $count++;
 
             $device_show = DeviceShow::findOne(['report_user_id' => $user->id, 'user_id' => Yii::$app->user->id, 'hardware_id' => $dataDevice->hardware_id]);
-            $device_show->seen = 1;
-            $device_show->save();
+            if ($device_show != null){
+                $device_show->seen = 1;
+                $device_show->save();
+            }
         }
 
 
@@ -737,8 +739,11 @@ class DeviceController extends ContentContainerController
             $count++;
 
             $device_show = DeviceShow::findOne(['report_user_id' => $user->id, 'user_id' => Yii::$app->user->id, 'hardware_id' => $dataDevice->hardware_id]);
-            $device_show->seen = 1;
-            $device_show->save();
+            if ($device_show != null){
+                $device_show->seen = 1;
+                $device_show->save();
+            }
+
 
         }
 
