@@ -3,6 +3,7 @@ namespace humhub\modules\space\modules\manage\controllers;
 use humhub\modules\admin\models\Log;
 use humhub\modules\devices\models\Classlabelshourheart;
 use humhub\modules\devices\models\Classlabelshoursteps;
+use humhub\modules\devices\models\DeviceShow;
 use humhub\modules\space\modules\manage\models\MembershipSearch;
 use humhub\modules\user\models\Classlabels;
 use humhub\modules\user\models\forms\AccountDevice;
@@ -655,8 +656,6 @@ class DeviceController extends ContentContainerController
 //                    $deviceReportData[$row][$column] = $deviceReportData[$row][$column] + $hourlystep;
 //                    $deviceReportData[$row][13] = $deviceReportData[$row][13] + $hourlystep;
 
-                    $hourlyrow->seen = 1;
-                    $hourlyrow->save();
                 }
             }
 
@@ -666,13 +665,11 @@ class DeviceController extends ContentContainerController
             $devices[$count] = $dataDevice;
             $count++;
 
-//            $lastData = Classlabelshoursteps::find()->where(['hardware_id' => $dataDevice->hardware_id])
-//                ->andWhere(['>=', 'time', $start])->andWhere(['<', 'time', $end])->orderBy('updated_at DESC')->one();
-//            if (!is_null($lastData)){
-//                $lastData->seen = 1;
-//                $lastData->save();
-//            }
+            $device_show = DeviceShow::findOne(['report_user_id' => $user->id, 'user_id' => Yii::$app->user->id, 'hardware_id' => $dataDevice->hareware_id]);
+            $device_show->seen = 1;
+            $device_show->save();
         }
+
 
 
         return $this->render('report', array(
@@ -700,6 +697,7 @@ class DeviceController extends ContentContainerController
         $today = date("Y-m-d");
 //        date_default_timezone_set("GMT");
         $unixtoday = strtotime($today);
+//        $unixtoday = 1485925200;
         $unixlastweek = strtotime('-1 week', $unixtoday);
         $start = $unixlastweek*1000;
         $end = $unixtoday*1000;
@@ -755,6 +753,77 @@ class DeviceController extends ContentContainerController
             'data' => $DATA,
             'devices' => $devices,
         ));
+    }
+
+    public function actionReportHeartrateTest()
+    {
+        $space = $this->getSpace();
+        $user = $this->getCare();
+
+        $dataDevices = Device::find()->where(['user_id' => $user->id, 'activate' => 1])->andWhere(['<>','type', 'phone'])->all();
+        if (!$dataDevices){
+            return $this->render('report-none', array(
+                'space' => $space,
+                'user' => $user,
+            ));
+        }
+
+        $today = date("Y-m-d");
+//        date_default_timezone_set("GMT");
+        $unixtoday = strtotime($today);
+//        $unixtoday = 1485925200;
+        $unixlastweek = strtotime('-1 week', $unixtoday);
+        $start = $unixlastweek*1000;
+        $end = $unixtoday*1000;
+
+        $basicData = array_fill(0, 168, array_fill(0, 2, 0));
+
+        $time = $start;
+        for ($i = 0; $i < 168; $i++){
+            $basicData[$i][0] = $time;
+            $time = $time + 3600000;
+        }
+
+        $DATA = array();
+        $devices = array(); //use to give device details
+        $count = 0;
+        foreach ($dataDevices as $dataDevice) {
+            $deviceReportData = $basicData;
+            $heartrate_data = Classlabelshourheart::find()->where(['hardware_id' => $dataDevice->hardware_id])
+                ->andWhere(['>=', 'time', $start])->andWhere(['<', 'time', $end])->all();
+            if ($heartrate_data){
+                foreach ($heartrate_data as $rowData){
+                    $hourlyheartrate = $rowData->heartrateLabel;
+                    $hourlytime = substr($rowData->time, 0, 10); //division will have remainder
+
+                    $intervaltime = $hourlytime - $unixlastweek;
+                    $row = (int)($intervaltime/3600); //which hour
+
+                    $deviceReportData[$row][1] = $hourlyheartrate;
+
+                    $rowData->seen = 1;
+                    $rowData->save();
+                }
+
+            }
+            $DATA[$count] = $deviceReportData;
+            $devices[$count] = $dataDevice;
+            $count++;
+
+            $device_show = DeviceShow::findOne(['report_user_id' => $user->id, 'user_id' => Yii::$app->user->id, 'hardware_id' => $dataDevice->hareware_id]);
+            $device_show->seen = 1;
+            $device_show->save();
+        }
+
+//        Yii::getLogger()->log($basicData, Logger::LEVEL_INFO, 'MyLog');
+
+        return $this->render('report-heartrate-test', array(
+            'space' => $space,
+            'user' => $user,
+            'data' => $DATA,
+            'devices' => $devices,
+        ));
+
     }
 
 

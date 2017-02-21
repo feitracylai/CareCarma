@@ -31,8 +31,7 @@ class Classlabelshoursteps extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stepsLabel', 'nullData', 'seen'], 'integer'],
-            [['updated_at'], 'safe'],
+            [['stepsLabel', 'nullData'], 'integer'],
             [['time'], 'string', 'max' => 255],
             [['hardware_id'], 'string', 'max' => 15],
         ];
@@ -49,8 +48,6 @@ class Classlabelshoursteps extends \yii\db\ActiveRecord
             'stepsLabel' => 'Steps Label',
             'nullData' => 'Null Data',
             'hardware_id' => 'Hardware ID',
-            'updated_at' => 'Updated At',
-            'seen' => 'Seen',
         ];
     }
 

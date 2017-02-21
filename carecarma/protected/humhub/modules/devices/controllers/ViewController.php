@@ -11,6 +11,7 @@ namespace humhub\modules\devices\controllers;
 use humhub\modules\content\components\ContentContainerController;
 use humhub\modules\devices\models\Classlabelshoursteps;
 use humhub\modules\devices\models\Classlabelshourheart;
+use humhub\modules\devices\models\DeviceShow;
 use humhub\modules\user\models\Device;
 use Yii;
 use yii\log\Logger;
@@ -81,11 +82,9 @@ class ViewController extends ContentContainerController
             $devices[$count] = $dataDevice;
             $count++;
 
-//            $lastData = Classlabelshoursteps::find()->where(['hardware_id' => $dataDevice->hardware_id])->andWhere(['>=', 'time', $start])->andWhere(['<', 'time', $end])->orderBy('updated_at DESC')->one();
-//            if (!is_null($lastData)){
-//                $lastData->seen = 1;
-//                $lastData->save();
-//            }
+            $device_show = DeviceShow::findOne(['report_user_id' => $user->id, 'user_id' => Yii::$app->user->id, 'hardware_id' => $dataDevice->hareware_id]);
+            $device_show->seen = 1;
+            $device_show->save();
         }
 
         return $this->render('index', array(
@@ -148,11 +147,9 @@ class ViewController extends ContentContainerController
             $devices[$count] = $dataDevice;
             $count++;
 
-//            $lastData = Classlabelshourheart::find()->where(['hardware_id' => $dataDevice->hardware_id])->andWhere(['>=', 'time', $start])->andWhere(['<', 'time', $end])->orderBy('updated_at DESC')->one();
-//            if (!is_null($lastData)){
-//                $lastData->seen = 1;
-//                $lastData->save();
-//            }
+            $device_show = DeviceShow::findOne(['report_user_id' => $user->id, 'user_id' => Yii::$app->user->id, 'hardware_id' => $dataDevice->hareware_id]);
+            $device_show->seen = 1;
+            $device_show->save();
         }
         return $this->render('heartrate', array(
             'user' => $user,
