@@ -443,7 +443,17 @@ class AuthController extends Controller
 //        Yii::getLogger()->log(print_r($phone,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
 
+        //check the device is in used
+        $existDevice = Device::findOne(['hardware_id' => $data['IMEI'], 'activate' => 1]);
+        if ($existDevice){
+            $rejectGCM = new GCM();
+            $rejectMessage = array();
+            $rejectMessage['type'] = 'active,device_id';
+            $rejectMessage['device_id'] = 'this device is used';
+            $rejectGCM->send($gcm_id, $rejectMessage);
 
+            return;
+        }
 
 
         $device = new Device();
