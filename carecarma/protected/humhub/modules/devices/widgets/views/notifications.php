@@ -37,7 +37,7 @@ $devices = \humhub\modules\user\models\Device::find()->where(['user_id' => $user
     setNewReportCount(<?php echo $newReportCount; ?>);
 
 
-    var count = <?php echo $newReportCount; ?>;
+    var countCheck = <?php echo $newReportCount; ?>;
     /**
      * Sets current message count
      */
@@ -45,11 +45,12 @@ $devices = \humhub\modules\user\models\Device::find()->where(['user_id' => $user
         // show or hide the badge for new messages
         if (count == 0) {
             $('#badge-report').css('display', 'none');
-            $('#mark-seen-report').css('display', 'none');
         } else {
             $('#badge-report').empty();
             $('#badge-report').append(count);
             $('#badge-report').fadeIn('fast');
+            countCheck = count;
+            $('#mark-seen-report').css('display');
         }
     }
 
@@ -62,7 +63,7 @@ $devices = \humhub\modules\user\models\Device::find()->where(['user_id' => $user
 
         // append title and loader to dropdown
         $('#dropdown-report').append('<li class="dropdown-header"><div class="arrow"></div><?php echo Yii::t('DevicesModule.widgets_views_mailNotification', 'Report Lists'); ?> <div class="dropdown-header-link"><a id="mark-seen-report" href="javascript:markReportsAsSeen();" ><?php echo Yii::t('MailModule.widgets_views_mailNotification', 'Mark all as read'); ?></a></div></li><ul class="media-list"><li id="loader_reports"><div class="loader"><div class="sk-spinner sk-spinner-three-bounce"><div class="sk-bounce1"></div><div class="sk-bounce2"></div><div class="sk-bounce3"></div></div></div></li></ul>');
-        if (count==0){
+        if (countCheck==0){
             $('#mark-seen-report').css('display', 'none');
         }
 
@@ -88,7 +89,7 @@ $devices = \humhub\modules\user\models\Device::find()->where(['user_id' => $user
                 $('#badge-report').css('display', 'none');
                 $('#mark-seen-report').css('display', 'none');
 
-                count = 0;
+                countCheck = 0;
                 // remove notification count from page title
                 var pageTitle = $('title').text().replace(/\(.+?\)/g, '');
                 $('title').text(pageTitle);
