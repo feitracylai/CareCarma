@@ -37,6 +37,7 @@ $devices = \humhub\modules\user\models\Device::find()->where(['user_id' => $user
     setNewReportCount(<?php echo $newReportCount; ?>);
 
 
+    var count = <?php echo $newReportCount; ?>;
     /**
      * Sets current message count
      */
@@ -44,6 +45,7 @@ $devices = \humhub\modules\user\models\Device::find()->where(['user_id' => $user
         // show or hide the badge for new messages
         if (count == 0) {
             $('#badge-report').css('display', 'none');
+            $('#mark-seen-report').css('display', 'none');
         } else {
             $('#badge-report').empty();
             $('#badge-report').append(count);
@@ -59,8 +61,10 @@ $devices = \humhub\modules\user\models\Device::find()->where(['user_id' => $user
         $('#dropdown-report').find('ul').remove();
 
         // append title and loader to dropdown
-        $('#dropdown-report').append('<li class="dropdown-header"><div class="arrow"></div><?php echo Yii::t('DevicesModule.widgets_views_mailNotification', 'Report Lists'); ?> <?php if ($devices) echo Html::a(Yii::t('MailModule.widgets_views_mailNotification', 'My Report'), $user->createUrl('/devices/view/index'), array('class' => 'btn btn-info btn-xs', 'id' => 'create-message-button')); ?></li><ul class="media-list"><li id="loader_reports"><div class="loader"><div class="sk-spinner sk-spinner-three-bounce"><div class="sk-bounce1"></div><div class="sk-bounce2"></div><div class="sk-bounce3"></div></div></div></li></ul>');
-
+        $('#dropdown-report').append('<li class="dropdown-header"><div class="arrow"></div><?php echo Yii::t('DevicesModule.widgets_views_mailNotification', 'Report Lists'); ?> <div class="dropdown-header-link"><a id="mark-seen-report" href="javascript:markReportsAsSeen();" ><?php echo Yii::t('MailModule.widgets_views_mailNotification', 'Mark all as read'); ?></a></div></li><ul class="media-list"><li id="loader_reports"><div class="loader"><div class="sk-spinner sk-spinner-three-bounce"><div class="sk-bounce1"></div><div class="sk-bounce2"></div><div class="sk-bounce3"></div></div></div></li></ul>');
+        if (count==0){
+            $('#mark-seen-report').css('display', 'none');
+        }
 
         $.ajax({
             'type': 'GET',
@@ -71,6 +75,26 @@ $devices = \humhub\modules\user\models\Device::find()->where(['user_id' => $user
                 jQuery("#loader_reports").replaceWith(html)
             }});
     })
+
+    function markReportsAsSeen() {
+        // call ajax request to mark all notifications as seen
+        jQuery.ajax({
+            'type': 'GET',
+            'url': '<?php echo Url::to(['/devices/report/mark-as-seen', 'ajax' => 1]); ?>',
+            'cache': false,
+            'data': jQuery(this).parents("form").serialize(),
+            'success': function (html) {
+                // hide notification badge at the top menu
+                $('#badge-report').css('display', 'none');
+                $('#mark-seen-report').css('display', 'none');
+
+                count = 0;
+                // remove notification count from page title
+                var pageTitle = $('title').text().replace(/\(.+?\)/g, '');
+                $('title').text(pageTitle);
+
+            }});
+    }
 </script>
 
 

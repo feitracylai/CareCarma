@@ -19,7 +19,7 @@ class ReportController extends Controller
     public function actionReportList()
     {
 
-        $device_shows = DeviceShow::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['<>', 'report_user_id', Yii::$app->user->id])->all();
+        $device_shows = DeviceShow::find()->where(['user_id' => Yii::$app->user->id])->orderBy('space_id')->all();
 
 
         return $this->renderAjax('reportList', array('device_shows' => $device_shows));
@@ -38,5 +38,16 @@ class ReportController extends Controller
         $json['newReport'] = $count;
 
         return $json;
+    }
+
+    public function actionMarkAsSeen()
+    {
+        Yii::$app->response->format = 'json';
+        $count = DeviceShow::updateAll(['seen' => 1], ['user_id' => Yii::$app->user->id]);
+
+        return [
+            'success' => true,
+            'count' => $count
+        ];
     }
 }
