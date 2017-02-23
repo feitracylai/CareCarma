@@ -22,26 +22,21 @@ use humhub\widgets\GoogleChart;
         <?php
         echo "<hr>";
         for ($count = 0; $count < count($devices); $count++){
-            echo GoogleChart::widget(array(
-                'visualization' => 'LineChart',
-                'packages' => '"corechart"',
-                'addColumn' => [
-                    ['datetime', 'Time of Day'],
-                    ['number', 'Average Heart Rate'],
-                ],
+           echo GoogleChart::widget(array(
+               'visualization' => 'ColumnChart',
+               'packages' => '"corechart"',
+               'data' => $data[$count],
 
-
-                'data' => $data[$count],
-
-                'options' => array(
-                    'height' => 600,
-//                    'hAxis' => array(
-//                        'gridlines' => array(
-//                            'count' => 0
-//                        ),
-//                    )
-                )
-            ));
+               'options' => array(
+                   'height' => 600,
+                   'vAxis' => ['title' => 'steps'],
+                   'seriesType' => 'bars',
+//                    'isStacked' => true,
+//                    'annotations' => [
+//                        'alwaysOutside' => true,
+//                    ]
+               )
+           ));
         }
 
 
