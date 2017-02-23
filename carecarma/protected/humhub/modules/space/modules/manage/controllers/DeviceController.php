@@ -734,7 +734,10 @@ class DeviceController extends ContentContainerController
                     $remainder = $intervaltime - $row * 86400;
                     $column = (int)($remainder/14400); //which hour section
 
-                    array_push($deviceReportArray[$row][$column], $hourlyheart);
+                    if ($hourlyheart != 0){
+                        array_push($deviceReportArray[$row][$column], $hourlyheart);
+                    }
+
 
 
                 }
