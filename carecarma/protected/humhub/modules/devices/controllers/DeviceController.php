@@ -22,28 +22,27 @@ class DeviceController extends Controller
 
     public function actionTimezone()
     {
-//        date_default_timezone_set('GMT');
+//        Yii::getLogger()->log('timezone', Logger::LEVEL_INFO, 'MyLog');
         $data = Yii::$app->request->post();
 
         $hardware_id = $data['IMEI'];
         $timezone = $data['timezone'];
         $time = $data['time'];
 
-        $model = new DeviceTimezone();
-        $model->user_id = Yii::$app->user->id;
-        $model->hardware_id = $hardware_id;
-        $model->timezone = $timezone;
+        $model = DeviceTimezone::find()->where(['user_id' => Yii::$app->user->id, 'hardware_id'=>$hardware_id])->orderBy('updated_time DESC')->one();
+        if ($model == null || $model->timezone != $timezone){
+            $model = new DeviceTimezone();
+            $model->user_id = Yii::$app->user->id;
+            $model->hardware_id = $hardware_id;
+            $model->timezone = $timezone;
+        }
+
 //        $model->updated_time = $this->getMillisecond(microtime());
         $model->updated_time = $time;
-            Yii::getLogger()->log(print_r($model, true), Logger::LEVEL_INFO, 'MyLog');
+//        Yii::getLogger()->log(print_r($model, true), Logger::LEVEL_INFO, 'MyLog');
         $model->save();
 
     }
 
-    public function getMillisecond($time)
-    {
 
-        list($t1, $t2) = explode(' ', $time);
-        return $t2 . '' .  ceil( ($t1 * 1000) );
-    }
 }
