@@ -72,8 +72,7 @@ class ViewController extends ContentContainerController
                     $deviceReportData[$row][$column] = $deviceReportData[$row][$column] + $hourlystep;
                     $deviceReportData[$row][7] = $deviceReportData[$row][7] + $hourlystep;
 
-                    $hourlyrow->seen = 1;
-                    $hourlyrow->save();
+
                 }
             }
 
@@ -152,6 +151,7 @@ class ViewController extends ContentContainerController
 
 
                 }
+//                Yii::getLogger()->log($deviceReportArray, Logger::LEVEL_INFO, 'MyLog');
 
                 $row = 1;
                 foreach ($deviceReportArray as $deviceReportArray_row){
