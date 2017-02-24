@@ -303,6 +303,15 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             $contact->save();
         }
 
+        $device_list = Device::findAll(['user_id' => $this->id, 'activate' => 1]);
+        if (!empty($device_list)){
+            foreach ($device_list as $device){
+                $device->user_id = 0;
+                $device->activate = 0;
+                $device->save();
+            }
+        }
+
         return parent::beforeDelete();
     }
 
@@ -393,35 +402,6 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
             $contact->work_phone = $this->profile->phone_work;
             $contact->save();
 
-//            $gcm = new GCM();
-//            $user_id = $contact->user_id;
-//            $user = User::findOne(['id' => $user_id]);
-//            if ($user != null) {
-//                $device_id = $user->device_id;
-//                $device = Device::findOne(['device_id' => $device_id]);
-//                $data = array();
-//                $data['type'] = 'contact,updated';
-//                if ($device != null) {
-//                    $gcm_id = $device->gcmId;
-//                    $gcm->send($gcm_id, $data);
-//                }
-//            }
-            $user_id = $contact->user_id;
-            $user = User::findOne(['id' => $user_id]);
-            if ($user != null) {
-                $device_list = Device::findAll(['user_id' => $user->id]);
-                $data = array();
-                $data['type'] = 'contact,updated';
-                if ($device_list != null) {
-                    foreach($device_list as $device) {
-                        $gcm = new GCM();
-                        $gcm_id = $device->gcmId;
-                        $gcm->send($gcm_id, $data);
-                    }
-                }
-            }
-
-//            $contact->notifyDevice('update');
 
         }
     }

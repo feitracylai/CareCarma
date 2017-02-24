@@ -53,6 +53,17 @@ use humhub\modules\user\models\User;
 
         <br />
 
+        <strong><?php echo Yii::t('AdminModule.views_setting_mailing', 'Messages'); ?></strong><br />
+        <?php
+        echo $form->dropDownList($model, 'receive_email_messages', array(
+            User::RECEIVE_EMAIL_NEVER => Yii::t('AdminModule.views_setting_mailing', 'Never'),
+            User::RECEIVE_EMAIL_WHEN_OFFLINE => Yii::t('AdminModule.views_setting_mailing', 'When I´m offline'),
+            User::RECEIVE_EMAIL_ALWAYS => Yii::t('AdminModule.views_setting_mailing', 'Always'),
+        ), array('id' => 'reg_group', 'class' => 'form-control'));
+        ?>
+
+        <br />
+
         <?php echo CHtml::submitButton(Yii::t('AdminModule.views_setting_mailing', 'Save'), array('class' => 'btn btn-primary')); ?>
 
         <?php echo \humhub\widgets\DataSaved::widget(); ?>

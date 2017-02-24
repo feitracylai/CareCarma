@@ -13,6 +13,7 @@ class MailingDefaultsForm extends \yii\base\Model
 
     public $receive_email_activities;
     public $receive_email_notifications;
+    public $receive_email_messages;
 
     /**
      * Declares the validation rules.
@@ -20,7 +21,7 @@ class MailingDefaultsForm extends \yii\base\Model
     public function rules()
     {
         return array(
-            array(['receive_email_notifications', 'receive_email_activities'], 'integer'),
+            array(['receive_email_notifications', 'receive_email_activities', 'receive_email_messages'], 'integer'),
         );
     }
 

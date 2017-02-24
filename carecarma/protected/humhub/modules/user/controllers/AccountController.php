@@ -90,38 +90,60 @@ class AccountController extends Controller
         return $this->render('edit', array('hForm' => $form));
     }
 
+    public function checkPassword($model, $user){
+
+        if ($user->currentPassword !== null && !$user->currentPassword->validatePassword($model->currentPassword)) {
+            $model->addError('currentPassword', Yii::t('SpaceModule.controllers_DeviceController', "Password is incorrect!"));
+            return false;
+        }
+
+        return true;
+    }
+
 
     public function actionEditDevice()
     {
         $user = Yii::$app->user->getIdentity();
         $model = new \humhub\modules\user\models\forms\AccountDevice();
-        $model->scenario = 'userDevice';
-        $device_list = Device::findAll(['user_id' => $user->id]);
+        $model->scenario = 'editDevice';
+        $device_list = Device::findAll(['user_id' => $user->id, 'activate' => 1]);
 
-        if ($model->load(Yii::$app->request->post())&& $model->validate()) {
 
+
+        if ($model->load(Yii::$app->request->post())&& $model->validate() && $this->checkPassword($model, $user)) {
             $device = Device::find()->where(['device_id' => $model->deviceId])->one();
-            if ($device==null){
-                $model->addError('deviceId', Yii::t('UserModule.controllers_AccountController', "Activation ID is incorrect!"));
-            } elseif ($device->user_id != 0) {
-                $model->addError('deviceId', Yii::t('UserModule.controllers_AccountController', 'This Activation ID is already in use!'));
+
+            $user->temp_password = $model->currentPassword;
+            $user->save();
+            /****if it is the previous same device, replace the older row.****/
+            $same_device = Device::findOne(['hardware_id' => $device->hardware_id, 'user_id' => $user->getId()]);
+            if (!empty($device->hardware_id) && !empty($same_device) && $same_device->id != $device->id){
+                $same_device->device_id = $device->device_id;
+                $same_device->gcmId = $device->gcmId;
+                $same_device->phone = $device->phone;
+                $same_device->type = $device->type;
+                $same_device->model = $device->model;
+                $device->delete();
+                $same_device->save();
+
             } else {
-                $user->device_id = $model->deviceId;
                 $device->user_id = $user->getId();
-                $user->temp_password = $model->currentPassword;
-                $user->save();
                 $device->save();
-//                $user->updateUserContacts();
 
-
-                if ($this->checkDevice($device->device_id)) {
-                    $this->activationA($device->device_id);
-                }
-
-
-                Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
             }
 
+
+
+//                $user->updateUserContacts();
+            if ($this->checkDevice($model->deviceId)) {
+                $this->activationA($model->deviceId);
+            }
+
+
+            Yii::$app->getSession()->setFlash('data-saved', Yii::t('UserModule.controllers_AccountController', 'Saved'));
+
+
+            return $this->redirect(Url::to(['edit-device']));
 
 
         }
@@ -147,7 +169,8 @@ class AccountController extends Controller
                 $gcm_registration_id = $device->gcmId;
                 $gcm->send($gcm_registration_id, $data);
             }
-            $device->delete();
+            $device->activate = 0;
+            $device->save();
 
             /***test***/
 //            $device->user_id = 0;
@@ -225,6 +248,7 @@ class AccountController extends Controller
 //        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm_id = $data['gcm_id'];
         $phone = $data['phone'];
+
 //        Yii::getLogger()->log(print_r($gcm_id,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 //        Yii::getLogger()->log(print_r($phone,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
@@ -240,13 +264,21 @@ class AccountController extends Controller
         $new_device->device_id = $device_id;
         $new_device->gcmId = $gcm_id;
         $new_device->phone = $phone;
+        if (isset($data['IMEI'])){
+            $new_device->hardware_id = $data['IMEI'];
+        }
+        if (isset($data['type'])){
+            $new_device->type = $data['type'];
+        }
+        if (isset($data['model'])){
+            $new_device->model = $data['model'];
+        }
         $new_device->save();
-
+//
         $gcm = new GCM();
         $data2 = array();
         $data2['type'] = "active,device_id";
         $data2['device_id'] = $device_id;
-//        Yii::getLogger()->log(print_r($data2,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $gcm->send($gcm_id, $data2);
     }
 
@@ -275,11 +307,14 @@ class AccountController extends Controller
 //        $user_new->save();
           $user->temp_password = null;
           $user->save();
+
+        $device->activate = 1;
+        $device->save();
     }
 
     public static function randString($length, $specialChars = false) {
 //        $chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789';
-        $chars = 'abcdefghijkmnopqrstuvwxyzCDEFJKLMNOPQRSTUVWXYZ023456789';
+        $chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789';
         if ($specialChars) {
             $chars .= '!@#$%^&*()';
         }
@@ -431,12 +466,12 @@ class AccountController extends Controller
 
         $model->receive_email_activities = $user->getSetting("receive_email_activities", 'core', \humhub\models\Setting::Get('receive_email_activities', 'mailing'));
         $model->receive_email_notifications = $user->getSetting("receive_email_notifications", 'core', \humhub\models\Setting::Get('receive_email_notifications', 'mailing'));
-        $model->receive_email_messages = $user->getSetting('receive_email_messages', 'message', \humhub\models\Setting::Get('receive_email_messages', 'mailing'));
+        $model->receive_email_messages = $user->getSetting('receive_email_messages', 'core', \humhub\models\Setting::Get('receive_email_messages', 'mailing'));
         $model->enable_html5_desktop_notifications = $user->getSetting("enable_html5_desktop_notifications", 'core', \humhub\models\Setting::Get('enable_html5_desktop_notifications', 'notification'));
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-//            $user->setSetting("receive_email_activities", $model->receive_email_activities);
-//            $user->setSetting("receive_email_notifications", $model->receive_email_notifications);
+            $user->setSetting("receive_email_activities", $model->receive_email_activities);
+            $user->setSetting("receive_email_notifications", $model->receive_email_notifications);
             $user->setSetting("receive_email_messages", $model->receive_email_messages);
             $user->setSetting('enable_html5_desktop_notifications', $model->enable_html5_desktop_notifications);
 

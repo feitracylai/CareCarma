@@ -2,6 +2,7 @@
 
 namespace humhub\modules\user\models\forms;
 
+use humhub\modules\user\components\CheckActivateValidator;
 use Yii;
 
 class AccountDevice extends \yii\base\Model
@@ -13,9 +14,11 @@ class AccountDevice extends \yii\base\Model
     public function rules()
     {
         return array(
-            array('deviceId', 'required'),
-            array('currentPassword', 'required'),
-            array('currentPassword', \humhub\modules\user\components\CheckPasswordValidator::className(), 'on' => 'userDevice'),
+            array(['deviceId', 'currentPassword'], 'required',  'on' => 'editDevice'),
+//            array('currentPassword', \humhub\modules\user\components\CheckPasswordValidator::className()),
+
+            array(['deviceId'], 'string', 'max' => 4),
+            array('deviceId', CheckActivateValidator::className()),
 
         );
     }
@@ -26,6 +29,15 @@ class AccountDevice extends \yii\base\Model
             'currentPassword' => Yii::t('UserModule.forms_AccountDeviceForm', 'Current password'),
             'deviceId' => Yii::t('UserModule.forms_AccountDeviceForm', 'New Activation #'),
         );
+    }
+
+
+    public function scenarios()
+    {
+
+        $scenarios = parent::scenarios();
+        $scenarios['editDevice'] = ['deviceId', 'currentPassword'];
+        return $scenarios;
     }
 
 
