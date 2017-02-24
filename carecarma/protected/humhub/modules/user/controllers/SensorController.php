@@ -275,7 +275,7 @@ class SensorController extends Controller
         $list = array();
         Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         while(strlen($pure_data) != 0) {
-            
+
             if($pure_data[0] == "A"){
                 $temp_data = substr($pure_data, 1);
                 $pos_a = strpos($temp_data, "A");
@@ -463,7 +463,7 @@ class SensorController extends Controller
 //                    $sensor->accelZ = $az;
 //                    $sensor->save();
 //                }
-        }
+            }
             else if($pure_data[0] == "G") {
                 $temp_data = substr($pure_data, 1);
                 $pos_a = strpos($temp_data, "A");
