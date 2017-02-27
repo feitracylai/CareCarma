@@ -151,7 +151,7 @@ class ContactController extends Controller
         if ($contact == null)
             throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'PEOPLE not found!'));
 
-        $contact->scenario = 'editContact';
+//        $contact->scenario = 'editContact';
         // Build Form Definition
         $definition = array();
         $definition['elements'] = array();
@@ -208,12 +208,12 @@ class ContactController extends Controller
                     'maxlength' => 100,
                     'readonly' => 'true',
                 ),
-                'watch_primary_number' => array(
+                'phone_primary_number' => array(
                     'type' => 'checkbox',
                     'class' => 'form-control',
                     'maxlength' => 100,
                 ),
-                'phone_primary_number' => array(
+                'watch_primary_number' => array(
                     'type' => 'checkbox',
                     'class' => 'form-control',
                     'maxlength' => 100,
@@ -246,6 +246,7 @@ class ContactController extends Controller
         $form = new HForm($definition);
         $form->models['Contact'] = $contact;
         if ($form->submitted('save') && $form->validate()) {
+//            Yii::getLogger()->log($form->models['Contact']['glass_primary_number'], Logger::LEVEL_INFO, 'MyLog');
             if ($form->save()) {
 
 
@@ -904,7 +905,7 @@ class ContactController extends Controller
         }
     }
 
-    public function actionCglassallcontact ()
+    public function actionGlassallcontact ()
     {
 
         $data = Yii::$app->request->post();
@@ -913,7 +914,7 @@ class ContactController extends Controller
         $user_id = $user->id;
 
         $contact_list = array();
-        $contact_list['type'] = 'Cwatch,all';
+        $contact_list['type'] = 'Glass,all';
         $contact_data = array();
 
         foreach (Contact::find()->where(['user_id' => $user_id])->each() as $contact) {
