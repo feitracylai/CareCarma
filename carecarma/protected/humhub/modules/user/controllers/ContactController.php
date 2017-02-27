@@ -151,7 +151,7 @@ class ContactController extends Controller
         if ($contact == null)
             throw new \yii\web\HttpException(404, Yii::t('UserModule.controllers_ContactController', 'PEOPLE not found!'));
 
-        $contact->scenario = 'editContact';
+//        $contact->scenario = 'editContact';
         // Build Form Definition
         $definition = array();
         $definition['elements'] = array();
