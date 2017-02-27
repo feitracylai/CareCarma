@@ -26,6 +26,7 @@ use yii\log\Logger;
  * @property integer $watch_primary_number
  * @property integer $phone_primary_number
  * @property integer $carecarma_watch_number
+ * @property integer $glass_primary_number
  */
 class Contact extends \yii\db\ActiveRecord
 {
@@ -45,7 +46,7 @@ class Contact extends \yii\db\ActiveRecord
     {
         return [
             [['contact_first', 'contact_last'], 'required', 'on' => 'editContact'],
-            [['user_id', 'contact_user_id', 'linked'], 'integer'],
+            [['user_id', 'contact_user_id', 'linked', 'glass_primary_number'], 'integer'],
             [['contact_first', 'contact_last', 'contact_mobile', 'nickname', 'relation','device_phone','home_phone','work_phone'], 'string', 'max' => 255],
             [['contact_email'], 'string', 'max' => 100],
             [['watch_primary_number'], \humhub\modules\user\components\CheckPrimaryWatch::className()],
@@ -74,13 +75,14 @@ class Contact extends \yii\db\ActiveRecord
             'phone_primary_number' => Yii::t('UserModule.models_Contact', 'Primary Number on CoSMoS phone app'),
             'watch_primary_number' => Yii::t('UserModule.models_Contact', 'Primary Number on CoSMoS watch app'),
             'carecarma_watch_number' => Yii::t('UserModule.models_Contact', 'Primary Number on CareCarma Watch'),
+            'glass_primary_number' => Yii::t('UserModule.models_Contact', 'Primary Number on CareCarma Glass'),
         ];
     }
 
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios['editContact'] = ['contact_first', 'contact_last', 'contact_mobile', 'home_phone', 'work_phone', 'contact_email', 'nickname', 'relation', 'watch_primary_number', 'phone_primary_number', 'carecarma_watch_number'];
+        $scenarios['editContact'] = ['contact_first', 'contact_last', 'contact_mobile', 'home_phone', 'work_phone', 'contact_email', 'nickname', 'relation', 'watch_primary_number', 'phone_primary_number', 'carecarma_watch_number, glass_primary_number'];
         $scenarios['linkContact'] = ['user_id', 'contact_user_id', 'linked'];
         return $scenarios;
     }
@@ -122,7 +124,7 @@ class Contact extends \yii\db\ActiveRecord
             if ($newAttrs['linked'] == 1){
 
                 $devices = Device::find()->where(['user_id' => $this->user_id, 'activate' => 1])->all();
-                $devices_array = array('Phone' => [], 'watch' => [], 'CWatch' => [], 'null' => []);
+                $devices_array = array('Phone' => [], 'watch' => [], 'CWatch' => [], 'Glass' => [], 'null' => []);
                 $device_list = array();
                 if ($devices != null){
                     foreach ($devices as $device){
@@ -133,6 +135,8 @@ class Contact extends \yii\db\ActiveRecord
                             $devices_array['watch'][] = $device->gcmId;
                         }elseif ($device->type == 'CWatch'){
                             $devices_array['CWatch'][] = $device->gcmId;
+                        } elseif ($device->type == 'Glass'){
+                            $devices_array['Glass'][] = $device->gcmId;
                         } else {
                             $devices_array['null'][] = $device->gcmId;
                         }
@@ -148,7 +152,7 @@ class Contact extends \yii\db\ActiveRecord
                         $oldAttrs['nickname'] != $newAttrs['nickname'] ||
                         $oldAttrs['relation'] != $newAttrs['relation'])
                     {
-                        $device_list = array_merge($devices_array['Phone'], $devices_array['watch'], $devices_array['CWatch'], $devices_array['null']);
+                        $device_list = array_merge($devices_array['Phone'], $devices_array['watch'], $devices_array['CWatch'], $devices_array['Glass'], $devices_array['null']);
                     } elseif ($oldAttrs == $newAttrs){
                         Yii::getLogger()->log('no change', Logger::LEVEL_INFO, 'MyLog');
                     } else {
@@ -162,6 +166,9 @@ class Contact extends \yii\db\ActiveRecord
                         if ($oldAttrs['carecarma_watch_number'] != $newAttrs['carecarma_watch_number']){
                             $device_list = array_merge($device_list, $devices_array['CWatch']);
                         }
+                        if ($oldAttrs['glass_primary_number'] != $newAttrs['glass_primary_number']){
+                            $device_list = array_merge($device_list, $devices_array['Glass']);
+                        }
                     }
 
 
@@ -170,7 +177,7 @@ class Contact extends \yii\db\ActiveRecord
 
 
 //            Yii::getLogger()->log($device_list, Logger::LEVEL_INFO, 'MyLog');
-                
+
                 //begin to send GCM
                 $data = array();
                 $data['type'] = 'contact,updated';
@@ -207,6 +214,7 @@ class Contact extends \yii\db\ActiveRecord
                 $data2['watch_primary_number'] = $this->watch_primary_number;
                 $data2['phone_primary_number'] = $this->phone_primary_number;
                 $data2['carecarma_watch_number'] = $this->carecarma_watch_number;
+                $data2['glass_primary_number'] = $this->glass_primary_number;
 
 
                 if (!empty($device_list)) {
@@ -258,6 +266,7 @@ class Contact extends \yii\db\ActiveRecord
             'watch_primary_number' => $this->watch_primary_number,
             'phone_primary_number' => $this->phone_primary_number,
             'carecarma_watch_number' => $this->carecarma_watch_number,
+            'glass_primary_number' => $this->glass_primary_number,
         ];
     }
 
@@ -287,6 +296,7 @@ class Contact extends \yii\db\ActiveRecord
             'watch_primary_number' => $this->watch_primary_number,
             'phone_primary_number' => $this->phone_primary_number,
             'carecarma_watch_number' => $this->carecarma_watch_number,
+            'glass_primary_number' => $this->glass_primary_number,
         ];
     }
 

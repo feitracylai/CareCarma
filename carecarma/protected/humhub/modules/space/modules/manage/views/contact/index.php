@@ -91,6 +91,15 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
                     ]
                 ],
 
+                [
+                    'label' => Yii::t('UserModule.views_contact_index', 'CareCarma Glass'),
+                    'class' => 'humhub\libs\CheckGridColumn',
+                    'attribute' => 'glass_primary_number',
+                    'submitAttributes' => ['contact_id'],
+                    'htmlOptions' => [
+                        'class' => 'glass-primary'
+                    ]
+                ],
 
 
 
