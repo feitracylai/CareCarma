@@ -24,7 +24,7 @@ class GCM
             'to' => $to,
             'data' => $message,
         );
-//        Yii::getLogger()->log(print_r($fields,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        Yii::getLogger()->log(print_r($fields,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         return $this->sendPushNotification($fields);
     }
 

@@ -218,6 +218,11 @@ class ContactController extends Controller
                     'class' => 'form-control',
                     'maxlength' => 100,
                 ),
+                'carecarma_watch_number' => array(
+                    'type' => 'checkbox',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
             ),
         );
         // Get Form Definition
@@ -237,69 +242,7 @@ class ContactController extends Controller
         $form->models['Contact'] = $contact;
         if ($form->submitted('save') && $form->validate()) {
             if ($form->save()) {
-               // $user = User::findOne(['id' => $contact->user_id]);
 
-//                $contact->notifyDevice('update');
-//                $gcm = new GCM();
-//                $device_id = $user->device_id;
-//                $device = Device::findOne(['device_id' => $device_id]);
-//                $data = array();
-//                $data['type'] = 'contact,updated';
-//                if ($device != null) {
-//                    $gcm_id = $device->gcmId;
-//                    $gcm->send($gcm_id, $data);
-//                }
-
-                $device_list = Device::findAll(['user_id' => $user->id]);
-                $data = array();
-                $data['type'] = 'contact,updated';
-                if ($device_list != null) {
-                    foreach($device_list as $device) {
-                        $gcm = new GCM();
-                        $gcm_id = $device->gcmId;
-                        $gcm->send($gcm_id, $data);
-                    }
-                }
-
-                $image = "";
-
-                if ($contact->contact_user_id) {
-                    $contact_user_temp = User::findOne(['id' => $contact->contact_user_id]);
-                    $profileImage = new \humhub\libs\ProfileImage($contact_user_temp->guid);
-                    $pos = strpos($profileImage->getUrl(), "?m=");
-                    $image = substr($profileImage->getUrl(), 0, $pos);
-                }
-
-//                $gcm2 = new GCM();
-                $data2 = array();
-                $data2['type'] = 'contact,edit';
-                $data2['contact_id'] = $contact->contact_id;
-                $data2['contact_user_id'] = $contact->contact_user_id;
-                $data2['photo'] = $image;
-                $data2['contact_first'] = $contact->contact_first;
-                $data2['contact_last'] = $contact->contact_last;
-                $data2['nickname'] = $contact->nickname;
-                $data2['relation'] = $contact->relation;
-                $data2['contact_mobile'] = $contact->contact_mobile;
-                $data2['device_phone'] = $contact->device_phone;
-                $data2['home_phone'] = $contact->home_phone;
-                $data2['work_phone'] = $contact->work_phone;
-                $data2['contact_email'] = $contact->contact_email;
-                $data2['watch_primary_number'] = $contact->watch_primary_number;
-                $data2['phone_primary_number'] = $contact->phone_primary_number;
-
-//                if ($device != null) {
-//                    $gcm_id = $device->gcmId;
-//                    $gcm2->send($gcm_id, $data2);
-//                }
-
-                if ($device_list != null) {
-                    foreach($device_list as $device) {
-                        $gcm = new GCM();
-                        $gcm_id = $device->gcmId;
-                        $gcm->send($gcm_id, $data2);
-                    }
-                }
 
                 return $this->redirect(Url::toRoute('/user/contact'));
             }
@@ -505,23 +448,11 @@ class ContactController extends Controller
 
                 $contact2->delete();
 
-//                $gcm = new GCM();
-//                $contactUser = User::findOne(['id' => $contact2->user_id]);
-//                $device_id = $contactUser->device_id;
-//                $device = Device::findOne(['device_id' => $device_id]);
-//                $data = array();
-//                $data['type'] = 'contact,updated';
-//                if ($device != null) {
-//                    $gcm_id = $device->gcmId;
-//                    $gcm->send($gcm_id, $data);
-//                }
+
 
 
             }
         }
-
-
-
 
 
 
@@ -549,16 +480,6 @@ class ContactController extends Controller
                 if ($oppContact != null){
                     $oppContact->delete();
 
-//                    $gcm = new GCM();
-//                    $contactUser = User::findOne(['id' => $oppContact->user_id]);
-//                    $device_id = $contactUser->device_id;
-//                    $device = Device::findOne(['device_id' => $device_id]);
-//                    $data = array();
-//                    $data['type'] = 'contact,updated';
-//                    if ($device != null) {
-//                        $gcm_id = $device->gcmId;
-//                        $gcm->send($gcm_id, $data);
-//                    }
 
                     $contactUser = User::findOne(['id' => $oppContact->user_id]);
                     $device_list = Device::findAll(['user_id' => $contactUser->id]);
@@ -572,15 +493,7 @@ class ContactController extends Controller
                         }
                     }
 
-//                    $gcm2 = new GCM();
-//                    $data2 = array();
-//                    $data2['type'] = 'contact,delete';
-//                    $data2['contact_id'] = $oppContact->contact_id;
-//                    $data2['contact_user_id'] = $user->id;
-//                    if ($device != null) {
-//                        $gcm_id = $device->gcmId;
-//                        $gcm2->send($gcm_id, $data2);
-//                    }
+
 
                     $data2 = array();
                     $data2['type'] = 'contact,delete';
@@ -851,7 +764,6 @@ class ContactController extends Controller
         $contact_data = array();
 
         foreach (Contact::find()->where(['user_id' => $user_id])->each() as $contact) {
-            Yii::getLogger()->log(print_r($contact,true),yii\log\Logger::LEVEL_INFO,'MyLog');
             if ($contact->watch_primary_number == 1) {
                 $contactInfo = new ContactInfo();
                 $contactInfo->contact_id = $contact->contact_id;
@@ -938,7 +850,54 @@ class ContactController extends Controller
     }
 
 
+    public function actionCwatchallcontact ()
+    {
 
+        $data = Yii::$app->request->post();
+        $device_id = $data['device_id'];
+        $user = User::findOne(['username' => $data['username']]);
+        $user_id = $user->id;
+
+        $contact_list = array();
+        $contact_list['type'] = 'Cwatch,all';
+        $contact_data = array();
+
+        foreach (Contact::find()->where(['user_id' => $user_id])->each() as $contact) {
+            if ($contact->carecarma_watch_number == 1) {
+                $contactInfo = new ContactInfo();
+                $contactInfo->contact_id = $contact->contact_id;
+                $contactInfo->user_id = $user_id;
+                $contactInfo->contact_user_id = $contact->contact_user_id;
+                $contactInfo->contact_first = $contact->contact_first;
+                $contactInfo->contact_last = $contact->contact_last;
+                $contactInfo->nickname = $contact->nickname;
+                $contactInfo->relation = $contact->relation;
+                $contactInfo->contact_mobile = $contact->contact_mobile;
+                $contactInfo->contact_email = $contact->contact_email;
+                $contactInfo->home_phone = $contact->home_phone;
+                $contactInfo->work_phone = $contact->work_phone;
+
+                $contact_user = User::findOne(['id' => $contact->contact_user_id]);
+                if ($contact_user) {
+                    $profileImage = new \humhub\libs\ProfileImage($contact_user->guid);
+                    $pos = strpos($profileImage->getUrl(), "?m=");
+                    $image = substr($profileImage->getUrl(), 0, $pos);
+                    $contactInfo->photo = $image;
+                }
+
+                array_push($contact_data, $contactInfo);
+            }
+        }
+        $contact_list['data'] = $contact_data;
+
+        $gcm = new GCM();
+        $device = Device::findOne(['device_id' => $device_id]);
+
+        if ($device != null) {
+            $gcm_id = $device->gcmId;
+            $gcm->send($gcm_id, $contact_list);
+        }
+    }
 
 
     public function actionImportgoogle ()

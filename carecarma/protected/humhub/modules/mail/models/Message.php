@@ -201,7 +201,14 @@ class Message extends ActiveRecord
     public function notify($user)
     {
         $receive_email_messages = $user->getSetting("receive_email_messages", 'message', Setting::Get('receive_email_notifications', 'mailing'));
-        $isOnline = (count($user->httpSessions) > 0);
+        $isOnline  = false;
+        if (count($user->httpSessions) > 0){
+            $expire = time();
+            foreach ($user->httpSessions as $httpSession){
+                $expire = ($expire > $httpSession->expire)? $expire : $httpSession->expire;
+            }
+            $isOnline = ($expire > time());
+        }
         $willSend = false;
 
 

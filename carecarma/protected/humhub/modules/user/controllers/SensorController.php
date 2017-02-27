@@ -275,7 +275,7 @@ class SensorController extends Controller
         $list = array();
         Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
         while(strlen($pure_data) != 0) {
-            
+
             if($pure_data[0] == "A"){
                 $temp_data = substr($pure_data, 1);
                 $pos_a = strpos($temp_data, "A");
@@ -463,7 +463,7 @@ class SensorController extends Controller
 //                    $sensor->accelZ = $az;
 //                    $sensor->save();
 //                }
-        }
+            }
             else if($pure_data[0] == "G") {
                 $temp_data = substr($pure_data, 1);
                 $pos_a = strpos($temp_data, "A");
@@ -673,6 +673,7 @@ class SensorController extends Controller
                     else $pos = $pos_a;
                     $row = substr($temp_data, 0, $pos);
                 }
+//                Yii::getLogger()->log($row, yii\log\Logger::LEVEL_INFO,'MyLog');
                 $pos_x = strpos($row, "X");
                 $pos_y = strpos($row, "Y");
                 $pos_z = strpos($row, "Z");
@@ -690,7 +691,7 @@ class SensorController extends Controller
                 $ax = substr($row, $pos_x+1, $pos_y-$pos_x-1);
                 $ay = substr($row, $pos_y+1, $pos_z-$pos_y-1);
                 $az = substr($row, $pos_z+1, $pos_i-$pos_z-1);
-                $device_id = substr($row, $pos_i + 1);
+                $hardware_id = substr($row, $pos_i + 1);
                 // remove last row
                 $pure_data = substr($pure_data, strlen($row)+1);
 
@@ -743,7 +744,7 @@ class SensorController extends Controller
                             $gz = substr($gz, 0, -1);
                         }
                         $model->GyroZ = $gz;
-                        $model->device_id = $device_id;
+                        $model->hardware_id = $hardware_id;
                         $model->time = $shorttime ;
                         Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                         $model->save();
@@ -775,14 +776,14 @@ class SensorController extends Controller
                         $gx = substr($row, $pos_x+1, $pos_y-$pos_x-1);
                         $gy = substr($row, $pos_y+1, $pos_z-$pos_y-1);
                         $gz = substr($row, $pos_z+1, $pos_i-$pos_z-1);
-                        $device_id2 = substr($row, $pos_i+1);
+                        $hardware_id2 = substr($row, $pos_i+1);
                         $pure_data = substr($pure_data, strlen($row)+1);
                         $shorttime2 = strtotime($realtime2) . substr($time2, 5,3);
 
                         $model = new Sensor();
                         $model->user_id = Yii::$app->user->id;
                         $model->datetime = $realtime2;
-                        $model->device_id = $device_id2;
+                        $model->hardware_id = $hardware_id2;
                         $model->GyroX = $gx;
                         $model->GyroY = $gy;
                         if (!is_numeric(substr($gz,strlen($gz)-1,1))) {
@@ -795,7 +796,7 @@ class SensorController extends Controller
                         $model = new Sensor();
                         $model->user_id = Yii::$app->user->id;
                         $model->datetime = $realtime;
-                        $model->device_id = $device_id;
+                        $model->hardware_id = $hardware_id;
                         $model->accelX = $ax;
                         $model->accelY = $ay;
                         if (!is_numeric(substr($az,strlen($az)-1,1))) {
@@ -809,7 +810,7 @@ class SensorController extends Controller
                         $model = new Sensor();
                         $model->user_id = Yii::$app->user->id;
                         $model->datetime = $realtime;
-                        $model->device_id = $device_id;
+                        $model->hardware_id = $hardware_id;
                         $model->accelX = $ax;
                         $model->accelY = $ay;
                         if (!is_numeric(substr($az,strlen($az)-1,1))) {
@@ -824,7 +825,7 @@ class SensorController extends Controller
                     $model = new Sensor();
                     $model->user_id = Yii::$app->user->id;
                     $model->datetime = $realtime;
-                    $model->device_id = $device_id;
+                    $model->hardware_id = $hardware_id;
                     $model->accelX = $ax;
                     $model->accelY = $ay;
                     if (!is_numeric(substr($az,strlen($az)-1,1))) {
@@ -884,7 +885,7 @@ class SensorController extends Controller
                 $gx = substr($row, $pos_x + 1, $pos_y - $pos_x - 1);
                 $gy = substr($row, $pos_y + 1, $pos_z - $pos_y - 1);
                 $gz = substr($row, $pos_z + 1, $pos_i - $pos_z - 1);
-                $device_id = substr($row, $pos_i + 1);
+                $hardware_id = substr($row, $pos_i + 1);
                 $pure_data = substr($pure_data, strlen($row) + 1);
                 $shorttime = strtotime($realtime) . substr($time, 5,3);
 
@@ -927,7 +928,7 @@ class SensorController extends Controller
                             $gz = substr($gz, 0, -1);
                         }
                         $model->GyroZ = $gz;
-                        $model->device_id = $device_id;
+                        $model->hardware_id = $hardware_id;
                         $model->time = $shorttime ;
 //                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                         Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
@@ -961,7 +962,7 @@ class SensorController extends Controller
                         $ax = substr($row, $pos_x+1, $pos_y-$pos_x-1);
                         $ay = substr($row, $pos_y+1, $pos_z-$pos_y-1);
                         $az = substr($row, $pos_z+1, $pos_i-$pos_y-1);
-                        $device_id2 = substr($row, $pos_i+1);
+                        $hardware_id2 = substr($row, $pos_i+1);
                         $pure_data = substr($pure_data, strlen($row)+1);
                         $shorttime2 = strtotime($realtime2) . substr($time2, 5,3);
 
@@ -974,7 +975,7 @@ class SensorController extends Controller
                             $az = substr($az, 0, -1);
                         }
                         $model->accelZ = $az;
-                        $model->device_id = $device_id2;
+                        $model->hardware_id = $hardware_id2;
                         $model->time = $shorttime2 ;
                         $model->save();
 
@@ -987,7 +988,7 @@ class SensorController extends Controller
                             $gz = substr($gz, 0, -1);
                         }
                         $model->GyroZ = $gz;
-                        $model->device_id = $device_id;
+                        $model->hardware_id = $hardware_id;
                         $model->time = $shorttime ;
                         Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                         $model->save();
@@ -997,7 +998,7 @@ class SensorController extends Controller
                         $model = new Sensor();
                         $model->user_id = Yii::$app->user->id;
                         $model->datetime = $realtime;
-                        $model->device_id = $device_id;
+                        $model->hardware_id = $hardware_id;
                         $model->GyroX = $gx;
                         $model->GyroY = $gy;
                         if (!is_numeric(substr($gz,strlen($gz)-1,1))) {
@@ -1013,7 +1014,7 @@ class SensorController extends Controller
                     $model = new Sensor();
                     $model->user_id = Yii::$app->user->id;
                     $model->datetime = $realtime;
-                    $model->device_id = $device_id;
+                    $model->hardware_id = $hardware_id;
                     $model->GyroX = $gx;
                     $model->GyroY = $gy;
                     if (!is_numeric(substr($gz,strlen($gz)-1,1))) {
@@ -1375,8 +1376,8 @@ class SensorController extends Controller
     }
 
 
-
-    public static function bytesToInteger($bytes, $position) {
+    public function bytesToInteger($bytes, $position) {
+//        $i = unpack("L",pack("C*",$ar[1],$ar[2],$ar[3],$ar[4]));
         $val = 0;
         $val = $bytes[$position + 3] & 0xff;
         $val <<= 8;
@@ -1388,7 +1389,7 @@ class SensorController extends Controller
         return $val;
     }
 
-    public static function bytesToShort($bytes, $position) {
+    public function bytesToShort($bytes, $position) {
         $val = 0;
         $val = $bytes[$position + 1] & 0xFF;
         $val = $val << 8;
@@ -1396,98 +1397,108 @@ class SensorController extends Controller
         return $val;
     }
 
-    public static function bytesTo6Long($bytes, $position) {
-        $val = 0;
-        $val = $bytes[$position + 5] & 0xff;
-        $val <<= 8;
-        $val = $bytes[$position + 4] & 0xff;
-        $val <<= 8;
-        $val = $bytes[$position + 3] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position + 2] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position + 1] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position] & 0xff;
+    public function bytesTo6Long($bytes, $position) {
+        $long = unpack("Q",pack("C*",$bytes[$position+5],$bytes[$position+4],$bytes[$position+3],$bytes[$position+2],$bytes[$position+1],$bytes[$position],0,0));
+        $long_str = sprintf('%.0f', $long[1]);
+//        $val = 0;
+//        $val = $bytes[$position + 5] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 4] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 3] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position + 2] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position + 1] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position] & 0xff;
+//        return $val;
+        return $long_str;
+    }
+
+    public function bytesTo8Long($bytes, $position) {
+        $long = unpack("Q",pack("C*",$bytes[$position+7],$bytes[$position+6],$bytes[$position+5],$bytes[$position+4],$bytes[$position+3],$bytes[$position+2],$bytes[$position+1],$bytes[$position]));
+        $long_str = sprintf('%.0f', $long[1]);
+//        $val = 0;
+//        $val = $bytes[$position + 7] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 6] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 5] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 4] & 0xff;
+//        $val <<= 8;
+//        $val = $bytes[$position + 3] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position + 2] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position + 1] & 0xff;
+//        $val <<= 8;
+//        $val |= $bytes[$position] & 0xff;
+        return $long_str;
+    }
+
+    public function bytesToChar($byte_array, $position) {
+//        Yii::getLogger()->log(print_r($byte_array[$position+1],true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $val = chr($byte_array[$position+1]);
+//        Yii::getLogger()->log(print_r($val,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         return $val;
     }
 
-    public static function bytesTo8Long($bytes, $position) {
-        $val = 0;
-        $val = $bytes[$position + 7] & 0xff;
-        $val <<= 8;
-        $val = $bytes[$position + 6] & 0xff;
-        $val <<= 8;
-        $val = $bytes[$position + 5] & 0xff;
-        $val <<= 8;
-        $val = $bytes[$position + 4] & 0xff;
-        $val <<= 8;
-        $val = $bytes[$position + 3] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position + 2] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position + 1] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position] & 0xff;
-        return $val;
-    }
-
-    public static function bytesToChar($bytes, $position) {
-        $result = chr($bytes[$position+1]);
-        return $result;
-    }
-
-    public static function bytesToFloat($bytes, $position) {
-        $list = array();
-        $list[0] = $bytes[$position];
-        $list[1] = $bytes[$position + 1];
-        $list[2] = $bytes[$position + 2];
-        $list[3] = $bytes[$position + 3];
-        return unpack('f', pack('c*', $list));
+    public function bytesToFloat($bytes, $position) {
+        $float = unpack('f', pack('c*', $bytes[$position+3], $bytes[$position+2], $bytes[$position+1], $bytes[$position]));
+        $float_str = sprintf('%f', $float[1]);
+        return $float_str;
     }
 
     public function actionTestbytes()
     {
-        $data = Yii::$app->request->post();
-        $pure_data = $data['Sensor'];
+        Yii::getLogger()->log(print_r("data",true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        $pure_data = file_get_contents('php://input');
+
         $length = count($pure_data);
-        $current = 0;
+        $byte_array = unpack('C*', $pure_data);
+        Yii::getLogger()->log(print_r($byte_array,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+        $current = 1;
         Yii::getLogger()->log(print_r("beginning",true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $aorg = bytesToChar($pure_data, $current);
+        $aorg = $this->bytesToChar($byte_array, $current);
+
         Yii::getLogger()->log(print_r($aorg,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 2;
-        $time = bytesTo6Long($pure_data, $current);
-        Yii::getLogger()->log(print_r($aorg,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+
+        $time = $this->bytesTo6Long($byte_array, $current);
+        Yii::getLogger()->log(print_r($time,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 6;
-        $x = bytesToFloat($pure_data, $current);
+
+        $x = $this->bytesToFloat($byte_array, $current);
         Yii::getLogger()->log(print_r($x,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 4;
-        $y = bytesToFloat($pure_data, $current);
+        $y = $this->bytesToFloat($byte_array, $current);
         Yii::getLogger()->log(print_r($y,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 4;
-        $z = bytesToFloat($pure_data, $current);
+        $z = $this->bytesToFloat($byte_array, $current);
         Yii::getLogger()->log(print_r($z,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 4;
-        $imei = bytesTo8Long($pure_data, $current);
+        $imei = $this->bytesTo8Long($byte_array, $current);
         Yii::getLogger()->log(print_r($imei,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $current += 8;
 
-        $t = time();
-        $yearmonthday = date('Y-m-d',$t);
-        $hoursecond = date('H:i:s', substr(sprintf('%.0f', $time), 0, 5));
-        $realtime = $yearmonthday . " " . $hoursecond;
-        $ax = $x;
-        $ay = $y;
-        $az = $z;
-        $shorttime = strtotime($realtime) . substr(sprintf('%.0f', $time), 5,3);
+        $pre_time = (int)substr($time, 0,10);
+        $dt = new \DateTime("@$pre_time");  // convert UNIX timestamp to PHP DateTime
+        $ymd =  $dt->format('Y-m-d H:i:s'); // output = 2017-01-01 00:00:00
+        $realtime = $ymd . "." . substr($time, 10,3);
+        Yii::getLogger()->log(print_r($realtime,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
         $model = new Sensor();
-        $model->user_id = Yii::$app->user->id;
-        $model->datetime = sprintf('%.0f', $realtime);
-        $model->accelX = sprintf('%.0f', $ax);
-        $model->accelY = sprintf('%.0f', $ay);
-        $model->accelZ = sprintf('%.0f', $az);
-        $model->time = $shorttime ;
+        $model->user_id = 1;
+        $model->datetime = $realtime;
+        $model->accelX = $x;
+        $model->accelY = $y;
+        $model->accelZ = $z;
+        $model->time = $time ;
+        $model->hardware_id = $imei;
         Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         $model->save();
         Yii::getLogger()->log(print_r("end",true),yii\log\Logger::LEVEL_INFO,'MyLog');
@@ -1498,148 +1509,187 @@ class SensorController extends Controller
     public function actionCreatebytes()
     {
         ini_set('max_execution_time', 30000);
-        date_default_timezone_set('GMT');
-        $data = Yii::$app->request->post();
-        Yii::getLogger()->log(print_r($data,true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        $pure_data = $data['Sensor'];
-        $length = count($pure_data);
-        $current = 0;
+        $pure_data = file_get_contents('php://input');
+        $byte_array = unpack('C*', $pure_data);
+        $length = count($byte_array);
+        $current = 1;
+
         Yii::getLogger()->log(print_r("beginning!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
-        while($current != $length) {
-            $aorg = bytesToChar($pure_data, $current);
-            $current += 1;
-            $time = bytesTo6Long($pure_data, $current);
+        Yii::getLogger()->log(print_r([Yii::$app->user->id, $length],true),yii\log\Logger::LEVEL_INFO,'MyLog');
+        while($current < $length) {
+            $aorg = $this->bytesToChar($byte_array, $current);
+            $current += 2;
+            $time = $this->bytesTo6Long($byte_array, $current);
             $current += 6;
-            $x = bytesToFloat($pure_data, $current);
+            $x = $this->bytesToFloat($byte_array, $current);
             $current += 4;
-            $y = bytesToFloat($pure_data, $current);
+            $y = $this->bytesToFloat($byte_array, $current);
             $current += 4;
-            $z = bytesToFloat($pure_data, $current);
+            $z = $this->bytesToFloat($byte_array, $current);
             $current += 4;
-            $imei = bytesTo8Long($pure_data, $current);
+            $imei = $this->bytesTo8Long($byte_array, $current);
             $current += 8;
             if($aorg == "A"){
-                $t = time();
-                $yearmonthday = date('Y-m-d',$t);
-                $hoursecond = date('H:i:s', substr(sprintf('%.0f', $time), 0, 5));
-                $realtime = $yearmonthday . " " . $hoursecond;
-                $ax = $x;
-                $ay = $y;
-                $az = $z;
-                $shorttime = strtotime($realtime) . substr(sprintf('%.0f', $time), 5,3);
+                $pre_time = (int)substr($time, 0,10);
+                $dt = new \DateTime("@$pre_time");
+                $ymd =  $dt->format('Y-m-d H:i:s');
+                $realtime = $ymd . "." . substr($time, 10,3);
 
-                if ($current == $length) {
+                if ($current > $length) {
                     $model = new Sensor();
                     $model->user_id = Yii::$app->user->id;
-                    $model->datetime = sprintf('%.0f', $realtime);
-                    $model->accelX = sprintf('%.0f', $ax);
-                    $model->accelY = sprintf('%.0f', $ay);
-                    $model->accelZ = sprintf('%.0f', $az);
-                    $model->time = $shorttime ;
-                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                    $model->datetime = $realtime;
+                    $model->accelX = $x;
+                    $model->accelY = $y;
+                    $model->accelZ = $z;
+                    $model->time = $time;
+                    $model->hardware_id = $imei;
+//                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $model->save();
-                    continue;
+                    break;
                 }
                 else {
-                    $newaorg = bytesToChar($pure_data, $current);
-                    $current += 1;
-                    $newtime = bytesTo6Long($pure_data, $current);
+                    $newaorg = $this->bytesToChar($byte_array, $current);
+                    $current += 2;
+                    $newtime = $this->bytesTo6Long($byte_array, $current);
                     $current += 6;
-                    $newx = bytesToFloat($pure_data, $current);
+                    $newx = $this->bytesToFloat($byte_array, $current);
                     $current += 4;
-                    $newy = bytesToFloat($pure_data, $current);
+                    $newy = $this->bytesToFloat($byte_array, $current);
                     $current += 4;
-                    $newz = bytesToFloat($pure_data, $current);
+                    $newz = $this->bytesToFloat($byte_array, $current);
                     $current += 4;
-                    $newimei = bytesTo8Long($pure_data, $current);
+                    $newimei = $this->bytesTo8Long($byte_array, $current);
                     $current += 8;
-                    if ($aorg == "A") {
-                        $current -= 27;
+                    if ($newaorg == "A") {
+                        $model = new Sensor();
+                        $model->user_id = Yii::$app->user->id;
+                        $model->datetime = $realtime;
+                        $model->accelX = $x;
+                        $model->accelY = $y;
+                        $model->accelZ = $z;
+                        $model->time = $time;
+                        $model->hardware_id = $imei;
+//                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                        $model->save();
+                        $current -= 28;
                         continue;
                     }
                     else {
                         if ($time == $newtime) {
                             $model = new Sensor();
                             $model->user_id = Yii::$app->user->id;
-                            $model->datetime = sprintf('%.0f', $realtime);
-                            $model->accelX = sprintf('%.0f', $ax);
-                            $model->accelY = sprintf('%.0f', $ay);
-                            $model->accelZ = sprintf('%.0f', $az);
-                            $model->accelX = sprintf('%.0f', $newx);
-                            $model->accelY = sprintf('%.0f', $newy);
-                            $model->accelZ = sprintf('%.0f', $newz);
-                            $model->time = $shorttime ;
-                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                            $model->datetime = $realtime;
+                            $model->accelX = $x;
+                            $model->accelY = $y;
+                            $model->accelZ = $z;
+                            $model->GyroX = $newx;
+                            $model->GyroY = $newy;
+                            $model->GyroZ = $newz;
+                            $model->time = $time;
+                            $model->hardware_id = $imei;
+//                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                             $model->save();
+                            continue;
                         }
                         else {
-                            $current -= 27;
+                            $model = new Sensor();
+                            $model->user_id = Yii::$app->user->id;
+                            $model->datetime = $realtime;
+                            $model->accelX = $x;
+                            $model->accelY = $y;
+                            $model->accelZ = $z;
+                            $model->time = $time;
+                            $model->hardware_id = $imei;
+//                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                            $model->save();
+                            $current -= 28;
                             continue;
                         }
                     }
                 }
             }
             else if($aorg == "G"){
-                $t = time();
-                $yearmonthday = date('Y-m-d',$t);
-                $hoursecond = date('H:i:s', substr(sprintf('%.0f', $time), 0, 5));
-                $realtime = $yearmonthday . " " . $hoursecond;
-                $gx = $x;
-                $gy = $y;
-                $gz = $z;
-                $shorttime = strtotime($realtime) . substr(sprintf('%.0f', $time), 5,3);
+                $pre_time = (int)substr($time, 0,10);
+                $dt = new \DateTime("@$pre_time");
+                $ymd =  $dt->format('Y-m-d H:i:s');
+                $realtime = $ymd . "." . substr($time, 10,3);
 
-                if ($current == $length) {
+                if ($current > $length) {
                     $model = new Sensor();
                     $model->user_id = Yii::$app->user->id;
-                    $model->datetime = sprintf('%.0f', $realtime);
-                    $model->accelX = sprintf('%.0f', $gx);
-                    $model->accelY = sprintf('%.0f', $gy);
-                    $model->accelZ = sprintf('%.0f', $gz);
-                    $model->time = $shorttime ;
-                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                    $model->datetime = $realtime;
+                    $model->GyroX = $x;
+                    $model->GyroY = $y;
+                    $model->GyroZ = $z;
+                    $model->time = $time;
+                    $model->hardware_id = $imei;
+//                    Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                     $model->save();
-                    continue;
+                    break;
                 }
                 else {
-                    $newaorg = bytesToChar($pure_data, $current);
-                    $current += 1;
-                    $newtime = bytesTo6Long($pure_data, $current);
+                    $newaorg = $this->bytesToChar($byte_array, $current);
+                    $current += 2;
+                    $newtime = $this->bytesTo6Long($byte_array, $current);
                     $current += 6;
-                    $newx = bytesToFloat($pure_data, $current);
+                    $newx = $this->bytesToFloat($byte_array, $current);
                     $current += 4;
-                    $newy = bytesToFloat($pure_data, $current);
+                    $newy = $this->bytesToFloat($byte_array, $current);
                     $current += 4;
-                    $newz = bytesToFloat($pure_data, $current);
+                    $newz = $this->bytesToFloat($byte_array, $current);
                     $current += 4;
-                    $newimei = bytesTo8Long($pure_data, $current);
+                    $newimei = $this->bytesTo8Long($byte_array, $current);
                     $current += 8;
-                    if ($aorg == "G") {
-                        $current -= 27;
+                    if ($newaorg == "G") {
+                        $model = new Sensor();
+                        $model->user_id = Yii::$app->user->id;
+                        $model->datetime = $realtime;
+                        $model->GyroX = $x;
+                        $model->GyroY = $y;
+                        $model->GyroZ = $z;
+                        $model->time = $time;
+                        $model->hardware_id = $imei;
+//                        Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                        $model->save();
+                        $current -= 28;
                         continue;
                     }
                     else {
                         if ($time == $newtime) {
                             $model = new Sensor();
                             $model->user_id = Yii::$app->user->id;
-                            $model->datetime = sprintf('%.0f', $realtime);
-                            $model->accelX = sprintf('%.0f', $newx);
-                            $model->accelY = sprintf('%.0f', $newy);
-                            $model->accelZ = sprintf('%.0f', $newz);
-                            $model->accelX = sprintf('%.0f', $gx);
-                            $model->accelY = sprintf('%.0f', $gy);
-                            $model->accelZ = sprintf('%.0f', $gz);
-                            $model->time = $shorttime ;
-                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                            $model->datetime = $realtime;
+                            $model->accelX = $newx;
+                            $model->accelY = $newy;
+                            $model->accelZ = $newz;
+                            $model->GyroX = $x;
+                            $model->GyroY = $y;
+                            $model->GyroZ = $z;
+                            $model->time = $time;
+                            $model->hardware_id = $imei;
+//                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
                             $model->save();
+                            continue;
                         }
                         else {
-                            $current -= 27;
+                            $model = new Sensor();
+                            $model->user_id = Yii::$app->user->id;
+                            $model->datetime = $realtime;
+                            $model->GyroX = $x;
+                            $model->GyroY = $y;
+                            $model->GyroZ = $z;
+                            $model->time = $time;
+                            $model->hardware_id = $imei;
+//                            Yii::getLogger()->log(print_r($model,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+                            $model->save();
+                            $current -= 28;
                             continue;
                         }
                     }
                 }
             }
+            Yii::getLogger()->log(print_r($imei,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         }
         Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
     }

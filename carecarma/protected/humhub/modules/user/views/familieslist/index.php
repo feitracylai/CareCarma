@@ -9,11 +9,15 @@ $user = Yii::$app->user->getIdentity();
 
 $showSpaces = 30;
 $spaces = array();
+$invisible = 0;
 $i = 0;
 
 foreach (Membership::GetUserSpaces($user->id) as $space) {
     if ($space->visibility == Space::VISIBILITY_NONE)
+    {
+        $invisible++;
         continue;
+    }
     if ($space->status != Space::STATUS_ENABLED)
         continue;
     $i++;
@@ -39,7 +43,7 @@ foreach (Membership::GetUserSpaces($user->id) as $space) {
             </a>
 
         <?php endforeach; ?>
-
+        <div><?php echo Yii::t('UserModule.widgets_views_userFollower', '{invisible} invisible circles are not shown', array('{invisible}' => $invisible)); ?></div>
 
     </div>
 </div>

@@ -4,12 +4,16 @@ use humhub\compat\CHtml;
 use humhub\models\Setting;
 use yii\widgets\ActiveForm;
 
+
 ?>
 
 <div class="panel panel-default">
     <div
         class="panel-heading"><?php echo Yii::t('AdminModule.views_setting_index', '<strong>Basic</strong> settings'); ?></div>
     <div class="panel-body">
+        <!------test now time------->
+        <?php echo Yii::t('AdminModule.views_setting_index', time()); ?>
+        <!------test now time------->
 
         <?php $form = ActiveForm::begin(); ?>
 
@@ -55,4 +59,6 @@ use yii\widgets\ActiveForm;
 
     </div>
 </div>
+
+
 

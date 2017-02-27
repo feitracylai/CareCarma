@@ -148,7 +148,7 @@ class MailController extends Controller
 //                $user = User::findOne(['id' => $userMessage->user_id]);
 //               Yii::getLogger()->log($userMessage->user_id, Logger::LEVEL_INFO, 'MyLog');
                 if ($userMessage->user_id != Yii::$app->user->id) {
-                  //  Yii::getLogger()->log($userMessage->user_id, Logger::LEVEL_INFO, 'MyLog');
+                   //Yii::getLogger()->log($userMessage->user_id, Logger::LEVEL_INFO, 'MyLog');
                     $deviceMessage = new DeviceMessage();
                     $deviceMessage->type = "message,reply";
                     $deviceMessage->message_id = $message->id;
@@ -156,6 +156,7 @@ class MailController extends Controller
                     $deviceMessage->from_id = Yii::$app->user->id;
                     $deviceMessage->content = $messageEntry->content;
                     $deviceMessage->notify();
+
 
                 }
 
@@ -391,9 +392,9 @@ class MailController extends Controller
 
 
 
-            Yii::getLogger()->log($messageEntry->message_id, Logger::LEVEL_INFO, 'MyLog');
-            Yii::getLogger()->log($messageEntry->user_id, Logger::LEVEL_INFO, 'MyLog');
-            Yii::getLogger()->log($messageEntry->content, Logger::LEVEL_INFO, 'MyLog');
+//            Yii::getLogger()->log($messageEntry->message_id, Logger::LEVEL_INFO, 'MyLog');
+//            Yii::getLogger()->log($messageEntry->user_id, Logger::LEVEL_INFO, 'MyLog');
+//            Yii::getLogger()->log($messageEntry->content, Logger::LEVEL_INFO, 'MyLog');
             sleep(1);
 
 
@@ -579,6 +580,9 @@ class MailController extends Controller
         return null;
     }
 
+    /**
+     *
+     */
     public function actionDevicecreate()
     {
 //        $userGuid = Yii::$app->request->get('userGuid');

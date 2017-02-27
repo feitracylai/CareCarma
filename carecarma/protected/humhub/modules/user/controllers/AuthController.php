@@ -9,6 +9,7 @@
 namespace humhub\modules\user\controllers;
 
 use Yii;
+use yii\log\Logger;
 use yii\web\HttpException;
 use yii\helpers\Url;
 use humhub\components\Controller;
@@ -442,7 +443,17 @@ class AuthController extends Controller
 //        Yii::getLogger()->log(print_r($phone,true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
 
+        //check the device is in used
+        $existDevice = Device::findOne(['hardware_id' => $data['IMEI'], 'activate' => 1]);
+        if ($existDevice){
+            $rejectGCM = new GCM();
+            $rejectMessage = array();
+            $rejectMessage['type'] = 'active,device_id';
+            $rejectMessage['device_id'] = 'this device is used';
+            $rejectGCM->send($gcm_id, $rejectMessage);
 
+            return;
+        }
 
 
         $device = new Device();
@@ -456,6 +467,15 @@ class AuthController extends Controller
         $new_device->device_id = $device_id;
         $new_device->gcmId = $gcm_id;
         $new_device->phone = $phone;
+        if (isset($data['IMEI'])){
+            $new_device->hardware_id = $data['IMEI'];
+        }
+        if (isset($data['type'])){
+            $new_device->type = $data['type'];
+        }
+        if (isset($data['model'])){
+            $new_device->model = $data['model'];
+        }
         $new_device->save();
 
         $gcm = new GCM();

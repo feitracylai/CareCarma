@@ -17,7 +17,7 @@ class DeviceReportMenu extends \humhub\widgets\BaseMenu
     public function init()
 
     {
-        $id = Yii::$app->request->get('id');
+        $rguid =  Yii::$app->request->get('rguid');
 
         $this->addItem(array(
             'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', ' Back'),
@@ -28,11 +28,19 @@ class DeviceReportMenu extends \humhub\widgets\BaseMenu
         ));
 
         $this->addItem(array(
-            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Report1'),
-            'url' => $this->space->createUrl('/space/manage/device/report', ['id' => $id]),
+            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Steps'),
+            'url' => $this->space->createUrl('/space/manage/device/report', ['rguid' => $rguid]),
             'sortOrder' => 200,
             'isActive' => (Yii::$app->controller->action->id == 'report' && Yii::$app->controller->id === 'device'),
         ));
+
+        $this->addItem(array(
+            'label' => Yii::t('SpaceModule.widgets_SpaceMembersMenu', 'Heart Rate'),
+            'url' => $this->space->createUrl('/space/manage/device/report-heartrate', ['rguid' => $rguid]),
+            'sortOrder' => 300,
+            'isActive' => (Yii::$app->controller->action->id == 'report-heartrate' && Yii::$app->controller->id === 'device'),
+        ));
+
 
         parent::init();
 

@@ -47,7 +47,14 @@ class Module extends \humhub\components\Module
 
         // User is online and want only receive when offline
         if ($interval == CronController::EVENT_ON_HOURLY_RUN) {
-            $isOnline = (count($user->httpSessions) > 0);
+            $isOnline  = false;
+            if (count($user->httpSessions) > 0){
+                $expire = time();
+                foreach ($user->httpSessions as $httpSession){
+                    $expire = ($expire > $httpSession->expire)? $expire : $httpSession->expire;
+                }
+                $isOnline = ($expire > time());
+            }
             if ($receive_email_activities == User::RECEIVE_EMAIL_WHEN_OFFLINE && $isOnline) {
                 return "";
             }
