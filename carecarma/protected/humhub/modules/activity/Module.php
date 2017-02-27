@@ -68,7 +68,7 @@ class Module extends \humhub\components\Module
         foreach ($stream->getWallEntries() as $wallEntry) {
             try {
                 $activity = $wallEntry->content->getPolymorphicRelation();
-                $output['html'] .= $activity->getActivityBaseClass()->render(BaseActivity::OUTPUT_MAIL);
+		$output['html'] .= $activity->getActivityBaseClass()->render(BaseActivity::OUTPUT_MAIL);
                 $output['plaintext'] .= $activity->getActivityBaseClass()->render(BaseActivity::OUTPUT_MAIL_PLAINTEXT);
             } catch (\yii\base\Exception $ex) {
                 \Yii::error($ex->getMessage());
