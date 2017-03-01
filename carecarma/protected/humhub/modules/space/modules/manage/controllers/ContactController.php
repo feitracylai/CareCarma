@@ -74,7 +74,7 @@ class ContactController extends Controller
         $space = $this->getSpace();
         $user = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
         $contact = Contact::findOne(['contact_id' => Yii::$app->request->get('Cid'), 'user_id' => $user->id]);
-        $contact->scenario = 'editContact';
+//        $contact->scenario = 'editContact';
 
         if ($contact == null)
             throw new \yii\web\HttpException(404, Yii::t('SpaceModule.controllers_ContactController', 'Contact not found!'));
@@ -136,17 +136,22 @@ class ContactController extends Controller
                     'maxlength' => 100,
                     'readonly' => 'true',
                 ),
-                'watch_primary_number' => array(
-                    'type' => 'checkbox',
-                    'class' => 'form-control',
-                    'maxlength' => 100,
-                ),
                 'phone_primary_number' => array(
                     'type' => 'checkbox',
                     'class' => 'form-control',
                     'maxlength' => 100,
                 ),
+                'watch_primary_number' => array(
+                    'type' => 'checkbox',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
                 'carecarma_watch_number' => array(
+                    'type' => 'checkbox',
+                    'class' => 'form-control',
+                    'maxlength' => 100,
+                ),
+                'glass_primary_number' => array(
                     'type' => 'checkbox',
                     'class' => 'form-control',
                     'maxlength' => 100,

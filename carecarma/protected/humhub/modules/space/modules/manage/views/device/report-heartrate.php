@@ -22,6 +22,7 @@ use humhub\widgets\GoogleChart;
         <?php
         echo "<hr>";
         for ($count = 0; $count < count($devices); $count++){
+            echo Yii::t('SpaceModule.views_admin_receiver', '<strong>{device_type}: {device_name}</strong>', array('{device_type}' => $devices[$count]->type, '{device_name}' => $devices[$count]->model));
            echo GoogleChart::widget(array(
                'visualization' => 'ColumnChart',
                'packages' => '"corechart"',
@@ -29,12 +30,17 @@ use humhub\widgets\GoogleChart;
 
                'options' => array(
                    'height' => 600,
-                   'vAxis' => ['title' => 'steps'],
                    'seriesType' => 'bars',
-//                    'isStacked' => true,
-//                    'annotations' => [
-//                        'alwaysOutside' => true,
-//                    ]
+                   'vAxis' => [
+                       'viewWindow' => [
+                           'min' => 0
+                       ]
+                   ],
+                    'annotations' => [
+                        'alwaysOutside' => true,
+                    ]
+
+
                )
            ));
         }
