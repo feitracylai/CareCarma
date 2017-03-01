@@ -608,7 +608,7 @@ class MailController extends Controller
             $messageEntry->user_id = Yii::$app->user->id;
             $messageEntry->content = $model->message;
             $messageEntry->save();
-            $messageEntry->notify();
+            //$messageEntry->notify();
             File::attachPrecreated($messageEntry, Yii::$app->request->post('fileUploaderHiddenGuidField'));
 
             foreach ($model->getRecipients() as $recipient) {
@@ -639,10 +639,10 @@ class MailController extends Controller
             $deviceMessage->from_id = Yii::$app->user->id;
             $deviceMessage->content = $model->message;
             $deviceMessage->notify();
-            Yii::getLogger()->log($deviceMessage->message_id , Logger::LEVEL_INFO, 'MyLog');
-            Yii::getLogger()->log($deviceMessage->user_id , Logger::LEVEL_INFO, 'MyLog');
-            Yii::getLogger()->log($deviceMessage->from_id , Logger::LEVEL_INFO, 'MyLog');
-            Yii::getLogger()->log($deviceMessage->content , Logger::LEVEL_INFO, 'MyLog');
+//            Yii::getLogger()->log($deviceMessage->message_id , Logger::LEVEL_INFO, 'MyLog');
+//            Yii::getLogger()->log($deviceMessage->user_id , Logger::LEVEL_INFO, 'MyLog');
+//            Yii::getLogger()->log($deviceMessage->from_id , Logger::LEVEL_INFO, 'MyLog');
+//            Yii::getLogger()->log($deviceMessage->content , Logger::LEVEL_INFO, 'MyLog');
 
             $AllUserid = UserMessage::findAll(['message_id' => $deviceMessage->message_id]);
             $Allreceipt = array();

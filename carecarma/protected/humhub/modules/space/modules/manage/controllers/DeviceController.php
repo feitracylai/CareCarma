@@ -389,6 +389,22 @@ class DeviceController extends ContentContainerController
         ));
     }
 
+    public function actionImage()
+    {
+        $space = $this->getSpace();
+        if (!$space->isAdmin())
+            throw new HttpException(403, 'Access denied - Circle Administrator only!');
+
+        $user = $this->getCare();
+
+
+
+        return $this->render('image', array(
+            'space' => $space,
+            'user' => $user,
+        ));
+    }
+
     public function actionEdit() {
         $space = $this->getSpace();
         if (!$space->isAdmin())
@@ -606,9 +622,15 @@ class DeviceController extends ContentContainerController
             ));
         }
 
+        $time_zone = $user->time_zone;
+        if ($time_zone == ""){
+            $time_zone = \humhub\models\Setting::Get('timeZone');
+        }
+
+        date_default_timezone_set($time_zone);
         $today = date("Y-m-d");
-//        date_default_timezone_set("GMT");
         $unixtoday = strtotime($today);
+//        $unixtoday = 1485925200;
         $unixlastweek = strtotime('-1 week', $unixtoday);
         $start = $unixlastweek."000";
         $end = $unixtoday. "000";
@@ -696,8 +718,13 @@ class DeviceController extends ContentContainerController
             ));
         }
 
+        $time_zone = $user->time_zone;
+        if ($time_zone == ""){
+            $time_zone = \humhub\models\Setting::Get('timeZone');
+        }
+
+        date_default_timezone_set($time_zone);
         $today = date("Y-m-d");
-//        date_default_timezone_set("GMT");
         $unixtoday = strtotime($today);
 //        $unixtoday = 1485925200;
         $unixlastweek = strtotime('-1 week', $unixtoday);
@@ -805,9 +832,5 @@ class DeviceController extends ContentContainerController
     }
 
 
-    public function actionImage()
-    {
-
-    }
 }
 ?>
