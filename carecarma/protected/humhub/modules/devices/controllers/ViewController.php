@@ -32,8 +32,14 @@ class ViewController extends ContentContainerController
             ));
         }
 
+        $time_zone = $user->time_zone;
+        if ($time_zone == ""){
+            $time_zone = \humhub\models\Setting::Get('timeZone');
+        }
+
+        date_default_timezone_set($time_zone);
         $today = date("Y-m-d");
-//        date_default_timezone_set("GMT");
+//        date_default_timezone_set($user->time_zone);
         $unixtoday = strtotime($today);
         $unixlastweek = strtotime('-1 week', $unixtoday);
         $start = $unixlastweek."000";
@@ -106,8 +112,15 @@ class ViewController extends ContentContainerController
             ));
         }
 
+        $time_zone = $user->time_zone;
+        if ($time_zone == ""){
+            $time_zone = \humhub\models\Setting::Get('timeZone');
+        }
+
+
+        date_default_timezone_set($time_zone);
         $today = date("Y-m-d");
-//        date_default_timezone_set("GMT");
+//        $today = "2017-02-01";
         $unixtoday = strtotime($today);
 //        $unixtoday = 1485925200;
         $unixlastweek = strtotime('-1 week', $unixtoday);
