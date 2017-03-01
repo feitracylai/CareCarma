@@ -26,8 +26,22 @@ class Notifications extends Widget
      */
     public function run()
     {
-        $device_shows = DeviceShow::findAll(['user_id' => Yii::$app->user->id, 'seen' => 0]);
-        $count = count($device_shows);
+
+
+        $user_id = Yii::$app->user->id;
+        $device_shows = DeviceShow::findAll(['user_id' => $user_id, 'seen' => 0]);
+        $report_user_array = [];
+        foreach ($device_shows as $device_show){
+            $report_user_array[$device_show->id] = $device_show->report_user_id;
+        }
+//        Yii::getLogger()->log($report_user_array, Logger::LEVEL_INFO, 'MyLog');
+        $unique_array = array_unique($report_user_array);
+//        Yii::getLogger()->log($unique_array, Logger::LEVEL_INFO, 'MyLog');
+        $keys = array_keys($unique_array);
+//        Yii::getLogger()->log($keys, Logger::LEVEL_INFO, 'MyLog');
+        $unique_device_shows = DeviceShow::findAll($keys);
+
+        $count = count($unique_device_shows);
 
         return $this->render('notifications', array(
             'newReportCount' => $count
