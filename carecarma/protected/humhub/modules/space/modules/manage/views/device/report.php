@@ -13,7 +13,7 @@ use humhub\widgets\GoogleChart;
 <br/>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo Yii::t('SpaceModule.views_admin_receiver', '<strong>{first} {last}</strong> ', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
+        <?php echo Yii::t('SpaceModule.views_admin_receiver', '<strong>{first} {last}</strong> Steps', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
     </div>
     <div class="panel-body">
 
@@ -31,12 +31,17 @@ use humhub\widgets\GoogleChart;
 
                 'options' => array(
                 'height' => 600,
-                'vAxis' => ['title' => 'steps'],
+                'vAxis' => [
+                    'title' => 'steps',
+                    'viewWindow' => [
+                        'min' => 0
+                    ]
+                ],
                 'seriesType' => 'bars',
                 'isStacked' => true,
-//                    'annotations' => [
-//                        'alwaysOutside' => true,
-//                    ]
+                    'annotations' => [
+                        'alwaysOutside' => true,
+                    ]
                 )
             ));
         }

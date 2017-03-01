@@ -29,8 +29,12 @@ use humhub\widgets\GoogleChart;
 
                'options' => array(
                    'height' => 600,
-                   'vAxis' => ['title' => 'steps'],
                    'seriesType' => 'bars',
+                   'vAxis' => [
+                       'viewWindow' => [
+                           'min' => 0
+                       ]
+                   ],
 //                    'isStacked' => true,
 //                    'annotations' => [
 //                        'alwaysOutside' => true,
