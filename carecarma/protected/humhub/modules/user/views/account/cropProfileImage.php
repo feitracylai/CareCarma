@@ -62,7 +62,7 @@ use yii\helpers\Url;
                     'id' => 'blabla',
                     'beforeSend' => new yii\web\JsExpression('function(){ setModalLoader(); }'),
                     'success' => new yii\web\JsExpression('function(html){ $("#globalModal").html(html); }'),
-                    'url' => Url::toRoute(['/user/account/crop-profile-image', 'userGuid' => $user->guid]),
+                    'url' => Url::toRoute(['/user/account/crop-profile-image', 'userGuid' => $user->guid, 'spaceGuid' => $spaceGuid]),
                 ],
                 'htmlOptions' => [
                     'class' => 'btn btn-primary'
