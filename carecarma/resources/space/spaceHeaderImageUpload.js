@@ -156,6 +156,8 @@ function resetProfileImage(json) {
     } else if (json.type == "receiver-profile") {
         // $('#user-profile-image img').attr('src', json.defaultUrl);
         $('#user-profile-image').attr('src', json.defaultUrl);
+        $('#receiver-profile-image-upload-edit-button').hide();
+        $('#deleteLinkPost_modal_receiver_profileimagedelete').hide();
     }
 
     $('.image-upload-buttons').hide();
