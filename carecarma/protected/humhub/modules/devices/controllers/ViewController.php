@@ -12,6 +12,7 @@ use humhub\modules\content\components\ContentContainerController;
 use humhub\modules\devices\models\Classlabelshoursteps;
 use humhub\modules\devices\models\Classlabelshourheart;
 use humhub\modules\devices\models\DeviceShow;
+use humhub\modules\devices\models\DeviceTimezone;
 use humhub\modules\user\models\Device;
 use Yii;
 use yii\log\Logger;
@@ -31,37 +32,44 @@ class ViewController extends ContentContainerController
                 'user' => $user,
             ));
         }
-
-        $time_zone = $user->time_zone;
-        if ($time_zone == ""){
-            $time_zone = \humhub\models\Setting::Get('timeZone');
-        }
-
-        date_default_timezone_set($time_zone);
-        $today = date("Y-m-d");
-//        date_default_timezone_set($user->time_zone);
-        $unixtoday = strtotime($today);
-        $unixlastweek = strtotime('-1 week', $unixtoday);
-        $start = $unixlastweek."000";
-        $end = $unixtoday. "000";
-
-        $basicData = array_fill(0, 7, array_fill(0, 8, 0));
-        $basicData0 = ['Month', '0:00 -- 4:00', '4:00 -- 8:00', '8:00 -- 12:00', '12:00 -- 16:00', '16:00 -- 20:00', '20:00 -- 24:00', ['role' => 'annotation']];
-
-        array_unshift($basicData, $basicData0);
-
-        $time = $unixlastweek;
-        for ($i = 1; $i < 8; $i++){
-            $basicData[$i][0] = date('M d', $time);
-            $time = $time + 86400;
-        }
-
-
         $DATA = array();
         $devices = array();
         $yesterday_step = 0;
         $count = 0;
         foreach ($dataDevices as $dataDevice){
+
+            $deviceTimezone = DeviceTimezone::find()->where(['hardware_id' => $dataDevice->hardware_id])->orderBy('updated_time DESC')->one();
+            if ($deviceTimezone != null){
+                date_default_timezone_set($deviceTimezone->timezone);
+            } elseif ($user->time_zone != "") {
+                date_default_timezone_set($user->time_zone);
+            } else {
+                $time_zone = \humhub\models\Setting::Get('timeZone');
+                date_default_timezone_set($time_zone);
+            }
+
+
+
+            $today = date("Y-m-d");
+//        date_default_timezone_set($user->time_zone);
+            $unixtoday = strtotime($today);
+            $unixlastweek = strtotime('-1 week', $unixtoday);
+            $start = $unixlastweek."000";
+            $end = $unixtoday. "000";
+
+            $basicData = array_fill(0, 7, array_fill(0, 8, 0));
+            $basicData0 = ['Month', '0:00 -- 4:00', '4:00 -- 8:00', '8:00 -- 12:00', '12:00 -- 16:00', '16:00 -- 20:00', '20:00 -- 24:00', ['role' => 'annotation']];
+
+            array_unshift($basicData, $basicData0);
+
+            $time = $unixlastweek;
+            for ($i = 1; $i < 8; $i++){
+                $basicData[$i][0] = date('M d', $time);
+                $time = $time + 86400;
+            }
+
+
+
             $deviceReportData = $basicData;
             $steps_data = Classlabelshoursteps::find()->where(['hardware_id' => $dataDevice->hardware_id])
                 ->andWhere(['>=', 'time', $start])->andWhere(['<', 'time', $end])->all();
@@ -112,37 +120,42 @@ class ViewController extends ContentContainerController
             ));
         }
 
-        $time_zone = $user->time_zone;
-        if ($time_zone == ""){
-            $time_zone = \humhub\models\Setting::Get('timeZone');
-        }
-
-
-        date_default_timezone_set($time_zone);
-        $today = date("Y-m-d");
-//        $today = "2017-02-01";
-        $unixtoday = strtotime($today);
-//        $unixtoday = 1485925200;
-        $unixlastweek = strtotime('-1 week', $unixtoday);
-        $start = $unixlastweek."000";
-        $end = $unixtoday. "000";
-
-        $basicData = array_fill(0, 7, array_fill(0, 8, 0));
-        $basicData0 = ['Month', '0:00 -- 4:00', '4:00 -- 8:00', '8:00 -- 12:00', '12:00 -- 16:00', '16:00 -- 20:00', '20:00 -- 24:00', ['role' => 'annotation']];
-
-        array_unshift($basicData, $basicData0);
-
-        $time = $unixlastweek;
-        for ($i = 1; $i < 8; $i++){
-            $basicData[$i][0] = date('M d', $time);
-            $time = $time + 86400;
-        }
-
-
         $DATA = array();
         $devices = array();
         $count = 0;
         foreach ($dataDevices as $dataDevice){
+
+            $deviceTimezone = DeviceTimezone::find()->where(['hardware_id' => $dataDevice->hardware_id])->orderBy('updated_time DESC')->one();
+            if ($deviceTimezone != null){
+                date_default_timezone_set($deviceTimezone->timezone);
+            } elseif ($user->time_zone != "") {
+                date_default_timezone_set($user->time_zone);
+            } else {
+                $time_zone = \humhub\models\Setting::Get('timeZone');
+                date_default_timezone_set($time_zone);
+            }
+
+            $today = date("Y-m-d");
+//        $today = "2017-02-01";
+            $unixtoday = strtotime($today);
+//            $unixtoday = 1485925200;
+            $unixlastweek = strtotime('-1 week', $unixtoday);
+            $start = $unixlastweek."000";
+            $end = $unixtoday. "000";
+
+            $basicData = array_fill(0, 7, array_fill(0, 8, 0));
+            $basicData0 = ['Month', '0:00 -- 4:00', '4:00 -- 8:00', '8:00 -- 12:00', '12:00 -- 16:00', '16:00 -- 20:00', '20:00 -- 24:00', ['role' => 'annotation']];
+
+            array_unshift($basicData, $basicData0);
+
+            $time = $unixlastweek;
+            for ($i = 1; $i < 8; $i++){
+                $basicData[$i][0] = date('M d', $time);
+                $time = $time + 86400;
+            }
+
+
+
             $deviceReportData = $basicData;
             $deviceReportArray = array_fill(0, 7, array_fill(0, 6, array()));
             $heart_data = Classlabelshourheart::find()->where(['hardware_id' => $dataDevice->hardware_id])
