@@ -379,7 +379,7 @@ class AuthController extends Controller
             $userS->experience = "";
             $userS->skills = "";
             $userS->workarea = "";
-            $userS->status = "";
+            $userS->status = "active";
             $userS->background = "yes";
             $userS->insurance = "yes";
             $userS->logintype = "normal";
@@ -394,7 +394,7 @@ class AuthController extends Controller
             $userS->unitnumber = "";
             $userS->address = "";
             $userS->city = "";
-            $userS->state = "active";
+            $userS->state = "";
             $userS->country = "";
             $userS->postalcode = "90007";
             $userS->paypalemail = "";
