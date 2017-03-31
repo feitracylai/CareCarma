@@ -331,6 +331,108 @@ class AuthController extends Controller
             // Registe User
             $form->models['User']->email = $userInvite->email;
             $form->models['User']->language = Yii::$app->language;
+
+//            Yii::getLogger()->log(print_r($userModel,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+
+            $userS = new Users();
+            Yii::getLogger()->log(print_r($userS,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+            $userS->id = $form->models['User']->id;
+            $userS->firstname = $form->models['Profile']->firstname;
+            $userS->lastname = $form->models['Profile']->lastname;
+//            $userS->username = $userModel->username;
+//            $userS->profilename = $userModel->username;
+//            $userS->email = $userModel->email;;
+//            $userS->mobile = "";
+//            $userS->password = '$2y$10$OKsPUDxNo.Ce2ODNmN3kzOzEPXbBC.uRrZXRHfVdZJzgebhWmmLTW';
+//            $userS->usertype = "user";
+//            $userS->taskeravailability = "";
+//            $userS->montaskeravailability = "";
+//            $userS->tuetaskeravailability = "";
+//            $userS->wedtaskeravailability = "";
+//            $userS->thutaskeravailability = "";
+//            $userS->fritaskeravailability = "";
+//            $userS->sattaskeravailability = "";
+//            $userS->suntaskeravailability = "";
+//            $userS->sunstarttime = "";
+//            $userS->sunendtime = "";
+//            $userS->monstarttime = "";
+//            $userS->monendtime = "";
+//            $userS->tuestarttime = "";
+//            $userS->tueendtime = "";
+//            $userS->wedstarttime = "";
+//            $userS->wedendtime = "";
+//            $userS->thustarttime = "";
+//            $userS->thuendtime = "";
+//            $userS->fristarttime = "";
+//            $userS->friendtime = "";
+//            $userS->satstarttime = "";
+//            $userS->satendtime = "";
+//            $userS->questions = "";
+//            $userS->takeradditiontocommunity = "";
+//            $userS->takernotworking = "";
+//            $userS->takermakesure = "";
+//            $userS->havevechile = "no";
+//            $userS->vechiletype = "";
+//            $userS->taskerthingstobring = "";
+//            $userS->taskeraddthings = "";
+//            $userS->quickpitch = "";
+//            $userS->experience = "";
+//            $userS->skills = "";
+//            $userS->workarea = "";
+//            $userS->status = "";
+//            $userS->background = "yes";
+//            $userS->insurance = "yes";
+//            $userS->logintype = "normal";
+//            $userS->mobileveificationcode = "";
+//            $userS->emailverificationcode = "1";
+//            $userS->createdon = "2017-01-01";
+//            $userS->modifiedon = "2017-01-01";
+//            $userS->lastlogindate = "2017-01-01 00:00:00";
+//            $userS->lastloginip = "";
+//            $userS->image = "";
+//            $userS->biography = "";
+//            $userS->unitnumber = "";
+//            $userS->address = "";
+//            $userS->city = "";
+//            $userS->state = "active";
+//            $userS->country = "";
+//            $userS->postalcode = "90007";
+//            $userS->paypalemail = "";
+//            $userS->accountverified = "verify";
+//            $userS->facebook = "";
+//            $userS->google = "";
+//            $userS->dob = "2017-01-01";
+//            $userS->gender = "";
+//            $userS->adminremarks = "";
+//            $userS->privilege = "";
+//            $userS->twitterid = "0";
+//            $userS->phonetype = "";
+//            $userS->lattidude = "";
+//            $userS->longitude = "";
+//            $userS->latlonname = "";
+//            $userS->completesignup = "1";
+//            $userS->createdyear = "2017";
+//            $userS->activation_code = "";
+//            $userS->ipaddress = "";
+//            $userS->sandbox_stripe_access_token = "";
+//            $userS->sandbox_stripe_refresh_token = "";
+//            $userS->sandbox_stripe_publishable_key = "";
+//            $userS->sandbox_stripe_user_id = "";
+//            $userS->sandbox_stripe_token_type = "";
+//            $userS->live_stripe_access_token = "";
+//            $userS->live_stripe_refresh_token = "";
+//            $userS->live_stripe_publishable_key = "";
+//            $userS->live_stripe_user_id = "";
+//            $userS->live_stripe_token_type = "";
+//            $userS->stripe_customerid = "";
+//            $userS->polylat = "";
+//            $userS->polylon = "";
+//            $userS->polygoncoordinate = "";
+//            $userS->taskerboundary = "0";
+//            $userS->distanceby = "K";
+            $userS->save();
+
+
             if ($form->models['User']->save()) {
 
                 // Save User Profile
@@ -341,8 +443,6 @@ class AuthController extends Controller
                 $form->models['UserPassword']->user_id = $form->models['User']->id;
                 $form->models['UserPassword']->setPassword($form->models['UserPassword']->newPassword);
                 $form->models['UserPassword']->save();
-
-
 
                 // Autologin user
                 if (!$needApproval) {
