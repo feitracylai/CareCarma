@@ -24,8 +24,9 @@ use yii\helpers\Html;
                     <div class="middle">
                         <?php
                         $devicePhone = '';
-                        if ($user->device_id != null){
-                            $device = \humhub\modules\user\models\Device::findOne(['device_id' => $user->device_id]);
+                        $device = \humhub\modules\user\models\Device::findOne(['user_id' => $user->id]);
+                        if ($device != null){
+
                             $devicePhone = $device->phone;
                         }
                             echo \humhub\widgets\DetailView::widget([
