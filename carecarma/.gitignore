@@ -21,7 +21,7 @@ uploads/profile_image/banner/*
 .htaccess
 nbproject
 .idea/*
-
+.gitmodules
 /composer.lock
 
 
