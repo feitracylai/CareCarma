@@ -1,4 +1,9 @@
 # Ignore everything in this directory
-
+*
+!/background
+!.gitignore
+!index.html
+!file
+!profile_image
 
 
