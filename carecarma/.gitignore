@@ -7,12 +7,16 @@ protected/runtime/*
 protected/config/local/*
 !protected/config/local/.gitignore
 
-uploads/files/.gitignore
+uploads/files/*
+!uploads/files/.gitignore
+!uploads/files/.htaccess
 
-uploads/profile_image/.gitignore
+uploads/profile_image/*
+!uploads/profile_image/banner
+!uploads/profile_image/.gitignore
 
-
-uploads/profile_image/banner/.gitignore
+uploads/profile_image/banner/*
+!uploads/profile_image/banner/.gitignore
 
 .htaccess
 nbproject
@@ -22,4 +26,3 @@ nbproject
 
 
 !themes/HumHub
-
