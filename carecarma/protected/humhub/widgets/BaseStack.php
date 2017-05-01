@@ -70,7 +70,11 @@ class BaseStack extends \yii\base\Widget
      */
     public function init()
     {
-        $this->trigger(self::EVENT_INIT);
+    //    $this->trigger(self::EVENT_INIT);
+	// Yii 2.0.11 introduced own init event
+        if (version_compare(Yii::getVersion(), '2.0.11', '<')) {
+            $this->trigger(self::EVENT_INIT);
+        }
         return parent::init();
     }
 
@@ -80,7 +84,7 @@ class BaseStack extends \yii\base\Widget
     public function run()
     {
         $this->trigger(self::EVENT_RUN);
-
+	
         $content = "";
 
         $i = 0;

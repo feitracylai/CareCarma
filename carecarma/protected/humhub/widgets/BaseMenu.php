@@ -2,6 +2,8 @@
 
 namespace humhub\widgets;
 
+use Yii;
+
 class BaseMenu extends \yii\base\Widget
 {
 
@@ -50,7 +52,10 @@ class BaseMenu extends \yii\base\Widget
         ));
 
         //$this->trigger(self::EVENT_INIT);
-
+	// Yii 2.0.11 introduced own init event
+        if (version_compare(Yii::getVersion(), '2.0.11', '<')) {
+            $this->trigger(self::EVENT_INIT);
+        }
         return parent::init();
     }
 
