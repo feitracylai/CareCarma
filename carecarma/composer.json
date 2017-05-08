@@ -15,10 +15,11 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-	"yiisoft/yii2": "~2.0.9",
-        "yiisoft/yii2-bootstrap": "*",
-        "yiisoft/yii2-swiftmailer": "*",
-        "raoul2000/yii2-jcrop-widget": "*",
+        "yiisoft/yii2": "~2.0.9, <2.0.10",
+        "yiisoft/yii2-bootstrap": "~2.0.0",
+        "yiisoft/yii2-swiftmailer": "~2.0.0",
+        "yiisoft/yii2-authclient": "~2.0.0",
+        "yiisoft/yii2-imagine": "~2.0.0",
         "cebe/markdown": "1.0.2",
         "yiisoft/yii2-jui": "^2.0",
         "zendframework/zend-http": "*",
@@ -29,8 +30,10 @@
         "bower-asset/jquery-knob": "1.2.*",
         "bower-asset/jquery-placeholder": "^2.3.0",
         "bower-asset/blueimp-file-upload": "9.11.*",
-        "bower-asset/fontawesome": "^4.3.0",
-        "bower-asset/bootstrap-markdown": "2.10.*"
+        "bower-asset/fontawesome": "^4.7.0",
+        "bower-asset/bootstrap-markdown": "2.10.*",
+        "kartik-v/yii2-widget-timepicker": "*"
+
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
