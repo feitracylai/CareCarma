@@ -8,6 +8,7 @@
 
 namespace humhub\modules\user\controllers;
 
+use humhub\modules\space\models\Space;
 use Yii;
 use \humhub\components\Controller;
 use \yii\helpers\Url;
@@ -654,15 +655,19 @@ class AccountController extends Controller
      */
     public function actionCropProfileImage()
     {
+        $spaceGuid = Yii::$app->request->get('spaceGuid');
         $model = new \humhub\models\forms\CropProfileImage();
         $profileImage = new \humhub\libs\ProfileImage($this->getUser()->guid);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $profileImage->cropOriginal($model->cropX, $model->cropY, $model->cropH, $model->cropW);
+            if ($spaceGuid != null){
+                return $this->htmlRedirect(Url::to(["/space/manage/device/profile", 'sguid' => $spaceGuid, 'rguid' => $this->getUser()->guid]));
+            }
             return $this->htmlRedirect($this->getUser()->getUrl());
         }
 
-        return $this->renderAjax('cropProfileImage', array('model' => $model, 'profileImage' => $profileImage, 'user' => $this->getUser()));
+        return $this->renderAjax('cropProfileImage', array('model' => $model, 'profileImage' => $profileImage, 'user' => $this->getUser(), 'spaceGuid' => $spaceGuid));
     }
 
     /**
@@ -679,7 +684,7 @@ class AccountController extends Controller
         $json = array('type' => $type);
 
         $image = null;
-        if ($type == 'profile') {
+        if ($type == 'profile' || $type == 'receiver-profile') {
             $image = new \humhub\libs\ProfileImage($this->getUser()->guid);
         } elseif ($type == 'banner') {
             $image = new \humhub\libs\ProfileBannerImage($this->getUser()->guid);

@@ -86,6 +86,43 @@ $(function () {
                 $('#space-banner-image').removeClass('animated bounceIn');
             })
 
+        } else if($(this).attr('id') == "receiverfileupload"){
+            $(this).fileupload({
+                dropZone: $(this),
+                url: receiverImageUploaderUrl,
+                dataType: 'json',
+                singleFileUploads: true,
+                //formData: {'CSRF_TOKEN': csrfValue},
+                limitMultiFileUploads: 1,
+                progressall: function(e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#receiver-profile-image-upload-bar .progress-bar').css('width', progress + '%');
+                },
+                done: function(e, data) {
+
+                    if (data.result.files.error == true) {
+                        handleUploadError(data.result);
+                    } else {
+                        if (receiverImageUploaderUserGuid === receiverImageUploaderCurrentUserGuid) {
+                            $('#user-account-image').attr('src', data.result.files.url + '&c=' + Math.random());
+                        }
+                        $('#user-profile-image').attr('src', data.result.files.url + '&c=' + Math.random());
+                        $('.user-' + receiverImageUploaderUserGuid).attr('src', data.result.files.url + '&c=' + Math.random());
+                        $('#user-profile-image').addClass('animated bounceIn');
+                    }
+
+                    $('#receiver-profile-image-upload-loader').hide();
+                    $('#receiver-profile-image-upload-bar .progress-bar').css('width', '0%');
+                    $('#receiver-profile-image-upload-edit-button').show();
+                    $('#deleteLinkPost_modal_receiver_profileimagedelete').show();
+
+
+                }
+            }).bind('fileuploadstart', function(e) {
+                $('#receiver-profile-image-upload-loader').show();
+            }).bind('fileuploadstart', function(e) {
+                $('#user-profile-image').removeClass('animated bounceIn');
+            })
         }
 
 
@@ -116,6 +153,11 @@ function resetProfileImage(json) {
 
     } else if (json.type == "banner") {
         $('#space-banner-image').attr('src', json.defaultUrl);
+    } else if (json.type == "receiver-profile") {
+        // $('#user-profile-image img').attr('src', json.defaultUrl);
+        $('#user-profile-image').attr('src', json.defaultUrl);
+        $('#receiver-profile-image-upload-edit-button').hide();
+        $('#deleteLinkPost_modal_receiver_profileimagedelete').hide();
     }
 
     $('.image-upload-buttons').hide();
@@ -157,6 +199,15 @@ $(document).ready(function () {
     // hide buttons at image mouse leave
     $('#bannerfileupload, .img-profile-data').mouseleave(function () {
         $('#banner-image-upload-buttons').hide();
+    })
+
+    // show buttons at image rollover
+    $('#receiver-photo-container').mouseover(function() {
+        $('#receiver-profile-image-upload-buttons').show();
+    })
+
+    $('#receiver-photo-container').mouseleave(function() {
+        $('#receiver-profile-image-upload-buttons').hide();
     })
 
 });
