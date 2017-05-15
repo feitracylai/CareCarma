@@ -9,6 +9,7 @@
 namespace humhub\modules\user\models;
 
 use humhub\modules\content\models\Content;
+use humhub\modules\devices\models\DeviceShow;
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\models\Space;
 use humhub\modules\user\notifications\LinkAccepted;
@@ -295,6 +296,8 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
         Setting::deleteAll(['user_id' => $this->id]);
         Contact::deleteAll(['user_id' => $this->id]);
         Contact::deleteAll(['contact_user_id' => $this->id]);
+        DeviceShow::findAll(['user_id' => $this->id]);
+        DeviceShow::findAll(['report_user_id' => $this->id]);
 
         $asOtherContact = Contact::findAll(['contact_user_id' => $this->id]);
         foreach ($asOtherContact as $contact) {
