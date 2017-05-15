@@ -8,6 +8,8 @@
 
 namespace humhub\modules\space\behaviors;
 
+use humhub\modules\devices\models\DeviceShow;
+use humhub\modules\user\models\Device;
 use humhub\modules\user\models\Profile;
 use Yii;
 use yii\base\Behavior;
@@ -418,8 +420,25 @@ class SpaceModelMembership extends Behavior
             foreach ($careMembers as $careMember) {
                 $careUser = User::findOne(['id' => $careMember->user_id]);
                 $careUser->addContact($user);
+
+                //generate device show row
+                $devices = Device::findAll(['user_id' => $careMember->user_id, 'activate' => 1]);
+                if (count($devices) != 0){
+                    foreach ($devices as $device){
+                        $device_show = new DeviceShow();
+                        $device_show->space_id = $this->owner->id;
+                        $device_show->report_user_id = $careMember->user_id;
+                        $device_show->hardware_id = $device->hardware_id;
+                        $device_show->user_id = $user->id;
+                        $device_show->save();
+                    }
+
+                }
             }
         }
+
+
+
 
         // Members can't also follow the space
         $this->owner->unfollow($userId);
@@ -479,6 +498,7 @@ class SpaceModelMembership extends Behavior
 
         foreach (Membership::findAll(['user_id' => $userId, 'space_id' => $this->owner->id]) as $membership) {
             $membership->delete();
+            DeviceShow::deleteAll(['space_id' => $this->owner->id, 'user_id' => $userId]);
         }
 
         $notificationApproval = new \humhub\modules\space\notifications\ApprovalRequest();
