@@ -85,7 +85,7 @@ class Events extends \yii\base\Object
                     }
 
                     $reportUser = Profile::findOne(['user_id' => $device_show->report_user_id]);
-                    $mes = Yii::t('DevicesModule.base', "{ReportF} {ReportL}'s health report is already.", array("{ReportF}" => $reportUser->firstname, "{ReportL}" => $reportUser->lastname));
+                    $mes = Yii::t('DevicesModule.base', "{ReportF} {ReportL}'s health report is ready.", array("{ReportF}" => $reportUser->firstname, "{ReportL}" => $reportUser->lastname));
                     foreach ($user_tokens as $token){
                         $firebase = new Firebase();
                         $firebase->send($token->device_token, $mes);
