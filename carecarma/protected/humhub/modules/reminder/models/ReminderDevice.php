@@ -61,7 +61,7 @@ class ReminderDevice extends \yii\db\ActiveRecord
 
     public function getTimes()
     {
-        return $this->hasOne(ReminderDeviceTime::className(), ['reminder_id' => 'id']);
+        return $this->hasMany(ReminderDeviceTime::className(), ['reminder_id' => 'id']);
     }
 
     public function getSend()

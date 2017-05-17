@@ -59,7 +59,15 @@ $index = 0;
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title"
-                id="myModalLabel"><?php echo Yii::t('ReminderModule.views_receiver_add', '<strong>Add</strong> reminder'); ?></h4>
+                id="myModalLabel">
+                <?php if ($reminder->isNewRecord ){
+                    echo Yii::t('ReminderModule.views_receiver_add', '<strong>Add</strong> reminder');
+                } else {
+                    echo Yii::t('ReminderModule.views_receiver_add', '<strong>Edit</strong> reminder');
+                }
+
+                ?>
+            </h4>
         </div>
 
         <div class="modal-body">
@@ -159,18 +167,36 @@ $index = 0;
             <div class="row">
                 <div class="col-md-12">
                     <?php
-                    echo \humhub\widgets\AjaxButton::widget([
-                        'label' => Yii::t('TasksModule.views_task_edit', 'Send'),
-                        'ajaxOptions' => [
-                            'type' => 'POST',
-                            'beforeSend' => new yii\web\JsExpression('function(){ setModalLoader(); }'),
-                            'success' => new yii\web\JsExpression('function(html){ $("#globalModal").html(html); }'),
-                            'url' => $space->createUrl('add', ['rguid' => $receiver->guid]),
-                        ],
-                        'htmlOptions' => [
-                            'class' => 'btn btn-primary'
-                        ]
-                    ]);
+                    if ($reminder->isNewRecord ){
+                        echo \humhub\widgets\AjaxButton::widget([
+                            'label' => Yii::t('TasksModule.views_task_edit', 'Send'),
+                            'ajaxOptions' => [
+                                'type' => 'POST',
+                                'beforeSend' => new yii\web\JsExpression('function(){ setModalLoader(); }'),
+                                'success' => new yii\web\JsExpression('function(html){ $("#globalModal").html(html); }'),
+                                'url' => $space->createUrl('add', ['rguid' => $receiver->guid]),
+
+                            ],
+                            'htmlOptions' => [
+                                'class' => 'btn btn-primary'
+                            ]
+                        ]);
+                    } else {
+                        echo \humhub\widgets\AjaxButton::widget([
+                            'label' => Yii::t('TasksModule.views_task_edit', 'Update'),
+                            'ajaxOptions' => [
+                                'type' => 'POST',
+                                'beforeSend' => new yii\web\JsExpression('function(){ setModalLoader(); }'),
+                                'success' => new yii\web\JsExpression('function(html){ $("#globalModal").html(html); }'),
+                                'url' => $space->createUrl('edit', ['rguid' => $receiver->guid, 'id' => $reminder->id]),
+
+                            ],
+                            'htmlOptions' => [
+                                'class' => 'btn btn-primary'
+                            ]
+                        ]);
+                    }
+
                     ?>
 
                     <button type="button" class="btn btn-primary"
@@ -187,7 +213,17 @@ $index = 0;
 <script type="text/javascript">
 
 
+    var timesCount = <?php echo $index; ?>;
+    for (var i = 0; i < timesCount; i++){
+        if ($("#reminderdevicetime-" + i + "-repeat").prop('checked')){
+            $(".field-reminderdevicetime-"+ i + "-day").show();
+            $(".field-reminderdevicetime-"+ i + "-date").hide();
+        } else {
+            $(".field-reminderdevicetime-"+ i + "-date").show();
+            $(".field-reminderdevicetime-"+ i + "-day").hide();
+        }
 
+    }
 
 
 
@@ -206,23 +242,6 @@ $index = 0;
 
     }
 
-    $("#repeatCheckbox").change(function () {
-        if ($("#repeatCheckbox").prop('checked')) {
-            $('#repeatBox').show();
-            $("#dateBox").hide();
-        } else {
-            $('#repeatBox').hide();
-            $("#dateBox").show();
-        }
-    });
-
-    if ($("#repeatCheckbox").prop('checked')) {
-        $('#repeatBox').show();
-        $("#dateBox").hide();
-    } else {
-        $('#repeatBox').hide();
-        $("#dateBox").show();
-    }
 
 
 

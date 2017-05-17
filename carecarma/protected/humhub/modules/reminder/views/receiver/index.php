@@ -40,10 +40,6 @@ use yii\helpers\Html;
                 'title',
 
 
-                'times.time',
-                'times.date',
-                'times.day',
-
                 'description',
 
                 [
@@ -70,8 +66,9 @@ use yii\helpers\Html;
                         'view' => function() {
                             return ;
                         },
-                        'update' => function() {
-                            return ;
+                        'update' => function($url, $model) use  ($space, $receiver) {
+
+                            return Html::a(Yii::t('ReminderModule.views_receiver_index', 'Edit'), $space->createUrl('edit', ['rguid' => $receiver->guid, 'id' => $model->id]), ['class' => 'btn btn-info btn-sm', 'data-target' => '#globalModal']);
                         },
                         'delete' => function($url, $model) use ($space){
 //                            return Html::a(Yii::t('ReminderModule.views_receiver_index', 'Remove'), $space->createUrl('delete', ['id' => $model->id]), ['class' => 'btn btn-danger btn-sm', 'data-target' => '#globalModal']);
