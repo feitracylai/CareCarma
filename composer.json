@@ -1,0 +1,6 @@
+{
+    "require": {
+        "kartik-v/yii2-widgets": "*",
+        "wbraganca/yii2-dynamicform": "dev-master"
+    }
+}

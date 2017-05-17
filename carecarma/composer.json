@@ -15,11 +15,11 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": "~2.0.9, <2.0.10",
-        "yiisoft/yii2-bootstrap": "~2.0.0",
-        "yiisoft/yii2-swiftmailer": "~2.0.0",
-        "yiisoft/yii2-authclient": "~2.0.0",
-        "yiisoft/yii2-imagine": "~2.0.0",
+        "yiisoft/yii2": ">=2.0.4, <2.0.10",
+        "yiisoft/yii2-bootstrap": "*",
+        "yiisoft/yii2-swiftmailer": "*",
+        "yiisoft/yii2-authclient": "*",
+        "yiisoft/yii2-imagine": "*",
         "cebe/markdown": "1.0.2",
         "yiisoft/yii2-jui": "^2.0",
         "zendframework/zend-http": "*",
@@ -32,11 +32,7 @@
         "bower-asset/blueimp-file-upload": "9.11.*",
         "bower-asset/fontawesome": "^4.7.0",
         "bower-asset/bootstrap-markdown": "2.10.*",
-        "kartik-v/yii2-widget-timepicker": "*",
-        "2amigos/yii2-multi-select-widget": "*",
-        "wbraganca/yii2-dynamicform": "dev-master",
-        "kartik-v/yii2-widget-datepicker": "@dev",
-        "kartik-v/yii2-checkbox-x": "*"
+        "kartik-v/yii2-widget-timepicker": "*"
 
     },
     "require-dev": {
