@@ -9,10 +9,8 @@ class m170421_151749_reminder_device extends Migration
         $this->createTable('reminder_device', array(
             'id' => 'pk',
             'title' => 'text NOT NULL',
-//            'date' => 'text NOT NULL',
-//            'time' => 'text NOT NULL',
             'description' => 'text DEFAULT NULL',
-            'user_id' => 'user_id', 'int(11) NOT NULL',
+            'user_id' => 'int(11) NOT NULL',
             'sent' => 'int(1) DEFAULT 0',
             'update_user_id' => 'int(11) NOT NULL',
         ), '');

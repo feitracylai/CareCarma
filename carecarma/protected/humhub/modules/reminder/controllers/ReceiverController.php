@@ -81,7 +81,7 @@ class ReceiverController extends ContentContainerController
             Yii::getLogger()->log(Yii::$app->request->post(), Logger::LEVEL_INFO, 'MyLog');
             //validate all models
             if ($reminder->validate() && MultipleModel::validateMultiple($reminder_times)) {
-                Yii::getLogger()->log(print_r($reminder_times, 'true'), Logger::LEVEL_INFO, 'MyLog');
+//                Yii::getLogger()->log(print_r($reminder_times, 'true'), Logger::LEVEL_INFO, 'MyLog');
 
 
                 if ($flag = $reminder->save(false)) {
