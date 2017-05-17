@@ -25,8 +25,6 @@ use yii\base\NotSupportedException;
  * - `captcha`: [[\yii\captcha\CaptchaValidator]]
  * - `compare`: [[CompareValidator]]
  * - `date`: [[DateValidator]]
- * - `datetime`: [[DateValidator]]
- * - `time`: [[DateValidator]]
  * - `default`: [[DefaultValueValidator]]
  * - `double`: [[NumberValidator]]
  * - `each`: [[EachValidator]]
@@ -46,8 +44,6 @@ use yii\base\NotSupportedException;
  * - `url`: [[UrlValidator]]
  * - `ip`: [[IpValidator]]
  *
- * For more details and usage information on Validator, see the [guide article on validators](guide:input-validation).
- *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
@@ -61,14 +57,6 @@ class Validator extends Component
         'captcha' => 'yii\captcha\CaptchaValidator',
         'compare' => 'yii\validators\CompareValidator',
         'date' => 'yii\validators\DateValidator',
-        'datetime' => [
-            'class' => 'yii\validators\DateValidator',
-            'type' => DateValidator::TYPE_DATETIME,
-        ],
-        'time' => [
-            'class' => 'yii\validators\DateValidator',
-            'type' => DateValidator::TYPE_TIME,
-        ],
         'default' => 'yii\validators\DefaultValueValidator',
         'double' => 'yii\validators\NumberValidator',
         'each' => 'yii\validators\EachValidator',
@@ -125,17 +113,17 @@ class Validator extends Component
      */
     public $except = [];
     /**
-     * @var bool whether this validation rule should be skipped if the attribute being validated
+     * @var boolean whether this validation rule should be skipped if the attribute being validated
      * already has some validation error according to some previous rules. Defaults to true.
      */
     public $skipOnError = true;
     /**
-     * @var bool whether this validation rule should be skipped if the attribute value
+     * @var boolean whether this validation rule should be skipped if the attribute value
      * is null or an empty string.
      */
     public $skipOnEmpty = true;
     /**
-     * @var bool whether to enable client-side validation for this validator.
+     * @var boolean whether to enable client-side validation for this validator.
      * The actual client-side validation is done via the JavaScript code returned
      * by [[clientValidateAttribute()]]. If that method returns null, even if this property
      * is true, no client-side validation will be done by this validator.
@@ -153,8 +141,8 @@ class Validator extends Component
      * The signature of the callable should be `function ($model, $attribute)`, where `$model` and `$attribute`
      * refer to the model and the attribute currently being validated. The callable should return a boolean value.
      *
-     * This property is mainly provided to support conditional validation on the server-side.
-     * If this property is not set, this validator will be always applied on the server-side.
+     * This property is mainly provided to support conditional validation on the server side.
+     * If this property is not set, this validator will be always applied on the server side.
      *
      * The following example will enable the validator only when the country currently selected is USA:
      *
@@ -169,16 +157,16 @@ class Validator extends Component
     public $when;
     /**
      * @var string a JavaScript function name whose return value determines whether this validator should be applied
-     * on the client-side. The signature of the function should be `function (attribute, value)`, where
+     * on the client side. The signature of the function should be `function (attribute, value)`, where
      * `attribute` is an object describing the attribute being validated (see [[clientValidateAttribute()]])
      * and `value` the current value of the attribute.
      *
-     * This property is mainly provided to support conditional validation on the client-side.
-     * If this property is not set, this validator will be always applied on the client-side.
+     * This property is mainly provided to support conditional validation on the client side.
+     * If this property is not set, this validator will be always applied on the client side.
      *
      * The following example will enable the validator only when the country currently selected is USA:
      *
-     * ```javascript
+     * ```php
      * function (attribute, value) {
      *     return $('#country').val() === 'USA';
      * }
@@ -191,15 +179,12 @@ class Validator extends Component
 
     /**
      * Creates a validator object.
-     * @param string|\Closure $type the validator type. This can be either:
-     *  * a built-in validator name listed in [[builtInValidators]];
-     *  * a method name of the model class;
-     *  * an anonymous function;
-     *  * a validator class name.
+     * @param mixed $type the validator type. This can be a built-in validator name,
+     * a method name of the model class, an anonymous function, or a validator class name.
      * @param \yii\base\Model $model the data model to be validated.
      * @param array|string $attributes list of attributes to be validated. This can be either an array of
      * the attribute names or a string of comma-separated attribute names.
-     * @param array $params initial values to be applied to the validator properties.
+     * @param array $params initial values to be applied to the validator properties
      * @return Validator the validator
      */
     public static function createValidator($type, $model, $attributes, $params = [])
@@ -289,7 +274,7 @@ class Validator extends Component
      * You may use this method to validate a value out of the context of a data model.
      * @param mixed $value the data value to be validated.
      * @param string $error the error message to be returned, if the validation fails.
-     * @return bool whether the data is valid.
+     * @return boolean whether the data is valid.
      */
     public function validate($value, &$error = null)
     {
@@ -328,8 +313,6 @@ class Validator extends Component
     /**
      * Returns the JavaScript needed for performing client-side validation.
      *
-     * Calls [[getClientOptions()]] to generate options array for client-side validation.
-     *
      * You may override this method to return the JavaScript validation code if
      * the validator can support client-side validation.
      *
@@ -355,26 +338,11 @@ class Validator extends Component
      * containing a model form with this validator applied.
      * @return string the client-side validation script. Null if the validator does not support
      * client-side validation.
-     * @see getClientOptions()
      * @see \yii\widgets\ActiveForm::enableClientValidation
      */
     public function clientValidateAttribute($model, $attribute, $view)
     {
         return null;
-    }
-
-    /**
-     * Returns the client-side validation options.
-     * This method is usually called from [[clientValidateAttribute()]]. You may override this method to modify options
-     * that will be passed to the client-side validation.
-     * @param \yii\base\Model $model the model being validated
-     * @param string $attribute the attribute name being validated
-     * @return array the client-side validation options
-     * @since 2.0.11
-     */
-    public function getClientOptions($model, $attribute)
-    {
-        return [];
     }
 
     /**
@@ -386,7 +354,7 @@ class Validator extends Component
      * - the validator's `on` property contains the specified scenario
      *
      * @param string $scenario scenario name
-     * @return bool whether the validator applies to the specified scenario.
+     * @return boolean whether the validator applies to the specified scenario.
      */
     public function isActive($scenario)
     {
@@ -422,7 +390,7 @@ class Validator extends Component
      * A value is considered empty if it is null, an empty array, or an empty string.
      * Note that this method is different from PHP empty(). It will return false when the value is 0.
      * @param mixed $value the value to be checked
-     * @return bool whether the value is empty
+     * @return boolean whether the value is empty
      */
     public function isEmpty($value)
     {

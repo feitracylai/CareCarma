@@ -32,7 +32,8 @@
         "bower-asset/blueimp-file-upload": "9.11.*",
         "bower-asset/fontawesome": "^4.7.0",
         "bower-asset/bootstrap-markdown": "2.10.*",
-        "kartik-v/yii2-widget-timepicker": "*"
+        "kartik-v/yii2-widget-timepicker": "*",
+        "wbraganca/yii2-dynamicform": "dev-master"
 
     },
     "require-dev": {

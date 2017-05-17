@@ -24,7 +24,7 @@ use yii\base\InvalidParamException;
 trait ActiveRelationTrait
 {
     /**
-     * @var bool whether this query represents a relation to more than one record.
+     * @var boolean whether this query represents a relation to more than one record.
      * This property is only used in relational context. If true, this relation will
      * populate all query results into AR instances using [[Query::all()|all()]].
      * If false, only the first row of the results will be retrieved using [[Query::one()|one()]].
@@ -83,16 +83,15 @@ trait ActiveRelationTrait
      * Use this method to specify a pivot record/table when declaring a relation in the [[ActiveRecord]] class:
      *
      * ```php
-     * class Order extends ActiveRecord
+     * public function getOrders()
      * {
-     *    public function getOrderItems() {
-     *        return $this->hasMany(OrderItem::className(), ['order_id' => 'id']);
-     *    }
+     *     return $this->hasOne(Order::className(), ['id' => 'order_id']);
+     * }
      *
-     *    public function getItems() {
-     *        return $this->hasMany(Item::className(), ['id' => 'item_id'])
-     *                    ->via('orderItems');
-     *    }
+     * public function getOrderItems()
+     * {
+     *     return $this->hasMany(Item::className(), ['id' => 'item_id'])
+     *                 ->via('orders');
      * }
      * ```
      *
@@ -348,7 +347,7 @@ trait ActiveRelationTrait
      * @param array $link
      * @param array $viaModels
      * @param array $viaLink
-     * @param bool $checkMultiple
+     * @param boolean $checkMultiple
      * @return array
      */
     private function buildBuckets($models, $link, $viaModels = null, $viaLink = null, $checkMultiple = true)
@@ -397,7 +396,7 @@ trait ActiveRelationTrait
      * Indexes buckets by column name.
      *
      * @param array $buckets
-     * @param string|callable $indexBy the name of the column by which the query results should be indexed by.
+     * @var string|callable $column the name of the column by which the query results should be indexed by.
      * This can also be a callable (e.g. anonymous function) that returns the index value based on the given row data.
      * @return array
      */
@@ -464,9 +463,6 @@ trait ActiveRelationTrait
                     }
                 }
             }
-            if (empty($values)) {
-                $this->emulateExecution();
-            }
         } else {
             // composite keys
 
@@ -481,9 +477,6 @@ trait ActiveRelationTrait
                     $v[$attribute] = $model[$link];
                 }
                 $values[] = $v;
-                if (empty($v)) {
-                    $this->emulateExecution();
-                }
             }
         }
         $this->andWhere(['in', $attributes, array_unique($values, SORT_REGULAR)]);

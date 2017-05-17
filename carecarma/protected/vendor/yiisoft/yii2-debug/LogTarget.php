@@ -152,7 +152,7 @@ class LogTarget extends Target
             'ajax' => (int) $request->getIsAjax(),
             'method' => $request->getMethod(),
             'ip' => $request->getUserIP(),
-            'time' => $_SERVER['REQUEST_TIME_FLOAT'],
+            'time' => time(),
             'statusCode' => $response->statusCode,
             'sqlCount' => $this->getSqlTotalCount(),
         ];

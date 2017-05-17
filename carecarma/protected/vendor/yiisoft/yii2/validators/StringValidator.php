@@ -20,7 +20,7 @@ use Yii;
 class StringValidator extends Validator
 {
     /**
-     * @var int|array specifies the length limit of the value to be validated.
+     * @var integer|array specifies the length limit of the value to be validated.
      * This can be specified in one of the following forms:
      *
      * - an integer: the exact length that the value should be of;
@@ -34,12 +34,12 @@ class StringValidator extends Validator
      */
     public $length;
     /**
-     * @var int maximum length. If not set, it means no maximum length limit.
+     * @var integer maximum length. If not set, it means no maximum length limit.
      * @see tooLong for the customized message for a too long string.
      */
     public $max;
     /**
-     * @var int minimum length. If not set, it means no minimum length limit.
+     * @var integer minimum length. If not set, it means no minimum length limit.
      * @see tooShort for the customized message for a too short string.
      */
     public $min;
@@ -153,14 +153,6 @@ class StringValidator extends Validator
      */
     public function clientValidateAttribute($model, $attribute, $view)
     {
-        ValidationAsset::register($view);
-        $options = $this->getClientOptions($model, $attribute);
-
-        return 'yii.validation.string(value, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
-    }
-
-    public function getClientOptions($model, $attribute)
-    {
         $label = $model->getAttributeLabel($attribute);
 
         $options = [
@@ -194,6 +186,8 @@ class StringValidator extends Validator
             $options['skipOnEmpty'] = 1;
         }
 
-        return $options;
+        ValidationAsset::register($view);
+
+        return 'yii.validation.string(value, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
     }
 }
