@@ -96,16 +96,10 @@ $index = 0;
                 ]);?>
 
 
-                <div class="panel-body container-items"><!-- widgetContainer -->
+                <div class="container-items"><!-- widgetContainer -->
                     <?php foreach ($reminder_times as $reminder_time): ?>
-                        <div class="item panel panel-default"><!-- widgetBody -->
-                            <div class="panel-heading">
+                        <div class="item  panel-default"><!-- widgetBody -->
 
-                                <span class="panel-title-address" >Time: <?= ($index + 1) ?></span>
-
-                                <button type="button" class="pull-right remove-item btn btn-danger btn-xs"><i class="fa fa-minus"></i></button>
-                                <div class="clearfix"></div>
-                            </div>
                             <div class="panel-body">
                                 <?php
                                 // necessary for update action.
@@ -115,18 +109,17 @@ $index = 0;
                                 ?>
 
                                 <div class="row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-4">
                                         <?php echo $form->field($reminder_time, "[{$index}]time")->widget(\kartik\time\TimePicker::className(), [
                                             'options' => ['class' => 'form-control'],
                                             'pluginOptions' => ['minuteStep' => 1, 'showMeridian' => false]
                                         ]); ?>
 
                                     </div>
-                                    <div class="col-md-2">
-                                        <label>
+                                    <div class="col-md-2" style="padding: 0 20px">
 
-                                            <?php  echo $form->field($reminder_time, "[{$index}]repeat")->checkbox(['label' => '', 'onclick' => 'return OptionsSelected(this)'])->label('Repeat'); ?>
-                                        </label>
+                                            <?php  //echo $form->field($reminder_time, "[{$index}]repeat")->checkbox(['label' => '', 'onclick' => 'return OptionsSelected(this)'])->label('Repeat', ['class' => 'pull-right control-label']); ?>
+                                            <?php  echo $form->field($reminder_time, "[{$index}]repeat")->checkbox(['label' => '', 'onclick' => 'return OptionsSelected(this)'])->label('Repeat', ['class' => ' control-label']); ?>
 
 
                                     </div>
@@ -152,6 +145,12 @@ $index = 0;
 
 
                                     </div>
+
+                                    <div class="col-md-1" style="padding-top: 10px">
+                                        <br>
+                                        <button type="button" class="pull-right remove-item btn btn-danger btn-xs"><i class="fa fa-minus"></i></button>
+                                        <div class="clearfix"></div>
+                                    </div>
                                 </div><!-- end:row -->
                             </div>
                         </div>
@@ -159,7 +158,7 @@ $index = 0;
                     <?php endforeach; ?>
                 </div>
 
-            <div class="panel-heading">
+            <div class="add-time">
                 <button type="button" class="pull-left add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> Add time</button>
                 <div class="clearfix"></div>
             </div>
@@ -167,8 +166,8 @@ $index = 0;
 
 <!--            </div>-->
 
-            <div class="row">
-                <div class="col-md-12">
+            <div class="modal-footer">
+<!--                <div class="col-md-12">-->
                     <?php
                     if ($reminder->isNewRecord ){
                         echo \humhub\widgets\AjaxButton::widget([
@@ -204,7 +203,7 @@ $index = 0;
 
                     <button type="button" class="btn btn-primary"
                             data-dismiss="modal"><?php echo Yii::t('TasksModule.views_task_edit', 'Cancel'); ?></button>
-                </div>
+<!--                </div>-->
             </div>
 
         </div>
@@ -254,4 +253,14 @@ $index = 0;
     .multiselect-container{
         min-width: 170px;
     }
+
+    .panel-body{
+        padding: 0;
+    }
+
+    .add-time{
+        padding: 0 0 10px;
+    }
+
+
 </style>

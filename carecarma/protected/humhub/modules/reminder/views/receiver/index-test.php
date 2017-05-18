@@ -18,78 +18,88 @@ use yii\helpers\Html;
     </div>
 
     <div class="panel-body">
-        <p>
-            <?php echo Yii::t('ReminderModule.views_receiver_index', 'Please help {firstname} {lastname} set reminders in his/her CoSMoS device here.',
-                array('{firstname}' => $receiver->profile->firstname, '{lastname}' => $receiver->profile->lastname)) ?>
-        </p>
+        <?php if (\humhub\modules\user\models\Device::find()->where(['user_id' => $receiver->id, 'activate' => 1])->count() == 0): ?>
 
-        <!--        <a href="--><?php //echo $space->createUrl('add', ['rguid' => $receiver->guid]); ?><!--" class="btn btn-primary"-->
-        <!--           data-target="#globalModal"><i-->
-        <!--                class="fa fa-plus"></i> --><?php //echo Yii::t('ReminderModule.views_receiver_index', 'Add Reminder'); ?><!--</a>-->
+            <p>
+                <?php echo Yii::t('ReminderModule.views_receiver_index', '{firstname} {lastname} does not have a CoSMoS device, please help him/her to',
+                    array('{firstname}' => $receiver->profile->firstname, '{lastname}' => $receiver->profile->lastname)) ?> <?php echo Html::a('<u style="color: #4CACC6">add one.</u>', $space->createUrl('/space/manage/device/device',['rguid' => $receiver->guid]));?>
+            </p>
 
-        <!----test----->
-        <a href="<?php echo $space->createUrl('add-test', ['rguid' => $receiver->guid]); ?>" class="btn btn-primary"
-           data-target="#globalModal"><i
-                class="fa fa-plus"></i> <?php echo Yii::t('ReminderModule.views_receiver_index', 'Add Reminder'); ?></a>
-        <!----test----->
+        <?php else: ?>
+            <p>
+                <?php echo Yii::t('ReminderModule.views_receiver_index', 'Please help {firstname} {lastname} set reminders in his/her CoSMoS device here.',
+                    array('{firstname}' => $receiver->profile->firstname, '{lastname}' => $receiver->profile->lastname)) ?>
+            </p>
 
-        <?php
-        echo GridView::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => [
-                'title',
-                'date',
-                'time',
-                'description',
+            <a href="<?php echo $space->createUrl('add', ['rguid' => $receiver->guid]); ?>" class="btn btn-primary"
+               data-target="#globalModal"><i
+                    class="fa fa-plus"></i> <?php echo Yii::t('ReminderModule.views_receiver_index', 'Add Reminder'); ?></a>
 
-                [
-                    'label' => Yii::t('ReminderModule.views_receiver_index', 'Updated_by'),
-                    'attribute' => 'update_user_id',
-                    'format' => 'raw',
-                    'value' =>
-                        function ($data) {
-                            $profile = \humhub\modules\user\models\Profile::findOne(['user_id' => $data->update_user_id]);
-                            return Yii::t('ReminderModule.views_receiver_index', '{firstname} {lastname}', ['{firstname}' => $profile->firstname, '{lastname}' => $profile->lastname]);
-                        },
+            <!----test----->
+            <!--        <a href="--><?php //echo $space->createUrl('add-test', ['rguid' => $receiver->guid]); ?><!--" class="btn btn-primary"-->
+            <!--           data-target="#globalModal"><i-->
+            <!--                class="fa fa-plus"></i> --><?php //echo Yii::t('ReminderModule.views_receiver_index', 'Add Reminder'); ?><!--</a>-->
+            <!----test----->
 
-                ],
-
-//                'user.profile.firstname',
-//                'user.profile.lastname',
+            <?php
+            echo GridView::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => [
+                    'title',
 
 
-                [
-                    'header' => Yii::t('ReminderModule.views_receiver_index', 'Actions'),
-                    'class' => 'yii\grid\ActionColumn',
-//                    'options' => ['style' => 'width:80px; min-width:80px;'],
-                    'buttons' => [
-                        'view' => function() {
-                            return ;
-                        },
-                        'update' => function() {
-                            return ;
-                        },
-                        'delete' => function($url, $model) use ($space){
+//                'description',
+
+                    [
+                        'label' => Yii::t('ReminderModule.views_receiver_index', 'Updated_by'),
+                        'attribute' => 'update_user_id',
+                        'format' => 'raw',
+                        'value' =>
+                            function ($data) {
+                                $profile = \humhub\modules\user\models\Profile::findOne(['user_id' => $data->update_user_id]);
+                                return Yii::t('ReminderModule.views_receiver_index', '{firstname} {lastname}', ['{firstname}' => $profile->firstname, '{lastname}' => $profile->lastname]);
+                            },
+
+                    ],
+
+
+
+
+                    [
+                        'header' => Yii::t('ReminderModule.views_receiver_index', 'Actions'),
+                        'class' => 'yii\grid\ActionColumn',
+                        'options' => ['style' => 'width:180px; min-width:180px;'],
+                        'buttons' => [
+                            'view' => function() {
+                                return ;
+                            },
+                            'update' => function($url, $model) use  ($space, $receiver) {
+
+                                return Html::a(Yii::t('ReminderModule.views_receiver_index', 'Edit'), $space->createUrl('edit', ['rguid' => $receiver->guid, 'id' => $model->id]), ['class' => 'btn btn-info btn-sm', 'data-target' => '#globalModal']);
+                            },
+                            'delete' => function($url, $model) use ($space){
 //                            return Html::a(Yii::t('ReminderModule.views_receiver_index', 'Remove'), $space->createUrl('delete', ['id' => $model->id]), ['class' => 'btn btn-danger btn-sm', 'data-target' => '#globalModal']);
 //                            Yii::getLogger()->log($url, \yii\log\Logger::LEVEL_INFO, 'MyLog');
-                            return humhub\widgets\ModalConfirm::widget(array(
-                                'uniqueID' => 'modal_delete_remind_' . $model->id,
-                                'linkOutput' => 'a',
-                                'cssClass' => 'btn btn-danger btn-sm',
-                                'title' => Yii::t('ReminderModule.views_receiver_index', '<strong>Confirm</strong> deleting'),
-                                'message' => Yii::t('ReminderModule.views_receiver_index', 'Do you really want to delete this task?'),
-                                'buttonTrue' => Yii::t('ReminderModule.views_receiver_index', 'Delete'),
-                                'buttonFalse' => Yii::t('ReminderModule.views_receiver_index', 'Cancel'),
-                                'linkContent' => 'remove',
-                                'linkHref' => $url.'&sguid='.$space->guid,
-                                'confirmJS' => "window.location.reload()",
-                            ));
-                        }
+                                return humhub\widgets\ModalConfirm::widget(array(
+                                    'uniqueID' => 'modal_delete_remind_' . $model->id,
+                                    'linkOutput' => 'a',
+                                    'cssClass' => 'btn btn-danger btn-sm',
+                                    'title' => Yii::t('ReminderModule.views_receiver_index', '<strong>Confirm</strong> deleting'),
+                                    'message' => Yii::t('ReminderModule.views_receiver_index', 'Do you really want to delete this task?'),
+                                    'buttonTrue' => Yii::t('ReminderModule.views_receiver_index', 'Delete'),
+                                    'buttonFalse' => Yii::t('ReminderModule.views_receiver_index', 'Cancel'),
+                                    'linkContent' => 'remove',
+                                    'linkHref' => $url.'&sguid='.$space->guid,
+                                    'confirmJS' => "window.location.reload()",
+                                ));
+                            }
+                        ],
                     ],
                 ],
-            ],
-        ]);
-        ?>
+            ]);
+            ?>
+
+        <?php endif; ?>
     </div>
 </div>
 

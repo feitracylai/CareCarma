@@ -44,23 +44,6 @@ class ReceiverController extends ContentContainerController
         ));
     }
 
-    public function actionIndexTest()
-    {
-        $space = $this->contentContainer;
-        $receiver = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
-
-        $searchModel = new ReminderDeviceSearch();
-        $searchModel->user_id = $receiver->id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-//        Yii::getLogger()->log($dataProvider->count, Logger::LEVEL_INFO, 'MyLog');
-
-        return $this->render('index-test', array(
-            'space' => $space,
-            'dataProvider' => $dataProvider,
-            'receiver' => $receiver,
-        ));
-    }
 
     public function actionAdd()
     {
@@ -115,54 +98,6 @@ class ReceiverController extends ContentContainerController
         ));
     }
 
-    public function actionAddTest()
-    {
-
-            $space = $this->contentContainer;
-            $receiver =User::findOne(['guid' => Yii::$app->request->get('rguid')]);
-
-            $reminder = new ReminderDevice();
-            $reminder->user_id = $receiver->id;
-            $reminder->update_user_id = Yii::$app->user->id;
-
-            $reminder_time = new ReminderDeviceTime();
-
-        if ($reminder->load(Yii::$app->request->post()) && $reminder_time->load(Yii::$app->request->post())) {
-//            Yii::getLogger()->log(print_r(Yii::$app->request->post(), 'true'), Logger::LEVEL_INFO, 'MyLog');
-
-            if ($reminder->validate() && $reminder_time->validate()) {
-                Yii::getLogger()->log('validate', Logger::LEVEL_INFO, 'MyLog');
-                if ($reminder_time->repeat == 0 && $reminder_time->date == ''){
-                    $reminder_time->addError('date', Yii::t('ReminderModule.controllers_ReceiverController', "Date cannot be blank."));
-                }
-                if ($reminder_time->repeat == 1 && $reminder_time->repeat_days == ''){
-                    $reminder_time->addError('repeat_days', Yii::t('ReminderModule.controllers_ReceiverController', "Repeat Days cannot be blank."));
-                }
-
-                if ($reminder->save()) {
-                    if ($reminder_time->repeat == 1){
-
-                    } else {
-                        $reminder_time->reminder_id = $reminder->id;
-
-                        $reminder_time->save();
-                    }
-
-
-
-                    return $this->htmlRedirect($space->createUrl('index-test', ['rguid' => $receiver->guid]));
-                }
-            }
-        }
-
-
-        return $this->renderAjax('add-test', array(
-            'reminder' => $reminder,
-            'reminder_time' => $reminder_time,
-            'space' => $space,
-            'receiver' => $receiver,
-        ));
-    }
 
     public function actionEdit()
     {

@@ -48,7 +48,7 @@ use yii\helpers\Html;
                 'title',
 
 
-                'description',
+//                'description',
 
                 [
                     'label' => Yii::t('ReminderModule.views_receiver_index', 'Updated_by'),
@@ -62,14 +62,13 @@ use yii\helpers\Html;
 
                 ],
 
-//                'user.profile.firstname',
-//                'user.profile.lastname',
+
 
 
                 [
                     'header' => Yii::t('ReminderModule.views_receiver_index', 'Actions'),
                     'class' => 'yii\grid\ActionColumn',
-//                    'options' => ['style' => 'width:80px; min-width:80px;'],
+                    'options' => ['style' => 'width:180px; min-width:180px;'],
                     'buttons' => [
                         'view' => function() {
                             return ;
