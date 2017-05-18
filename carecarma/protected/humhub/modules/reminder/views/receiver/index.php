@@ -18,6 +18,14 @@ use yii\helpers\Html;
     </div>
 
     <div class="panel-body">
+        <?php if (\humhub\modules\user\models\Device::find()->where(['user_id' => $receiver->id, 'activate' => 1])->count() == 0): ?>
+
+        <p>
+            <?php echo Yii::t('ReminderModule.views_receiver_index', '{firstname} {lastname} does not have a CoSMoS device, please help him/her to',
+                array('{firstname}' => $receiver->profile->firstname, '{lastname}' => $receiver->profile->lastname)) ?> <?php echo Html::a('<u style="color: #4CACC6">add one.</u>', $space->createUrl('/space/manage/device/device',['rguid' => $receiver->guid]));?>
+        </p>
+
+        <?php else: ?>
         <p>
             <?php echo Yii::t('ReminderModule.views_receiver_index', 'Please help {firstname} {lastname} set reminders in his/her CoSMoS device here.',
                 array('{firstname}' => $receiver->profile->firstname, '{lastname}' => $receiver->profile->lastname)) ?>
@@ -91,6 +99,8 @@ use yii\helpers\Html;
             ],
         ]);
         ?>
+
+        <?php endif; ?>
     </div>
 </div>
 

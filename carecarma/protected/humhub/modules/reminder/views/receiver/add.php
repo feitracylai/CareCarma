@@ -144,7 +144,10 @@ $index = 0;
                                             ], ['prompt' => 'Please select:']);
                                             ?>
 
-                                            <?php echo $form->field($reminder_time, "[{$index}]date")->widget(\yii\jui\DatePicker::className(), ['options' => ['class' => 'form-control reminder-time-datepicker']]); ?>
+                                            <?php echo $form->field($reminder_time, "[{$index}]date")->widget(\yii\jui\DatePicker::className(), [
+                                                'options' => ['class' => 'form-control reminder-time-datepicker'],
+                                                'clientOptions' => ['minDate' => 0]
+                                            ]); ?>
 
 
 
