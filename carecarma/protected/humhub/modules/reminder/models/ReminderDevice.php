@@ -15,11 +15,14 @@ use yii\log\Logger;
  * @property integer $id
  * @property string $title
  * @property string $description
- * @property integer $sent
+ * @property integer $status
  * @property integer $update_user_id
  */
 class ReminderDevice extends \yii\db\ActiveRecord
 {
+    const STATUS_SENDWRONG = 0;
+    const STATUS_SENT = 1;
+    const STATUS_EXPIRED = 2;
 
     /**
      * @inheritdoc
@@ -38,7 +41,7 @@ class ReminderDevice extends \yii\db\ActiveRecord
 //            [['title', 'date', 'time', 'user_id', 'update_user_id'], 'required'],
             [['title', 'user_id', 'update_user_id'], 'required'],
             [['title', 'description'], 'string'],
-            [['user_id', 'sent', 'update_user_id'], 'integer'],
+            [['user_id', 'status', 'update_user_id'], 'integer'],
         ];
     }
 

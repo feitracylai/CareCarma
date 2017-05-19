@@ -43,6 +43,8 @@ class Events extends \yii\base\Object
     public static function setCareRemind($event)
     {
         $space = $event->sender->space;
+
+
         $event->sender->addItem(array(
             'label' => Yii::t('ReminderModule.base', 'Set Reminder'),
             'url' => $space->createUrl('/reminder/receiver/index', ['rguid' => Yii::$app->request->get('rguid')]),

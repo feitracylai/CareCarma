@@ -35,11 +35,6 @@ use yii\helpers\Html;
                    data-target="#globalModal"><i
                         class="fa fa-plus"></i> <?php echo Yii::t('ReminderModule.views_receiver_index', 'Add Reminder'); ?></a>
 
-        <!----test----->
-<!--        <a href="--><?php //echo $space->createUrl('add-test', ['rguid' => $receiver->guid]); ?><!--" class="btn btn-primary"-->
-<!--           data-target="#globalModal"><i-->
-<!--                class="fa fa-plus"></i> --><?php //echo Yii::t('ReminderModule.views_receiver_index', 'Add Reminder'); ?><!--</a>-->
-        <!----test----->
 
         <?php
         echo GridView::widget([
@@ -49,15 +44,47 @@ use yii\helpers\Html;
 
 
 //                'description',
+                [
+                    'label' => Yii::t('ReminderModule.views_receiver_index', 'Reminder Time'),
+                    'format' => 'raw',
+                    'options' => ['style' => 'width:25%; min-width:180px;'],
+                    'value' => function($data){
+                        $times = $data->times;
+                        $time_detail = array();
+
+                        $days = ['everyday' => 'Everyday',
+                            'Sun' => 'Every Sunday',
+                            'Mon' => 'Every Monday',
+                            'Tue' => 'Every Tuesday',
+                            'Wed' => 'Every Wednesday',
+                            'Thur' => 'Every Thursday',
+                            'Fri' => 'Every Friday',
+                            'Sat' => 'Every Saturday'];
+
+                        foreach ($times as $time){
+                            if ($time->repeat == 0){
+                                $time_detail[] = $time->date.' '.$time->time;
+                            } else {
+                                $time_detail[] = $days[$time->day].' '.$time->time;
+                            }
+                        }
+
+                        return implode("<br><br>", $time_detail);
+                    }
+                ],
+
 
                 [
                     'label' => Yii::t('ReminderModule.views_receiver_index', 'Updated_by'),
                     'attribute' => 'update_user_id',
+                    'options' => ['style' => 'width:25%; '],
                     'format' => 'raw',
                     'value' =>
                         function ($data) {
-                            $profile = \humhub\modules\user\models\Profile::findOne(['user_id' => $data->update_user_id]);
-                            return Yii::t('ReminderModule.views_receiver_index', '{firstname} {lastname}', ['{firstname}' => $profile->firstname, '{lastname}' => $profile->lastname]);
+//                            $profile = \humhub\modules\user\models\Profile::findOne(['user_id' => $data->update_user_id]);
+//                            return Yii::t('ReminderModule.views_receiver_index', '{firstname} {lastname}', ['{firstname}' => $profile->firstname, '{lastname}' => $profile->lastname]);
+                            return Yii::t('ReminderModule.views_receiver_index', '{firstname} {lastname}', ['{firstname}' => $data->send->profile->firstname, '{lastname}' => $data->send->profile->lastname]);
+
                         },
 
                 ],

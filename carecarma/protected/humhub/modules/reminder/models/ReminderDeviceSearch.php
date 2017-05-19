@@ -11,11 +11,7 @@ use yii\data\ActiveDataProvider;
  */
 class ReminderDeviceSearch extends ReminderDevice
 {
-    public function attributes()
-    {
-        // add related fields to searchable attributes
-        return array_merge(parent::attributes(), ['times.time', 'times.date', 'times.day']);
-    }
+
 
     /**
      * @inheritdoc
@@ -23,8 +19,8 @@ class ReminderDeviceSearch extends ReminderDevice
     public function rules()
     {
         return [
-            [['id', 'user_id', 'sent', 'update_user_id'], 'integer'],
-            [['title', 'times.time', 'times.date', 'description'], 'safe'],
+            [['id', 'update_user_id'], 'integer'],
+            [['title', 'description'], 'safe'],
         ];
     }
 
@@ -57,13 +53,9 @@ class ReminderDeviceSearch extends ReminderDevice
         $dataProvider->setSort([
             'attributes' => [
                 'title',
-                'times.time',
-                'times.date',
-                'times.day',
                 'description',
+                'update_user_id',
 
-
-                'sent',
             ]
         ]);
 
@@ -78,8 +70,6 @@ class ReminderDeviceSearch extends ReminderDevice
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'sent' => $this->sent,
             'update_user_id' => $this->update_user_id,
         ]);
 
