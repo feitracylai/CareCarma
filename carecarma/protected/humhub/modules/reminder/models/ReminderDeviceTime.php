@@ -98,7 +98,8 @@ class ReminderDeviceTime extends \yii\db\ActiveRecord
 
 
                 } elseif ($this->repeat == 1){
-                    if ($this->day == 'everyday'){
+                    /******if it is everyday**********/
+                    if ($this->day == 0){
                         $data['repeat'] = $this::REMIND_EVERYDAY;
                     } else {
                         $data['repeat'] = $this::REMIND_DAY;

@@ -126,15 +126,7 @@ $index = 0;
 
                                     <div class="col-md-5">
                                             <?php echo $form->field($reminder_time, "[{$index}]day", ['options' => ['style' => 'display : none']])->dropDownList([
-                                                'everyday' => 'Everyday',
-                                                'Sun' => 'Every Sunday',
-                                                'Mon' => 'Every Monday',
-                                                'Tue' => 'Every Tuesday',
-                                                'Wed' => 'Every Wednesday',
-                                                'Thur' => 'Every Thursday',
-                                                'Fri' => 'Every Friday',
-                                                'Sat' => 'Every Saturday'
-                                            ], ['prompt' => 'Please select:']);
+                                                'Everyday', 'Every Sunday', 'Every Monday', 'Every Tuesday', 'Every Wednesday', 'Every Thursday', 'Every Friday', 'Every Saturday'], ['prompt' => 'Please select:']);
                                             ?>
 
                                             <?php echo $form->field($reminder_time, "[{$index}]date")->widget(\yii\jui\DatePicker::className(), [

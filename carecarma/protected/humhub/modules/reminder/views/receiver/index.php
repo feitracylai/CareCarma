@@ -52,14 +52,15 @@ use yii\helpers\Html;
                         $times = $data->times;
                         $time_detail = array();
 
-                        $days = ['everyday' => 'Everyday',
-                            'Sun' => 'Every Sunday',
-                            'Mon' => 'Every Monday',
-                            'Tue' => 'Every Tuesday',
-                            'Wed' => 'Every Wednesday',
-                            'Thur' => 'Every Thursday',
-                            'Fri' => 'Every Friday',
-                            'Sat' => 'Every Saturday'];
+//                        $days = ['everyday' => 'Everyday',
+//                            'Sun' => 'Every Sunday',
+//                            'Mon' => 'Every Monday',
+//                            'Tue' => 'Every Tuesday',
+//                            'Wed' => 'Every Wednesday',
+//                            'Thur' => 'Every Thursday',
+//                            'Fri' => 'Every Friday',
+//                            'Sat' => 'Every Saturday'];
+                        $days = ['Everyday', 'Every Sunday', 'Every Monday', 'Every Tuesday', 'Every Wednesday', 'Every Thursday', 'Every Friday', 'Every Saturday'];
 
                         foreach ($times as $time){
                             if ($time->repeat == 0){
