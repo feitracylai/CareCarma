@@ -35,7 +35,7 @@ $this->registerJs('
 $(function () {
     $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
         $( ".reminder-time-datepicker" ).each(function() {
-           $( this ).datepicker({dateFormat : "M d, yy"});
+           $( this ).datepicker({dateFormat : "M d, yy", minDate : 0});
       });
       
         
@@ -44,7 +44,7 @@ $(function () {
 $(function () {
     $(".dynamicform_wrapper").on("afterDelete", function(e, item) {
         $( ".reminder-time-datepicker" ).each(function() {
-           $( this ).removeClass("hasDatepicker").datepicker({dateFormat : "M d, yy"});
+           $( this ).removeClass("hasDatepicker").datepicker({dateFormat : "M d, yy", minDate : 0});
       });          
     });
 });
