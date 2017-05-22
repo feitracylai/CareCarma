@@ -93,8 +93,8 @@ class ReminderDeviceTime extends \yii\db\ActiveRecord
 
                     $data['repeat'] = $this::REMIND_ONCE;
                     $data['date'] = date_format(date_create($this->date), "d");
-                    $data['month'] = date_format(date_create("01:46 PM"), "m");
-                    $data['year'] = date_format(date_create("01:46 PM"), "Y");
+                    $data['month'] = date_format(date_create($this->date), "m");
+                    $data['year'] = date_format(date_create($this->date), "Y");
 
 
                 } elseif ($this->repeat == 1){
