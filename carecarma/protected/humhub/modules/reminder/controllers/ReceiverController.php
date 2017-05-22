@@ -182,25 +182,5 @@ class ReceiverController extends ContentContainerController
     }
 
 
-    public function actionGetreminders()
-    {
-        $data = Yii::$app->request->post();
-        $user = User::findOne($data['user_id']);
 
-        if ($user == null){
-            return 'user id is error.';
-        }
-
-        $device = Device::findOne(['device_id' => $data['device_id'], 'user_id' => $user->id, 'activate' => 1]);
-
-        if ($device == null){
-            return 'device id is error.';
-        }
-
-        foreach (ReminderDevice::find()->where(['user_id' => $user->id])->each() as $reminder){
-            Yii::getLogger()->log($reminder->id, Logger::LEVEL_INFO, 'MyLog');
-        }
-
-        return 'success';
-    }
 }

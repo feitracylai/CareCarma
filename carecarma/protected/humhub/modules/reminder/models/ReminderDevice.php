@@ -15,6 +15,7 @@ use yii\log\Logger;
  * @property integer $id
  * @property string $title
  * @property string $description
+ * @property integer $user_id
  * @property integer $status
  * @property integer $update_user_id
  */
