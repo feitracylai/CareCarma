@@ -11,6 +11,7 @@ namespace humhub\modules\reminder\controllers;
 use humhub\models\MultipleModel;
 use humhub\modules\reminder\models\ReminderDevice;
 use humhub\modules\reminder\models\ReminderDeviceTime;
+use humhub\modules\user\models\Device;
 use humhub\modules\user\models\User;
 use Yii;
 use humhub\modules\content\components\ContentContainerController;
@@ -32,8 +33,8 @@ class ReceiverController extends ContentContainerController
         $receiver = User::findOne(['guid' => Yii::$app->request->get('rguid')]);
 
         $searchModel = new ReminderDeviceSearch();
-        $searchModel->user_id = $receiver->id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//        $searchModel->user_id = $receiver->id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $receiver->id);
 
 //        Yii::getLogger()->log($dataProvider->count, Logger::LEVEL_INFO, 'MyLog');
 
@@ -63,7 +64,7 @@ class ReceiverController extends ContentContainerController
 
             $reminder_times = MultipleModel::createMultiple(ReminderDeviceTime::className());
             MultipleModel::loadMultiple($reminder_times, Yii::$app->request->post());
-            Yii::getLogger()->log(Yii::$app->request->post(), Logger::LEVEL_INFO, 'MyLog');
+//            Yii::getLogger()->log(Yii::$app->request->post(), Logger::LEVEL_INFO, 'MyLog');
             //validate all models
             if ($reminder->validate() && MultipleModel::validateMultiple($reminder_times)) {
 //                Yii::getLogger()->log('add', Logger::LEVEL_INFO, 'MyLog');
@@ -178,5 +179,28 @@ class ReceiverController extends ContentContainerController
         } else {
             throw new HttpException(404, 'The requested page does not exist.');
         }
+    }
+
+
+    public function actionGetreminders()
+    {
+        $data = Yii::$app->request->post();
+        $user = User::findOne($data['user_id']);
+
+        if ($user == null){
+            return 'user id is error.';
+        }
+
+        $device = Device::findOne(['device_id' => $data['device_id'], 'user_id' => $user->id, 'activate' => 1]);
+
+        if ($device == null){
+            return 'device id is error.';
+        }
+
+        foreach (ReminderDevice::find()->where(['user_id' => $user->id])->each() as $reminder){
+            Yii::getLogger()->log($reminder->id, Logger::LEVEL_INFO, 'MyLog');
+        }
+
+        return 'success';
     }
 }

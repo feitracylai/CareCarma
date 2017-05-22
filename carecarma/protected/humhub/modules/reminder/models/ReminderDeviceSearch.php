@@ -40,9 +40,9 @@ class ReminderDeviceSearch extends ReminderDevice
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $id)
     {
-        $query = ReminderDevice::find()->joinWith('times');
+        $query = ReminderDevice::find()->where(['user_id' => $id ])->joinWith('times');
 
         // add conditions that should always apply here
 
