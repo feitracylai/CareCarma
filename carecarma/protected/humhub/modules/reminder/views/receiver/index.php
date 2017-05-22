@@ -39,6 +39,9 @@ use yii\helpers\Html;
         <?php
         echo GridView::widget([
             'dataProvider' => $dataProvider,
+            'rowOptions' => function($model, $key, $index, $grid){
+                return ['id' => 'reminder_'.$model['id']];
+            },
             'columns' => [
                 'title',
 
@@ -76,7 +79,7 @@ use yii\helpers\Html;
 
 
                 [
-                    'label' => Yii::t('ReminderModule.views_receiver_index', 'Updated_by'),
+                    'label' => Yii::t('ReminderModule.views_receiver_index', 'Created by'),
                     'attribute' => 'update_user_id',
                     'options' => ['style' => 'width:25%; '],
                     'format' => 'raw',
@@ -118,7 +121,7 @@ use yii\helpers\Html;
                                 'buttonFalse' => Yii::t('ReminderModule.views_receiver_index', 'Cancel'),
                                 'linkContent' => 'remove',
                                 'linkHref' => $url.'&sguid='.$space->guid,
-                                'confirmJS' => "window.location.reload()",
+                                'confirmJS' => "$('#reminder_" . $model->id . "').fadeOut('fast')",
                             ));
                         }
                     ],
