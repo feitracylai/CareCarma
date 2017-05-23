@@ -94,9 +94,6 @@ class DeviceController extends Controller
         return 'success';
     }
 
-
-}
-
     public function actionGetreminderadd()
     {
         $data = Yii::$app->request->post();
@@ -168,4 +165,3 @@ class DeviceController extends Controller
     }
 
 }
-
