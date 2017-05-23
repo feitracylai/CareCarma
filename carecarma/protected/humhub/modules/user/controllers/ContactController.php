@@ -738,7 +738,7 @@ class ContactController extends Controller
         }
         $contact_list['data'] = $contact_data;
 
-        Yii::getLogger()->log(print_r($contact_list, true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        Yii::getLogger()->log(print_r($contact_list, true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
 
         $gcm = new GCM();
