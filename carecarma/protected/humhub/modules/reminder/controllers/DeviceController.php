@@ -29,10 +29,10 @@ class DeviceController extends Controller
     {
 
         $data = Yii::$app->request->post();
-        $user = User::findOne($data['user_id']);
+        $user = User::findOne(['username' => $data['username']]);
 
         if ($user == null){
-            return 'user id is error.';
+            return 'user name is error.';
         }
 
         $device = Device::findOne(['device_id' => $data['device_id'], 'user_id' => $user->id, 'activate' => 1]);
@@ -83,12 +83,12 @@ class DeviceController extends Controller
                 array_push($data['data'], $info);
             }
         }
-//        Yii::getLogger()->log($data, Logger::LEVEL_INFO, 'MyLog');
+
         $gcm = new GCM();
         $result = json_decode($gcm->send($device->gcmId, $data), true);
-
+//        Yii::getLogger()->log($result, Logger::LEVEL_INFO, 'MyLog');
         if ($result['success'] == 0) {
-            return $result['results']['error'];
+            return $result['results'][0]['error'];
         }
 
         return 'success';
