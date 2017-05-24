@@ -46,13 +46,14 @@ class Events extends \yii\base\Object
     {
         $space = $event->sender->space;
 
-        if (Yii::$app->user->id == 1){
+        if (Yii::$app->user->id == 1 || Yii::$app->user->id == 32){
         $event->sender->addItem(array(
             'label' => Yii::t('ReminderModule.base', 'Set Reminders'),
             'url' => $space->createUrl('/reminder/receiver/index', ['rguid' => Yii::$app->request->get('rguid')]),
             'sortOrder' => '350',
             'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'reminder'),
-        ));}
+        ));
+        }
     }
 
 
