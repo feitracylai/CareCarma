@@ -176,10 +176,10 @@ class BaseNotification extends \yii\base\Component implements ViewContextInterfa
             foreach($users_token as $user_token) {
                $mobile_token = $user_token->device_token;
 		// Yii::getLogger()->log($mobile_token, Logger::LEVEL_INFO, 'MyLog');
-               $firebase = new Firebase();
+               $firebase = new Firebase(); //for Android device
                $firebase->send($mobile_token,$msg );
-                $sendNot = new sendNotificationIOS();
-                $sendNot ->sendMessage($mobile_token,$msg);
+//                $sendNot = new sendNotificationIOS(); //for IOS device
+//                $sendNot ->sendMessage($mobile_token,$msg);
 
                
             }
@@ -239,7 +239,8 @@ class BaseNotification extends \yii\base\Component implements ViewContextInterfa
     }
 
     /**
-     * Returns the directory containing the view files for this notification.
+     * Returns the directory containing the view fi
+     * les for this notification.
      * The default implementation returns the 'views' subdirectory under the directory containing the notification class file.
      * @return string the directory containing the view files for this notification.
      */
@@ -290,5 +291,15 @@ class BaseNotification extends \yii\base\Component implements ViewContextInterfa
         $this->record->seen = 1;
         $this->record->save();
     }
-    
+
+    /**
+     * Static initializer should be prefered over new initialization, since it makes use
+     * of Yii::createObject dependency injection/configuration.
+     *
+     * @return \humhub\components\SocialActivity
+     */
+    public static function instance($options = [])
+    {
+        return Yii::createObject(static::class, $options);
+    }
 }
