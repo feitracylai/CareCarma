@@ -12,7 +12,7 @@ use humhub\modules\user\models\Device;
 </div>
 <div class="panel-body">
     <p>
-        <?php echo Yii::t('UserModule.views_account_editDevice', 'If you have got an CoSMoS device or use CoSMoS App, please input your <strong>Activation ID</strong> to activate it here.'); ?>
+        <?php echo Yii::t('UserModule.views_account_editDevice', 'If you have a CoSMoS device or use a CoSMoS App, please input your <strong>Activation ID</strong> to activate it here.'); ?>
     </p>
 
     <?php $form = ActiveForm::begin(); ?>
