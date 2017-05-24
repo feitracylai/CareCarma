@@ -132,9 +132,9 @@ class MailController extends Controller
                     if ($users_tokenT != null) {
                         foreach ($users_tokenT as $userToken) {
                             $mobile_token = $userToken->device_token;
-                            $sendNot = new sendNotificationIOS();
-                            $sendNot->sendMessage($mobile_token, $txt1);
-                            $firebase = new Firebase();
+//                            $sendNot = new sendNotificationIOS(); //for IOS device
+//                            $sendNot->sendMessage($mobile_token, $txt1);
+                            $firebase = new Firebase(); //only for Android device
                             $firebase->send($mobile_token, $txt1);
                         }
                     }
@@ -417,8 +417,8 @@ class MailController extends Controller
                         {
                             foreach($users_tokenT as $users_tokenT) {
                                 $mobile_token = $users_tokenT->device_token;
-                                $sendNot = new sendNotificationIOS();
-                                $sendNot ->sendMessage($mobile_token,$messageEntry->content);
+//                                $sendNot = new sendNotificationIOS();
+//                                $sendNot ->sendMessage($mobile_token,$messageEntry->content);
                                 $firebase = new Firebase();
                                 $firebase->send($mobile_token,$messageEntry->content);
                             }
@@ -653,8 +653,8 @@ class MailController extends Controller
                     if ($users_tokenT != null) {
                         foreach ($users_tokenT as $userToken) {
                             $mobile_token = $userToken->device_token;
-                            $sendNot = new sendNotificationIOS();
-                            $sendNot->sendMessage($mobile_token, $deviceMessage->content);
+//                            $sendNot = new sendNotificationIOS();
+//                            $sendNot->sendMessage($mobile_token, $deviceMessage->content);
                             $firebase = new Firebase();
                             $firebase->send($mobile_token, $deviceMessage->content);
                         }
@@ -745,8 +745,8 @@ class MailController extends Controller
                         if ($users_tokenT != null) {
                             foreach ($users_tokenT as $userToken) {
                                 $mobile_token = $userToken->device_token;
-                                $sendNot = new sendNotificationIOS();
-                                $sendNot->sendMessage($mobile_token, $deviceMessage->content);
+//                                $sendNot = new sendNotificationIOS();
+//                                $sendNot->sendMessage($mobile_token, $deviceMessage->content);
                                 $firebase = new Firebase();
                                 $firebase->send($mobile_token, $deviceMessage->content);
                             }

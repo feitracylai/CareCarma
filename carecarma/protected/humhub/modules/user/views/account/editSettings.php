@@ -26,8 +26,9 @@ use \humhub\models\Setting;
 
 
     <?php endif; ?>
-
+    <?php if (Setting::Get('enable', 'tour')): ?>
     <?php echo $form->field($model, 'show_introduction_tour')->checkbox(); ?>
+    <?php endif; ?>
     <hr>
 
     <?php echo CHtml::submitButton(Yii::t('UserModule.views_account_editSettings', 'Save'), array('class' => 'btn btn-primary')); ?>

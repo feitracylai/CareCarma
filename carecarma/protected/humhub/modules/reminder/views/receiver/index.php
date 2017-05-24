@@ -67,13 +67,11 @@ use yii\helpers\Html;
 
                         foreach ($times as $time){
                             if ($time->repeat == 0){
-                                $now = date('M d, Y H:i');
+                                $now = time();
                                 $datetime = $time->date.' '.$time->time;
-                                if ($now < $datetime){
-                                    $time_detail[] = '<p>'.$datetime.'</p>';
-                                } else {
-                                    $time_detail[] = '<p style="text-decoration: line-through"><i>'.$datetime.'</i></p>';
-                                }
+                                /***add line-through for expired reminders *****/
+                                $time_detail[] = ($now < strtotime($datetime)) ? '<p>'.$datetime.'</p>' : '<p style="text-decoration: line-through"><i>'.$datetime.'</i></p>';
+
 
                             } else {
                                 $time_detail[] = '<p>'.$days[$time->day].' '.$time->time.'</p>';

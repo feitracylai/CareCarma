@@ -11,7 +11,6 @@ class m170421_151749_reminder_device extends Migration
             'title' => 'text NOT NULL',
             'description' => 'text NOT NULL',
             'user_id' => 'int(11) NOT NULL',
-            'status' => 'int(1) DEFAULT 0',
             'update_user_id' => 'int(11) NOT NULL',
         ), '');
 
