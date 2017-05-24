@@ -37,17 +37,25 @@ class ViewController extends ContentContainerController
         $yesterday_step = 0;
         $count = 0;
         foreach ($dataDevices as $dataDevice){
-
+            /*****use the last record timezone*******/
             $deviceTimezone = DeviceTimezone::find()->where(['hardware_id' => $dataDevice->hardware_id])->orderBy('updated_time DESC')->one();
+
             if ($deviceTimezone != null){
-                date_default_timezone_set($deviceTimezone->timezone);
+                switch ($deviceTimezone->timezone){
+                    case 'PST': $realTimezone = 'PST8PDT'; break;
+                    case 'CST' : $realTimezone = 'CST6CDT'; break;
+                    case 'EST' : $realTimezone = 'EST5EDT'; break;
+                    case  'MST' : $realTimezone = 'MST7MDT'; break;
+                    default: $realTimezone = $deviceTimezone->timezone;
+                }
+                date_default_timezone_set($realTimezone);
             } elseif ($user->time_zone != "") {
                 date_default_timezone_set($user->time_zone);
             } else {
                 $time_zone = \humhub\models\Setting::Get('timeZone');
                 date_default_timezone_set($time_zone);
             }
-
+            /*****use the last record timezone*******/
 
 
             $today = date("Y-m-d");
@@ -127,7 +135,14 @@ class ViewController extends ContentContainerController
 
             $deviceTimezone = DeviceTimezone::find()->where(['hardware_id' => $dataDevice->hardware_id])->orderBy('updated_time DESC')->one();
             if ($deviceTimezone != null){
-                date_default_timezone_set($deviceTimezone->timezone);
+                switch ($deviceTimezone->timezone){
+                    case 'PST': $realTimezone = 'PST8PDT'; break;
+                    case 'CST' : $realTimezone = 'CST6CDT'; break;
+                    case 'EST' : $realTimezone = 'EST5EDT'; break;
+                    case  'MST' : $realTimezone = 'MST7MDT'; break;
+                    default: $realTimezone = $deviceTimezone->timezone;
+                }
+                date_default_timezone_set($realTimezone);
             } elseif ($user->time_zone != "") {
                 date_default_timezone_set($user->time_zone);
             } else {
