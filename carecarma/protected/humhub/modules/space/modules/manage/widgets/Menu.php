@@ -84,7 +84,7 @@ class Menu extends \humhub\widgets\BaseMenu
                 'icon' => '<i class="fa fa-times"></i>',
                 'sortOrder' => 300,
                 'isActive' => (Yii::$app->controller->id == "module"),
-                'htmlOptions' => ['data-method' => 'POST']
+                'htmlOptions' => ['data-method' => 'POST', 'data-confirm' => "Are you sure ?"]
 
             ));
         }
