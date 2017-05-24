@@ -89,8 +89,8 @@ class Events extends \yii\base\Object
                     foreach ($user_tokens as $token){
                         $firebase = new Firebase();
                         $firebase->send($token->device_token, $mes);
-                        $sendIOS = new sendNotificationIOS();
-                        $sendIOS->sendMessage($token->device_token, $mes);
+//                        $sendIOS = new sendNotificationIOS();
+//                        $sendIOS->sendMessage($token->device_token, $mes);
                         $notifySent++;
                     }
                     $reportId[] = $device_show->report_user_id;
