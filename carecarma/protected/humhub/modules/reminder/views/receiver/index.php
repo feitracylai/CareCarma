@@ -67,13 +67,20 @@ use yii\helpers\Html;
 
                         foreach ($times as $time){
                             if ($time->repeat == 0){
-                                $time_detail[] = $time->date.' '.$time->time;
+                                $now = date('M d, Y H:i');
+                                $datetime = $time->date.' '.$time->time;
+                                if ($now < $datetime){
+                                    $time_detail[] = '<p>'.$datetime.'</p>';
+                                } else {
+                                    $time_detail[] = '<p style="text-decoration: line-through"><i>'.$datetime.'</i></p>';
+                                }
+
                             } else {
-                                $time_detail[] = $days[$time->day].' '.$time->time;
+                                $time_detail[] = '<p>'.$days[$time->day].' '.$time->time.'</p>';
                             }
                         }
 
-                        return implode("<br><br>", $time_detail);
+                        return implode("", $time_detail);
                     }
                 ],
 

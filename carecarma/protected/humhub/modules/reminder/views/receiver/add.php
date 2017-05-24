@@ -80,7 +80,7 @@ $index = 0;
                     'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
                     'widgetBody' => '.container-items', // required: css class selector
                     'widgetItem' => '.item', // required: css class
-                    'limit' => 4, // the maximum times, an element can be cloned (default 999)
+//                    'limit' => 4, // the maximum times, an element can be cloned (default 999)
                     'min' => 1, // 0 or 1 (default 1)
                     'insertButton' => '.add-item', // css class
                     'deleteButton' => '.remove-item', // css class
@@ -195,7 +195,7 @@ $index = 0;
 
                     <button type="button" class="btn btn-primary"
                             data-dismiss="modal"><?php echo Yii::t('TasksModule.views_task_edit', 'Cancel'); ?></button>
-<!--                </div>-->
+                <?php echo \humhub\widgets\LoaderWidget::widget(['id' => 'addreminder-loader', 'cssClass' => 'loader-modal hidden']); ?>
             </div>
 
         </div>

@@ -8,7 +8,9 @@
 
 namespace humhub\modules\reminder;
 
+use humhub\commands\CronController;
 use Yii;
+use yii\helpers\Console;
 use yii\helpers\Url;
 use yii\log\Logger;
 
@@ -46,11 +48,13 @@ class Events extends \yii\base\Object
 
 
         $event->sender->addItem(array(
-            'label' => Yii::t('ReminderModule.base', 'Set Reminder'),
+            'label' => Yii::t('ReminderModule.base', 'Set Reminders'),
             'url' => $space->createUrl('/reminder/receiver/index', ['rguid' => Yii::$app->request->get('rguid')]),
             'sortOrder' => '350',
             'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'reminder'),
         ));
     }
+
+
 
 }
