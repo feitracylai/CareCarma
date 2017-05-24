@@ -1,0 +1,12 @@
+{
+  "id": "reminder",
+  "name": "Reminder",
+  "description": "remind the calendar event",
+  "keywords": [
+    "modules"
+  ],
+  "version": "1.0",
+  "humhub": {
+    "minVersion": "0.20"
+  }
+}
