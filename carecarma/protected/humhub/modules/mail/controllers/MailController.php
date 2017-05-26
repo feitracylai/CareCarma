@@ -314,7 +314,7 @@ class MailController extends Controller
 
         $results = [];
         foreach ($query->all() as $user) {
-
+//Yii::getLogger()->log($user->username, Logger::LEVEL_INFO, 'MyLog');
             if ($user != null) {
                 //check contact user
                 $contactUser = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $user->id]);
