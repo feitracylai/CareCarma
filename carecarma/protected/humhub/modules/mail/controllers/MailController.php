@@ -228,13 +228,36 @@ class MailController extends Controller
     public function actionSearchUser()
     {
         Yii::$app->response->format = 'json';
-        return $this->getUserPickerResult(Yii::$app->request->get('keyword'));
+
+        $group = [];
+        //check contact user
+        $contactUsers = Contact::findAll(['user_id' => Yii::$app->user->id]);
+        if (count($contactUsers) != 0){
+            foreach ($contactUsers as $contactUser){
+                $group[] = $contactUser->contact_user_id;
+            }
+        }
+
+
+        //check circle members
+        $spaces = Membership::findAll(['user_id' => Yii::$app->user->id, 'status' => 3]);
+        if (count($spaces) != 0){
+            foreach ($spaces as $space){
+                foreach (Membership::find()->where(['space_id' => $space])->andWhere(['<>', 'user_id', Yii::$app->user->id])->each() as $member){
+                    $group[] = $member->user_id;
+                }
+            }
+        }
+
+
+//        Yii::getLogger()->log(array_unique($group), Logger::LEVEL_INFO, 'MyLog');
+        return $this->getUserPickerResult(Yii::$app->request->get('keyword'), array_unique($group));
     }
 
-    private function getUserPickerResult($keyword)
+    private function getUserPickerResult($keyword, $limit )
     {
         if (version_compare(Yii::$app->version, '1.1', 'lt')) {
-            return $this->findUserByFilter($keyword, 10);
+            return $this->findUserByFilter($keyword, 10, $limit);
         } else if (Yii::$app->getModule('friendship')->getIsEnabled()) {
             return UserPicker::filter([
                 'keyword' => $keyword,
@@ -298,58 +321,33 @@ class MailController extends Controller
     /*
      * @deprecated
      */
-    private function findUserByFilter($keyword, $maxResult)
+    private function findUserByFilter($keyword, $maxResult, $limit)
     {
-        $query = User::find()->limit($maxResult)->joinWith('profile');
 
+        $query = User::find()->limit($maxResult)->joinWith('profile');
+//        Yii::getLogger()->log($keyword, Logger::LEVEL_INFO, 'MyLog');
         foreach (explode(" ", $keyword) as $part) {
             $query->orFilterWhere(['like', 'user.email', $part]);
             $query->orFilterWhere(['like', 'user.username', $part]);
             $query->orFilterWhere(['like', 'profile.firstname', $part]);
             $query->orFilterWhere(['like', 'profile.lastname', $part]);
             $query->orFilterWhere(['like', 'profile.title', $part]);
+            $query->andFilterWhere(['id' => $limit]);
         }
 
         $query->active();
 
         $results = [];
         foreach ($query->all() as $user) {
-
+//            Yii::getLogger()->log($user->username, Logger::LEVEL_INFO, 'MyLog');
             if ($user != null) {
-                //check contact user
-                $contactUser = Contact::findOne(['user_id' => Yii::$app->user->id, 'contact_user_id' => $user->id]);
-                if ($contactUser != null) {
-                    $userInfo = array();
-                    $userInfo['guid'] = $user->guid;
-                    $userInfo['displayName'] = Html::encode($user->displayName);
-                    $userInfo['image'] = $user->getProfileImage()->getUrl();
-                    $userInfo['link'] = $user->getUrl();
-                    $results[] = $userInfo;
-                    break;
-                }
 
-                //check circle members
-                $spaces = Membership::findAll(['user_id' => $user->id, 'status' => 3]);
-                foreach ($spaces as $memberSpace) {
-                    $spaceId = $memberSpace->space_id;
-                    $spaceUser = Membership::findAll(['space_id' => $spaceId, 'user_id' => Yii::$app->user->id, 'status' => 3]);
-                    if ($spaceUser != null && $user->id != Yii::$app->user->id) {
-//                        Yii::getLogger()->log($user->getUserGroup(), Logger::LEVEL_INFO, 'MyLog');
-                        $userInfo = array();
-                        $userInfo['guid'] = $user->guid;
-                        $userInfo['displayName'] = Html::encode($user->displayName);
-                        $userInfo['image'] = $user->getProfileImage()->getUrl();
-                        $userInfo['link'] = $user->getUrl();
-                        $results[] = $userInfo;
-                        break;
-                    }
-                }
-//                $userInfo = array();
-//                $userInfo['guid'] = $user->guid;
-//                $userInfo['displayName'] = Html::encode($user->displayName);
-//                $userInfo['image'] = $user->getProfileImage()->getUrl();
-//                $userInfo['link'] = $user->getUrl();
-//                $results[] = $userInfo;
+                $userInfo = array();
+                $userInfo['guid'] = $user->guid;
+                $userInfo['displayName'] = Html::encode($user->displayName);
+                $userInfo['image'] = $user->getProfileImage()->getUrl();
+                $userInfo['link'] = $user->getUrl();
+                $results[] = $userInfo;
 
             }
         }
