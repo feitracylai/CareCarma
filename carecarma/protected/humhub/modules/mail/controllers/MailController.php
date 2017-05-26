@@ -327,11 +327,11 @@ class MailController extends Controller
         $query = User::find()->limit($maxResult)->joinWith('profile');
 //        Yii::getLogger()->log($keyword, Logger::LEVEL_INFO, 'MyLog');
         foreach (explode(" ", $keyword) as $part) {
-            $query->orFilterWhere(['like', 'user.email', $part]);
-            $query->orFilterWhere(['like', 'user.username', $part]);
+//            $query->orFilterWhere(['like', 'user.email', $part]);
+//            $query->orFilterWhere(['like', 'user.username', $part]);
             $query->orFilterWhere(['like', 'profile.firstname', $part]);
             $query->orFilterWhere(['like', 'profile.lastname', $part]);
-            $query->orFilterWhere(['like', 'profile.title', $part]);
+//            $query->orFilterWhere(['like', 'profile.title', $part]);
             $query->andFilterWhere(['id' => $limit]);
         }
 
