@@ -16,7 +16,8 @@ use yii\helpers\Url;
         <?php echo Yii::t('SpaceModule.views_admin_members', '<strong>Manage</strong> members'); ?>
     </div>
     <div class="panel-body">
-        <?php echo Yii::t('SpaceModule.views_admin_members', 'If you set someone in "Care Receiver" Group, his/her account can be managed by the administers in this circle. And All of the member in this circle can see the health report of his/her device.'); ?>
+        <?php echo Yii::t('SpaceModule.views_admin_members', 'You can set any "Memebers" to be "Administrators", which will have all of the permissions to manage this circle <b>except</b> delete it. <br>
+Only the owner of this cycle can delete it. The default owner is the creater. <br>'); ?>
         <div class="table-responsive">
             <?php
             $groups = $space->getUserGroups();
@@ -40,14 +41,14 @@ use yii\helpers\Url;
                         'attribute' => 'group_id',
                         'submitAttributes' => ['user_id'],
                         'readonly' => function ($data) use ($space) {
-                    if ($space->isSpaceOwner($data->user->id) || $space->isOtherCareReceiver($data->user->id)) {
-                        return true;
-                    }
+                            if ($space->isSpaceOwner($data->user->id)) {
+                                return true;
+                            }
                             if ($data->group_id == $space::USERGROUP_MODERATOR){
                                 return true;
                             }
-                    return false;
-                },
+                            return false;
+                        },
                         'filter' => $groups,
                         'dropDownOptions' => $chooseGroups,
 
@@ -63,8 +64,8 @@ use yii\helpers\Url;
 
                             return humhub\widgets\TimeAgo::widget(['timestamp' => $data->last_visit]);
                         }
-                            ],
-                            [
+                    ],
+                    [
                                 'header' => Yii::t('SpaceModule.views_admin_members', 'Actions'),
                                 'class' => 'yii\grid\ActionColumn',
                                 'buttons' => [
@@ -80,11 +81,11 @@ use yii\helpers\Url;
                                             'update' => function () {
                                         return;
                                     },
-                                        ],
-                                    ],
                                 ],
-                            ]);
-                            ?>
+                    ],
+                ],
+            ]);
+            ?>
         </div>
     </div>
 </div>
