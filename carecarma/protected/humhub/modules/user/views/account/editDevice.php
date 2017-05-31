@@ -12,7 +12,7 @@ use humhub\modules\user\models\Device;
 </div>
 <div class="panel-body">
     <p>
-        <?php echo Yii::t('UserModule.views_account_editDevice', 'If you have a CoSMoS device or use a CoSMoS App, please input your <strong>Activation ID</strong> to activate it here.'); ?>
+        <?php echo Yii::t('UserModule.views_account_editDevice', 'If you have a CoSMoS Vue or a CareCarma Watch or use a CoSMoS App, please input your <strong>Activation ID</strong> to activate it here.'); ?>
     </p>
 
     <?php $form = ActiveForm::begin(); ?>
@@ -26,7 +26,13 @@ use humhub\modules\user\models\Device;
                     <div style="margin: 0 20px">
                         <p>
                             <?php
-                            echo Yii::t('UserModule.views_account_editDevice', '{count}) {model}', array('{count}' => $count, '{model}' => $device->model));
+                            if ($device->type == 'CWatch'){
+                                echo Yii::t('UserModule.views_account_editDevice', '{count}) <i>CareCarma Watch</i>', array('{count}' => $count));
+                            } elseif ($device->type == 'Glass'){
+                                echo Yii::t('UserModule.views_account_editDevice', '{count}) <i>CoSMoS Vue</i>', array('{count}' => $count));
+                            } else {
+                                echo Yii::t('UserModule.views_account_editDevice', '{count}) <i>{model}</i>', array('{count}' => $count, '{model}' => $device->model));
+                            }
                             $count++;
                             ?>
                             <?php echo Html::a(Yii::t('UserModule.views_account_editDevice', 'Deactivate'), Url::toRoute(['/user/account/delete-device', 'id' => $device->device_id]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>

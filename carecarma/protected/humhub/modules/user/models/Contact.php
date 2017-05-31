@@ -51,7 +51,7 @@ class Contact extends \yii\db\ActiveRecord
             [['contact_email'], 'string', 'max' => 100],
             [['watch_primary_number'], \humhub\modules\user\components\CheckPrimaryWatch::className()],
             [['phone_primary_number'], \humhub\modules\user\components\CheckPrimaryPhone::className()],
-            [['carecarma_watch_number'], \humhub\modules\user\components\CheckCareCarmaWatch::className()]
+            [['carecarma_watch_number'], \humhub\modules\user\components\CheckCareCarmaWatch::className()],
         ];
     }
 
@@ -75,7 +75,7 @@ class Contact extends \yii\db\ActiveRecord
             'phone_primary_number' => Yii::t('UserModule.models_Contact', 'Primary Number on CoSMoS phone app'),
             'watch_primary_number' => Yii::t('UserModule.models_Contact', 'Primary Number on CoSMoS watch app'),
             'carecarma_watch_number' => Yii::t('UserModule.models_Contact', 'Primary Number on CareCarma Watch'),
-            'glass_primary_number' => Yii::t('UserModule.models_Contact', 'Primary Number on CareCarma Glass'),
+            'glass_primary_number' => Yii::t('UserModule.models_Contact', 'Primary Number on CoSMoS Vue'),
         ];
     }
 
@@ -122,7 +122,6 @@ class Contact extends \yii\db\ActiveRecord
             $oldAttrs = $this->getOldAttributes();
 
             if ($newAttrs['linked'] == 1){
-
                 $devices = Device::find()->where(['user_id' => $this->user_id, 'activate' => 1])->all();
                 $devices_array = array('Phone' => [], 'watch' => [], 'CWatch' => [], 'Glass' => [], 'null' => []);
                 $device_list = array();

@@ -62,7 +62,9 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
                 ],
 
                 [
-                    'label' => Yii::t('UserModule.views_contact_index', 'CoSMoS Phone (max: 7)'),
+                    'label' => Yii::t('UserModule.views_contact_index', 'CoSMoS Phone App (max: 7)'),
+                    'options' => ['style' => 'width:10%'],
+                    'headerOptions' => ['style' => 'color: #888'],
                     'class' => 'humhub\libs\CheckGridColumn',
                     'attribute' => 'phone_primary_number',
                     'submitAttributes' => ['contact_id'],
@@ -72,7 +74,9 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
                 ],
 
                 [
-                    'label' => Yii::t('UserModule.views_contact_index', 'CoSMoS Watch (max: 6)'),
+                    'label' => Yii::t('UserModule.views_contact_index', 'CoSMoS Watch App (max: 6)'),
+                    'options' => ['style' => 'width:10%; '],
+                    'headerOptions' => ['style' => 'color: #888'],
                     'class' => 'humhub\libs\CheckGridColumn',
                     'attribute' => 'watch_primary_number',
                     'submitAttributes' => ['contact_id'],
@@ -83,6 +87,8 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
 
                 [
                     'label' => Yii::t('UserModule.views_contact_index', 'CareCarma Watch (max: 5)'),
+                    'options' => ['style' => 'width:8%; '],
+                    'headerOptions' => ['style' => 'color: #888'],
                     'class' => 'humhub\libs\CheckGridColumn',
                     'attribute' => 'carecarma_watch_number',
                     'submitAttributes' => ['contact_id'],
@@ -92,7 +98,9 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
                 ],
 
                 [
-                    'label' => Yii::t('UserModule.views_contact_index', 'CareCarma Glass'),
+                    'label' => Yii::t('UserModule.views_contact_index', 'CoSMoS Vue'),
+                    'options' => ['style' => 'width:5%; '],
+                    'headerOptions' => ['style' => 'color: #888'],
                     'class' => 'humhub\libs\CheckGridColumn',
                     'attribute' => 'glass_primary_number',
                     'submitAttributes' => ['contact_id'],
