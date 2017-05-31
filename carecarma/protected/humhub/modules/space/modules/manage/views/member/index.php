@@ -16,7 +16,7 @@ use yii\helpers\Url;
         <?php echo Yii::t('SpaceModule.views_admin_members', '<strong>Manage</strong> members'); ?>
     </div>
     <div class="panel-body">
-        <?php echo Yii::t('SpaceModule.views_admin_members', 'You can set any "Memebers" to be "Administrators", which will have all of the permissions to manage this circle <b>except</b> delete it. <br>
+        <?php echo Yii::t('SpaceModule.views_admin_members', 'If you set any "Members" to be "Administrators", they will have all the permissions to manage this circle <b>except</b> delete it. 
 Only the owner of this cycle can delete it. The default owner is the creater. <br>'); ?>
         <div class="table-responsive">
             <?php
