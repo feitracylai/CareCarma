@@ -120,7 +120,11 @@ class ReceiverController extends ContentContainerController
 //                Yii::getLogger()->log(print_r($reminder_times, 'true'), Logger::LEVEL_INFO, 'MyLog');
                 if ($flag = $reminder->save(false)) {
                     if (!empty($deleteIDs)){
-                        ReminderDeviceTime::deleteAll(['id' => $deleteIDs]);
+//                        ReminderDeviceTime::deleteAll(['id' => $deleteIDs]);
+                        $delete_times = ReminderDeviceTime::findAll($deleteIDs);
+                        foreach ($delete_times as $delete_time){
+                            $delete_time->delete();
+                        }
                     }
                     foreach ($reminder_times as $reminder_time) {
 //                        Yii::getLogger()->log($reminder_time->repeat, Logger::LEVEL_INFO, 'MyLog');
