@@ -6,7 +6,7 @@ class FollowinglistController extends \humhub\modules\content\components\Content
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render('index', ['user' => $this->contentContainer]);
     }
 
 }

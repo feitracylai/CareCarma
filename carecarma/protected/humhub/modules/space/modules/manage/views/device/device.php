@@ -15,7 +15,7 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
     </div>
     <div class="panel-body">
         <p>
-            <?php echo Yii::t('SpaceModule.views_admin_receiver_editDevice', 'If {first} {last} has a CoSMoS device or use CoSMoS App, please activate it here', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
+            <?php echo Yii::t('SpaceModule.views_admin_receiver_editDevice', 'If {first} {last} has a CoSMoS Vue or a CareCarma Watch or use CoSMoS App, please activate it here', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
         </p>
 
         <?php $form = ActiveForm::begin(); ?>
@@ -24,11 +24,17 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
             <?php if($device_list != null) :
                 $count = 1;
                 ?>
-                <?php echo Yii::t('SpaceModule.views_admin_receiver_editDevice', '<strong>Current CoSMoS</strong>'); ?>
+                <?php echo Yii::t('SpaceModule.views_admin_receiver_editDevice', '<strong>Current CoSMoS device</strong>'); ?><br>
                 <?php foreach ($device_list as $device){?>
                         <div style="margin: 0 20px 10px">
                             <?php
-                            echo Yii::t('SpaceModule.views_admin_receiver_editDevice', '{count}) {model}', array('{count}' => $count, '{model}' => $device->model));
+                            if ($device->type == 'CWatch'){
+                                echo Yii::t('SpaceModule.views_admin_receiver_editDevice', '{count}) <i>CareCarma Watch</i>', array('{count}' => $count));
+                            } elseif ($device->type == 'Glass'){
+                                echo Yii::t('SpaceModule.views_admin_receiver_editDevice', '{count}) <i>CoSMoS Vue</i>', array('{count}' => $count));
+                            } else {
+                                echo Yii::t('SpaceModule.views_admin_receiver_editDevice', '{count}) <i>{model}</i>', array('{count}' => $count, '{model}' => $device->model));
+                            }
                             $count++;
                             ?>
                             <?php echo Html::a(Yii::t('SpaceModule.views_admin_receiver_editDevice', 'Deactivate'), $space->createUrl('delete-device', ['id' => $device->device_id, 'rguid' => $user->guid]), array('class' => 'btn btn-danger btn-xs pull-right')); ?>

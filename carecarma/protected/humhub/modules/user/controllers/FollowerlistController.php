@@ -8,7 +8,8 @@ class FollowerlistController extends \humhub\modules\content\components\ContentC
 {
     public function actionIndex()
     {
-        return $this->render('index');
+
+        return $this->render('index', ['user' => $this->contentContainer]);
     }
 
 }

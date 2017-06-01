@@ -3,8 +3,6 @@
 use yii\helpers\Html;
 use humhub\modules\user\models\User;
 
-$user = Yii::$app->user->getIdentity();
-
 $followers = $user->getFollowingObjects(User::find());
 ?>
 
