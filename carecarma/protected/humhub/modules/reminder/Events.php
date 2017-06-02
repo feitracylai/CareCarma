@@ -103,7 +103,7 @@ class Events extends \yii\base\Object
                         $expired = 0;
                         /***check expired time before now***/
                         if ($reminder_time->repeat == 1 && $reminder_time->remove_sent == '0'){
-                            if (strtotime($reminder_time->deadline) < strtotime($today)){
+			    if (strtotime($reminder_time->deadline) < strtotime($today)){
                                 $expired = 1;
                             } elseif ($reminder_time->deadline == $today && $reminder_time->time <= $time){
                                 $expired = 1;
