@@ -91,6 +91,7 @@ $index = 0;
                         'repeat',
                         'date',
                         'day',
+                        'deadline'
 
                     ],
                 ]);?>
@@ -128,6 +129,11 @@ $index = 0;
                                             <?php echo $form->field($reminder_time, "[{$index}]day", ['options' => ['style' => 'display : none']])->dropDownList([
                                                 'Everyday', 'Every Sunday', 'Every Monday', 'Every Tuesday', 'Every Wednesday', 'Every Thursday', 'Every Friday', 'Every Saturday'], ['prompt' => 'Please select:']);
                                             ?>
+
+                                            <?php echo $form->field($reminder_time, "[{$index}]deadline", ['options' => ['style' => 'display : none', 'title' => 'The date ']])->widget(\yii\jui\DatePicker::className(), [
+                                                'options' => ['class' => 'form-control reminder-time-datepicker'],
+                                                'clientOptions' => ['minDate' => 0]
+                                            ]); ?>
 
                                             <?php echo $form->field($reminder_time, "[{$index}]date")->widget(\yii\jui\DatePicker::className(), [
                                                 'options' => ['class' => 'form-control reminder-time-datepicker'],
@@ -211,10 +217,12 @@ $index = 0;
     for (var i = 0; i < timesCount; i++){
         if ($("#reminderdevicetime-" + i + "-repeat").prop('checked')){
             $(".field-reminderdevicetime-"+ i + "-day").show();
+            $(".field-reminderdevicetime-"+ i + "-deadline").show();
             $(".field-reminderdevicetime-"+ i + "-date").hide();
         } else {
             $(".field-reminderdevicetime-"+ i + "-date").show();
             $(".field-reminderdevicetime-"+ i + "-day").hide();
+            $(".field-reminderdevicetime-"+ i + "-deadline").hide();
         }
 
     }
@@ -227,10 +235,12 @@ $index = 0;
         if ($(me).prop('checked')){
 //            alert(id);
             $(".field-reminderdevicetime-"+ id + "-day").show();
+            $(".field-reminderdevicetime-"+ id + "-deadline").show();
             $(".field-reminderdevicetime-"+ id + "-date").hide();
         } else {
             $(".field-reminderdevicetime-"+ id + "-date").show();
             $(".field-reminderdevicetime-"+ id + "-day").hide();
+            $(".field-reminderdevicetime-"+ id + "-deadline").hide();
         }
 
 

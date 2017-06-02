@@ -114,18 +114,22 @@ class ReceiverController extends ContentContainerController
             $reminder_times = MultipleModel::createMultiple(ReminderDeviceTime::className(), $reminder_times);
             MultipleModel::loadMultiple($reminder_times, Yii::$app->request->post());
             $deleteIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($reminder_times, 'id', 'id')));
-//            Yii::getLogger()->log($deleteIDs, Logger::LEVEL_INFO, 'MyLog');
+//            Yii::getLogger()->log(['oldIDs = '.implode(',',$oldIDs), 'newIDs = '.implode(',',ArrayHelper::map($reminder_times, 'id', 'id'))], Logger::LEVEL_INFO, 'MyLog');
             //validate all models
             if ($reminder->validate() && MultipleModel::validateMultiple($reminder_times)){
 //                Yii::getLogger()->log(print_r($reminder_times, 'true'), Logger::LEVEL_INFO, 'MyLog');
                 if ($flag = $reminder->save(false)) {
                     if (!empty($deleteIDs)){
-                        ReminderDeviceTime::deleteAll(['id' => $deleteIDs]);
+//                        ReminderDeviceTime::deleteAll(['id' => $deleteIDs]);
+                        $delete_times = ReminderDeviceTime::findAll($deleteIDs);
+                        foreach ($delete_times as $delete_time){
+                            $delete_time->delete();
+                        }
                     }
                     foreach ($reminder_times as $reminder_time) {
-//                        Yii::getLogger()->log($reminder_time->repeat, Logger::LEVEL_INFO, 'MyLog');
 
                         $reminder_time->reminder_id = $reminder->id;
+
                         if (!($flag = $reminder_time->save(false))){
                             break;
                         }

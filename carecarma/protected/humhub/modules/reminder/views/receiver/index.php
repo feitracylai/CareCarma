@@ -55,14 +55,7 @@ use yii\helpers\Html;
                         $times = $data->times;
                         $time_detail = array();
 
-//                        $days = ['everyday' => 'Everyday',
-//                            'Sun' => 'Every Sunday',
-//                            'Mon' => 'Every Monday',
-//                            'Tue' => 'Every Tuesday',
-//                            'Wed' => 'Every Wednesday',
-//                            'Thur' => 'Every Thursday',
-//                            'Fri' => 'Every Friday',
-//                            'Sat' => 'Every Saturday'];
+
                         $days = ['Everyday', 'Every Sunday', 'Every Monday', 'Every Tuesday', 'Every Wednesday', 'Every Thursday', 'Every Friday', 'Every Saturday'];
 
                         foreach ($times as $time){
@@ -72,9 +65,11 @@ use yii\helpers\Html;
                                 /***add line-through for expired reminders *****/
                                 $time_detail[] = ($now < strtotime($datetime)) ? '<p>'.$datetime.'</p>' : '<p style="text-decoration: line-through"><i>'.$datetime.'</i></p>';
 
-
                             } else {
-                                $time_detail[] = '<p>'.$days[$time->day].' '.$time->time.'</p>';
+                                $the_last_time = $time->deadline.' '.$time->time;
+                                /***add line-through for expired reminders *****/
+                                $time_detail[] = (time() < strtotime($the_last_time) || $time->deadline == '')? '<p>'.$days[$time->day].' '.$time->time.'</p>' : '<p style="text-decoration: line-through"><i>'.$days[$time->day].' '.$time->time.'</i></p>';
+//                                $time_detail[] = '<p>'.$days[$time->day].' '.$time->time.'</p>';
                             }
                         }
 
