@@ -93,7 +93,12 @@ class ReminderDeviceTime extends \yii\db\ActiveRecord
             $oldAttrs = $this->getOldAttributes();
 
             if ($newAttrs != $oldAttrs) {
-                $send = true;
+                if ($oldAttrs['remove_sent'] == 0 && $newAttrs['remove_sent'] == 1){
+                    /***cron job send expired remove***/
+                    $send = false;
+                } else {
+                    $send = true;
+                }
             }
         }
 

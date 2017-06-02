@@ -103,9 +103,14 @@ class Events extends \yii\base\Object
                         $expired = 0;
                         /***check expired time before now***/
                         if ($reminder_time->repeat == 1 && $reminder_time->remove_sent == '0'){
+//                            Yii::getLogger()->log($reminder_time->id.'have deadline', Logger::LEVEL_INFO, 'MyLog');
+//                            Yii::getLogger()->log([strtotime($reminder_time->deadline), strtotime($today)], Logger::LEVEL_INFO, 'MyLog');
+//                            Yii::getLogger()->log([strtotime($reminder_time->time), strtotime($time)], Logger::LEVEL_INFO, 'MyLog');
                             if (strtotime($reminder_time->deadline) < strtotime($today)){
+//                                Yii::getLogger()->log('before today deadline', Logger::LEVEL_INFO, 'MyLog');
                                 $expired = 1;
-                            } elseif ($reminder_time->deadline == $today && $reminder_time->time <= $time){
+                            } elseif (strtotime($reminder_time->deadline) == strtotime($today) && strtotime($reminder_time->time) <= strtotime($time)){
+//                                Yii::getLogger()->log('today deadline', Logger::LEVEL_INFO, 'MyLog');
                                 $expired = 1;
                             }
                         }
