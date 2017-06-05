@@ -19,7 +19,7 @@ return [
         array('class' => NotificationArea::className(), 'event' => NotificationArea::EVENT_INIT, 'callback' => array('humhub\modules\reminder\Events', 'onNotificationAddonInit')),
         array('class' => CareEditMenu::className(), 'event' => CareEditMenu::EVENT_INIT, 'callback' => array('humhub\modules\reminder\Events', 'setCareRemind')),
 //        array('class' => TopMenu::className(), 'event' => TopMenu::EVENT_INIT, 'callback' => array('humhub\modules\reminder\Events', 'onTopMenuInit')),
-//        array('class' => CronController::className(), 'event' => CronController::EVENT_ON_HOURLY_RUN, 'callback' => array('humhub\modules\reminder\Events', 'onCronRun')),
+        array('class' => CronController::className(), 'event' => CronController::EVENT_ON_DAILY_RUN, 'callback' => array('humhub\modules\reminder\Events', 'onCronRun')),
     ]
 ];
 

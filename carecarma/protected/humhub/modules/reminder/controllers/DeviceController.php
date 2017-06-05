@@ -50,6 +50,11 @@ class DeviceController extends Controller
 //        $data['data'] = array();
         foreach ($reminders as $reminder){
             foreach ($reminder->times as $reminder_time){
+                /***not send expired recurring reminders***/
+                if ($reminder_time->remove_sent == 1){
+                    break;
+                }
+
                 $info = array();
                 $info['type'] = 'reminder,add';
                 $info['id'] = $reminder_time->id;
