@@ -44,7 +44,7 @@ use humhub\modules\space\modules\manage\widgets\CareEditMenu;
 
     <div class="panel-body">
         <div>
-            <?php echo Yii::t('SpaceModule.views_admin_receiver_delete', 'Are you sure you want to remove <b>{first} {last}</b> to be a regular member in this space? If you do that, {first} {last} will not be shown in ', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
+            <?php echo Yii::t('SpaceModule.views_admin_receiver_delete', 'Are you sure you want to remove <b>{first} {last}</b> to be a regular member in this space? If you do that, {first} {last} will not be shown on the', array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
             <?php echo Html::a(Yii::t('SpaceModule.views_admin_receiver_delete', '"<b><i class="fa fa-headphones"></i><u> Care receiver</u></b>" page.'), $space->createUrl('index'), array('target' => '_blank')); ?>
         </div>
 

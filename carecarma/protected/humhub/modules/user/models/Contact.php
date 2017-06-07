@@ -205,7 +205,7 @@ class Contact extends \yii\db\ActiveRecord
                 $data2['contact_first'] = $this->contact_first;
                 $data2['contact_last'] = $this->contact_last;
                 $data2['nickname'] = $this->nickname;
-                $data2['relation'] = $this->relation;
+                $data2['relation'] =  $this->getRelationship($this->relation);
                 $data2['contact_mobile'] = $this->contact_mobile;
                 $data2['device_phone'] = $this->device_phone;
                 $data2['home_phone'] = $this->home_phone;
@@ -262,7 +262,7 @@ class Contact extends \yii\db\ActiveRecord
             'nickname' => $this->nickname,
             'user_id' => $this->user_id,
             'contact_user_id' => $this->contact_user_id,
-            'relation' => $this->relation,
+            'relation' => $this->getRelationship($this->relation),
             'home_phone' => $this->home_phone,
             'work_phone' => $this->work_phone,
             'watch_primary_number' => $this->watch_primary_number,
@@ -292,7 +292,7 @@ class Contact extends \yii\db\ActiveRecord
             'nickname' => $this->nickname,
             'user_id' => $this->user_id,
             'contact_user_id' => $this->contact_user_id,
-            'relation' => $this->relation,
+            'relation' => $this->getRelationship($this->relation),
             'home_phone' => $this->home_phone,
             'work_phone' => $this->work_phone,
             'watch_primary_number' => $this->watch_primary_number,
@@ -300,6 +300,21 @@ class Contact extends \yii\db\ActiveRecord
             'carecarma_watch_number' => $this->carecarma_watch_number,
             'glass_primary_number' => $this->glass_primary_number,
         ];
+    }
+
+    private function getRelationship($key)
+    {
+        $relationship_groups = Yii::$app->params['availableRelationship'];
+        $relation = $key;
+        foreach ($relationship_groups as $relationship_group){
+            if (is_array($relationship_group)){
+                if (isset($relationship_group[$key])){
+                    $relation = $relationship_group[$key];
+                    break;
+                }
+            }
+        }
+        return $relation;
     }
 
 
