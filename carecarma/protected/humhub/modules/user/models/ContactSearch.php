@@ -57,6 +57,7 @@ class ContactSearch extends Contact
 
         if ($this->status == 'index'){
             $query->andFilterWhere(['user_id' => $id]);
+            $query->andWhere(['linked' => 1]);
             $query->andFilterCompare('contact_first','<>NULL');
         } elseif ($this->status == 'console') {
             $query->andFilterCompare('contact_user_id','<>NULL');
