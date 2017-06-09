@@ -20,12 +20,14 @@ use humhub\modules\space\modules\manage\widgets\ContactMenu;
 <!--        <?//=ContactMenu::widget(['space' => $space]); ?>-->
 <!--        <br/>-->
         <p>
-            <?php echo Yii::t('SpaceModule.views_admin_receiver_contact', "In this overview you can find and manage
-              {first} {last}'s contacts.", array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
+            <?php echo Yii::t('SpaceModule.views_admin_receiver_contact', "In this overview you can find
+              {first} {last}'s all contacts, and manage the relationship of this contact people to {first} {last}. 
+              <br>And you can check the primary contact list in {first} {last}'s device(s).", array('{first}' => $user->profile->firstname, '{last}' => $user->profile->lastname)); ?>
         </p>
 
         <?php
         $relationship = Yii::$app->params['availableRelationship'];
+
 
         echo GridView::widget([
             'dataProvider' => $dataProvider,
