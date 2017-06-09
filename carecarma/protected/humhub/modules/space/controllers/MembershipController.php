@@ -161,10 +161,21 @@ class MembershipController extends \humhub\modules\content\components\ContentCon
 
         $space->removeMember();
 
-        $notification = new \humhub\modules\space\notifications\InviteDeclined();
-        $notification->source = $space;
-        $notification->originator = $user;
-        $notification->send($membership->originator);
+        if ($membership->originator == null){
+            $admins = $space->getAdmins();
+            foreach ($admins as $admin){
+                $notification = new \humhub\modules\space\notifications\InviteDeclined();
+                $notification->source = $space;
+                $notification->originator = $user;
+                $notification->send($admin);
+            }
+        } else {
+            $notification = new \humhub\modules\space\notifications\InviteDeclined();
+            $notification->source = $space;
+            $notification->originator = $user;
+            $notification->send($membership->originator);
+        }
+
 
 
 

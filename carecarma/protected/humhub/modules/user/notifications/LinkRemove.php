@@ -9,6 +9,8 @@
 namespace humhub\modules\user\notifications;
 
 use humhub\modules\notification\components\BaseNotification;
+use humhub\modules\user\models\User;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 class LinkRemove extends BaseNotification
@@ -26,5 +28,11 @@ class LinkRemove extends BaseNotification
     public function getUrl()
     {
         return Url::to('index.php?r=user%2Fcontact%2Fconsole');
+    }
+
+    public function send(User $user)
+    {
+        $msg =  Html::encode($this->originator->displayName). ' remove you in his/her People list.';
+        return parent::send($user, $msg);
     }
 }

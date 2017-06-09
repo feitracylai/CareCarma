@@ -9,6 +9,8 @@
 namespace humhub\modules\user\notifications;
 
 use humhub\modules\notification\components\BaseNotification;
+use humhub\modules\user\models\User;
+use yii\bootstrap\Html;
 use yii\log\Logger;
 
 class Linked extends BaseNotification
@@ -35,6 +37,12 @@ class Linked extends BaseNotification
     public function getUrl()
     {
         return $this->originator->getUrl();
+    }
+
+    public function send(User $user)
+    {
+        $msg =  Html::encode($this->originator->displayName). ' wants to invite you to his/her People list.';
+        return parent::send($user, $msg);
     }
 
 }

@@ -720,7 +720,7 @@ class ContactController extends Controller
             $contactInfo->contact_first = $contact->contact_first;
             $contactInfo->contact_last = $contact->contact_last;
             $contactInfo->nickname = $contact->nickname;
-            $contactInfo->relation = $contact->relation;
+            $contactInfo->relation = $this->getRelationship($contact->relation);
             $contactInfo->contact_mobile = $contact->contact_mobile;
             $contactInfo->contact_email = $contact->contact_email;
             $contactInfo->home_phone = $contact->home_phone;
@@ -738,7 +738,7 @@ class ContactController extends Controller
         }
         $contact_list['data'] = $contact_data;
 
-        Yii::getLogger()->log(print_r($contact_list, true),yii\log\Logger::LEVEL_INFO,'MyLog');
+//        Yii::getLogger()->log(print_r($contact_list, true),yii\log\Logger::LEVEL_INFO,'MyLog');
 
 
         $gcm = new GCM();
@@ -778,7 +778,7 @@ class ContactController extends Controller
                 $contactInfo->contact_first = $contact->contact_first;
                 $contactInfo->contact_last = $contact->contact_last;
                 $contactInfo->nickname = $contact->nickname;
-                $contactInfo->relation = $contact->relation;
+                $contactInfo->relation = $$this->getRelationship($contact->relation);
                 $contactInfo->contact_mobile = $contact->contact_mobile;
                 $contactInfo->contact_email = $contact->contact_email;
                 $contactInfo->home_phone = $contact->home_phone;
@@ -826,7 +826,7 @@ class ContactController extends Controller
                 $contactInfo->contact_first = $contact->contact_first;
                 $contactInfo->contact_last = $contact->contact_last;
                 $contactInfo->nickname = $contact->nickname;
-                $contactInfo->relation = $contact->relation;
+                $contactInfo->relation = $this->getRelationship($contact->relation);
                 $contactInfo->contact_mobile = $contact->contact_mobile;
                 $contactInfo->contact_email = $contact->contact_email;
                 $contactInfo->home_phone = $contact->home_phone;
@@ -877,7 +877,7 @@ class ContactController extends Controller
                 $contactInfo->contact_first = $contact->contact_first;
                 $contactInfo->contact_last = $contact->contact_last;
                 $contactInfo->nickname = $contact->nickname;
-                $contactInfo->relation = $contact->relation;
+                $contactInfo->relation = $this->getRelationship($contact->relation);
                 $contactInfo->contact_mobile = $contact->contact_mobile;
                 $contactInfo->contact_email = $contact->contact_email;
                 $contactInfo->home_phone = $contact->home_phone;
@@ -926,7 +926,7 @@ class ContactController extends Controller
                 $contactInfo->contact_first = $contact->contact_first;
                 $contactInfo->contact_last = $contact->contact_last;
                 $contactInfo->nickname = $contact->nickname;
-                $contactInfo->relation = $contact->relation;
+                $contactInfo->relation = $this->getRelationship($contact->relation);
                 $contactInfo->contact_mobile = $contact->contact_mobile;
                 $contactInfo->contact_email = $contact->contact_email;
                 $contactInfo->home_phone = $contact->home_phone;
@@ -1195,6 +1195,21 @@ class ContactController extends Controller
 
 
         return $browser;
+    }
+
+    private function getRelationship($key)
+    {
+        $relationship_groups = Yii::$app->params['availableRelationship'];
+        $relation = $key;
+        foreach ($relationship_groups as $relationship_group){
+            if (is_array($relationship_group)){
+                if (isset($relationship_group[$key])){
+                    $relation = $relationship_group[$key];
+                    break;
+                }
+            }
+        }
+        return $relation;
     }
 
 }

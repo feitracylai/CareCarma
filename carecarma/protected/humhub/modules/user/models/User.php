@@ -395,7 +395,7 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
     }
 
     public function updateUserContacts () {
-        $contacts = Contact::findAll(['contact_user_id' => $this->id]);
+        $contacts = Contact::findAll(['contact_user_id' => $this->id, 'linked' => 1]);
         foreach ($contacts as $contact) {
             $contact->contact_first = $this->profile->firstname;
             $contact->contact_last = $this->profile->lastname;
@@ -433,16 +433,16 @@ class User extends ContentContainerActiveRecord implements \yii\web\IdentityInte
                     $contact->linked = 1;
                     $contact->save();
 
-                    $data = array();
-                    $data['type'] = 'contact,updated';
-                    $device_list = Device::findAll(['user_id' => $this->id]);
-                    foreach($device_list as $device) {
-                        if ($device != null) {
-                            $gcm = new GCM();
-                            $gcm_id = $device->gcmId;
-                            $gcm->send($gcm_id, $data);
-                        }
-                    }
+//                    $data = array();
+//                    $data['type'] = 'contact,updated';
+//                    $device_list = Device::findAll(['user_id' => $this->id]);
+//                    foreach($device_list as $device) {
+//                        if ($device != null) {
+//                            $gcm = new GCM();
+//                            $gcm_id = $device->gcmId;
+//                            $gcm->send($gcm_id, $data);
+//                        }
+//                    }
 
                     $notification = new LinkAccepted();
                     $notification->source = $contact;
