@@ -117,15 +117,16 @@ class Contact extends \yii\db\ActiveRecord
 
     public function afterSave($insert, $changedAttributes)
     {
+        $device_list = array();
         // store history
-        if (!$this->isNewRecord) {
+        if (!$insert) {
             $newAttrs = $this->getAttributes();
             $oldAttrs = $this->getOldAttributes();
 
             if ($newAttrs['linked'] == 1){
                 $devices = Device::find()->where(['user_id' => $this->user_id, 'activate' => 1])->all();
                 $devices_array = array('Phone' => [], 'watch' => [], 'CWatch' => [], 'Glass' => [], 'null' => []);
-                $device_list = array();
+
                 if ($devices != null){
                     foreach ($devices as $device){
                         //separate gcmId in diff type
@@ -178,56 +179,62 @@ class Contact extends \yii\db\ActiveRecord
 
 //            Yii::getLogger()->log($device_list, Logger::LEVEL_INFO, 'MyLog');
 
-                //begin to send GCM
-                $data = array();
-                $data['type'] = 'contact,updated';
-                if (!empty($device_list)) {
-                    foreach($device_list as $gcm_id) {
-                        $gcm = new GCM();
-                        $gcm->send($gcm_id, $data);
-                    }
-                }
-
-                $image = "";
-
-                if ($this->contact_user_id) {
-                    $contact_user_temp = User::findOne(['id' => $this->contact_user_id]);
-                    $profileImage = new \humhub\libs\ProfileImage($contact_user_temp->guid);
-                    $pos = strpos($profileImage->getUrl(), "?m=");
-                    $image = substr($profileImage->getUrl(), 0, $pos);
-                }
-
-                $data2 = array();
-                $data2['type'] = 'contact,edit';
-                $data2['contact_id'] = $this->contact_id;
-                $data2['contact_user_id'] = $this->contact_user_id;
-                $data2['photo'] = $image;
-                $data2['contact_first'] = $this->contact_first;
-                $data2['contact_last'] = $this->contact_last;
-                $data2['nickname'] = $this->nickname;
-                $data2['relation'] =  $this->getRelationship($this->relation);
-                $data2['contact_mobile'] = $this->contact_mobile;
-                $data2['device_phone'] = $this->device_phone;
-                $data2['home_phone'] = $this->home_phone;
-                $data2['work_phone'] = $this->work_phone;
-                $data2['contact_email'] = $this->contact_email;
-                $data2['watch_primary_number'] = $this->watch_primary_number;
-                $data2['phone_primary_number'] = $this->phone_primary_number;
-                $data2['carecarma_watch_number'] = $this->carecarma_watch_number;
-                $data2['glass_primary_number'] = $this->glass_primary_number;
-
-
-                if (!empty($device_list)) {
-                    foreach($device_list as $gcm_id) {
-                        $gcm = new GCM();
-                        $gcm->send($gcm_id, $data2);
-                    }
-                }
-            } else {
 
             }
 
 
+        } elseif ($this->linked == 1) {
+            $devices = Device::find()->where(['user_id' => $this->user_id, 'activate' => 1])->all();
+            foreach ($devices as $device){
+                $device_list[] = $device->gcmId;
+            }
+        }
+
+
+
+
+        if (count($device_list) != 0){
+            //begin to send GCM
+            $data = array();
+            $data['type'] = 'contact,updated';
+            foreach($device_list as $gcm_id) {
+                $gcm = new GCM();
+                $gcm->send($gcm_id, $data);
+            }
+
+            $image = "";
+
+            if ($this->contact_user_id) {
+                $contact_user_temp = User::findOne(['id' => $this->contact_user_id]);
+                $profileImage = new \humhub\libs\ProfileImage($contact_user_temp->guid);
+                $pos = strpos($profileImage->getUrl(), "?m=");
+                $image = substr($profileImage->getUrl(), 0, $pos);
+            }
+
+            $data2 = array();
+            $data2['type'] = 'contact,edit';
+            $data2['contact_id'] = $this->contact_id;
+            $data2['contact_user_id'] = $this->contact_user_id;
+            $data2['photo'] = $image;
+            $data2['contact_first'] = $this->contact_first;
+            $data2['contact_last'] = $this->contact_last;
+            $data2['nickname'] = $this->nickname;
+            $data2['relation'] =  $this->getRelationship($this->relation);
+            $data2['contact_mobile'] = $this->contact_mobile;
+            $data2['device_phone'] = $this->device_phone;
+            $data2['home_phone'] = $this->home_phone;
+            $data2['work_phone'] = $this->work_phone;
+            $data2['contact_email'] = $this->contact_email;
+            $data2['watch_primary_number'] = $this->watch_primary_number;
+            $data2['phone_primary_number'] = $this->phone_primary_number;
+            $data2['carecarma_watch_number'] = $this->carecarma_watch_number;
+            $data2['glass_primary_number'] = $this->glass_primary_number;
+
+
+            foreach($device_list as $gcm_id) {
+                $gcm = new GCM();
+                $gcm->send($gcm_id, $data2);
+            }
         }
 
         parent::afterSave($insert, $changedAttributes); // TODO: Change the autogenerated stub

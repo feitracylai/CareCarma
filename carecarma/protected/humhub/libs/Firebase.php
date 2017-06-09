@@ -8,12 +8,12 @@ use yii\log\Logger;
 class Firebase
 {
 
-    public function send($to, $message)
+    public function send($to, $message, $title = '')
     {
         
 		$msg = array
         (
-            'title' => 'CareCarma',
+//            'title' => 'CareCarma',
             'body' => $message,
             'sound' => 'mySound',
             'icon' => 'ic_status_icon',
@@ -22,14 +22,14 @@ class Firebase
         $fields = array
         (
             'to' => $to,
-             'priority' => "high",
+            'priority' => "high",
             'notification' => $msg,
         );
         return $this->sendPushNotification($fields);
     }
 
     public function sendPushNotification($fields) {
-		//Yii::getLogger()->log('sendFcm', Logger::LEVEL_INFO, 'MyLog');
+//		Yii::getLogger()->log($fields, Logger::LEVEL_INFO, 'MyLog');
         $api_key = 'AIzaSyBCpL8QgHY-sydrQepDLqma6jnsc_KyopQ';
         $url = 'https://fcm.googleapis.com/fcm/send';
 
@@ -47,7 +47,7 @@ class Firebase
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
 
         $result = curl_exec($ch);
-//	Yii::getLogger()->log($result, Logger::LEVEL_INFO, 'MyLog');
+//	Yii::getLogger()->log($result['success'], Logger::LEVEL_INFO, 'MyLog');
         curl_close($ch);
 
         return $result;
