@@ -163,7 +163,7 @@ class SensorstepController extends Controller
                 $model->time = $time;
                 $model->save();
             }
-            Yii::getLogger()->log(print_r($imei,true),yii\log\Logger::LEVEL_INFO,'MyLog');
+            //Yii::getLogger()->log(print_r($imei,true),yii\log\Logger::LEVEL_INFO,'MyLog');
         }
         Yii::getLogger()->log(print_r("end!!!!!!!!!!!",true),yii\log\Logger::LEVEL_INFO,'MyLog');
     }
