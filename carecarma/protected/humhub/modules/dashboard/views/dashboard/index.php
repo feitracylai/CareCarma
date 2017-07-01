@@ -18,12 +18,12 @@ $this->pageTitle = Yii::t('DashboardModule.views_dashboard_index', 'Home');
             ]);
             ?>
         </div>
-        <div class="col-md-4 layout-sidebar-container">
+        <!--<div class="col-md-4 layout-sidebar-container">
             <?php
-            echo \humhub\modules\dashboard\widgets\Sidebar::widget(['widgets' => [
-                    [\humhub\modules\activity\widgets\Stream::className(), ['streamAction' => '/dashboard/dashboard/stream'], ['sortOrder' => 150]]
-            ]]);
+            //echo \humhub\modules\dashboard\widgets\Sidebar::widget(['widgets' => [
+            //        [\humhub\modules\activity\widgets\Stream::className(), ['streamAction' => '/dashboard/dashboard/stream'], ['sortOrder' => 150]]
+            //]]);
             ?>
-        </div>
+        </div>-->
     </div>
 </div>
