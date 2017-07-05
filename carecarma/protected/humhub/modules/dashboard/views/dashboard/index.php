@@ -3,11 +3,7 @@ $this->pageTitle = Yii::t('DashboardModule.views_dashboard_index', 'Home');
 ?>
 <div class="container">
     <div class="row">
-        <?php if (Yii::$app->user->id == 1): ?>
         <div class="col-md-8 layout-below-top-second">
-        <?php else: ?>
-        <div class="col-md-12 layout-below-top-second">
-        <?php endif; ?>
             <?php
             if ($showProfilePostForm) {
                 echo \humhub\modules\post\widgets\Form::widget(['contentContainer' => \Yii::$app->user->getIdentity()]);
@@ -22,7 +18,6 @@ $this->pageTitle = Yii::t('DashboardModule.views_dashboard_index', 'Home');
             ]);
             ?>
         </div>
-        <?php if (Yii::$app->user->id == 1): ?>
         <div class="col-md-4 layout-sidebar-container">
             <?php
             echo \humhub\modules\dashboard\widgets\Sidebar::widget(['widgets' => [
@@ -30,6 +25,5 @@ $this->pageTitle = Yii::t('DashboardModule.views_dashboard_index', 'Home');
             ]]);
             ?>
         </div>
-        <?php endif; ?>
     </div>
 </div>
