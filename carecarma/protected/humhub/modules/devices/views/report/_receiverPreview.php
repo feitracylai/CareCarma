@@ -15,7 +15,7 @@ use humhub\widgets\TimeAgo;
 $user = User::findOne(['id' =>  $device_show->report_user_id]);
 ?>
 
-<?php if (empty($device_show->space_id)): ?>
+<?php if (empty($device_show->space_id) || $device_show->user_id == $device_show->report_user_id): ?>
     <li class="userPreviewEntry_<?php echo $user->id; ?> userPreviewEntry entry <?php if ($device_show->seen == 0): ?>new<?php endif; ?>" >
         <a href="<?php echo $user->createUrl('/devices/view/index') ?>">
             <div class="media">
