@@ -61,7 +61,7 @@ class AccountSettings extends \yii\base\Model
         return array(
             'tags' => Yii::t('UserModule.forms_AccountSettingsForm', 'Tags'),
             'language' => Yii::t('UserModule.forms_AccountSettingsForm', 'Language'),
-            'show_introduction_tour' => Yii::t('UserModule.forms_AccountSettingsForm', 'Hide panel on home'),
+            'show_introduction_tour' => Yii::t('UserModule.forms_AccountSettingsForm', 'Hide tutorial panel on home page'),
             'timeZone' => Yii::t('UserModule.forms_AccountSettingsForm', 'TimeZone'),
             'visibility' => Yii::t('UserModule.forms_AccountSettingsForm', 'Profile visibility'),
         );

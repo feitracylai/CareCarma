@@ -28,7 +28,8 @@ class Dashboard extends \yii\base\Widget
 
     public function run()
     {
-        return $this->render('tourPanel');
+//        return $this->render('tourPanel');
+        return $this->render('tutorials');
     }
 
 }
