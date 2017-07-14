@@ -40,8 +40,8 @@ use humhub\models\Setting;
         <pre>
 
 <strong><?php echo Yii::t('AdminModule.views_setting_cronjob', 'Crontab of user: {user}', array('{user}' => $currentUser)); ?></strong>
-30 * * * * <?php echo Yii::getAlias('@app/yii'); ?> cron/hourly >/dev/null 2>&1
-00 22 * * * <?php echo Yii::getAlias('@app/yii'); ?> cron/daily >/dev/null 2>&1
+30 * * * * php <?php echo Yii::getAlias('@app/yii'); ?> cron/hourly >/dev/null 2>&1
+00 22 * * * php <?php echo Yii::getAlias('@app/yii'); ?> cron/daily >/dev/null 2>&1
 
             <?php if ($currentUser != ""): ?>
 
