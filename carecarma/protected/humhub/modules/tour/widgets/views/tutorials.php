@@ -27,7 +27,7 @@ use humhub\models\Setting;
         </div>
         <div class="panel-body">
             <p>
-                <?php echo Yii::t('TourModule.widgets_views_tourPanel', 'Get to know everything of CareCarma with the following document:'); ?>
+                <?php echo Yii::t('TourModule.widgets_views_tourPanel', 'Get to know everything about CareCarma with the following document:'); ?>
                 <a href="/assets/CareCarma%20Tutorials.pdf" target="_blank" style="color: #6fdbe8"><u><strong>CareCarma Tutorials</strong></u></a>
             </p>
 
